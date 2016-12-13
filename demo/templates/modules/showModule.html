@@ -1,4 +1,6 @@
-<rx-page title="module.displayName" class="{{module.name}}-demo">
+<div class="{{module.name}}-demo">
+  <h1>{{ module.displayName }}</h1>
+
   <div layout="row" layout-align="middle">
     <div flex>
       <rx-stability stability="module.stability"></rx-stability>
@@ -6,6 +8,7 @@
 
     <div flex class="align-right">
       <span ng-if="module.hasApi">
+        <!-- TODO: Remove legacy logic! -->
         <span ng-if="module.isLegacy"><!-- for legacy Components -->
           <a href="ngdocs/index.html#/api/{{ module.name }}/" class="module-api button">View API</a>
         </span>
@@ -17,13 +20,16 @@
     </div>
   </div>
 
+  <!-- TODO: REMOVE! -->
   <div class="clear module-description" ng-if="module.docs.md">
     <h2 class="readme-title">Readme</h2>
     <div ng-bind-html="module.docs.md"></div>
   </div>
 
+  <!-- TODO: REMOVE ngIf -->
   <div ng-if="!module.isLegacy" rx-compile="module.docs.html" class="module-demo"></div>
 
+  <!-- TODO: REMOVE! -->
   <tabset class="clearfix clear" ng-if="module.isLegacy && (module.docs.html || module.docs.js)">
     <tab heading="Demo">
       <div rx-compile="module.docs.html" class="module-demo"></div>
@@ -41,4 +47,4 @@
       <rx-prism language="css">{{ module.docs.less }}</rx-prism>
     </tab>
   </tabset>
-</rx-page>
+</div>

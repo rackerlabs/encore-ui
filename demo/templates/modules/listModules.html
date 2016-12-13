@@ -1,41 +1,44 @@
-<rx-page title="vm.pageTitle" class="modules-list">
-  <div class="clear">
-    <table rx-floating-header class="table-striped">
-      <thead>
-        <tr>
-          <th colspan="10">
-            <rx-search-box
-              rx-placeholder="'Filter by any...'"
-              ng-model="searchText">
-            </rx-search-box>
-          </th>
-        </tr>
-        <tr>
-          <th class="column stability" ng-click="vm.sortColumn('stability')">Stability
-            <span ng-show="vm.showCaret('stability')" ng-class="vm.getCaretType()"></span>
-          </th>
-          <th class="column name" ng-click="vm.sortColumn('displayName')">Name
-            <span ng-show="vm.showCaret('displayName')" ng-class="vm.getCaretType()"></span>
-          </th>
-          <th class="column category" ng-click="vm.sortColumn('category')">Category
-            <span ng-show="vm.showCaret('category')" ng-class="vm.getCaretType()"></span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-if="vm.modules.length" ng-repeat="module in vm.modules | modulesFilter:searchText | orderBy:vm.sortKey:vm.sortReverse">
-          <td class="column stability">
-            <rx-stability stability="module.stability"></rx-stability>
-          </td>
-          <td class="column name">
-            <a href="#/{{module.category}}/{{module.name}}">{{ module.displayName }}</a>
-          </td>
-          <td><a href="#/{{module.category}}">{{module.category | rxCapitalize}}</a></td>
-        </tr>
-        <tr ng-if="!vm.modules.length">
-          <td colspan="10">No {{vm.category}} were found.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</rx-page>
+<h1>{{ vm.pageTitle }}</h1>
+<table rx-floating-header class="table-striped table--modules">
+  <thead>
+    <tr>
+      <th colspan="10">
+        <rx-search-box
+          rx-placeholder="'Filter by any...'"
+          ng-model="searchText">
+        </rx-search-box>
+      </th>
+    </tr>
+    <tr>
+      <th class="column--stability" ng-click="vm.sortColumn('stability')">Stability
+        <span ng-show="vm.showCaret('stability')" ng-class="vm.getCaretType()"></span>
+      </th>
+      <th class="column--name" ng-click="vm.sortColumn('displayName')">Name
+        <span ng-show="vm.showCaret('displayName')" ng-class="vm.getCaretType()"></span>
+      </th>
+      <th class="column--category" ng-click="vm.sortColumn('category')">Category
+        <span ng-show="vm.showCaret('category')" ng-class="vm.getCaretType()"></span>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody ng-if="vm.modules.length">
+    <tr ng-repeat="module in vm.modules | modulesFilter:searchText | orderBy:vm.sortKey:vm.sortReverse">
+      <td class="column--stability">
+        <rx-stability stability="module.stability"></rx-stability>
+      </td>
+      <td class="column--name">
+        <a href="#/{{module.category}}/{{module.name}}">{{ module.displayName }}</a>
+      </td>
+      <td class="column--category">
+        <a href="#/{{module.category}}">{{module.category | rxCapitalize}}</a>
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody ng-if="!vm.modules.length">
+    <tr>
+      <td colspan="10">No {{vm.category}} were found.</td>
+    </tr>
+  </tbody>
+</table>

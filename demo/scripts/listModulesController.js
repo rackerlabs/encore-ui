@@ -1,10 +1,10 @@
 angular.module('demoApp')
-.controller('listModulesController', function ($filter, Modules, rxBreadcrumbsSvc) {
+.controller('listModulesController', function ($filter, Modules, rxBreadcrumbsSvc, rxPageTitle) {
     var vm = this;
 
     vm.category = 'modules';
     vm.capitalizedCategory = $filter('rxCapitalize')(vm.category);
-    vm.pageTitle = 'All ' + vm.capitalizedCategory;
+    rxPageTitle.setTitle('All ' + vm.capitalizedCategory);
     vm.sortKey = 'displayName';
     vm.sortReverse = false;
     vm.modules = _.filter(Modules, { 'isCategory': false });

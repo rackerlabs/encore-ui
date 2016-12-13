@@ -1,0 +1,114 @@
+.demoNav {
+  @l1-padding: 0 10px 0 16px;
+  @l2-padding: 0 24px 0 32px;
+  @l3-padding: 0 38px 0 56px;
+  @navTransitionDuration: 0.2s;
+
+  &__item {
+    // TBD
+  }
+
+  &__item-link {
+    align-items: center;
+    border: 0;
+    color: @gray-600;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 1px;
+    position: relative;
+    transition: background @navTransitionDuration;
+
+    &:hover,
+    &:focus {
+      color: @white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .link-text {
+      flex: 1;
+    }
+
+    .link-icon {
+      flex: 0;
+      transition: all @navTransitionDuration;
+    }
+
+    &.is-leaf {
+      .link-icon {
+        display: none;
+      }
+
+      &.is-active {
+        background-color: @gray-800;
+        color: @white;
+      }
+    }//.is-leaf
+
+    &.is-branch {
+      &.is-active {
+        .link-icon {
+          transform: scaleY(-1); // invert icon
+        }
+      }
+    }//.is-branch
+
+    &--level-1 {
+      font-size: 14px;
+      height: 40px;
+      padding: @l1-padding;
+      text-transform: uppercase;
+    }//level 1
+
+    &--level-2 {
+      font-size: 13px;
+      height: 30px;
+      padding: @l2-padding;
+    }//level 2
+
+    &--level-3 {
+      font-size: 13px;
+      height: 30px;
+      padding: @l3-padding;
+    }//level 3
+  }//__item-link
+
+  &__item-content {
+    &--level-1 {
+      margin-bottom: 16px;
+
+      & > .demoNav__item-directive {
+        margin-left: 32px;
+      }
+    }//level 1
+
+    &--level-2 {
+      & > .demoNav__item-directive {
+        margin-left: 56px;
+      }
+    }//level 2
+
+    &--level-3 {
+      // TBD
+    }//level 3
+  }//__item-content
+
+  &__item-directive {
+    margin-top: 4px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+
+    &:not(.ng-hide) + .demoNav__item-children {
+      //margin-top: 10px;
+    }
+  }//__item-directive
+
+  &__item-children {
+    // TBD
+  }//__item-children
+
+  &__child-header {
+    margin: 12px 0;
+    padding-right: 10px;
+  }//__child-header
+}//.demoNav

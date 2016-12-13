@@ -4,6 +4,25 @@
 @import "_rxExample";
 @import "_rxPermalink";
 @import "_rxStability";
+@import "_demoApp";
+@import "_demoNavItem";
+@import "_404";
+@import "_shame";
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: @gray-50;
+  padding: 0;
+}
 
 /* TODO: (deprecated) remove with last of components */
 .module-description {
@@ -83,31 +102,25 @@
   }
 }
 
-.modules-list {
-  .page-content {
-    clear: left;
-    margin-top: 60px;
+.table--modules {
+  thead th {
+    cursor: pointer;
+  }
+  td,
+  th {
+    padding: 7px 10px;
   }
 
-  table {
-    thead th {
-      cursor: pointer;
-
-      &.column {
-        &.stability {
-          width: 120px;
-        }
-        &.category {
-          width: 100px;
-        }
-      }
+  .column {
+    &--stability {
+      width: 120px;
     }
-    td,
-    th {
-      padding: 7px 10px;
+
+    &--category {
+      width: 120px;
     }
   }
-}
+}//.table--modules
 
 .page-content {
   clear: both;

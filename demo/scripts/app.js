@@ -1,14 +1,18 @@
-function genericRouteController (breadcrumbs) {
-    return function (rxBreadcrumbsSvc) {
-        if (breadcrumbs === undefined) {
-            breadcrumbs = [{
-                name: '',
-                path: ''
-            }];
-        }
+function genericRouteController (title, breadcrumbs) {
+    var crumbs = [];
+    title = title || '';
 
-        rxBreadcrumbsSvc.set(breadcrumbs);
-    };
+    return function (rxBreadcrumbsSvc, rxPageTitle) {
+        var titleCrumb = { name: title };
+        if (breadcrumbs === undefined) {
+            crumbs = titleCrumb
+        } else {
+            crumbs = breadcrumbs.concat(titleCrumb);
+        }
+        rxBreadcrumbsSvc.set(crumbs);
+
+        rxPageTitle.setTitle(title);
+    }
 }
 
 angular.module('demoApp', ['encore.ui', 'ngRoute'])
@@ -21,13 +25,14 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
         .when('/', {
             redirectTo: '/overview'
         })
-        .when('/login', {
-            templateUrl: 'templates/login.html',
-            controller: genericRouteController()
-        })
         .when('/overview', {
             templateUrl: 'templates/overview.html',
-            controller: genericRouteController()
+            controller: function (rxBreadcrumbsSvc, rxPageTitle) {
+                rxBreadcrumbsSvc.set([
+                    { name: '', path: '' }
+                ]);
+                rxPageTitle.setTitle('Overview');
+            }
         })
 
         /* Layout */
@@ -35,41 +40,27 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
         /* Style Pages */
         .when('/styles/color', {
             templateUrl: 'templates/styles/color.html',
-            controller: genericRouteController([
-                { name: 'Color' }
-            ])
+            controller: genericRouteController('Color')
         })
         .when('/styles/formatting', {
             templateUrl: 'templates/styles/formatting.html',
-            controller: genericRouteController([{
-                name: 'Formatting'
-            }])
+            controller: genericRouteController('Date/Time Formatting')
         })
         .when('/styles/layout/detail', {
             templateUrl: 'templates/styles/layouts/detail-page.html',
-            controller: genericRouteController([
-                { name: 'Detail Page' }
-            ])
+            controller: genericRouteController('Layout 1: Detail Page')
         })
         .when('/styles/layout/data-table', {
             templateUrl: 'templates/styles/layouts/data-table-page.html',
-            controller: genericRouteController([
-                { name: 'Data Table' }
-            ])
+            controller: genericRouteController('Layout 2: Data Table')
         })
         .when('/styles/layout/form', {
             templateUrl: 'templates/styles/layouts/form-page.html',
-            controller: genericRouteController([
-                { name: 'Form Page' }
-            ])
+            controller: genericRouteController('Layout 3: Form Page')
         })
         .when('/styles/typography', {
             templateUrl: 'templates/styles/typography.html',
-            controller: genericRouteController([
-                {
-                    name: 'Typography'
-                }
-            ])
+            controller: genericRouteController('Typography')
         })
 
         /* Module Pages */
@@ -148,6 +139,10 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
                     });
                 }
             }
+        })
+        .otherwise({
+            templateUrl: 'templates/404.html',
+            controller: genericRouteController('Not Found')
         });
 
     // Define a custom status tag for use in the rxBreadcrumbs demo
@@ -167,92 +162,6 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
     });
 
     rxBreadcrumbsSvc.setHome('#/overview', 'Overview');
-
-    var linksForModuleCategory = function (kategory) {
-        var filteredModules = _.filter(Modules, {
-            category: kategory,
-            isCategory: false
-        });
-
-        var sortedModules = _.sortBy(filteredModules, function (mod) {
-            return mod.displayName.toLowerCase();
-        });
-
-        return sortedModules.map(function (mod) {
-            return {
-                href: ['#', kategory, mod.name].join('/'),
-                linkText: mod.displayName
-            };
-        });
-    };//linksForModuleCategory()
-
-    $rootScope.demoNav = [
-        {
-            type: 'no-title',
-            children: [
-                {
-                    linkText: 'Version <%= pkg.version %>',
-                    directive: 'switch-docs',
-                    children: [{}],
-                    childVisibility: 'false'
-                },
-                {
-                    linkText: 'Overview',
-                    href: '#/overview'
-                },
-                {
-                    linkText: 'Styleguide',
-                    children: [
-                        {
-                            linkText: 'Color',
-                            href: '#/styles/color'
-                        },
-                        {
-                            linkText: 'Date/Time Formatting',
-                            href: '#/styles/formatting'
-                        },
-                        {
-                            linkText: 'Layouts',
-                            children: [
-                                {
-                                    linkText: 'Layout 1: Detail Page',
-                                    href: '#/styles/layout/detail'
-                                },
-                                {
-                                    linkText: 'Layout 2: Data Table',
-                                    href: '#/styles/layout/data-table'
-                                },
-                                {
-                                    linkText: 'Layout 3: Form Page',
-                                    href: '#/styles/layout/form'
-                                }
-                            ]
-                        },
-                        {
-                            linkText: 'Typography',
-                            href: '#/styles/typography'
-                        }
-                    ]
-                },
-                { /* temporary solution until site-wide search is implemented */
-                    linkText: 'All Modules',
-                    href: '#/modules'
-                },
-                {
-                    linkText: 'Elements',
-                    children: linksForModuleCategory('elements')
-                },
-                {
-                    linkText: 'Utilities',
-                    children: linksForModuleCategory('utilities')
-                },
-                { /* Deprecated in favor of Elements */
-                    linkText: 'Components',
-                    children: linksForModuleCategory('components')
-                }
-            ]
-        }
-    ];
 
     rxPageTitle.setSuffix(' - EncoreUI');
 

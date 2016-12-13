@@ -96,7 +96,8 @@ describe('rxPage', function () {
         expect(customPage.subtitle).to.eventually.contain('With a new subtitle at 1');
     });
 
-    describe('main title', function () {
+    // Skipping. Demo app doesn't use rxPage and component is slated for removal.
+    describe.skip('main title', function () {
 
         before(function () {
             demoPage.go('#/utilities/rxTitleize');

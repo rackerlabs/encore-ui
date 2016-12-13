@@ -1,0 +1,106 @@
+@gray-985: #262626;
+@demo-nav-width: 300px;
+
+.appStage {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh; // or 100%?
+  padding: 0;
+  margin: 0;
+
+  &__left {
+    background-color: @gray-985;
+    border-right: 1px solid @gray-1000;
+    flex: 0 0 @demo-nav-width;
+  }//__left
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+
+    main {
+      flex: 1;
+      padding: 20px 30px 50px;
+    }
+
+    & > .rx-notifications {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+    }
+
+    // TODO: Legacy... remove.
+    .page-header {
+      background: linear-gradient(to bottom, @gray-200 0%, @gray-400 100%);
+      border-bottom: 1px solid @gray-500;
+      flex: 0;
+    }
+
+    // TODO: Legacy... remove.
+    .page-actions {
+      float: right;
+      margin: 0 0 2em 2em;
+    }
+  }//__right
+}//.appStage
+
+.globalNav {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: @app-line-height;
+  padding-bottom: 60px; // (feedback-height + 20px)
+
+  &__header {
+    background-color: @gray-975;
+    border-bottom: 1px solid @gray-1000;
+    color: @gray-600;
+    padding: 10px;
+
+    .brand {
+      color: @gray-50;
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }//__header
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    color: @white;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: @app-line-height;
+  }//_list
+
+  &__footer {
+    align-items: center;
+    background-color: @gray-975;
+    border-top: 1px solid @gray-1000;
+    bottom: 0;
+    color: @orange-500;
+    display: flex;
+    font-size: 15px;
+    font-weight: 300;
+    height: 40px;
+    justify-content: center;
+    left: 0;
+    padding: 0 10px;
+    position: fixed;
+    text-shadow: 1px 1px 0 rgba(26, 26, 26, 0.2);
+    width: @demo-nav-width;
+
+    rx-feedback {
+      margin-left: 5px;
+      display: inline-block;
+
+      .modal-link {
+        color: @orange-500;
+      }
+    }//rx-feedback
+  }//__footer
+}//.globalNav

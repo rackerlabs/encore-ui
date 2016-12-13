@@ -1,56 +1,57 @@
-<rx-page title="'Layout 2: Data Table'" subtitle="'Lorem ipsum'">
-  <div class="clear" ng-controller="layoutDataTableCtrl">
-    <table class="table-striped" rx-floating-header>
-      <thead>
-        <th colspan="6">
-          <rx-search-box
-            rx-placeholder="'Filter by any...'"
-            style="font-style: italic;"
-            ng-model="searchText"></rx-search-box>
-        </th>
-        <tr>
-          <th rx-status-header></th>
-          <th>Column 1</th>
-          <th>Column 2</th>
-          <th>Column 3</th>
-          <th>Column 4</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="person in people | filter:searchText | Paginate:pager">
-          <td rx-status-column status="{{ person.status }}"></td>
-          <td><a href="#">Lorem ipsum</a></td>
-          <td>{{ person.name }}</td>
-          <td>{{ person.occupation }}</td>
-          <td>{{ person.number }}</td>
-          <td>
-            <rx-action-menu>
-              <ul class="actions-area">
-                <li>
-                  <rx-modal-action
-                  classes="msg-action">
-                    <i class="fa fa-plus fa-lg"></i> Action One
-                  </rx-modal-action>
-                </li>
-                <li>
-                  <rx-modal-action
-                       classes="msg-warn">
-                    <i class="fa fa-times fa-lg"></i> Action Two
-                  </rx-modal-action>
-                </li>
-              </ul>
-            </rx-action-menu>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr class="paginate-area">
-          <td colspan="6">
-            <rx-paginate page-tracking="pager"></rx-paginate>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-</rx-page>
+<h1>Layout 2: Data Table</h1>
+<h2 class="subdued"><small>Lorem ipsum</small></h2>
+
+<div ng-controller="layoutDataTableCtrl">
+  <table class="table-striped">
+    <thead>
+      <th colspan="6">
+        <rx-search-box
+          rx-placeholder="'Filter by any...'"
+          style="font-style: italic;"
+          ng-model="searchText"></rx-search-box>
+      </th>
+      <tr>
+        <th rx-status-header></th>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+        <th>Column 4</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="person in people | filter:searchText | Paginate:pager">
+        <td rx-status-column status="{{ person.status }}"></td>
+        <td><a href="#">Lorem ipsum</a></td>
+        <td>{{ person.name }}</td>
+        <td>{{ person.occupation }}</td>
+        <td>{{ person.number }}</td>
+        <td>
+          <rx-action-menu>
+            <ul class="actions-area">
+              <li>
+                <rx-modal-action
+                classes="msg-action">
+                  <i class="fa fa-plus fa-lg"></i> Action One
+                </rx-modal-action>
+              </li>
+              <li>
+                <rx-modal-action
+                     classes="msg-warn">
+                  <i class="fa fa-times fa-lg"></i> Action Two
+                </rx-modal-action>
+              </li>
+            </ul>
+          </rx-action-menu>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="paginate-area">
+        <td colspan="6">
+          <rx-paginate page-tracking="pager"></rx-paginate>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

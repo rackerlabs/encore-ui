@@ -1,0 +1,26 @@
+<div class="demoNav__item" data-nav-key="{{ item.key }}">
+  <a
+    class="demoNav__item-link demoNav__item-link--level-{{level}}"
+    ng-class="{ 'is-active': item.active, 'is-branch': item.children, 'is-leaf': !item.children }"
+    ng-click="navClickHandler($event, item)"
+    ng-href="{{ item.href }}">
+
+    <span class="link-text">{{ item.linkText }}</span>
+    <span class="link-icon fa fa-fw fa-angle-double-down"></span>
+  </a>
+
+  <div
+    class="demoNav__item-content demoNav__item-content--level-{{level}}"
+    ng-show="item.active && item.children">
+
+    <div class="demoNav__item-children" ng-show="item.children">
+      <div
+        class="demoNav__child-header"
+        ng-if="item.childHeader"
+        rx-compile="item.childHeader">
+      </div>
+
+      <!-- demoNav injected here if 'children' is array -->
+    </div>
+  </div>
+</div>
