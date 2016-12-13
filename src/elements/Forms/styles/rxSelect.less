@@ -123,4 +123,85 @@
       justify-content: center;
     }//.select-trigger
   }//.fake-select
+
+
+  /* Inverse Theme - [ALPHA] */
+  .rx-inverse & {
+    @inverse-color: @gray-500;
+    @inverse-border-color: @gray-500;
+    @inverse-background-color: @gray-975;
+    @inverse-trigger-background-color: @gray-975;
+    @inverse-trigger-color: @gray-500;
+
+    @inverse-disabled-background-color: @gray-975;
+    @inverse-disabled-border-color: @gray-800;
+    @inverse-disabled-color: @gray-700;
+    @inverse-disabled-trigger-background-color: @gray-975;
+    @inverse-disabled-trigger-color: @gray-700;
+
+    @inverse-invalid-border-color: @red-accent;
+    @inverse-invalid-trigger-background-color: @gray-975;
+    @inverse-invalid-trigger-color: @red-accent;
+
+    color: @inverse-color;
+    background: @inverse-background-color;
+
+    &.rx-disabled {
+      background: @inverse-disabled-background-color;
+      color: @inverse-disabled-color;
+    }
+
+    .disabledSelect() {
+      & + .fake-select {
+        border-color: @inverse-disabled-border-color;
+        .select-trigger {
+          background: @inverse-disabled-trigger-background-color;
+          border-left-color: @inverse-disabled-border-color;
+          color: @inverse-disabled-color;
+        }
+      }
+    }//.disabledSelect()
+
+    .invalidSelect() {
+      & + .fake-select {
+        border-color: @inverse-invalid-border-color;
+        //border-width: 1px;
+        .select-trigger {
+          background: @inverse-invalid-trigger-background-color;
+          color: @inverse-invalid-trigger-color;
+        }
+      }
+      &[disabled] {
+        .disabledSelect();
+      }
+    }//.invalidSelect()
+
+    select {
+      background: @inverse-background-color;
+      &:-moz-focusring {
+        // FF uses text color to draw ring. Make it transparent
+        color: transparent;
+        // However, we still need to display our select <option> text
+        text-shadow: 0 0 0 @inverse-color;
+      }
+      & + .fake-select {
+        border-color: @inverse-border-color;
+      }
+      &.ng-invalid.ng-dirty {
+        .invalidSelect();
+      }
+      // Disabled trumps all
+      &[disabled] {
+        .disabledSelect();
+      }
+    }//select
+
+    .fake-select {
+      border-color: @inverse-border-color;
+      .select-trigger {
+        background: @inverse-trigger-background-color;
+        color: @inverse-trigger-color;
+      }
+    }
+  }//.rx-inverted
 }//.rxSelect
