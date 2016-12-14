@@ -13,14 +13,10 @@ function genericRouteController (title, breadcrumbs) {
 
         rxPageTitle.setTitle(title);
     }
-}
+}//genericRouteController
 
 angular.module('demoApp', ['encore.ui', 'ngRoute'])
-.config(function ($routeProvider, $locationProvider, rxStatusTagsProvider) {
-    // Angular 1.6 changes the default value of the prefix to '!', this reverts to previous behavior
-    // https://github.com/angular/angular.js/commit/aa077e81129c740041438688dff2e8d20c3d7b52
-    $locationProvider.hashPrefix('');
-
+.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
             redirectTo: '/overview'
@@ -144,16 +140,9 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             templateUrl: 'templates/404.html',
             controller: genericRouteController('Not Found')
         });
-
-    // Define a custom status tag for use in the rxBreadcrumbs demo
-    rxStatusTagsProvider.addStatus({
-        key: 'demo',
-        class: 'alpha-status',
-        text: 'Demo Tag'
-    });
 })
-.run(function ($rootScope, $window, $location, $anchorScroll, $interpolate,
-               rxEnvironment, rxBreadcrumbsSvc, rxPageTitle, Modules, $timeout) {
+.run(function ($rootScope, $anchorScroll, rxEnvironment, rxBreadcrumbsSvc,
+               rxPageTitle, $timeout) {
     var baseGithubUrl = '//rackerlabs.github.io/encore-ui/';
     rxEnvironment.add({
         name: 'ghPages',
