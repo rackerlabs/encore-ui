@@ -30,7 +30,7 @@ angular.module('encore.ui.elements')
  * ## Styling
  *
  * There are several styles of buttons available, and they are documented in the
- * [Buttons Styleguide](../#/elements/Buttons). Any classes that need to be
+ * Buttons [demo](../#/elements/Buttons). Any classes that need to be
  * added to the button should be passed to the `classes` attribute.
  *
  * @param {String} loadingMsg Text to be displayed when an operation is in progress.
