@@ -150,7 +150,7 @@ describe('rxSelect', function () {
 
         describe('Selecting "I do not like bacon"', function () {
             before(function () {
-                subject.select('I do not like bacon');
+                subject.select('I do not like bacon', slowClick);
             });
 
             it('should not be valid', function () {
