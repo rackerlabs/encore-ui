@@ -24,14 +24,14 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {
+.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
     };
 
     var itemsPerPage = 8;
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });
     $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;
 
     $scope.removeDatacenter = function (dc) {

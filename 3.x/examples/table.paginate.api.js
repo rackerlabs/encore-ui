@@ -1,5 +1,5 @@
 angular.module('demoApp')
-.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, PageTracking,
+.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,
                 rxSortUtil, rxSelectFilter) {
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
@@ -77,5 +77,5 @@ angular.module('demoApp')
         }
     });
     $scope.serverInterface = serverInterface;
-    $scope.pagedServers = PageTracking.createInstance({ itemsPerPage: 25 });
+    $scope.pagedServers = rxPageTracker.createInstance({ itemsPerPage: 25 });
 });

@@ -1,5 +1,5 @@
 angular.module('demoApp')
-.controller('StatusSimpleCtrl', function ($scope, $rootScope, rxStatus) {
+.controller('rxStatusSimpleCtrl', function ($scope, $rootScope, rxStatus) {
     rxStatus.setScope($scope);
 
     $scope.triggerRouteChangeSuccess = function () {

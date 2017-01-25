@@ -1,5 +1,5 @@
 angular.module('demoApp')
-.controller('SessionStorageSimpleCtrl', function ($scope, $window, rxSessionStorage) {
+.controller('rxSessionStorageSimpleCtrl', function ($scope, $window, rxSessionStorage) {
     $scope.setSideKick = function () {
         rxSessionStorage.setItem('Batman', 'Robin');
     };

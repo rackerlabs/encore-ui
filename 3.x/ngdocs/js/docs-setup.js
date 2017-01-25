@@ -797,7 +797,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "utilities",
       "shortDescription": "Used to apply an instance of rxSelectFilter to an array.",
-      "keywords": "api apply applyto array calls filter filtered input instance item list method ng-repeat rxselectfilter service utilities"
+      "keywords": "api apply applyto array calls filter filtered input instance item list method ng-repeat rxapply rxselectfilter service utilities"
     },
     {
       "section": "api",
@@ -998,8 +998,7 @@ NG_DOCS={
       "shortName": "Identity",
       "type": "service",
       "moduleName": "utilities",
-      "shortDescription": "This is a component designed to aid interaction with Rackspace&#39;s Identity API.",
-      "keywords": "$resource aid api component designed errorcallback identity interaction login loginwithjson password promise rackspace returns service successcallback utilities"
+      "keywords": "api item release removed rxauth service utilities"
     },
     {
       "section": "api",
@@ -1051,7 +1050,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "utilities",
       "shortDescription": "Service which provides an entire solution for authenticating, user session management",
-      "keywords": "api array authenticating broken components customization entire errorcallback expired facilitate getroles gettoken hasrole identity isauthenticated iscurrent login loginwithjson logout logs management password permission permissions promise re-use returns role roles rxauth service services session smaller solution stored stores storetoken successcallback token true ui user utilities valid wrapper"
+      "keywords": "api array authenticating broken components customization entire errorcallback expired facilitate getroles gettoken hasrole isauthenticated iscurrent login loginwithjson logout logs management password permission permissions promise re-use returns role roles rxauth service services session smaller solution stored stores storetoken successcallback token true ui user utilities valid wrapper"
     },
     {
       "section": "api",
@@ -1105,7 +1104,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "utilities",
       "shortDescription": "Allows defining environments and retrieving the current environment based on location",
-      "keywords": "actions add adding additional allows api application assume assumption avoid avoided based basegithuburl build building built call check checking code component consider current currently custom define defines defining demo deprecated detect dev didn discussed encore envcheck environment environments example exclusive explicitly find friendly full generate ghpages github http https including instance io islocal ispreprod issue isunified isunifiedpreprod isunifiedprod list listed local location matched matches matching methods mind multiple mutually mynewproduct normal note object older overlapping path pattern preprod problems procedure prod products properties provide rackspace regex retrieving return running rxenvironment rxenvironmenturl service set special specific staging string system takes three true unified-preprod unified-prod url urls utilities ve warning wrong"
+      "keywords": "actions add adding additional allows api application assume assumption avoid avoided based basegithuburl build building built call check checking code component consider current currently custom define defines defining demo deprecated detect dev didn discussed encore encoreui envcheck environment environments example exclusive explicitly find friendly full generate ghpages github http https including instance io islocal ispreprod issue isunified isunifiedpreprod isunifiedprod list listed local location matched matches matching methods mind multiple mutually mynewproduct normal note object older overlapping path pattern preprod problems procedure prod products properties provide rackspace regex removed retrieving return running rxenvironment rxenvironmenturl service set special specific staging string system takes three true unified-preprod unified-prod url urls utilities ve warning wrong"
     },
     {
       "section": "api",

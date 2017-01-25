@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">utilities/Identity/scripts/Identity.js</span></h1>
     <h2>
-        Statements: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(1 / 1)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/Identity/scripts/</a> &#187; Identity.js</div>
@@ -40,30 +40,7 @@
 13
 14
 15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+16</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -72,79 +49,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
 /**
-* @ngdoc service
-* @name utilities.service:Identity
-* @description
-* This is a component designed to aid interaction with Rackspace's Identity API.
-*
-* @requires $resource
-*
-* @example
-* &lt;pre&gt;
-* Identity.loginWithJSON(json); //Returns a promise
-* Identity.login({username: '', password: '', successCallback, errorCallback}); // returns a promise
-* &lt;/pre&gt;
-*/
-.factory('Identity', function ($resource) {
-    var authSvc = $resource('/api/identity/:action',
-        {},
-        {
-            loginWithJSON: { method: 'POST', isArray: false, params: { action: 'tokens' }},
-            validate: { method: 'GET', url: '/api/identity/login/session/:id', isArray: false }
-        });
-&nbsp;
-    authSvc.login = function (credentials, success, error) {
-        var body = {
-            auth: {
-                passwordCredentials: {
-                    username: credentials.username,
-                    password: credentials.password
-                }
-            }
-        };
-&nbsp;
-        return authSvc.loginWithJSON(body, success, error);
-    };
-&nbsp;
-    return authSvc;
+ * @deprecated
+ * Please use rxAuth instead. This item will be removed on the 4.0.0 release.
+ * @ngdoc service
+ * @name utilities.service:Identity
+ * @requires utilities.service:rxAuth
+ */
+.factory('Identity', function (rxAuth) {
+    console.warn (
+        'DEPRECATED: Identity - Please use rxAuth.' +
+        'Identity will be removed in EncoreUI 4.0.0'
+    );
+    return rxAuth;
 });
 &nbsp;</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 18 2017 09:55:43 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 25 2017 13:49:35 GMT-0600 (CST)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

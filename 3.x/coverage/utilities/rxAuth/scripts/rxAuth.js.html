@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">utilities/rxAuth/scripts/rxAuth.js</span></h1>
     <h2>
-        Statements: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">80% <small>(8 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">66.67% <small>(2 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">80% <small>(8 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxAuth/scripts/</a> &#187; rxAuth.js</div>
@@ -76,7 +76,31 @@
 49
 50
 51
-52</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -103,14 +127,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18</span>
-<span class="cline-any cline-yes">18</span>
-<span class="cline-any cline-yes">18</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">20</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,11 +138,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
 /**
@@ -133,11 +181,10 @@
  * @name utilities.service:rxAuth
  * @description
  * Service which provides an entire solution for authenticating, user session management
- * and permissions in the UI.  The rxAuth service is a wrapper for the Identity, Session and
+ * and permissions in the UI.  The rxAuth service is a wrapper for the Session and
  * Permission services.  These services were broken into smaller components to facilitate
  * customization and re-use.
- *
- * @requires utilities.service:Identity
+ * 
  * @requires utilities.service:Session
  * @requires utilities.service:Permission
  *
@@ -154,10 +201,35 @@
  * rxAuth.hasRole(role) // Returns true/false if user has specified role
  * &lt;/pre&gt;
  */
-.factory('rxAuth', function (Identity, Session, Permission) {
-    var svc = {};
+.factory('rxAuth', function ($resource, Session, Permission) {
+    var svc = $resource('/api/identity/:action', {}, { 
+        loginWithJSON: { 
+            method: 'POST', 
+            isArray: false, 
+            params: { 
+                action: 'tokens' 
+            }
+        },
+        validate: { 
+            method: 'GET', 
+            url: '/api/identity/login/session/:id', 
+            isArray: false 
+        }
+    });
 &nbsp;
-    _.assign(svc, Identity);
+    svc.login = function (credentials, success, error) {
+        var body = {
+            auth: {
+                passwordCredentials: {
+                    username: credentials.username,
+                    password: credentials.password
+                }
+            }
+        };
+&nbsp;
+        return svc.loginWithJSON(body, success, error);
+    };
+&nbsp;
     _.assign(svc, Session);
     _.assign(svc, Permission);
 &nbsp;
@@ -171,19 +243,19 @@
  * @name utilities.service:Auth
  * @requires utilities.service:rxAuth
  */
-.service('Auth', function (rxAuth) {
-    console.warn (
-        'DEPRECATED: Auth - Please use rxAuth.' +
+.service('Auth', <span class="fstat-no" title="function not covered" >function (rxAuth) {</span>
+<span class="cstat-no" title="statement not covered" >    console.warn (</span>
+        'DEPRECATED: Auth - Please use rxAuth. ' +
         'Auth will be removed in EncoreUI 4.0.0'
     );
-    return rxAuth;
+<span class="cstat-no" title="statement not covered" >    return rxAuth;</span>
 });
 &nbsp;</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 18 2017 09:55:43 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 25 2017 13:49:35 GMT-0600 (CST)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

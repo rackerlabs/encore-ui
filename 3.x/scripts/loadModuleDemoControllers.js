@@ -1159,14 +1159,14 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {
+.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
     };
 
     var itemsPerPage = 8;
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });
     $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;
 
     $scope.removeDatacenter = function (dc) {
@@ -1223,14 +1223,14 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {
+.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
     };
 
     var itemsPerPage = 8;
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });
     $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;
 
     $scope.removeDatacenter = function (dc) {
@@ -1437,7 +1437,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, PageTracking,
+.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,
                 rxSortUtil, rxSelectFilter) {
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
@@ -1515,12 +1515,12 @@ angular.module('demoApp')
         }
     });
     $scope.serverInterface = serverInterface;
-    $scope.pagedServers = PageTracking.createInstance({ itemsPerPage: 25 });
+    $scope.pagedServers = rxPageTracker.createInstance({ itemsPerPage: 25 });
 });
 
 angular.module('demoApp')
-.controller('rxPaginateUiCtrl', function ($scope, PageTracking) {
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: 3 });
+.controller('rxPaginateUiCtrl', function ($scope, rxPageTracker) {
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: 3 });
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
     var makeServers = function (serverCount) {
@@ -1835,27 +1835,19 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('EnvironmentSimpleCtrl', function ($scope, rxEnvironment) {
+.controller('rxEnvironmentSimpleCtrl', function ($scope, rxEnvironment) {
     var environment = rxEnvironment.get();
     $scope.url = environment.url;
     $scope.name = environment.name;
 });
 
 
-angular.module('demoApp')
-.controller('rxEnvironmentMatchSimpleCtrl', function ($scope, Environment) {
-    $scope.Environment = Environment;
-});
+
+
 
 
 angular.module('demoApp')
-.controller('rxEnvironmentUrlSimpleCtrl', function ($scope, rxEnvironment) {
-    $scope.rxEnvironment = rxEnvironment;
-});
-
-
-angular.module('demoApp')
-.controller('ErrorFormatterSimpleCtrl', function ($scope, rxErrorFormatter) {
+.controller('rxErrorFormatterSimpleCtrl', function ($scope, rxErrorFormatter) {
     $scope.setErrorMsg = function (msg) {
         var error = { message: msg };
         $scope.errorMsg = rxErrorFormatter.buildErrorMsg('Error: ${message}', error);
@@ -1992,7 +1984,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('SessionStorageSimpleCtrl', function ($scope, $window, rxSessionStorage) {
+.controller('rxSessionStorageSimpleCtrl', function ($scope, $window, rxSessionStorage) {
     $scope.setSideKick = function () {
         rxSessionStorage.setItem('Batman', 'Robin');
     };
@@ -2004,10 +1996,10 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('rxSortEmptyTopSimpleCtrl', function ($scope, PageTracking, rxSortUtil) {
+.controller('rxSortEmptyTopSimpleCtrl', function ($scope, rxPageTracker, rxSortUtil) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sort = rxSortUtil.getDefault('name', false);
-    $scope.pager = PageTracking.createInstance();
+    $scope.pager = rxPageTracker.createInstance();
 
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
@@ -2041,7 +2033,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('StatusSimpleCtrl', function ($scope, $rootScope, rxStatus) {
+.controller('rxStatusSimpleCtrl', function ($scope, $rootScope, rxStatus) {
     rxStatus.setScope($scope);
 
     $scope.triggerRouteChangeSuccess = function () {
