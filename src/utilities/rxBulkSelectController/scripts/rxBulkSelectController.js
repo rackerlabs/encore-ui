@@ -29,6 +29,7 @@ angular.module('encore.ui.utilities')
     var updateMessageStats = function () {
         messageStats.numSelected = numSelected();
         messageStats.total = $scope.bulkSource.length;
+        $scope._rxFloatingHeaderCtrl.reapply();
     };
 
     this.key = function () {
@@ -75,10 +76,12 @@ angular.module('encore.ui.utilities')
 
     this.increment = function () {
         messageStats.numSelected += 1;
+        $scope._rxFloatingHeaderCtrl.reapply();
     };
 
     this.decrement = function () {
         messageStats.numSelected -= 1;
+        $scope._rxFloatingHeaderCtrl.reapply();
     };
 
     this.registerHeader = function (uncheck) {
