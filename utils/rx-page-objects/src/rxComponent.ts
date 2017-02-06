@@ -1,9 +1,6 @@
-///<reference path="../typings/globals/node/index.d.ts"/>
-
 'use strict';
-
-import {browser} from 'protractor/globals';
-import {ElementFinder} from 'protractor';
+import * as webdriver from 'selenium-webdriver';
+import {ElementFinder, browser} from 'protractor';
 
 export class rxComponentElement extends ElementFinder {
     constructor(rootElement: ElementFinder) {
