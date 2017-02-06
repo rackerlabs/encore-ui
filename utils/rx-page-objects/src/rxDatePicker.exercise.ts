@@ -1,9 +1,3 @@
-///<reference path="../typings/globals/mocha/index.d.ts"/>
-///<reference path="../typings/globals/chai/index.d.ts"/>
-///<reference path="../typings/globals/promises-a-plus/index.d.ts"/>
-///<reference path="../typings/globals/chai-as-promised/index.d.ts"/>
-///<reference path="../typings/globals/lodash/index.d.ts"/>
-
 import {expect} from 'chai';
 import * as _ from 'lodash';
 import * as moment from 'moment';

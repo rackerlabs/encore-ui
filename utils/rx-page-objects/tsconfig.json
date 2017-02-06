@@ -7,7 +7,14 @@
         "declaration": false,
         "removeComments": false,
         "noImplicitAny": false,
-        "outDir": "."
+        "allowJs": true,
+        "outDir": "src",
+        "types": [
+            "node",
+            "mocha",
+            "lodash",
+            "chai-as-promised"
+        ]
     },
     "files": [
         "src/rxComponent.ts",
