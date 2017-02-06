@@ -1,6 +1,6 @@
 angular.module('demoApp')
-.controller('rxSelectFilterSimpleCtrl', function ($scope, SelectFilter) {
-    $scope.filter = SelectFilter.create({
+.controller('rxSelectFilterSimpleCtrl', function ($scope, rxSelectFilter) {
+    $scope.filter = rxSelectFilter.create({
         properties: ['account', 'status'],
         selected: {
             account: ['A']

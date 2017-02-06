@@ -1,6 +1,6 @@
 {
     "displayName": "rxVisibilityPathParams",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "Returns an object with name and method params that can be passed to rxVisibility.addMethod().",
     "api": "service:rxVisibilityPathParams",
     "keywords": []

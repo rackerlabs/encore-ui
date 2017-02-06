@@ -1,16 +1,19 @@
+/* DEPRECATED: Use standard 'transition' property instead. Will be removed in EncoreUI 4 */
 .transition(@duration: 0.2s; @ease: ease-out) {
   .transition-property(all, @duration, @ease);
 }
 
+/* DEPRECATED: Use standard 'transition' property instead. Will be removed in EncoreUI 4 */
 .transition-property(@property: all; @duration: 0.2s; @ease: ease-out; @delay: 0s) when (@delay > 0s) {
   .transition-value(@property @duration @delay @ease);
 }
 
+/* DEPRECATED: Use standard 'transition' property instead. Will be removed in EncoreUI 4 */
 .transition-property(@property: all; @duration: 0.2s; @ease: ease-out; @delay: 0s) when (@delay = 0s) {
   .transition-value(@property @duration @ease);
 }
 
-
+/* DEPRECATED: Use standard 'transition' property instead. Will be removed in EncoreUI 4 */
 .transition-value(@value) {
   -webkit-transition: @value;
   -moz-transition: @value;
@@ -22,7 +25,6 @@
   content: "\00bb";
   -webkit-transform: rotate(90deg) scaleX(@state);
   transform: rotate(90deg) scaleX(@state);
-  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 

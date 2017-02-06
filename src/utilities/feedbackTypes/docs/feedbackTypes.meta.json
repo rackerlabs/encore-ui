@@ -1,7 +1,0 @@
-{
-    "displayName": "feedbackTypes",
-    "stability": "stable",
-    "description": "Provides default feedback types with placeholder text.",
-    "api": "value:feedbackTypes",
-    "keywords": []
-}

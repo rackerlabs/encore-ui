@@ -1,7 +1,0 @@
-{
-    "displayName": "feedbackApi",
-    "stability": "stable",
-    "description": "Provides the feedback URL.",
-    "api": "constant:feedbackApi",
-    "keywords": []
-}

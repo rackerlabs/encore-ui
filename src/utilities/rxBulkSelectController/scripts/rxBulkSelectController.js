@@ -6,7 +6,7 @@ angular.module('encore.ui.utilities')
  * @description
  * Provides controller logic for {@link elements.directive:rxBulkSelect}.
  */
-.controller('rxBulkSelectController', function ($scope, NotifyProperties, rxBulkSelectUtils) {
+.controller('rxBulkSelectController', function ($scope, rxNotifyProperties, rxBulkSelectUtils) {
     $scope.showMessage = false;
 
     var uncheckHeaderFn = _.noop,
@@ -16,8 +16,8 @@ angular.module('encore.ui.utilities')
             _total: 0
         };
 
-    this.registerForNumSelected = NotifyProperties.registrationFn(messageStats, 'numSelected', '_numSelected');
-    this.registerForTotal = NotifyProperties.registrationFn(messageStats, 'total', '_total');
+    this.registerForNumSelected = rxNotifyProperties.registrationFn(messageStats, 'numSelected', '_numSelected');
+    this.registerForTotal = rxNotifyProperties.registrationFn(messageStats, 'total', '_total');
 
     this.messageStats = messageStats;
 

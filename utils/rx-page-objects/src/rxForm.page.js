@@ -1,70 +1,4 @@
-var Page = require('astrolabe').Page;
-var _ = require('lodash');
-
-/**
- * @namespace
- */
-var rxFieldName = {
-    eleRequiredSymbol: {
-        get: function () {
-            return this.rootElement.$('.required-symbol');
-        }
-    },
-
-    eleContent: {
-        get: function () {
-            return this.rootElement.$('.rx-field-name-content');
-        }
-    },
-
-    /**
-     * @function
-     * @instance
-     * @description Whether or not a required field currently displays a red asterisk next to it.
-     * @returns {Boolean}
-     */
-    isSymbolDisplayed: {
-        value: function () {
-            return this.eleRequiredSymbol.isDisplayed();
-        }
-    },
-
-    /**
-     * @function
-     * @instance
-     * @description Whether the required symbol is present in the DOM.
-     * @returns {Boolean}
-     */
-    isSymbolPresent: {
-        value: function () {
-            return this.eleRequiredSymbol.isPresent();
-        }
-    },
-
-    /**
-     * @function
-     * @instance
-     * @description Whether the field is currently displayed.
-     * @returns {Boolean}
-     */
-    isDisplayed: {
-        value: function () {
-            return this.rootElement.isDisplayed();
-        }
-    },
-
-    /**
-     * @function
-     * @instance
-     * @description Whether the field is currently present on the page.
-     * @returns {Boolean}
-     */
-    isPresent: {
-        value: function () {
-            return this.rootElement.isPresent();
-        }
-    }
-};//rxFieldName
+var rxFieldName = require('./rxFieldName.page').rxFieldName;
 
 /**
  * @namespace rxForm
@@ -171,22 +105,8 @@ exports.rxForm = {
         });
     },
 
-    //TODO: split out into exports.rxFieldName (src/rxFieldName.page.js)
     /**
-     * @namespace
+     * @description **ALIASED** Directly uses {@link rxFieldName}.
      */
-    fieldName: {
-        /**
-         * @function
-         * @param {ElementFinder} rxFieldNameElement -
-         * ElementFinder to be transformed into an rxFieldNameElement object.
-         * @returns {rxFieldName} Page object representing the rxFieldName object.
-         */
-        initialize: function (rxFieldNameElement) {
-            rxFieldName.rootElement = {
-                get: function () { return rxFieldNameElement; }
-            };
-            return Page.create(rxFieldName);
-        }
-    }
+    fieldName: rxFieldName
 };

@@ -55,7 +55,7 @@ describe('utilities:rxAutoSave', function () {
         };
 
         var leavePage = function () {
-            demoPage.go('#/utilities/titleize');
+            demoPage.go('#/utilities/rxTitleize');
             demoPage.go('#/utilities/rxAutoSave');
         };
 

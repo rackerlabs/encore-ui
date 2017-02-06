@@ -52,11 +52,11 @@ describe('rxFeedback', function () {
         });
 
         // Inject in angular constructs
-        inject(function ($rootScope, $compile, rxFeedbackSvc, $httpBackend, feedbackApi) {
+        inject(function ($rootScope, $compile, rxFeedbackSvc, $httpBackend, rxFeedbackApi) {
             scope = $rootScope.$new();
             compile = $compile;
             feedbackSvc = rxFeedbackSvc;
-            apiUrl = feedbackApi;
+            apiUrl = rxFeedbackApi;
             httpMock = $httpBackend;
         });
 

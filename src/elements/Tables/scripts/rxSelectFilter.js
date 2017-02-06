@@ -12,11 +12,11 @@ angular.module('encore.ui.elements')
  * hierarchy validation enforces this relationship.
  *
  * ## rxSelectFilter
- * Uses an instance of `SelectFilter` to create a set of `<rx-multi-select>`'s
+ * Uses an instance of `rxSelectFilter` to create a set of `<rx-multi-select>`'s
  * that modify the instance object.
  * <pre>
  * // In the controller
- * $scope.filter = SelectFilter.create({
+ * $scope.filter = rxSelectFilter.create({
  *   // options...
  * });
  * </pre>
@@ -29,7 +29,7 @@ angular.module('encore.ui.elements')
  * </rx-form-section>
  * </pre>
  *
- * @param {Object} filter - An instance of SelectFilter
+ * @param {Object} filter - An instance of rxSelectFilter
  *
  */
 .directive('rxSelectFilter', function (rxNestedElement) {

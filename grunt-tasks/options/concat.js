@@ -18,8 +18,8 @@ module.exports = {
     },
     tmpExamplesLess: {
         options: {
-            banner: '.example {\n',
-            footer: '\n}//.example'
+            banner: '.rx-example {\n',
+            footer: '\n}//.rx-example'
         },
         src: [
             'src/**/examples/*.less',
@@ -35,7 +35,8 @@ module.exports = {
             /* Non-responsive Styles */
             {
                 src: [
-                    'src/**/*.less',
+                    'src/base.less',
+                    'src/**/styles/*.less',
                     '!src/styles/*.less',
                     // exclude responsive, handled below
                     '!src/components/layout/responsive.less'
@@ -45,7 +46,8 @@ module.exports = {
             /* Responsive Styles */
             {
                 src: [
-                    'src/**/*.less',
+                    'src/base.less',
+                    'src/**/styles/*.less',
                     '!src/styles/*.less'
                 ],
                 dest: '<%= config.tmp.less.encoreResp %>'

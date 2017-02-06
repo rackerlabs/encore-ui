@@ -1,4 +1,4 @@
-describe('utilities:Identity', function () {
+describe('utilities:Identity (DEPRECATED)', function () {
     var identity, $httpBackend, token;
 
     token = {

@@ -1,0 +1,188 @@
+/*
+ * Common
+ */
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,100,100italic,300,300italic,400italic,700,700italic");
+@import "vars";
+@import (inline) "normalize.css";
+
+// Resets for HTML elements
+html,
+body {
+  height: 100%;
+  font-size: @app-font-size;
+  color: @gray-900;
+  font-family: @app-font;
+}
+
+// Resets for form inputs
+input,
+textarea,
+select {
+  box-shadow: none;
+}
+
+// Set default font
+button,
+input,
+select {
+  font-family: @app-font;
+}
+
+// Remove default margin/padding/etc
+header,
+nav,
+ol,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+// No list styles for lists
+ol,
+ul,
+li {
+  list-style: none;
+}
+
+// We want a little bit more line-spacing in paragraphs
+p {
+  line-height: @app-line-height;
+}
+
+/* ===== HEADINGS ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1em 0;
+
+  &.subdued {
+    color: @gray-700;
+  }
+}
+
+h1 {
+  font-size: 28px;
+}
+h2 {
+  font-size: 22px;
+}
+h3 {
+  font-size: 18px;
+}
+h4 {
+  font-size: 16px;
+}
+h5 {
+  font-size: 13px;
+}
+h6 {
+  font-size: 10px;
+}
+
+// Other Stuff
+.subdued {
+  color: @gray-700;
+}
+
+// Add hover style if a link or inside a link
+a.subdued:hover,
+a.subdued:focus,
+a:hover .subdued,
+a:focus .subdued {
+  color: darken(@gray-700, 15%);
+}
+
+// Hidden content
+.hidden {
+  visibility: hidden;
+}
+
+// Used to hide content visually but let them still be read
+// by screen readers (removed from the page spacing)
+// !important is required and prevents visible styling
+.visually-hidden {
+  position: absolute !important; // lesshint importantRule: false
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important; // lesshint importantRule: false
+  border: 0 !important; // lesshint importantRule: false
+  height: 1px !important; // lesshint importantRule: false
+  width: 1px !important; // lesshint importantRule: false
+  overflow: hidden;
+}
+body:hover .visually-hidden a,
+body:hover .visually-hidden input,
+body:hover .visually-hidden button {
+  display: none;
+}
+
+// Clearing Floats
+.clearfix:before,
+.clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+// Clearing siblings
+.clear {
+  clear: both;
+}
+.clear-left {
+  clear: left;
+}
+.clear-right {
+  clear: right;
+}
+
+// Marks content as full width (e.g. to give a button full width).
+// Requires 'display' to be defined as `inline-block` or `block`
+.full-width {
+  width: 100%;
+}
+
+// Center content
+// Requires 'display' to be defined as `inline-block` or `block`
+.centered {
+  text-align: center;
+}
+
+
+/*
+ * PLACEHOLDER TEXT STYLING
+ * https://css-tricks.com/snippets/css/style-placeholder-text/
+ */
+::-webkit-input-placeholder { // Chrome
+  color: @rxForm-placeholder-color;
+  font-weight: 300;
+  font-style: italic;
+}
+::-moz-placeholder { // Firefox 19+
+  color: @rxForm-placeholder-color;
+  font-weight: 400;
+  font-style: italic;
+}
+
+//TODO: Remove. DEPRECATED
+.action-separator {
+  font-size: 1.1em;
+  color: @gray-700;
+}

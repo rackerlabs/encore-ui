@@ -31,7 +31,7 @@ angular.module('encore.ui.elements')
  * 2. This is then passed to `orderBy`, to perform column sorting with `rxSortableColumn`.
  * 3. The sorted results are then passed to `Paginate:pager`, where `Paginate` is a filter from the
  * `rxPaginate` module, and `pager` is a variable on your scope created like
- * `$scope.pager = PageTracking.createInstance();`.
+ * `$scope.pager = rxPageTracker.createInstance();`.
  *
  * This `pager` is responsible for tracking pagination state (i.e. "which page are we on", "how many
  * items per page", "total number of items tracked", etc.
@@ -62,7 +62,7 @@ angular.module('encore.ui.elements')
  *
  * This applies to both UI-based pagination and API-based pagination.
  *
- * *NOTE*: If `itemsPerPage` is explicitly specified in the `opts` you pass to `PageTracking.createInstance()`,
+ * *NOTE*: If `itemsPerPage` is explicitly specified in the `opts` you pass to `rxPageTracker.createInstance()`,
  * then that pager instance will load using the `itemsPerPage` you specified, and _not_ the globally persisted value.
  *
  * *NOTE*: If you don't want a specific pager to have its `itemsPerPage` persisted to other pagers,
@@ -145,14 +145,14 @@ angular.module('encore.ui.elements')
  *  `<rx-paginate>` will watch the variables for changes, and will call `getItems()` for updates whenever
  *  the values change.
  *
- * *Note:* If using `<rx-select-filter>` in the table, the `available` option passed to the `SelectFilter`
+ * *Note:* If using `<rx-select-filter>` in the table, the `available` option passed to the `rxSelectFilter`
  * constructor **must** be provided and include every property.  This is because the filter cannot reliably
  * determine all available options from a paginated API.
  *
- * You will still create a `PageTracking` instance on your scope, just like in UI-based pagination:
+ * You will still create a `rxPageTracker` instance on your scope, just like in UI-based pagination:
  *
  * <pre>
- * $scope.pagedServers = PageTracking.createInstance();
+ * $scope.pagedServers = rxPageTracker.createInstance();
  * </pre>
  *
  * ## getItems()
@@ -486,7 +486,7 @@ angular.module('encore.ui.elements')
  *
  * @param {Object} pageTracking
  * This is the page tracking service instance to be used for this directive.
- * See {@link utilities.service:PageTracking}
+ * See {@link utilities.service:rxPageTracker rxPageTracker}
  * @param {Number} numberOfPages
  * This is the maximum number of pages that the page object will display at a
  * time.
@@ -497,7 +497,7 @@ angular.module('encore.ui.elements')
  * The model for the table filter input, if any. This directive will watch that
  * model for changes, and request new results from the paginated API, on change
  * @param {Object=} selections
- * The `selected` property of a SelectFilter instance, if one is being used.
+ * The `selected` property of a rxSelectFilter instance, if one is being used.
  * This directive will watch the filter's selections, and request new results
  * from the paginated API, on change
  * @param {Object=} sortColumn
@@ -511,7 +511,7 @@ angular.module('encore.ui.elements')
  * @param {String=} errorMessage
  * An error message that should be displayed if a call to the request fails
  */
-.directive('rxPaginate', function ($q, $compile, debounce, PageTracking, rxPromiseNotifications) {
+.directive('rxPaginate', function ($q, $compile, debounce, rxPromiseNotifications) {
     return {
         templateUrl: 'templates/rxPaginate.html',
         replace: true,
@@ -527,7 +527,6 @@ angular.module('encore.ui.elements')
             sortDirection: '=?'
         },
         link: function (scope, element, attrs, rxLoadingOverlayCtrl) {
-
             var errorMessage = attrs.errorMessage;
 
             rxLoadingOverlayCtrl = rxLoadingOverlayCtrl || {

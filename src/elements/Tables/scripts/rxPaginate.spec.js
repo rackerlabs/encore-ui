@@ -1,6 +1,6 @@
 describe('Pagination', function () {
     var originalItems = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
-        mockPageTracking = {
+        mockPageTracker = {
             itemsPerPage: 3,
             pageNumber: 0,
             totalPages: Math.ceil(originalItems.length / 3),
@@ -23,10 +23,10 @@ describe('Pagination', function () {
             module('templates/rxPaginate.html');
 
             // Inject in angular constructs
-            inject(function ($rootScope, $compile, PageTracking) {
+            inject(function ($rootScope, $compile, rxPageTracker) {
                 scope = $rootScope.$new();
-                pageTracking = PageTracking;
-                scope.pager = PageTracking.createInstance(angular.copy(mockPageTracking));
+                pageTracking = rxPageTracker;
+                scope.pager = rxPageTracker.createInstance(angular.copy(mockPageTracker));
                 compile = $compile;
             });
 
@@ -245,7 +245,7 @@ describe('Pagination', function () {
             module('templates/rxPaginate.html');
 
             // Inject in angular constructs
-            inject(function ($rootScope, $compile, $q, _$timeout_, PageTracking) {
+            inject(function ($rootScope, $compile, $q, _$timeout_, rxPageTracker) {
                 $timeout = _$timeout_;
                 scope = $rootScope.$new();
                 scope.api = api;
@@ -262,8 +262,8 @@ describe('Pagination', function () {
                     return deferred.promise;
                 };
                 sinon.spy(api, 'getItems');
-                pageTracking = PageTracking;
-                scope.pager = PageTracking.createInstance(angular.copy(mockPageTracking));
+                pageTracking = rxPageTracker;
+                scope.pager = rxPageTracker.createInstance(angular.copy(mockPageTracker));
                 compile = $compile;
             });
 

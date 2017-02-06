@@ -20,7 +20,7 @@ describe('rxFeedbackSvc', function () {
         };
 
         module(function ($provide) {
-            $provide.constant('feedbackApi', apiUrl);
+            $provide.constant('rxFeedbackApi', apiUrl);
             $provide.value('$resource', mockResource);
             $provide.value('$window', mockWindow);
             $provide.value('rxNotify', mockNotifySvc);

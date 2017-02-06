@@ -1,0 +1,9 @@
+{
+    "displayName": "rxErrorFormatter",
+    "stability": "stable",
+    "description": "Provides a helper method to parse and format error objects.",
+    "api": "service:rxErrorFormatter",
+    "keywords": [
+      "ErrorFormatter"
+    ]
+}

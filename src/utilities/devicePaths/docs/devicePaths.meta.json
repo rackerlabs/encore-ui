@@ -1,7 +1,0 @@
-{
-    "displayName": "devicePaths",
-    "stability": "stable",
-    "description": "Device Paths configuration",
-    "api": "value:devicePaths",
-    "keywords": []
-}

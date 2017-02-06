@@ -1,7 +1,0 @@
-{
-    "displayName": "Page",
-    "stability": "stable",
-    "description": "Pagination filter that is used to limit the number of pages shown.",
-    "api": "filter:Page",
-    "keywords": []
-}

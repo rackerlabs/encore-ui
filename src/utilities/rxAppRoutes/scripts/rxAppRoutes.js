@@ -1,15 +1,20 @@
 angular.module('encore.ui.utilities')
 /**
+ * @deprecated This service will be removed in EncoreUI 4.0.0
  * @ngdoc service
  * @name utilities.service:rxAppRoutes
  * @description
  * Manages page routes, building urls and marking them as active on route change.
  */
-.factory('rxAppRoutes', function ($rootScope, $log, urlUtils, $q) {
+.factory('rxAppRoutes', function ($rootScope, $log, rxUrlUtils, $q) {
+    console.warn(
+        'DEPRECATED: rxAppRoutes will be removed in EncoreUI 4.0.0'
+    );
+
     var AppRoutes = function (routes) {
         routes = routes || [];
         // we need to get the current path on page load
-        var currentPathChunks = urlUtils.getCurrentPathChunks();
+        var currentPathChunks = rxUrlUtils.getCurrentPathChunks();
         var loadingDeferred = $q.defer();
 
         // if the routes were already passed in, then we can immediately
@@ -21,7 +26,7 @@ angular.module('encore.ui.utilities')
         var setDynamicProperties = function (routes, extraUrlContext) {
             _.each(routes, function (route) {
                 // build out url for current route
-                route.url = urlUtils.buildUrl(route.href, extraUrlContext);
+                route.url = rxUrlUtils.buildUrl(route.href, extraUrlContext);
 
                 // check if any children exist, if so, build their URLs as well
                 if (route.children) {
@@ -30,7 +35,7 @@ angular.module('encore.ui.utilities')
 
                 // set active state (this needs to go after the recursion,
                 // so that the URL is built for all the children)
-                route.active = urlUtils.isActive(route, currentPathChunks);
+                route.active = rxUrlUtils.isActive(route, currentPathChunks);
             });
 
             return routes;
@@ -91,7 +96,7 @@ angular.module('encore.ui.utilities')
 
         $rootScope.$on('$locationChangeSuccess', function () {
             // NOTE: currentPath MUST be updated before routes
-            currentPathChunks = urlUtils.getCurrentPathChunks();
+            currentPathChunks = rxUrlUtils.getCurrentPathChunks();
 
             routes = setDynamicProperties(routes);
         });
@@ -127,7 +132,7 @@ angular.module('encore.ui.utilities')
 
             isActiveByKey: function (key) {
                 return this.getRouteByKey(key).then(function (route) {
-                    return urlUtils.isActive(route, urlUtils.getCurrentPathChunks());
+                    return rxUrlUtils.isActive(route, rxUrlUtils.getCurrentPathChunks());
                 }, function () {
                     return $q.reject();
                 });

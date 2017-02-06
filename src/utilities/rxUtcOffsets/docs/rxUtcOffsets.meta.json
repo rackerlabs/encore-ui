@@ -1,0 +1,9 @@
+{
+    "displayName": "rxUtcOffsets",
+    "stability": "prototype",
+    "description": "List of known UTC offset values",
+    "api": "constant:rxUtcOffsets",
+    "keywords": [
+        "UtcOffsets"
+    ]
+}

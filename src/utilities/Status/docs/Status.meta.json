@@ -1,7 +1,0 @@
-{
-    "displayName": "Status",
-    "stability": "stable",
-    "description": "Manages notifications for rxNotify",
-    "api": "service:Status",
-    "keywords": []
-}

@@ -1,6 +1,6 @@
 angular.module('demoApp')
-.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, PageTracking,
-                rxSortUtil, SelectFilter) {
+.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,
+                rxSortUtil, rxSelectFilter) {
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
     var makeServers = function (serverCount) {
@@ -70,12 +70,12 @@ angular.module('demoApp')
     $scope.clearFilter = function () {
         $scope.data.searchText = '';
     };
-    $scope.osFilter = SelectFilter.create({
+    $scope.osFilter = rxSelectFilter.create({
         properties: ['os'],
         available: {
             os: os
         }
     });
     $scope.serverInterface = serverInterface;
-    $scope.pagedServers = PageTracking.createInstance({ itemsPerPage: 25 });
+    $scope.pagedServers = rxPageTracker.createInstance({ itemsPerPage: 25 });
 });

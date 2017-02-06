@@ -1,0 +1,9 @@
+{
+    "displayName": "rxTokenInterceptor",
+    "stability": "stable",
+    "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
+    "api": "service:rxTokenInterceptor",
+    "keywords": [
+        "TokenInterceptor"
+    ]
+}

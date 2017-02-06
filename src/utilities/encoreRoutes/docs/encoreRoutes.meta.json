@@ -1,6 +1,6 @@
 {
     "displayName": "encoreRoutes",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "Allows apps to make updates to the navigation.",
     "api": "service:encoreRoutes",
     "keywords": []

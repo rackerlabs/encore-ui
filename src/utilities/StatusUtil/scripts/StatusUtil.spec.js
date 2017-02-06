@@ -8,7 +8,7 @@ describe('utilities: StatusUtil', function () {
     beforeEach(function () {
         module('ngRoute');
         module('encore.ui.utilities', function ($provide) {
-            $provide.value('Status', status);
+            $provide.value('rxStatus', status);
         });
 
         inject(function ($rootScope, StatusUtil) {

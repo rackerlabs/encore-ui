@@ -8,16 +8,16 @@
      * @ngdoc filter
      * @name utilities.filter:rxApply
      * @description
-     * Used to apply an instance of {@link utilities.service:SelectFilter SelectFilter} to an array.
+     * Used to apply an instance of {@link utilities.service:rxSelectFilter rxSelectFilter} to an array.
      *
-     * Merely calls the `applyTo()` method of a `SelectFilter` instance to an
+     * Merely calls the `applyTo()` method of a `rxSelectFilter` instance to an
      * input array.
      * <pre>
-     * <tr ng-repeat="item in list | Apply:filter">
+     * <tr ng-repeat="item in list | rxApply:filter">
      * </pre>
      *
      * @param {Array} list The list to be filtered.
-     * @param {Object} filter An instance of SelectFilter
+     * @param {Object} filter An instance of rxSelectFilter
      */
     function rxApplyFilter () {
         return function (list, filter) {
@@ -32,11 +32,13 @@
      * @name utilities.filter:Apply
      * @requires utilities.filter:rxApply
      */
-    function ApplyFilter ($filter) {
-        console.warn(
-            'DEPRECATED: Apply - Please use rxApply. ' +
-            'Apply will be removed in EncoreUI 4.0.0'
-        );
-        return $filter('rxApply');
+    function ApplyFilter () {
+        return function (list, filter) {
+            console.warn(
+                'DEPRECATED: Apply - Please use rxApply. ' +
+                'Apply will be removed in EncoreUI 4.0.0'
+            );
+            return rxApplyFilter()(list, filter);
+        };
     }//ApplyFilter
 })();

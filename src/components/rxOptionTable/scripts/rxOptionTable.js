@@ -1,5 +1,6 @@
 angular.module('encore.ui.rxOptionTable')
 /**
+ * @deprecated This directive will be removed in EncoreUI 4.0.0
  * @ngdoc directive
  * @name rxOptionTable.directive:rxOptionTable
  * @restrict E
@@ -54,7 +55,7 @@ angular.module('encore.ui.rxOptionTable')
  * Example:
  *
  * <pre>
- *  <rx-option-table disable-fn="disableOption(tableId, fieldId, rowId)"></rx-option-table>
+ * <rx-option-table disable-fn="disableOption(tableId, fieldId, rowId)"></rx-option-table>
  * </pre>
  */
 .directive('rxOptionTable', function ($interpolate) {

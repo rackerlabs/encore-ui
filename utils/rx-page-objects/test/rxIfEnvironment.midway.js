@@ -19,7 +19,7 @@ describe('rxIfEnvironment', function () {
     });
 
     it('should not change the original environment', function () {
-        browser.get('http://rackerlabs.github.io/encore-ui/#/overview');
+        browser.get('http://rackerlabs.github.io/encore-ui/1.x/#/overview');
         expect(environment.original()).to.eventually.equal('localhost');
     });
 

@@ -36,6 +36,8 @@ var config = {
         moment = require('moment');
         demoPage = require('../demo.page.js');
         encore = require('./index');
+        isChrome = true;
+        isMac = (process.platform === 'darwin');
     },
 
     // Options to be passed to mocha

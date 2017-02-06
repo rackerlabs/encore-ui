@@ -1,0 +1,8 @@
+{
+    "displayName": "rxSessionStorage",
+    "stability": "stable",
+    "description": "",
+    "keywords": [
+      "SessionStorage"
+    ]
+}

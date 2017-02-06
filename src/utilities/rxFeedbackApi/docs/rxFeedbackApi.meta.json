@@ -1,0 +1,9 @@
+{
+    "displayName": "rxFeedbackApi",
+    "stability": "stable",
+    "description": "Provides the feedback URL.",
+    "api": "constant:rxFeedbackApi",
+    "keywords": [
+        "feedbackApi"
+    ]
+}

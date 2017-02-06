@@ -8,6 +8,8 @@
         "expect": true,
         "it": false,
         "inject": false,
+        "isChrome": true,
+        "isMac": true,
         "process": true,
         "screenshot": true,
         "sinon": false

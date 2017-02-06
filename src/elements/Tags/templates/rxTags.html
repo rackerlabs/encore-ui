@@ -13,6 +13,6 @@
         ng-model="newTag"
         ng-keydown="focusTag($event, newTag)"
         ng-disabled="disabled"
-        typeahead="tag as tag.text for tag in options | xor:tags | filter:{text: $viewValue}"
+        typeahead="tag as tag.text for tag in options | rxXor:tags | filter:{text: $viewValue}"
         typeahead-on-select="add(newTag)" />
 </div>

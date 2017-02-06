@@ -39,3 +39,6 @@ results
 /dist/
 
 /screenshots/
+
+# VS Code workspace files
+/.vscode/
