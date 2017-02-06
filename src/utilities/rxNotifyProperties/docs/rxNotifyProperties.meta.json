@@ -1,0 +1,9 @@
+{
+    "displayName": "rxNotifyProperties",
+    "stability": "prototype",
+    "description": "Provides a registration service for directive, controller, or other service notification updates.",
+    "api": "service:rxNotifyProperties",
+    "keywords": [
+      "NotifyProperties"
+    ]
+}

@@ -57,7 +57,7 @@ angular.module('encore.ui.rxApp')
         scope: {
             item: '='
         },
-        controller: function ($scope, $location, $injector, rxVisibility, Permission, urlUtils) {
+        controller: function ($scope, $location, $injector, rxVisibility, Permission, rxUrlUtils) {
             /*
              * @description Determines whether or not a nav item should have its href prefixed
              * based on whether the `$injector` has a `NAV_ITEM_PREFIX` injectable
@@ -84,7 +84,7 @@ angular.module('encore.ui.rxApp')
                 //
 
                 if ($injector.has('NAV_ITEM_PREFIX')) {
-                    var prefix = urlUtils.parseUrl($injector.get('NAV_ITEM_PREFIX'));
+                    var prefix = rxUrlUtils.parseUrl($injector.get('NAV_ITEM_PREFIX'));
                     return prefix.protocol.concat('//').concat(prefix.host).concat(url);
                 } else {
                     // Return as normal if no prefix

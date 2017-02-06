@@ -263,7 +263,7 @@ angular.module('encore.ui.rxApp')
  *
  * This expression would be evaluated, checking if the user is currently viewing
  * the app in the `unified-preprod` environment or the `local` environment, and
- * only display the item if one of those was true. (See {@link utilities.service:Environment}
+ * only display the item if one of those was true. (See {@link utilities.service:rxEnvironment rxEnvironment}
  * for more details on environemnts). This was used to prevent items from being
  * displayed in a production environment if they were only currently available in
  * staging.

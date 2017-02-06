@@ -1,0 +1,9 @@
+{
+    "displayName": "rxPageTracker",
+    "stability": "stable",
+    "description": "Used with pagination objects to store/control page display of data tables and other items.",
+    "api": "service:rxPageTracker",
+    "keywords": [
+      "PageTracking"
+    ]
+}

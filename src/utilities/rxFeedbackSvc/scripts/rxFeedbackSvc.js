@@ -6,7 +6,7 @@ angular.module('encore.ui.utilities')
  * `rxFeedbackSvc` service supports `rxFeedback` directive functionality.  A `custom endpoint` may be set to override
  * the `default` endpoint.
  */
-.factory('rxFeedbackSvc', function ($resource, feedbackApi, $location, $window) {
+.factory('rxFeedbackSvc', function ($resource, rxFeedbackApi, $location, $window) {
     var container = {
         api: undefined,
         email: 'encoreui@lists.rackspace.com'
@@ -17,7 +17,7 @@ angular.module('encore.ui.utilities')
     };
 
     // set a default endpoint
-    container.setEndpoint(feedbackApi);
+    container.setEndpoint(rxFeedbackApi);
 
     container.fallback = function (feedback) {
         var subject = 'Encore Feedback: ' + feedback.type.label;

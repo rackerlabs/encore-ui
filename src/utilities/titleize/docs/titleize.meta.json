@@ -1,8 +1,0 @@
-{
-    "displayName": "titleize",
-    "stability": "stable",
-    "description": "Convert a string to title case, stripping out underscores and all uppercase words.",
-    "api": "filter:titleize",
-    "keywords": []
-}
-

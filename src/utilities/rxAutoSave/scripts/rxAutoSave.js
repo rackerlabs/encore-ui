@@ -24,8 +24,8 @@ angular.module('encore.ui.utilities')
  *
  * By default, all values are stored in {@link utilities.service:rxLocalStorage rxLocalStoage} which interfaces with the
  * browser's `localStorage` object. This means that if a user logs into a different computer, their stored values will
- * not be present.  Use of `SessionStorage` is also supported out-of-the-box. If you wish to save form states elsewhere
- * (for instance, to an API), see the "Storage Location" section below.
+ * not be present.  Use of `rxSessionStorage` is also supported out-of-the-box. If you wish to save form states 
+ * elsewhere (for instance, to an API), see the "Storage Location" section below.
  *
  * ## Setting up your template
  *
@@ -249,14 +249,15 @@ angular.module('encore.ui.utilities')
  * present at the URL `'users/JonnyRocket/edit'`, then the form data would be saved into the browser's `localStorage`
  * at location `'rxAutoSave::users/JonnyRocket/edit'`.
  *
- * If you wish to use a different storage backend (`SessionStorage`, for instance), use the `storageBackend` parameter:
+ * If you wish to use a different storage backend (`rxSessionStorage`, for instance), use the `storageBackend` 
+ * parameter:
  *
  * <pre>
- *    var autosave = rxAutoSave($scope, 'formData', { storageBackend: SessionStorage });
+ *    var autosave = rxAutoSave($scope, 'formData', { storageBackend: rxSessionStorage });
  * </pre>
  *
  * `storageBackend` requires that you pass it an object which has `getObject(key)` and `setObject(key, val)` methods.
- * `rxLocalStorage` and `SessionStorage` are both provided by EncoreUI, and support this interface.
+ * `rxLocalStorage` and `rxSessionStorage` are both provided by EncoreUI, and support this interface.
  *
  * You can use your own custom backends as well, as long as it supports `getObject(key)` and `setObject(key, val)`.
  *
@@ -343,7 +344,7 @@ angular.module('encore.ui.utilities')
  *
  * @param {Object=} [options.storageBackend=rxLocalStorage]
  * Must be an object which has `getObject(key)` and `setObject(key, val)` methods.
- * `rxLocalStorage` and `SessionStorage` are both provided by EncoreUI, and support
+ * `rxLocalStorage` and `rxSessionStorage` are both provided by EncoreUI, and support
  * this interface.
  *
  * You can use your own custom backends as well, as long as it supports `getObject(key)`
@@ -391,7 +392,7 @@ angular.module('encore.ui.utilities')
     //                   by the rxAutoSave instance
     // @param [storageBackend] - Optional, defaults to rxLocalStorage. If you pass in a storage object,
     //                           it must support both getObject(key) and setObject(key, val), matching
-    //                           the operations of rxLocalStorage and SessionStorage
+    //                           the operations of rxLocalStorage and rxSessionStorage
     // @param [keyShaping] - Optional, defaults to just returning the originally defined key value.
     //                       It gets passed the original value defined ('rxAutoSave::' + $location.path())
     //                       and is expected to return the new key that you wish to have used.

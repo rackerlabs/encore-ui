@@ -1,0 +1,9 @@
+{
+    "displayName": "rxSelectFilter",
+    "stability": "prototype",
+    "description": "A prototype for creating objects that can be used for filtering arrays.",
+    "api": "service:rxSelectFilter",
+    "keywords": [
+      "SelectFilter"
+    ]
+}

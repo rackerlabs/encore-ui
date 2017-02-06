@@ -1,0 +1,9 @@
+{
+    "displayName": "rxStatus",
+    "stability": "stable",
+    "description": "Manages notifications for rxNotify",
+    "api": "service:rxStatus",
+    "keywords": [
+        "Status"
+    ]
+}

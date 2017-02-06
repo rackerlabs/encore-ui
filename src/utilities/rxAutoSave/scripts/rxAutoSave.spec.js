@@ -1,5 +1,5 @@
 describe('utilities:rxAutoSave', function () {
-    var $rootScope, $q, $timeout, scope, rxAutoSave, a, rxLocalStorage, SessionStorage,
+    var $rootScope, $q, $timeout, scope, rxAutoSave, a, rxLocalStorage, rxSessionStorage,
         now;
 
     var url, path;
@@ -37,16 +37,16 @@ describe('utilities:rxAutoSave', function () {
 
         url = 'foo/bar?x=y';
 
-        inject(function (_$rootScope_, _$q_, _$timeout_, _rxAutoSave_, _rxLocalStorage_, _SessionStorage_) {
+        inject(function (_$rootScope_, _$q_, _$timeout_, _rxAutoSave_, _rxLocalStorage_, _rxSessionStorage_) {
             $rootScope = _$rootScope_;
             $q = _$q_;
             $timeout = _$timeout_;
             rxAutoSave = _rxAutoSave_;
             rxLocalStorage = _rxLocalStorage_;
-            SessionStorage = _SessionStorage_;
+            rxSessionStorage = _rxSessionStorage_;
             scope = $rootScope.$new();
             rxLocalStorage.clear();
-            SessionStorage.clear();
+            rxSessionStorage.clear();
         });
 
         now = sinon.stub(_, 'now');
@@ -351,10 +351,10 @@ describe('utilities:rxAutoSave', function () {
         expect(scope.formA.foo, 'not in localstorage').to.equal('');
     });
 
-    it('should save and load values from SessionStorage', function () {
+    it('should save and load values from rxSessionStorage', function () {
         // Automatically load the last stored value into the scope
-        a = rxAutoSave(scope, 'formA', { storageBackend: SessionStorage });
-        rxAutoSave(scope, 'formB', { storageBackend: SessionStorage });
+        a = rxAutoSave(scope, 'formA', { storageBackend: rxSessionStorage });
+        rxAutoSave(scope, 'formB', { storageBackend: rxSessionStorage });
         flush();
 
         scope.formA.foo = 'bar';
@@ -365,8 +365,8 @@ describe('utilities:rxAutoSave', function () {
         // and create a new scope
         initializeScope();
 
-        a = rxAutoSave(scope, 'formA', { storageBackend: SessionStorage });
-        rxAutoSave(scope, 'formB', { storageBackend: SessionStorage });
+        a = rxAutoSave(scope, 'formA', { storageBackend: rxSessionStorage });
+        rxAutoSave(scope, 'formB', { storageBackend: rxSessionStorage });
         flush();
 
         expect(scope.formA.foo).to.equal('bar');

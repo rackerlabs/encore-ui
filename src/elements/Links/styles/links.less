@@ -1,3 +1,20 @@
+// Link Styles
+a {
+  text-decoration: none;
+  color: @app-link-text-color;
+}
+a:hover,
+a:focus {
+  text-decoration: underline;
+  color: @app-link-hover-text-color;
+}
+a.disabled { // pulled from rxApp.less
+  color: #d5d3d3; // TODO: use global variable
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
+}
+
 // Link and Status Messages
 .link-action,
 .link-action a,

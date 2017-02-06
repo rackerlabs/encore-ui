@@ -1,8 +1,8 @@
 angular.module('demoApp')
-.controller('rxSortEmptyTopSimpleCtrl', function ($scope, PageTracking, rxSortUtil) {
+.controller('rxSortEmptyTopSimpleCtrl', function ($scope, rxPageTracker, rxSortUtil) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sort = rxSortUtil.getDefault('name', false);
-    $scope.pager = PageTracking.createInstance();
+    $scope.pager = rxPageTracker.createInstance();
 
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);

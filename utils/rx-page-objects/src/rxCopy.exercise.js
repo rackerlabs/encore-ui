@@ -100,7 +100,8 @@ exports.rxCopy = function (options) {
                 expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
             });
 
-            if (options.testCopyArea) {
+            // Skip on Chrome for Mac: CMD-V is not working to paste clipboard contents
+            if (options.testCopyArea && !(isMac && isChrome)) {
                 it('should copy text to clipboard', function () {
                     component.copy();
                     getPastedValue().then(function (pastedValue) {

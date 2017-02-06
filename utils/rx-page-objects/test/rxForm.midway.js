@@ -38,13 +38,13 @@ describe('rxForm', function () {
 
     describe('rxFieldName', function () {
         describe('"Plain Textbox"', encore.exercise.rxFieldName({
-            instance: encore.rxForm.fieldName.initialize($('#fieldNamePlainTextbox')),
+            instance: new encore.rxFieldName($('#fieldNamePlainTextbox')),
             visible: true,
             required: false
         }));
 
         describe('"Required Textarea"', encore.exercise.rxFieldName({
-            instance: encore.rxForm.fieldName.initialize($('#fieldNameRequiredTextarea')),
+            instance: new encore.rxFieldName($('#fieldNameRequiredTextarea')),
             visible: true,
             required: true
         }));
@@ -54,7 +54,7 @@ describe('rxForm', function () {
 
             before(function () {
                 checkbox = encore.rxCheckbox.initialize($('#chkVolumeNameRequired'));
-                subject = encore.rxForm.fieldName.initialize($('#fieldNameVolumeName'));
+                subject = new encore.rxFieldName($('#fieldNameVolumeName'));
             });
 
             describe('when checkbox checked', function () {

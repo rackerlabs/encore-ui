@@ -142,7 +142,7 @@ angular.module('encore.ui.elements')
  * @param {String} description User-submitted feedback
  *
  */
-.directive('rxFeedback', function (feedbackTypes, $location, rxFeedbackSvc, rxScreenshotSvc, rxNotify, Session) {
+.directive('rxFeedback', function (rxFeedbackTypes, $location, rxFeedbackSvc, rxScreenshotSvc, rxNotify, Session) {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxFeedback.html',
@@ -150,7 +150,7 @@ angular.module('encore.ui.elements')
             sendFeedback: '=?onSubmit'
         },
         link: function (scope) {
-            scope.feedbackTypes = feedbackTypes;
+            scope.feedbackTypes = rxFeedbackTypes;
 
             scope.setCurrentUrl = function (modalScope) {
                 modalScope.currentUrl = $location.url();

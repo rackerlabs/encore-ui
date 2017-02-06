@@ -1,0 +1,9 @@
+{
+    "displayName": "rxXor",
+    "stability": "prototype",
+    "description": "rxXor filter",
+    "api": "filter:rxXor",
+    "keywords": [
+        "xor"
+    ]
+}

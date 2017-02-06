@@ -1,0 +1,9 @@
+{
+    "displayName": "rxUrlUtils",
+    "stability": "stable",
+    "description": "Set of utility functions to break apart/compare URLs.",
+    "api": "service:rxUrlUtils",
+    "keywords": [
+        "urlUtils"
+    ]
+}

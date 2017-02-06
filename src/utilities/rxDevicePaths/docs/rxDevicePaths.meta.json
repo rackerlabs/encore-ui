@@ -1,0 +1,9 @@
+{
+    "displayName": "rxDevicePaths",
+    "stability": "stable",
+    "description": "Device Paths configuration",
+    "api": "value:rxDevicePaths",
+    "keywords": [
+        "devicePaths"
+    ]
+}
