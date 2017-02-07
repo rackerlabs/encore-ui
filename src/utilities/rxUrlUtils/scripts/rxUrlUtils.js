@@ -129,20 +129,4 @@ angular.module('encore.ui.utilities')
         urlParser.href = url;
         return _.pick(urlParser, ['protocol', 'hostname', 'port', 'pathname', 'search', 'hash', 'host']);
     };
-})
-/**
- * @deprecated
- * Please use rxUrlUtils instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:urlUtils
- * @requires utilities.service:rxUrlUtils
- */
-.service('urlUtils', function (rxUrlUtils, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: urlUtils - Please use rxUrlUtils. ' +
-            'urlUtils will be removed in EncoreUI 4.0.0'
-        );
-    }
-    return rxUrlUtils;
 });

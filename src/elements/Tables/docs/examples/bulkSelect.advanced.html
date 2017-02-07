@@ -101,7 +101,8 @@
 
         <tbody>
           <tr ng-repeat="dc in selectedDatacenters | orderBy: sort.predicate:sort.reverse | rxPaginate:pager">
-            <td>{{ dc.name }}</td>
+            <td class="column-name">{{ dc.name }}</td>
+
             <!-- EDITING -->
             <td ng-if="state === 'editing'">{{ dc.city }}</td>
             <td class="column-action" ng-if="state === 'editing'">
@@ -140,4 +141,3 @@
     </rx-modal-footer>
   </script>
 </div>
-

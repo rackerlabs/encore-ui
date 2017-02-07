@@ -70,21 +70,4 @@ angular.module('encore.ui.utilities')
 
         return item;
     };
-})
-
-/**
- * @deprecated
- * Please use rxSessionStorage instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:SessionStorage
- * @requires utilities.service:rxSessionStorage
- */
-.service('SessionStorage', function (rxSessionStorage, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn (
-            'DEPRECATED: SessionStorage - Please use rxSessionStorage. ' +
-            'SessionStorage will be removed in EncoreUI 4.0.0'
-        );
-    }
-    return rxSessionStorage;
 });

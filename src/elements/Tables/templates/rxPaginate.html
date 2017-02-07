@@ -14,7 +14,11 @@
         </div>
 
         <div ng-repeat="n in pageTracking | rxPager" ng-class="{active: pageTracking.isPage(n), 'page-number-last': pageTracking.isPageNTheLastPage(n)}" class="pagination-page">
+<<<<<<< HEAD
           <a ng-click="goToPage(n)">{{n + 1}}</a>
+=======
+          <a ng-click="pageTracking.goToPage(n)">{{n + 1}}</a>
+>>>>>>> refactor(deprecations): Remove 3.x deprecations from 4.x
         </div>
 
         <div ng-class="{disabled: pageTracking.isLastPage() || pageTracking.isEmpty()}" class="pagination-next">

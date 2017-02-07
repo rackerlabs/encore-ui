@@ -7,7 +7,7 @@ describe('encore.ui.rxApp', function () {
     describe('rxApp', function () {
         describe('default', function () {
             var scope, scopeCustomNav, collapsibleScope, compile, rootScope, el, elCustom, elCollapsible,
-                httpMock, cdnPath, cdnGet, rxSession;
+                httpMock, cdnPath, cdnGet, rxAuth;
             var standardTemplate = '<rx-app></rx-app>';
             var collapsibleTemplate = '<rx-app collapsible-nav="true"></rx-app>';
             var customTemplate = '<rx-app site-title="My App" menu="customNav" new-instance="true"' +
@@ -64,14 +64,13 @@ describe('encore.ui.rxApp', function () {
 
                 // Inject in angular constructs
                 inject(function ($rootScope, $compile, encoreRoutes, $httpBackend, routesCdnPath, rxLocalStorage,
-                _rxSession_) {
+                _rxAuth_) {
                     rootScope = $rootScope;
                     compile = $compile;
                     httpMock = $httpBackend;
                     cdnPath = routesCdnPath;
-                    rxSession = _rxSession_;
-                    rxSession.getUserId = sinon.stub().returns('rack0000');
-
+                    rxAuth = _rxAuth_;
+                    rxAuth.getUserId = sinon.stub().returns('rack0000');
                     rxLocalStorage.clear();
                 });
 
@@ -173,7 +172,7 @@ describe('encore.ui.rxApp', function () {
                 });
 
                 it('should set the user name from the session', function () {
-                    expect(rxSession.getUserId).to.have.been.called;
+                    expect(rxAuth.getUserId).to.have.been.called;
                     expect(el.isolateScope().userId).to.equal('rack0000');
                 });
             });

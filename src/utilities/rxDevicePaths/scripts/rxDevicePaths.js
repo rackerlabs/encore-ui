@@ -20,6 +20,7 @@ angular.module('encore.ui.utilities')
     { value: '/dev/xvdn', label: '/dev/xvdn' },
     { value: '/dev/xvdo', label: '/dev/xvdo' },
     { value: '/dev/xvdp', label: '/dev/xvdp' }
+<<<<<<< HEAD
 ])
 
 /**
@@ -38,3 +39,6 @@ angular.module('encore.ui.utilities')
     }
     return rxDevicePaths;
 });
+=======
+]);
+>>>>>>> refactor(deprecations): Remove 3.x deprecations from 4.x

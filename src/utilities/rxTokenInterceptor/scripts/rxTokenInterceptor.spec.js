@@ -16,8 +16,8 @@ describe('provider:rxTokenInterceptor', function () {
 
         inject(function ($injector) {
             interceptor = $injector.get('rxTokenInterceptor');
-            rxSession = $injector.get('rxSession');
-            rxSession.getTokenId = sinon.stub().returns('12345');
+            session = $injector.get('rxAuth');
+            session.getTokenId = sinon.stub().returns('12345');
         });
     });
 

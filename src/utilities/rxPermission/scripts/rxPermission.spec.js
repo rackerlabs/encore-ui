@@ -8,7 +8,7 @@ describe('rxPermission', function () {
 
         beforeEach(function () {
             module('encore.ui.utilities', function ($provide) {
-                $provide.decorator('rxSession', function ($delegate) {
+                $provide.decorator('rxAuth', function ($delegate) {
                     $delegate.hasRole = function (role) {
                         return _.includes(role, 'pass') || _.includes(role, 'also');
                     };

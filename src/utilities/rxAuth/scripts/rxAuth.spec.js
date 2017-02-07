@@ -1,7 +1,7 @@
-// functionally identical to Auth
-describe('utilities:rxAuth (DEPRECATED)', function () {
-    var rxAuth, rxIdentity, rxSession;
-    var token = {
+describe('utilities:rxAuth', function () {
+    var auth, token, $httpBackend;
+
+    token = {
         'access': {
             'token': {
                 'id': 'somecrazyid',
@@ -21,18 +21,16 @@ describe('utilities:rxAuth (DEPRECATED)', function () {
 
 
         inject(function ($injector) {
-            rxIdentity = $injector.get('rxIdentity');
-            rxIdentity.loginWithJSON = sinon.stub().returns(token);
+            auth = $injector.get('rxAuth');
+            auth.getToken = sinon.stub().returns(token);
+            auth.storeToken = sinon.stub();
+            auth.logout = sinon.stub();
+            auth.isCurrent = sinon.stub().returns(true);
+            auth.isAuthenticated = sinon.stub().returns(true);
+            auth.getRoles = sinon.stub().returns([{ 'name': 'admin' }]);
 
-            rxSession = $injector.get('rxSession');
-            rxSession.getToken = sinon.stub().returns(token);
-            rxSession.storeToken = sinon.stub();
-            rxSession.logout = sinon.stub();
-            rxSession.isCurrent = sinon.stub().returns(true);
-            rxSession.isAuthenticated = sinon.stub().returns(true);
-            rxSession.getRoles = sinon.stub().returns([{ 'name': 'admin' }]);
-
-            rxAuth = $injector.get('rxAuth');
+            $httpBackend = $injector.get('$httpBackend');
+            $httpBackend.expectPOST('/api/identity/tokens').respond(token);
         });
     });
 
@@ -43,47 +41,42 @@ describe('utilities:rxAuth (DEPRECATED)', function () {
             expect(rxAuth.loginWithJSON).to.be.called;
         });
 
-        it('loginWithJSON() should get a token', function () {
-            var result = rxAuth.loginWithJSON({ username: 'Batman', token: 'bat-token' });
-            expect(result.access).not.be.empty;
-        });
-
         it('getToken() should return a token', function () {
-            var result = rxAuth.getToken();
+            var result = auth.getToken();
             expect(result).not.be.empty;
             expect(result.access).not.be.empty;
-            expect(rxAuth.getToken).to.be.called;
+            expect(auth.getToken).to.be.called;
         });
 
         it('storeToken() should store a token', function () {
-            rxAuth.storeToken(token);
-            expect(rxAuth.storeToken).to.be.called;
+            auth.storeToken(token);
+            expect(auth.storeToken).to.be.called;
         });
 
         it('logout() should log off user via rxAuth.logout', function () {
-            rxAuth.logout();
-            expect(rxAuth.logout).to.be.called;
+            auth.logout();
+            expect(auth.logout).to.be.called;
         });
 
         it('isCurrent() should check token via rxAuth.isCurrent', function () {
-            expect(rxAuth.isCurrent()).to.be.true;
-            expect(rxAuth.isCurrent).to.be.called;
+            expect(auth.isCurrent()).to.be.true;
+            expect(auth.isCurrent).to.be.called;
         });
 
         it('isAuthenticated() should check token via rxAuth.isAuthenticated', function () {
-            expect(rxAuth.isAuthenticated()).to.be.true;
-            expect(rxAuth.isAuthenticated).to.be.called;
+            expect(auth.isAuthenticated()).to.be.true;
+            expect(auth.isAuthenticated).to.be.called;
         });
 
         it('getRoles() should retrieve user roles via rxAuth.getRoles', function () {
-            expect(rxAuth.getRoles().length).to.eq(1);
-            expect(rxAuth.getRoles).to.be.called;
+            expect(auth.getRoles().length).to.eq(1);
+            expect(auth.getRoles).to.be.called;
         });
 
         it('hasRole() should validate user has role via rxAuth.hasRole', function () {
-            expect(rxAuth.hasRole('admin')).to.be.true;
-            expect(rxAuth.hasRole('fakeRole')).to.be.false;
-            expect(rxAuth.getRoles).to.be.called;
+            expect(auth.hasRole('admin')).to.be.true;
+            expect(auth.hasRole('fakeRole')).to.be.false;
+            expect(auth.getRoles).to.be.called;
         });
     });
 });

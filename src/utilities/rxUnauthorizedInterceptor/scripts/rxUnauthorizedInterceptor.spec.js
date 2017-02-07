@@ -15,7 +15,7 @@ describe('service:rxUnauthorizedInterceptor', function () {
             function ($provide) {
                 $provide.value('$q', q);
                 $provide.value('$window', mockWindow);
-                $provide.value('rxSession', rxSession);
+                $provide.value('rxAuth', session);
             });
 
         inject(function ($injector) {
@@ -38,7 +38,7 @@ describe('service:rxUnauthorizedInterceptor', function () {
 
         expect(mockWindow.location).to.contain('redirect=' + encodeURIComponent('/app/path'));
         expect(q.reject).to.be.called;
-        expect(rxSession.logout).to.be.called;
+        expect(session.logout).to.be.called;
     });
 
     it('Interceptor sets proper redirect path', function () {

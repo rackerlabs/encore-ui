@@ -6,7 +6,7 @@ angular.module('encore.ui.utilities')
  * Simple $http injector which will intercept http request and inject the
  * Rackspace Identity's token into every http request.
  *
- * @requires utilities.service:rxSession
+ * @requires rxAuth.service:rxAuth
  *
  * @example
  * <pre>
@@ -18,8 +18,7 @@ angular.module('encore.ui.utilities')
  */
 .provider('rxTokenInterceptor', function () {
     var exclusionList = this.exclusionList = [ 'rackcdn.com' ];
-
-    this.$get = function (rxSession, $document) {
+    this.$get = function (rxAuth, $document) {
         var url = $document[0].createElement('a');
         return {
             request: function (config) {
@@ -36,7 +35,7 @@ angular.module('encore.ui.utilities')
                 });
 
                 if (!exclude) {
-                    config.headers['X-Auth-Token'] = rxSession.getTokenId();
+                    config.headers['X-Auth-Token'] = rxAuth.getTokenId();
                 }
 
                 return config;

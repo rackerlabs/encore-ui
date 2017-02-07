@@ -1,6 +1,6 @@
 angular.module('demoApp')
-.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxSession) {
-    rxSession.getUserId = function () {
+.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {
+    rxAuth.getUserId = function () {
         return 'bert3000';
     };
 
