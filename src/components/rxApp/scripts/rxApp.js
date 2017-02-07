@@ -21,7 +21,7 @@ angular.module('encore.ui.rxApp')
  * </pre>
  */
 .directive('rxApp', function (encoreRoutes, rxAppRoutes, hotkeys,
-                              rxEnvironment, routesCdnPath, Session, $window) {
+                              rxEnvironment, routesCdnPath, rxAuth, $window) {
     return {
         restrict: 'E',
         transclude: true,
@@ -36,7 +36,7 @@ angular.module('encore.ui.rxApp')
             logoutUrl: '@?'
         },
         link: function (scope) {
-            scope.userId = Session.getUserId();
+            scope.userId = rxAuth.getUserId();
 
             scope.isPreProd = rxEnvironment.isPreProd();
 

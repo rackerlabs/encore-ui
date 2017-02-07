@@ -8,7 +8,7 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="server in servers | orderBy: sorter.predicate:sorter.reverse | Paginate:pager ">
+      <tr ng-repeat="server in servers | orderBy: sorter.predicate:sorter.reverse | rxPaginate:pager ">
         <td class="column-name">{{server.name}}</td>
         <td class="column-os">{{server.os}}</td>
       </tr>

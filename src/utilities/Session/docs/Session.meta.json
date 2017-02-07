@@ -1,7 +1,0 @@
-{
-    "displayName": "Session",
-    "stability": "stable",
-    "description": "Manages user session",
-    "api": "service:Session",
-    "keywords": []
-}

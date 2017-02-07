@@ -98,7 +98,7 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="dc in selectedDatacenters | orderBy: sort.predicate:sort.reverse | Paginate:pager">
+          <tr ng-repeat="dc in selectedDatacenters | orderBy: sort.predicate:sort.reverse | rxPaginate:pager">
             <td class="column-name">{{ dc.name }}</td>
 
             <!-- EDITING -->

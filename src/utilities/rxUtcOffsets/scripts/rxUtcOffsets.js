@@ -50,19 +50,4 @@ angular.module('encore.ui.utilities')
     '+12:45',
     '+13:00',
     '+14:00',
-])
-
-/**
- * @deprecated
- * Please use rxUtcOffsets instead. This item will be removed on the 4.0.0 release.
- * @ngdoc parameters
- * @name utilities.constant:UtcOffsets
- * @requires utilities.constant:rxUtcOffsets
- */
-.service('UtcOffsets', function (rxUtcOffsets) {
-    console.warn (
-        'DEPRECATED: UtcOffsets - Please use rxUtcOffsets. ' +
-        'UtcOffsets will be removed in EncoreUI 4.0.0'
-    );
-    return rxUtcOffsets;
-});
+]);

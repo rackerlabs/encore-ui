@@ -7,7 +7,7 @@ angular.module('encore.ui.utilities')
  * @description
  * Simple directive which will show or hide content based on whether or not the user has the specified role.
  *
- * @requires utilities.service:Permission
+ * @requires utilities.service:rxAuth
  *
  * @param {String} role - Name of required role.
  */
@@ -19,9 +19,9 @@ angular.module('encore.ui.utilities')
             role: '@'
         },
         templateUrl: 'templates/rxPermission.html',
-        controller: function ($scope, Permission) {
+        controller: function ($scope, rxAuth) {
             $scope.hasRole = function (roles) {
-                return Permission.hasRole(roles);
+                return rxAuth.hasRole(roles);
             };
         }
     };

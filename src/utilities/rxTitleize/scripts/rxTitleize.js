@@ -1,8 +1,7 @@
 (function () {
     angular
         .module('encore.ui.utilities')
-        .filter('rxTitleize', rxTitleizeFilter)
-        .filter('titleize', titleizeFilter);
+        .filter('rxTitleize', rxTitleizeFilter);
 
     /**
      * @ngdoc filter
@@ -33,23 +32,6 @@
                 .replace(/(?:^|\s)\S/g, function (character) {
                     return character.toUpperCase();
                 });
-        };
-    };
-
-    /**
-     * @deprecated
-     * Please use rxTitleize instead. This filter will be removed in EncoreUI 4.0.0'
-     * @ngdoc filter
-     * @name utilities.filter:titleize
-     * @requires utilities.filter:rxTitleize
-     */
-    function titleizeFilter () {
-        return function (inputString) {
-            console.warn(
-                'DEPRECATED: titleize - Please use rxTitleize. ' +
-                'titleize will be removed in EncoreUI 4.0.0'
-            );
-            return rxTitleizeFilter()(inputString);
         };
     };
 })();
