@@ -1,5 +1,5 @@
 describe('utilities:Permission', function () {
-    describe('service:Permission', function () {
+    describe('service:Permission (DEPRECATED)', function () {
         var permission, session, mockToken;
 
         mockToken = {

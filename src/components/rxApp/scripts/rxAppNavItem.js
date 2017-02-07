@@ -57,7 +57,7 @@ angular.module('encore.ui.rxApp')
         scope: {
             item: '='
         },
-        controller: function ($scope, $location, $injector, rxVisibility, Permission, rxUrlUtils) {
+        controller: function ($scope, $location, $injector, rxVisibility, rxAuth, rxUrlUtils) {
             /*
              * @description Determines whether or not a nav item should have its href prefixed
              * based on whether the `$injector` has a `NAV_ITEM_PREFIX` injectable
@@ -119,11 +119,11 @@ angular.module('encore.ui.rxApp')
                 }
 
                 if (!_.isUndefined(roles.any)) {
-                    return Permission.hasRole(roles.any);
+                    return rxAuth.hasRole(roles.any);
                 }
 
                 if (!_.isUndefined(roles.all)) {
-                    return Permission.hasAllRoles(roles.all);
+                    return rxAuth.hasAllRoles(roles.all);
                 }
 
                 return false;

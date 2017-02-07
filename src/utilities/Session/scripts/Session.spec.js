@@ -1,4 +1,4 @@
-describe('utilities:Session', function () {
+describe('utilities:Session (DEPRECATED)', function () {
     var storage, session, mockToken, tomorrow;
 
     beforeEach(function () {
