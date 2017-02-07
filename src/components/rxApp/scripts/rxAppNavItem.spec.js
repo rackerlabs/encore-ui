@@ -104,29 +104,24 @@ describe('encore.ui.rxApp', function () {
                 }
             };
 
-            var SessionMock = {
-                getToken: function () {
-                    return mockToken;
-                }
-            };
-
             module('encore.ui.rxApp');
-            
             // load templates
             module('templates/rxAppNav.html');
             module('templates/rxAppNavItem.html');
 
             module(function ($provide) {
-                $provide.value('Session', SessionMock);
                 provide = $provide;
             });
 
             // Inject in angular constructs
-            inject(function ($rootScope, $compile, _rxVisibility_, _rxEnvironmentUrlFilter_) {
+            inject(function ($rootScope, $compile, _rxVisibility_, _rxEnvironmentUrlFilter_, rxAuth) {
                 scope = $rootScope.$new();
                 compile = $compile;
                 rxVisibility = _rxVisibility_;
                 rxEnvironmentUrlFilter = _rxEnvironmentUrlFilter_;
+                rxAuth.getToken = function () {
+                    return mockToken;
+                };
             });
 
             rxVisibility.addMethod(
