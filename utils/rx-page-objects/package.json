@@ -12,7 +12,7 @@
     "lodash": "4.13.1",
     "mocha": "2.5.3",
     "moment": "2.13.0",
-    "protractor": "^4.0.14"
+    "protractor": "4.0.14"
   },
   "repository": {
     "type": "git",
@@ -25,9 +25,7 @@
     "@types/mocha": "^2.2.38",
     "@types/moment": "^2.13.0",
     "@types/node": "^7.0.3",
-    "@types/protractor": "^4.0.0",
     "@types/selenium-webdriver": "^2.53.39",
-    "protractor": "^4.0.14",
     "protractor-console-plugin": "^0.1.1",
     "typescript": "^2.1.5"
   }
