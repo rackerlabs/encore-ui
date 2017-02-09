@@ -14,7 +14,24 @@ var transformFns = {
     },
 
     'Amount': function (elem) {
-        return elem.getText().then(encore.rxMisc.currencyToPennies);
+        return elem.getText().then(function (currencyStringOrArray) {
+            var convert = function (currencyString) {
+                var resFloat = parseFloat(currencyString.split(' ')[0].replace(/[,$()]/g, '').trim());
+
+                // Negative number
+                if (_.head(currencyString) === '(' && _.last(currencyString) === ')') {
+                    resFloat = -resFloat;
+                }
+
+                return parseInt(Math.round(resFloat * 100), 10);
+            };
+
+            if (typeof currencyStringOrArray === 'string') {
+                return convert(currencyStringOrArray);
+            } else if (Array.isArray(currencyStringOrArray)) {
+                return _.map(currencyStringOrArray, convert);
+            }
+        });
     },
 
     'Date Field': function (elem) {

@@ -102,6 +102,15 @@ var calculateTolerance = function (location) {
     };
 };
 
+var scrollPosition = {
+    get x () {
+        return browser.executeScript('return window.scrollX;');
+    },
+    get y () {
+        return browser.executeScript('return window.scrollY;');
+    }
+};
+
 describe('rxFloatingHeader', function () {
     var initialY;
 
@@ -189,7 +198,7 @@ describe('rxFloatingHeader', function () {
                 var middleRow = multiRowTable.rowLocation('middle');
                 encore.rxMisc.transformLocation(middleRow, 'y').then(function (location) {
                     var t = calculateTolerance(location);
-                    expect(encore.rxMisc.scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
+                    expect(scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
                 });
             });
         });//after scrolling to middle of table
@@ -216,7 +225,7 @@ describe('rxFloatingHeader', function () {
             it('should have the row exactly in the middle of the screen', function () {
                 var t = calculateTolerance(innerHeight / 2);
                 var middleRowLocation = multiRowTable.rowLocation('middle');
-                var yDifference = yDiff(middleRowLocation, encore.rxMisc.scrollPosition.y);
+                var yDifference = yDiff(middleRowLocation, scrollPosition.y);
                 expect(yDifference).to.eventually.be.within(t.lower, t.upper);
             });
 
@@ -235,7 +244,7 @@ describe('rxFloatingHeader', function () {
                 var bottomOffset = innerHeight;
                 encore.rxMisc.transformLocation(middleRowLocation, 'y').then(function (location) {
                     var t = calculateTolerance(location - bottomOffset);
-                    expect(encore.rxMisc.scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
+                    expect(scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
                 });
             });
 
@@ -256,7 +265,7 @@ describe('rxFloatingHeader', function () {
                     multiRowTable.rowSize('last').then(function (lastRowSize) {
                         var expectedPosition = location + lastRowSize.height - bottomOffset;
                         var t = calculateTolerance(expectedPosition);
-                        expect(encore.rxMisc.scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
+                        expect(scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
                     });
                 });
             });

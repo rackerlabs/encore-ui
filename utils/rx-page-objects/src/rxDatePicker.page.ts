@@ -1,16 +1,11 @@
-///<reference path="../typings/globals/selenium-webdriver/index.d.ts"/>
-///<reference path="../typings/globals/node/index.d.ts"/>
-///<reference path="../typings/globals/lodash/index.d.ts"/>
-///<reference path="../typings/globals/moment-node/index.d.ts"/>
-
 'use strict';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import * as webdriver from 'selenium-webdriver';
 import {ElementFinder, ElementArrayFinder} from 'protractor';
-import {$$, browser, by, protractor} from 'protractor/globals';
+import {$$, browser, by} from 'protractor';
 import {rxComponentElement, AccessorPromiseString, Promise} from './rxComponent';
-
 let rxSelect = require('./rxSelect.page').rxSelect;
 
 /**
@@ -155,7 +150,7 @@ export class rxDatePicker extends rxComponentElement {
      */
     private _selectLastDayOfCurrentMonth(): Promise<void> {
         this.open();
-        return protractor.promise.all([
+        return webdriver.promise.all([
             (this.month as Promise<string>),
             (this.year as Promise<string>),
         ]).then(results => {

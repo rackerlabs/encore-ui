@@ -8,22 +8,33 @@ var rxMetadata = {
     /**
      * @instance
      * @function
-     * @description The text of the metadata term, unless a `transformFn` is provided, or `null` if not found.
-     * Uses {@link rxMisc.unless} to ensure that something is returned from the lookup.
+     * @description The text of the metadata term, unless a `transformFn` is provided, with fallback value.
      * @param {String} metadataTerm - The term to lookup in the metadata component.
+     * @param {Any} fallbackReturnValue - Optional return value if term not found, defaults to `null`.
      * @returns {*}
      */
     term: {
         value: function (metadataTerm, fallbackReturnValue) {
             var page = this;
             var termElement = $('rx-meta[label="' + metadataTerm  + '"]');
-            return encore.rxMisc.unless(termElement, function (foundTermElement) {
-                var definitionElement = foundTermElement.$('.definition');
+
+            if (fallbackReturnValue === undefined) {
+                fallbackReturnValue = null;
+            }
+
+            return termElement.isDisplayed().then(function (displayed) {
+                if (!displayed) {
+                    return fallbackReturnValue;
+                }
+
+                var definitionElement = termElement.$('.definition');
                 if (page.transformFns[metadataTerm] !== undefined) {
                     return page.transformFns[metadataTerm](definitionElement);
                 }
                 return definitionElement.getText();
-            }, fallbackReturnValue);
+            }, function () {
+                return fallbackReturnValue;
+            });
         }
     },
 
