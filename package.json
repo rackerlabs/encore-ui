@@ -15,7 +15,8 @@
     "test": "grunt test",
     "postinstall": "cd utils/rx-page-objects; npm i; cd -; grunt hooks",
     "eslint-dev": "eslint -c .eslintrc.json --ignore-path .eslintignore-dev {src,demo}",
-    "eslint-test": "eslint -c .eslintrc.test.json --ignore-path .eslintignore-test {src,demo} utils/rx-page-objects/{test,src}"
+    "eslint-test": "eslint -c .eslintrc.test.json --ignore-path .eslintignore-test {src,demo}",
+    "tslint-test": "cd utils/rx-page-objects; $(npm bin)/tslint -c tslint.json {test,src}/*.ts"
   },
   "dependencies": {
     "normalize.css": "^3.0.2"

@@ -1,10 +1,14 @@
 'use strict';
+
+import {browser, ElementFinder} from 'protractor';
 import * as webdriver from 'selenium-webdriver';
-import {ElementFinder, browser} from 'protractor';
 
 export class rxComponentElement extends ElementFinder {
-    constructor(rootElement: ElementFinder) {
-        super(browser, rootElement.elementArrayFinder_);
+    originalElement: ElementFinder;
+
+    constructor(originalElement: ElementFinder) {
+        super(browser, originalElement.elementArrayFinder_);
+        this.originalElement = originalElement;
     }
 };
 
@@ -13,3 +17,19 @@ export class rxComponentElement extends ElementFinder {
 // generic reusable exported types, as well as rxComponentElement
 export type AccessorPromiseString = string | webdriver.promise.Promise<string>;
 export type Promise<T> = webdriver.promise.Promise<T>; // alias to aid in typing
+
+/**
+ * @description Decorator that will allow us to easily override methods inherited from webdriver.
+ * This uses something of a simple hack to prevent protractor from changing the method at runtime.
+ */
+export function OverrideWebdriver(target: Object, propertyKey: string | symbol): PropertyDescriptor {
+    let original = target[propertyKey];
+    return {
+        get() {
+            return original;
+        },
+        set() {
+            return null;
+        },
+    };
+}
