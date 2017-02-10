@@ -96,6 +96,7 @@ module.exports = {
     },
     tscRxPageObjects: {
         files: [
+            'utils/rx-page-objects/test/*.ts',
             'utils/rx-page-objects/src/*.ts'
         ],
         tasks: [
