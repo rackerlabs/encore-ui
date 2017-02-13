@@ -214,7 +214,7 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             type: 'no-title',
             children: [
                 {
-                    linkText: 'Version 2.3.4',
+                    linkText: 'Version 2.3.5-0',
                     directive: 'switch-docs',
                     children: [{}],
                     childVisibility: 'false'
