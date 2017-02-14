@@ -106,9 +106,9 @@ angular.module('encore.ui.utilities')
      * It is prefilled with 'Encore' based environments
      * It can be overwritten if necessary via the returned 'environments' property
      *
-     * @property {string} name The 'friendly' name of the environment
-     * @property {string|RegEx} pattern The pattern to match the current path against
-     * @property {string} url The url pattern used to build out urls for that environment.
+     * @property {String} name The 'friendly' name of the environment
+     * @property {String|RegEx} pattern The pattern to match the current path against
+     * @property {String} url The url pattern used to build out urls for that environment.
      *                        See 'buildUrl' for more details
      */
     var environments = [{
@@ -169,8 +169,8 @@ angular.module('encore.ui.utilities')
     /*
      * Checks if an environment has valid properties
      * @private
-     * @param {object} environment The environment object to check
-     * @returns {boolean} true if valid, false otherwise
+     * @param {Object} environment The environment object to check
+     * @returns {Boolean} true if valid, false otherwise
      */
     var isValidEnvironment = function (environment) {
         return _.isString(environment.name) &&
@@ -189,7 +189,7 @@ angular.module('encore.ui.utilities')
     /*
      * Retrieves current environment
      * @public
-     * @param {string} [href] The path to check the environment on. Defaults to $location.absUrl()
+     * @param {String=} [href=$location.absUrl()] The path to check the environment on.
      * @returns {Object} The current environment (if found), else 'localhost' environment.
      */
     this.get = function (href) {
@@ -216,7 +216,7 @@ angular.module('encore.ui.utilities')
     /*
      * Adds an environment to the front of the stack, ensuring it will be matched first
      * @public
-     * @param {object} environment The environment to add. See 'environments' array for required properties
+     * @param {Object} environment The environment to add. See 'environments' array for required properties
      */
     this.add = function (environment) {
         // do some sanity checks here
@@ -231,7 +231,7 @@ angular.module('encore.ui.utilities')
     /*
      * Replaces current environments array with new one
      * @public
-     * @param {array} newEnvironments New environments to use
+     * @param {Array} newEnvironments New environments to use
      */
     this.setAll = function (newEnvironments) {
         // validate that all new environments are valid
@@ -245,8 +245,8 @@ angular.module('encore.ui.utilities')
      * Given an environment name, check if any of our registered environments
      * match it
      * @public
-     * @param {string} [name] Environment name to check
-     * @param {string} [href] Optional href to check against. Defaults to $location.absUrl()
+     * @param {String} name Environment name to check
+     * @param {String=} [href=$location.absUrl()] Optional href to check against.
      */
     this.envCheck = function (name, href) {
         href = href || $location.absUrl();

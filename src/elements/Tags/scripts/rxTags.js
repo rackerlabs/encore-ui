@@ -41,8 +41,8 @@ angular.module('encore.ui.elements')
  *
  * This component can be disabled via the `disabled` attribute or `ng-disabled`
  * directive.
- * @param {Array} options - The list of available tags.
- * @param {String=} [key=undefined] - Determines a value of the tag object to
+ * @param {Array} options The list of available tags.
+ * @param {String=} key Determines a value of the tag object to
  * use when binding an option to the model.
  * If not provided, the tag object is used.
  */

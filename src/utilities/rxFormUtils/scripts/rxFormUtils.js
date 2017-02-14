@@ -28,7 +28,7 @@ angular.module('encore.ui.utilities')
      * @description
      * Returns the selected option for the {@link rxOptionTable.directive:rxOptionTable rxOptionTable} with
      * `id`: tableId and `fieldId`: fieldId (optional).
-     * @param {String} tableId - The id of the table
+     * @param {String} tableId The id of the table
      * @returns {object} The rowId of the selected option
      */
     rxFormUtils.getSelectedOptionForTable = function (tableId) {

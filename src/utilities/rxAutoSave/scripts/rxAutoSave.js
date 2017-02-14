@@ -286,7 +286,7 @@ angular.module('encore.ui.utilities')
  * @param {String} variable
  * variable name corresponding to an object on the given scope
  * @param {Object=} options usage options
- * @param {Promise=} [options.clearOnSuccess=null]
+ * @param {Promise=} options.clearOnSuccess
  * Clear saved data on successful resolution of given promise.
  *
  * @param {Function=} options.keyShaping

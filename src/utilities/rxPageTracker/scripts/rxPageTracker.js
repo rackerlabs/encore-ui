@@ -22,7 +22,7 @@ angular.module('encore.ui.utilities')
          * @ngdoc method
          * @name utilities.service:rxPageTracker#createInstance
          * @methodOf utilities.service:rxPageTracker
-         * @param {Object} options Configuration options for the pager
+         * @param {Object=} options Configuration options for the pager
          * @param {Number=} [options.itemsPerPage=200]
          * The default number of items to display per page. If you choose a
          * value that is not in the default set to itemsPerPage options

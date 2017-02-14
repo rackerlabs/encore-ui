@@ -8,11 +8,11 @@ angular.module('encore.ui.rxOptionTable')
  * @description
  * This directive is used to build a table of radio/checkbox inputs.
  *
- * @param {String} field-id - Used as the base for unique identifiers within the generated markup.
- * @param {Object} model - The AngularJS model to tie all radios/checkboxes together.
- * @param {String} type - (`radio` | `checkbox`) Type of input to be used.
- * @param {String} empty-message - A default message if the data attribute is empty.
- * @param {Array} data - Array of objects used to populate table. Properties must match column keys.
+ * @param {String} fieldId Used as the base for unique identifiers within the generated markup.
+ * @param {Object} model The AngularJS model to tie all radios/checkboxes together.
+ * @param {String} type (`radio` | `checkbox`) Type of input to be used.
+ * @param {String} emptyMessage A default message if the data attribute is empty.
+ * @param {Array} data Array of objects used to populate table. Properties must match column keys.
  * For checkboxes, checked values default to true unless `value` and `falseValue` attributes are given.
  *
  * Example:
@@ -30,12 +30,12 @@ angular.module('encore.ui.rxOptionTable')
  *     }
  * ]
  * </pre>
- * @param {Object} columns - Array of column data to match against data objects.
+ * @param {Object} columns Array of column data to match against data objects.
  * Each object may include the following properties.
- * * **label** - Column display value
- * * **key** - object key used to display data from the data object
- * * *selectedLabel* - (optional) Label to display alongside preseleted-values. Expressions are allowed; see
- *   demonstration samples.
+ * @param {String} columns.label Column display value
+ * @param {String} columns.key Object key used to display data from the data object
+ * @param {String=} columns.selectedLabel (optional) Label to display alongside preseleted-values. 
+ * Expressions are allowed; see demonstration samples.
  *
  * Example:
  *
@@ -45,11 +45,11 @@ angular.module('encore.ui.rxOptionTable')
  *     'key': 'name'
  * }]
  * </pre>
- * @param {String=} selected - Array of objects to match against data for preselection on page load.
+ * @param {String=} selected Array of objects to match against data for preselection on page load.
  * If excluded, no values will be preselected on initial load.
- * @param {Boolean=} required - Value passed to input's `ng-required` attribute.
+ * @param {Boolean=} required Value passed to input's `ng-required` attribute.
  * For checkboxes, a `true` value means that there must be at least one checkbox selected.
- * @param {Function=} disable-fn - Optional callback function to determine if option should be disabled.
+ * @param {Function=} disableFn Optional callback function to determine if option should be disabled.
  * Parameters `tableId`, `fieldId`, and `rowId` will be passed to the function.
  *
  * Example:
@@ -175,10 +175,10 @@ angular.module('encore.ui.rxOptionTable')
                 }
             });
 
-            /*
+            /**
              * Updates $scope.values when a checkbox is clicked.
-             * @param {String|boolean} val - The checkbox value (Boolean, ng-true-value or ng-false-value per row)
-             * @param {Integer} index - Array index of the checkbox element marked true
+             * @param {String|Boolean} val The checkbox value (Boolean, ng-true-value or ng-false-value per row)
+             * @param {Integer} index Array index of the checkbox element marked true
              */
             scope.updateCheckboxes = function (val, index) {
                 var data = scope.data[index];
@@ -194,10 +194,10 @@ angular.module('encore.ui.rxOptionTable')
                 }
             };
 
-            /*
+            /**
              * Get the value out of a key from the row, or parse an expression
-             * @param {Object} column - Column whose `key` is an Angular Expression or HTML to be compiled
-             * @param {Object} row - Data object with data to be used against the expression
+             * @param {Object} column Column whose `key` is an Angular Expression or HTML to be compiled
+             * @param {Object} row Data object with data to be used against the expression
              */
             scope.getContent = function (column, row) {
                 var expr = column.key;

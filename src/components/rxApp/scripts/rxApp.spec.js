@@ -602,5 +602,4 @@ describe('encore.ui.rxApp', function () {
 
         });
     });
-
 });

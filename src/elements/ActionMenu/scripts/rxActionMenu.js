@@ -12,7 +12,7 @@ angular.module('encore.ui.elements')
  * be disabled by passing an optional `global-dismiss="false"` attribute to the
  * directive.
  *
- * @param {Boolean=} [globalDismiss=true] - optional attribute to make menu dismissable by clicking anywhere on the page
+ * @param {Boolean=} [globalDismiss=true] Optional attribute to make menu dismissable by clicking anywhere on the page
  */
 .directive('rxActionMenu', function ($rootScope, $document) {
     return {

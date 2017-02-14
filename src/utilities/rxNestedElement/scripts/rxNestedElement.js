@@ -6,8 +6,8 @@ angular.module('encore.ui.utilities')
  * Helper function to aid in the creation of boilerplate DDO definitions
  * required to validate nested custom elements.
  *
- * @param {Object=} opts - Options to merge with default DDO definitions
- * @param {String} opts.parent - Parent directive name
+ * @param {Object=} opts Options to merge with default DDO definitions
+ * @param {String} opts.parent Parent directive name
  * (i.e. defined NestedElement is an immediate child of this parent element)
  *
  * @return {Object} Directive Definition Object for a rxNestedElement

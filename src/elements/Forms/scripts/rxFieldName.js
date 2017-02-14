@@ -41,7 +41,7 @@ angular.module('encore.ui.elements')
  * ...
  * </pre>
  *
- * @param {Boolean=} [ng-required=false]
+ * @param {Boolean=} [ngRequired=false]
  * Is this field required? This will add/remove the required symbol to the left of the name.
  */
 .directive('rxFieldName', function (rxNestedElement) {

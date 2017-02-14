@@ -105,10 +105,10 @@ angular.module('encore.ui.utilities')
             /**
              * Finds the indexes/path to a route. Will return last match if duplicate keys exist
              * @see setRouteByKey for actual use
-             * @param  {string} key Route Key
+             * @param  {String} key Route Key
              * @example
              *     var myRouteIndex = rxAppRoutes.getIndexByKey('myKey'); // [0, 2, 0]
-             * @return {array|undefined} array of indexes describing path to route (or undefined if not found)
+             * @return {Array|undefined} Array of indexes describing path to route (or undefined if not found)
              */
             getIndexByKey: function (key) {
                 return loadingDeferred.promise.then(function () {
@@ -140,9 +140,9 @@ angular.module('encore.ui.utilities')
             },
             /**
              * functionality to update routes based on their key
-             * @param {string} key Route key used to identify it in navigation
-             * @param {object} routeInfo Information used to overwrite original properties
-             * @return {boolean} true if successfully updated, false if key not found
+             * @param {String} key Route key used to identify it in navigation
+             * @param {Object} routeInfo Information used to overwrite original properties
+             * @return {Boolean} true if successfully updated, false if key not found
              */
             setRouteByKey: function (key, routeInfo) {
                 return this.getIndexByKey(key).then(function (routeIndex) {

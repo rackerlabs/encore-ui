@@ -35,7 +35,7 @@ angular.module('encore.ui.utilities')
      * Shows either a success or error message
      * @private
      * @this Scope used for storing messages data
-     * @param {string} msgType Message type to be displayed
+     * @param {String} msgType Message type to be displayed
      * @param {Object} response Data that's returned from the promise
      */
     var showMessage = function (msgType, response) {
