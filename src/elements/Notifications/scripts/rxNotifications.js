@@ -23,9 +23,9 @@ angular.module('encore.ui.elements')
         replace: true,
         templateUrl: 'templates/rxNotifications.html',
         controller: function ($scope) {
-            /*
+            /**
              * Calls rxNotify service to remove a message from a stack
-             * @param {object} message The message object to remove.
+             * @param {Object} message The message object to remove.
              */
             $scope.dismiss = function (message) {
                 rxNotify.dismiss(message);

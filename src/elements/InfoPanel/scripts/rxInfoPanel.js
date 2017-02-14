@@ -7,7 +7,7 @@ angular.module('encore.ui.elements')
  * @description
  * This renders a generic, pre-styled, info panel, with an optional title.
  *
- * @param {String} title - Text to be displayed in the title area of the info panel
+ * @param {String} title Text to be displayed in the title area of the info panel
  * @example
  * <pre>
  *  <rx-info-panel panel-title="My title!">

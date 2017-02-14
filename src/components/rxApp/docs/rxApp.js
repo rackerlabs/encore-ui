@@ -16,7 +16,7 @@ angular.module('demoApp')
             return !_.isEmpty($rootScope.user);
         }
     );
-
+ 
     $scope.changeRoutes = function () {
         var newRoute = {
             linkText: 'Updated Route',

@@ -29,7 +29,7 @@ angular.module('encore.ui.elements')
  * </rx-form-section>
  * </pre>
  *
- * @param {Object} filter - An instance of rxSelectFilter
+ * @param {Object} filter An instance of rxSelectFilter
  *
  */
 .directive('rxSelectFilter', function (rxNestedElement) {

@@ -9,7 +9,7 @@ angular.module('encore.ui.utilities')
  *
  * @requires utilities.service:rxAuth
  *
- * @param {String} role - Name of required role.
+ * @param {String} role Name of required role.
  */
 .directive('rxPermission', function () {
     return {

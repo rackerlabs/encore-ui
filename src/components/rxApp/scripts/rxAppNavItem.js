@@ -58,14 +58,14 @@ angular.module('encore.ui.rxApp')
             item: '='
         },
         controller: function ($scope, $location, $injector, rxVisibility, rxAuth, rxUrlUtils) {
-            /*
+            /**
              * @description Determines whether or not a nav item should have its href prefixed
              * based on whether the `$injector` has a `NAV_ITEM_PREFIX` injectable
              *
              * _This is *NOT* meant for general consumption, this is strictly for the Origin Project_
              * _This will eventually be deprecated and removed_
              *
-             * @param {string} [url] - URL for the nav item's href
+             * @param {String=} url URL for the nav item's href
              */
             $scope.getUrl = function (url) {
                 // For URLs that have no URL definition, let's go ahead and return right away
@@ -92,7 +92,7 @@ angular.module('encore.ui.rxApp')
                 }
 
             };
-            /*
+            /**
              * @description Determines whether or not the links need to point to a target, this allows
              * for origin and applications that show the nav to implement a target in which to have the links
              * open in.
@@ -129,13 +129,13 @@ angular.module('encore.ui.rxApp')
                 return false;
             };
 
-            /*
+            /** 
              * @description Determines whether or not a nav item should be displayed, based on `visibility`
              * criteria and `roles` criteria
-             * @param [visibility] - Can be an expression, a function, an array (using format below) to
-             *                     determine visibility
-             * @param {object} [roles] - An object with a format { 'any': ['role1', 'role2'] } or
-             *                           { 'all': ['role1', 'role2'] }
+             * @param {Object} visibility 
+             * Can be an expression, a function, an array (using format below) to determine visibility
+             * @param {Object=} roles 
+             * An object with a format { 'any': ['role1', 'role2'] } or { 'all': ['role1', 'role2'] }
              */
             $scope.isVisible = function (visibility, roles) {
                 var locals = {

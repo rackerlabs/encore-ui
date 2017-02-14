@@ -28,10 +28,10 @@ angular.module('encore.ui.elements')
  * wherever you want it to be, and a new one that is intended to be placed underneath the breadcrumbs.
  * To use the new one, pass `account-info-banner="true"` to this directive
  *
- * @param {String} accountNumber - The account number to load and retrieve data for
- * @param {String=} teamId - Team ID, used for loading team badges
- * @param {String=} [notifyStack='page'] - Notifications stack to put errors on.
- * @param {String=} accountInfoBanner - Set to "true" to use the new under-the-breadcrumbs style
+ * @param {String} accountNumber The account number to load and retrieve data for
+ * @param {String=} teamId Team ID, used for loading team badges
+ * @param {String=} [notifyStack='page'] Notifications stack to put errors on.
+ * @param {String=} accountInfoBanner Set to "true" to use the new under-the-breadcrumbs style
  */
 .directive('rxAccountInfo', function (Teams, SupportAccount, Encore, rxNotify, encoreRoutes,
     AccountStatusGroup, $interpolate) {

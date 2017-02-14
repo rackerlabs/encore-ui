@@ -7,13 +7,13 @@ angular.module('encore.ui.elements')
  * Renders a clickable link in a table heading which will sort the table by
  * the referenced property in ascending or descending order.
  *
- * @param {String} displayText - The text to be displayed in the link
- * @param {Function} sortMethod - The sort function to be called when the link is
+ * @param {String} displayText The text to be displayed in the link
+ * @param {Function} sortMethod The sort function to be called when the link is
  * clicked
- * @param {String} sortProperty - The property on the array to sort by when the
+ * @param {String} sortProperty The property on the array to sort by when the
  * link is clicked.
- * @param {Object} predicate - The current property the collection is sorted by.
- * @param {Boolean} reverse - Indicates whether the collection should sort the
+ * @param {Object} predicate The current property the collection is sorted by.
+ * @param {Boolean} reverse Indicates whether the collection should sort the
  * array in reverse order.
  */
 .directive('rxSortableColumn', function () {

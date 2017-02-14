@@ -22,7 +22,7 @@ var rxLocalStorage = {
             var command = function (key, value) {
                 localStorage.setItem(key, value);
             };
-            this.driver.executeScript(command, key, JSON.stringify(value));
+            browser.executeScript(command, key, JSON.stringify(value));
         }
     },
 
@@ -44,7 +44,7 @@ var rxLocalStorage = {
             var command = function (key) {
                 return JSON.parse(localStorage.getItem(key));
             };
-            return this.driver.executeScript(command, key);
+            return browser.executeScript(command, key);
         }
     },
 
@@ -64,7 +64,7 @@ var rxLocalStorage = {
             var command = function (key) {
                 localStorage.removeItem(key);
             };
-            this.driver.executeScript(command, key);
+            browser.executeScript(command, key);
         }
     },
 
@@ -85,7 +85,7 @@ var rxLocalStorage = {
             var command = function (key) {
                 return localStorage.getItem(key) !== null;
             };
-            return this.driver.executeScript(command, key);
+            return browser.executeScript(command, key);
         }
     }
 

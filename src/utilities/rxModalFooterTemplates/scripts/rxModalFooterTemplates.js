@@ -21,7 +21,7 @@ angular.module('encore.ui.utilities')
         /*
          * Concatenates all the registered templates and clears the local template cache.
          * @public
-         * @returns {string} The concatenated templates wrapped in an `ng-switch`.
+         * @returns {String} The concatenated templates wrapped in an `ng-switch`.
          */
         flush: function () {
             var states = _.assign({}, globals, locals);
@@ -33,10 +33,10 @@ angular.module('encore.ui.utilities')
         /*
          * Register a template with an associated state.
          * @public
-         * @param {string} The state being registered.
-         * @param {string} The template associated with the state.
-         * @param [object} options
-         * @param {boolean} options.global Indicates if the template is used in other modals.
+         * @param {String} The state being registered.
+         * @param {String} The template associated with the state.
+         * @param {Object} options
+         * @param {Boolean} options.global Indicates if the template is used in other modals.
          */
         add: function (state, template, options) {
             if (options.global) {
