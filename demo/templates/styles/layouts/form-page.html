@@ -52,27 +52,39 @@
     <div>
       <tabset class="tab-area">
         <tab heading="Tab 1">
-          <div ng-controller="layoutRadioOptionTableCtrl">
+          <div ng-controller="radioTableCtrl">
             <rx-form-section>
               <rx-field>
-                <rx-field-name>Radio Option Table</rx-field-name>
+                <rx-field-name>Radio Table</rx-field-name>
                 <rx-field-content>
-                  <rx-input>
-                    <rx-option-table
-                      data="optionTableData"
-                      columns="optionTableColumns"
-                      type="radio"
-                      model="volume.data"
-                      field-id="optionTable"
-                      selected="0"
-                      class="full-width"
-                      ></rx-option-table>
-                  </rx-input>
+                  <table class="table-striped table--option">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Static Content</th>
+                        <th>Expression 2</th>
+                        <th>Expression 3</th>
+                        <th>Expression 4</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="datum in radioTableData">
+                        <td><input rx-radio name="radiooption"></td>
+                        <td>{{ datum.name }}</td>
+                        <td>Some <strong>Text &amp;</strong> HTML</td>
+                        <td>{{ datum.value * 100 | number:2 }}</td>
+                        <td>{{ datum.obj.name | uppercase }}</td>
+                        <td>{{ datum.value | currency }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </rx-field-content>
               </rx-field>
             </rx-form-section>
           </div>
         </tab>
+
         <tab heading="Tab 2">
           <table class="table-striped">
             <thead>
