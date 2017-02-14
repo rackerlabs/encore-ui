@@ -1,0 +1,29 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxTitleize/scripts/rxTitleize.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e0fb8ef/src/utilities/rxTitleize/scripts/rxTitleize.js#L27" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxTitleize</code>
+<div><span class="hint">filter in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-filter-page utilities-filter-rxtitleize-page"><p>Convert a string to title case, stripping out underscores and capitalizing words.</p>
+<p>Credit where it&#39;s due: <a href="https://github.com/epeli/underscore.string/blob/master/titleize.js">https://github.com/epeli/underscore.string/blob/master/titleize.js</a></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><h3 id="usage_in-html-template-binding">In HTML Template Binding</h3>
+<div class="in-html-template-binding"><code ng:non-bindable=""><span>{{</span> rxTitleize_expression | rxTitleize <span>}}</span></code>
+</div>
+<h3 id="usage_in-javascript">In JavaScript</h3>
+<div class="in-javascript"><code ng:non-bindable="">$filter('rxTitleize')(inputString)</code>
+</div>
+<h4 id="usage_in-javascript_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>inputString</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="utilities-filter-page utilities-filter-rxtitleize-page"><p>The string to convert</p>
+</div></td></tr></tbody></table><h4 id="usage_in-javascript_returns">Returns</h4><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="utilities-filter-page utilities-filter-rxtitleize-page"><p>The titleized version of the string</p>
+</div></td></tr></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="utilities-filter-page utilities-filter-rxtitleize-page"><p>Both examples result in a string of <code>&quot;A Simple String&quot;</code>.
+<pre class="prettyprint linenums">
+{{ 'a simple_STRING' | rxTitleize }}
+</pre>
+<pre class="prettyprint linenums">
+$filter('rxTitleize')('a simple_STRING');
+</pre>
+</div></div>
+</div>

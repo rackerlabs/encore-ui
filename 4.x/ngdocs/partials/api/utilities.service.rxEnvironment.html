@@ -1,4 +1,4 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxEnvironment/scripts/rxEnvironment.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/9544378/src/utilities/rxEnvironment/scripts/rxEnvironment.js#L102" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxEnvironment</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxEnvironment/scripts/rxEnvironment.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e0fb8ef/src/utilities/rxEnvironment/scripts/rxEnvironment.js#L103" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxEnvironment</code>
 <div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
 </span>
 </div>
@@ -6,7 +6,7 @@
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="utilities-service-page utilities-service-rxenvironment-page"><p>Allows defining environments and retrieving the current environment based on location</p>
 <h4 id="description_adding-new-environments">Adding New Environments</h4>
-<p>If necessary, you can add additional environments with <code>Environment.add()</code>.
+<p>If necessary, you can add additional environments with <code>rxEnvironment.add()</code>.
 This takes an object with three properties, <code>name</code>, <code>pattern</code> and <code>url</code>, where</p>
 <ul>
 <li>name: The &quot;friendly&quot; name of your environment, like &quot;local&quot;, &quot;preprod&quot;, etc.</li>
@@ -16,7 +16,7 @@ This takes an object with three properties, <code>name</code>, <code>pattern</co
 <p>As an example, if we didn&#39;t already have a <code>&#39;preprod&#39;</code> environment, we could
 add it as follows:</p>
 <pre class="prettyprint linenums">
-Environment.add({
+rxEnvironment.add({
     // Matches only https://preprod.encore.rackspace.com
     name: 'preprod',
     pattern: /\/\/preprod.encore.rackspace.com/,
@@ -25,7 +25,7 @@ Environment.add({
 </pre>
 <p>For this demo application, we add a &quot;Github Pages&quot; environment, like this:</p>
 <pre class="prettyprint linenums">
-Environment.add({
+rxEnvironment.add({
     name: 'ghPages',
     pattern: '//rackerlabs.github.io',
     url: baseGithubUrl + '{{path}}'
@@ -46,41 +46,42 @@ will all end with <code>encore.rackspace.com</code>. Try to avoid using
 <code>staging.encore.myNewProduct.rackspace.com</code> for new products, and instead set
 up your system as <code>encore.rackspace.com/myNewProduct</code>.</p>
 <h4 id="description_checking-current-environment">Checking Current Environment</h4>
-<p>The <code>Environment</code> service contains methods for checking if we are currently in
+<p>The <code>rxEnvironment</code> service contains methods for checking if we are currently in
 one of the five listed environments, namely:</p>
 <ul>
-<li><code>Environment.isLocal()</code></li>
-<li><code>Environment.isPreProd()</code></li>
-<li><code>Environment.isUnifiedPreProd()</code></li>
-<li><code>Environment.isUnified()</code></li>
-<li><code>Environment.isUnifiedProd()</code></li>
+<li><code>rxEnvironment.isLocal()</code></li>
+<li><code>rxEnvironment.isPreProd()</code></li>
+<li><code>rxEnvironment.isUnifiedPreProd()</code></li>
+<li><code>rxEnvironment.isUnified()</code></li>
+<li><code>rxEnvironment.isUnifiedProd()</code></li>
 </ul>
 <p>The normal procedure is to assume that your code is running in local or staging,
-and take special actions if <code>Environment.isPreProd()</code> or
-<code>Environment.isUnifiedProd()</code> are <code>true</code>.</p>
+and take special actions if <code>rxEnvironment.isPreProd()</code> or
+<code>rxEnvironment.isUnifiedProd()</code> are <code>true</code>.</p>
 <h4 id="description_overlapping-environments">Overlapping Environments</h4>
 <p>Keep in mind that the environments we define are not mutually exclusive. For
 instance, if we&#39;re at <code>http://preprod.encore.rackspace.com</code>, then we are in
 the <code>preprod</code> environment, the <code>unified-preprod</code> environment, and <code>unified-prod</code>.</p>
 <p>When you want to check if you&#39;re in one of the custom environments, you can
-use <code>envCheck()</code>, i.e.: <code>Environment.envCheck(&#39;ghPages&#39;)</code></p>
+use <code>envCheck()</code>, i.e.: <code>rxEnvironment.envCheck(&#39;ghPages&#39;)</code></p>
 <h4 id="description_a-warning-about-rxenvironmenturl">A Warning About rxEnvironmentUrl</h4>
 <p><code>rxEnvironmentUrl</code> can be used for building full URLs, based on the current
 environment. For now, you should consider it as deprecated. It has problems
 with overlapping environments, and could potentially generate the wrong URL.</p>
-<h4 id="description_a-warning-about">A Warning About <code>Environment.get().name</code></h4>
-<p>You might find older Encore code that uses <code>Environment.get().name</code> to get
+<h4 id="description_a-warning-about">A Warning About <code>rxEnvironment.get().name</code></h4>
+<h4 id="description_deprecated-will-be-removed-in-encoreui-400">DEPRECATED: <code>rxEnvironment.get()</code> will be removed in EncoreUI 4.0.0</h4>
+<p>You might find older Encore code that uses <code>rxEnvironment.get().name</code> to get
 the name of the current environment. This pattern should be avoided,
 specifically because of the overlapping environment issue discussed above.
-If you call <code>Environment.get().name</code>, it will just return the first matching
+If you call <code>rxEnvironment.get().name</code>, it will just return the first matching
 environment in the list of environments, even if we&#39;re overlapping and have
 multiple environments. Instead, check explicitly with
-<code>Environment.isLocal()</code>, <code>Environment.isPreProd()</code>, etc., or
-use <code>Environment.envCheck(&#39;local&#39;)</code></p>
+<code>rxEnvironment.isLocal()</code>, <code>rxEnvironment.isPreProd()</code>, etc., or
+use <code>rxEnvironment.envCheck(&#39;local&#39;)</code></p>
 </div></div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="utilities-service-page utilities-service-rxenvironment-page"><pre class="prettyprint linenums">
-Environment.get() // return environment object that matches current location
+rxEnvironment.get() // return environment object that matches current location
 </pre>
 </div></div>
 </div>

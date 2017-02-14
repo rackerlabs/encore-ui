@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">utilities/rxEnvironment/scripts/rxEnvironment.js</span></h1>
     <h2>
-        Statements: <span class="metric">94.74% <small>(36 / 38)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">94.87% <small>(37 / 39)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">90% <small>(18 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">91.67% <small>(11 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">94.59% <small>(35 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">94.74% <small>(36 / 38)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxEnvironment/scripts/</a> &#187; rxEnvironment.js</div>
@@ -321,7 +321,13 @@
 294
 295
 296
-297</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+297
+298
+299
+300
+301
+302</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -515,6 +521,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">57</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">57</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -627,7 +637,7 @@
  *
  * ## Adding New Environments ##
  *
- * If necessary, you can add additional environments with `Environment.add()`.
+ * If necessary, you can add additional environments with `rxEnvironment.add()`.
  * This takes an object with three properties, `name`, `pattern` and `url`, where
  *
  * * name: The "friendly" name of your environment, like "local", "preprod", etc.
@@ -638,7 +648,7 @@
  * add it as follows:
  *
  * &lt;pre&gt;
- * Environment.add({
+ * rxEnvironment.add({
  *     // Matches only https://preprod.encore.rackspace.com
  *     name: 'preprod',
  *     pattern: /\/\/preprod.encore.rackspace.com/,
@@ -649,7 +659,7 @@
  * For this demo application, we add a "Github Pages" environment, like this:
  *
  * &lt;pre&gt;
- * Environment.add({
+ * rxEnvironment.add({
  *     name: 'ghPages',
  *     pattern: '//rackerlabs.github.io',
  *     url: baseGithubUrl + '{{path}}'
@@ -675,18 +685,18 @@
  *
  * ## Checking Current Environment ##
  *
- * The `Environment` service contains methods for checking if we are currently in
+ * The `rxEnvironment` service contains methods for checking if we are currently in
  * one of the five listed environments, namely:
  *
- * * `Environment.isLocal()`
- * * `Environment.isPreProd()`
- * * `Environment.isUnifiedPreProd()`
- * * `Environment.isUnified()`
- * * `Environment.isUnifiedProd()`
+ * * `rxEnvironment.isLocal()`
+ * * `rxEnvironment.isPreProd()`
+ * * `rxEnvironment.isUnifiedPreProd()`
+ * * `rxEnvironment.isUnified()`
+ * * `rxEnvironment.isUnifiedProd()`
  *
  * The normal procedure is to assume that your code is running in local or staging,
- * and take special actions if `Environment.isPreProd()` or
- * `Environment.isUnifiedProd()` are `true`.
+ * and take special actions if `rxEnvironment.isPreProd()` or
+ * `rxEnvironment.isUnifiedProd()` are `true`.
  *
  * ## Overlapping Environments ##
  *
@@ -695,26 +705,27 @@
  * the `preprod` environment, the `unified-preprod` environment, and `unified-prod`.
  *
  * When you want to check if you're in one of the custom environments, you can
- * use `envCheck()`, i.e.: `Environment.envCheck('ghPages')`
+ * use `envCheck()`, i.e.: `rxEnvironment.envCheck('ghPages')`
  *
  * ## A Warning About rxEnvironmentUrl ##
  * `rxEnvironmentUrl` can be used for building full URLs, based on the current
  * environment. For now, you should consider it as deprecated. It has problems
  * with overlapping environments, and could potentially generate the wrong URL.
  *
- * ## A Warning About `Environment.get().name` ##
- * You might find older Encore code that uses `Environment.get().name` to get
+ * ## A Warning About `rxEnvironment.get().name` ##
+ * ## DEPRECATED: `rxEnvironment.get()` will be removed in EncoreUI 4.0.0 ##
+ * You might find older Encore code that uses `rxEnvironment.get().name` to get
  * the name of the current environment. This pattern should be avoided,
  * specifically because of the overlapping environment issue discussed above.
- * If you call `Environment.get().name`, it will just return the first matching
+ * If you call `rxEnvironment.get().name`, it will just return the first matching
  * environment in the list of environments, even if we're overlapping and have
  * multiple environments. Instead, check explicitly with
- * `Environment.isLocal()`, `Environment.isPreProd()`, etc., or
- * use `Environment.envCheck('local')`
+ * `rxEnvironment.isLocal()`, `rxEnvironment.isPreProd()`, etc., or
+ * use `rxEnvironment.envCheck('local')`
  *
  * @example
  * &lt;pre&gt;
- * Environment.get() // return environment object that matches current location
+ * rxEnvironment.get() // return environment object that matches current location
  * &lt;/pre&gt;
  *
  */
@@ -724,9 +735,9 @@
      * It is prefilled with 'Encore' based environments
      * It can be overwritten if necessary via the returned 'environments' property
      *
-     * @property {string} name The 'friendly' name of the environment
-     * @property {string|RegEx} pattern The pattern to match the current path against
-     * @property {string} url The url pattern used to build out urls for that environment.
+     * @property {String} name The 'friendly' name of the environment
+     * @property {String|RegEx} pattern The pattern to match the current path against
+     * @property {String} url The url pattern used to build out urls for that environment.
      *                        See 'buildUrl' for more details
      */
     var environments = [{
@@ -787,8 +798,8 @@
     /*
      * Checks if an environment has valid properties
      * @private
-     * @param {object} environment The environment object to check
-     * @returns {boolean} true if valid, false otherwise
+     * @param {Object} environment The environment object to check
+     * @returns {Boolean} true if valid, false otherwise
      */
     var isValidEnvironment = function (environment) {
         return _.isString(environment.name) &amp;&amp;
@@ -807,10 +818,14 @@
     /*
      * Retrieves current environment
      * @public
-     * @param {string} [href] The path to check the environment on. Defaults to $location.absUrl()
+     * @param {String=} [href=$location.absUrl()] The path to check the environment on.
      * @returns {Object} The current environment (if found), else 'localhost' environment.
      */
     this.get = function (href) {
+        console.warn (
+            'DEPRECATED: rxEnvironment.get() will be removed in EncoreUI 4.0.0'
+        );
+&nbsp;
         // default to current location if href not provided
         href = href || $location.absUrl();
 &nbsp;
@@ -830,7 +845,7 @@
     /*
      * Adds an environment to the front of the stack, ensuring it will be matched first
      * @public
-     * @param {object} environment The environment to add. See 'environments' array for required properties
+     * @param {Object} environment The environment to add. See 'environments' array for required properties
      */
     this.add = function (environment) {
         // do some sanity checks here
@@ -845,7 +860,7 @@
     /*
      * Replaces current environments array with new one
      * @public
-     * @param {array} newEnvironments New environments to use
+     * @param {Array} newEnvironments New environments to use
      */
     this.setAll = function (newEnvironments) {
         // validate that all new environments are valid
@@ -859,8 +874,8 @@
      * Given an environment name, check if any of our registered environments
      * match it
      * @public
-     * @param {string} [name] Environment name to check
-     * @param {string} [href] Optional href to check against. Defaults to $location.absUrl()
+     * @param {String} name Environment name to check
+     * @param {String=} [href=$location.absUrl()] Optional href to check against.
      */
     this.envCheck = function (name, href) {
         href = href || $location.absUrl();
@@ -918,7 +933,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 15 2016 14:19:37 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Feb 14 2017 17:36:31 GMT-0600 (CST)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

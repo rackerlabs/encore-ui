@@ -1,6 +1,6 @@
 angular.module('demoApp')
-.controller('rxPaginateUiCtrl', function ($scope, PageTracking) {
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: 3 });
+.controller('rxPaginateUiCtrl', function ($scope, rxPageTracker) {
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: 3 });
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
     var makeServers = function (serverCount) {

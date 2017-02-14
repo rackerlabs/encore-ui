@@ -1,4 +1,4 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxPaginate.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/9544378/src/elements/Tables/scripts/rxPaginate.js#L514" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxPaginate</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxPaginate.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e0fb8ef/src/elements/Tables/scripts/rxPaginate.js#L514" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxPaginate</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
 </span>
 </div>
@@ -27,7 +27,7 @@ bottom of the table.</p>
 <li>This is then passed to <code>orderBy</code>, to perform column sorting with <code>rxSortableColumn</code>.</li>
 <li>The sorted results are then passed to <code>Paginate:pager</code>, where <code>Paginate</code> is a filter from the
 <code>rxPaginate</code> module, and <code>pager</code> is a variable on your scope created like
-<code>$scope.pager = PageTracking.createInstance();</code>.</li>
+<code>$scope.pager = rxPageTracker.createInstance();</code>.</li>
 </ol>
 <p>This <code>pager</code> is responsible for tracking pagination state (i.e. &quot;which page are we on&quot;, &quot;how many
 items per page&quot;, &quot;total number of items tracked&quot;, etc.</p>
@@ -51,7 +51,7 @@ will automatically re-process it.</p>
 using <a href="#/api/utilities.service:rxLocalStorage">rxLocalStorage</a>. This preference is set whenever the user selects
 a new number to show.</p>
 <p>This applies to both UI-based pagination and API-based pagination.</p>
-<p><em>NOTE</em>: If <code>itemsPerPage</code> is explicitly specified in the <code>opts</code> you pass to <code>PageTracking.createInstance()</code>,
+<p><em>NOTE</em>: If <code>itemsPerPage</code> is explicitly specified in the <code>opts</code> you pass to <code>rxPageTracker.createInstance()</code>,
 then that pager instance will load using the <code>itemsPerPage</code> you specified, and <em>not</em> the globally persisted value.</p>
 <p><em>NOTE</em>: If you don&#39;t want a specific pager to have its <code>itemsPerPage</code> persisted to other pagers,
 pass <code>persistItemsPerPage: false</code> with the <code>opts</code> to <code>createInstance()</code>.</p>
@@ -119,12 +119,12 @@ on it. This method is what <code>&lt;rx-paginate&gt;</code> will use to request 
 <code>&lt;rx-paginate&gt;</code> will watch the variables for changes, and will call <code>getItems()</code> for updates whenever
 the values change.</li>
 </ul>
-<p><em>Note:</em> If using <code>&lt;rx-select-filter&gt;</code> in the table, the <code>available</code> option passed to the <code>SelectFilter</code>
+<p><em>Note:</em> If using <code>&lt;rx-select-filter&gt;</code> in the table, the <code>available</code> option passed to the <code>rxSelectFilter</code>
 constructor <strong>must</strong> be provided and include every property.  This is because the filter cannot reliably
 determine all available options from a paginated API.</p>
-<p>You will still create a <code>PageTracking</code> instance on your scope, just like in UI-based pagination:</p>
+<p>You will still create a <code>rxPageTracker</code> instance on your scope, just like in UI-based pagination:</p>
 <pre class="prettyprint linenums">
-$scope.pagedServers = PageTracking.createInstance();
+$scope.pagedServers = rxPageTracker.createInstance();
 </pre>
 <h4 id="description_api-based-pagination_getitems">getItems()</h4>
 <p>The <code>getItems()</code> method is one you write on your own, and lives as an interface between <code>&lt;rx-paginate&gt;</code>
@@ -513,14 +513,14 @@ object if you instead intend to use a paginated server-side API</p>
        [error-message="{String}"]&gt;
 &lt;/rx-paginate&gt;</pre>
 <h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pageTracking</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>This is the page tracking service instance to be used for this directive.
-See <a href="#/api/utilities.service:PageTracking">utilities.service:PageTracking</a></p>
+See <a href="#/api/utilities.service:rxPageTracker">rxPageTracker</a></p>
 </div></td></tr><tr><td>numberOfPages</td><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>This is the maximum number of pages that the page object will display at a
 time.</p>
 </div></td></tr><tr><td>serverInterface <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>An object with a <code>getItems()</code> method. The requirements of this method are
 described in the rxPaginate module documentation</p>
 </div></td></tr><tr><td>filterText <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The model for the table filter input, if any. This directive will watch that
 model for changes, and request new results from the paginated API, on change</p>
-</div></td></tr><tr><td>selections <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The <code>selected</code> property of a SelectFilter instance, if one is being used.
+</div></td></tr><tr><td>selections <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The <code>selected</code> property of a rxSelectFilter instance, if one is being used.
 This directive will watch the filter&#39;s selections, and request new results
 from the paginated API, on change</p>
 </div></td></tr><tr><td>sortColumn <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The model containing the current column the results should sort on. This

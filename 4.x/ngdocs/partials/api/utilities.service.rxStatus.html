@@ -1,0 +1,140 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxStatus/scripts/rxStatus.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e0fb8ef/src/utilities/rxStatus/scripts/rxStatus.js#L171" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxStatus</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxstatus-page"><p>Manages notifications for rxNotify with an abstracted set of functions for
+ease of use.</p>
+<p>This service is provided as a compliment to <a href="#/api/elements">elements</a>.  It abstracts out
+some of the raw functionality provided by <code>rxNotify</code> to make the addition and
+removal of single messages easier.</p>
+<h4 id="description_preparation">Preparation</h4>
+<p>In order to use the <code>rxStatus</code> service, one has to instantiate it with a proper
+<code>$scope</code> object to keep track of a running state. <code>rxNotify</code> indirectly makes
+use of the <code>$scope</code> variable when a message can be auto-dismissed.  In order
+to keep the interface for the wrapper functions coherent, the <code>$scope</code> variable
+must be provided before use.  This can be accomplished as follows:</p>
+<pre class="prettyprint linenums">
+rxStatus.setScope($scope);
+</pre>
+<h4 id="description_success-cases">Success cases</h4>
+<p>The <code>rxStatus</code> service is provided as a wrapper to <code>rxNotify</code>.  As such, the
+rxStatus types supported by <code>rxNotify</code> are still used and have been wrapped into
+utility functions.  For example, on page load it is usually necessary to inform
+the user of pending data retrieval.  This can be accomplished by:</p>
+<pre class="prettyprint linenums">
+rxStatus.setLoading('Retrieving users');
+</pre>
+<p>This will call <code>rxNotify</code> in the following manner:</p>
+<pre class="prettyprint linenums">
+rxNotify.add('Retrieving users', {
+    stack: 'page',
+    dismiss: [scope, 'loaded'],
+    loading: true
+});
+</pre>
+<p>Similarly, the following call using the <code>rxStatus</code> service:</p>
+<pre class="prettyprint linenums">
+rxStatus.setSuccess('Successfully deleted questionable ' +
+    'browsing history');
+</pre>
+<p>results in a call to <code>rxNotify</code> as such:</p>
+<pre class="prettyprint linenums">
+rxNotify.add('Successfully deleted questionable ' +
+    'browsing history',
+    {
+        stack: 'page',
+        show: 'next'
+     }
+);
+</pre>
+<p>Note: For <code>success</code> and <code>error</code> messages, the <code>repeat</code> attribute is set to
+false. Messages of <code>success</code> will also automatically timeout after 5 seconds.
+Both of these defaults were design decisions made at this level for usability
+and consistency across all Encore products.</p>
+<p>Each of the wrapper functions to the different <code>rxNotify</code> message types support
+receiving an <code>options:{}</code> parameter that can override defaults for the respective
+wrapper. For example, instead of showing a success message on next route change,
+it can be shown immediately:</p>
+<pre class="prettyprint linenums">
+rxStatus.setSuccess('Please show immediately', {
+    show: 'immediate'
+});
+</pre>
+<p>Please note that the <code>options</code> are of the same type as one would provide to
+<code>rxNotify</code>.  This should allow for maximum flexibility when necessary.
+However, as a bonus, some common behaviours expected to be overriden have
+been provided as their own wrapper functions.  For example:</p>
+<pre class="prettyprint linenums">
+rxStatus.setSuccessImmediate('Please show immediately')
+</pre>
+<p>is the equivalent of calling <code>rxStatus.setSuccess()</code> with the
+<code>{ show: &#39;immediate&#39; }</code> parameter.  Please note, there isn&#39;t much fault
+checking in place, so the following behaviour although permitted, is not
+advised:</p>
+<pre class="prettyprint linenums">
+rxStatus.setSuccessImmediate('Please show immediately', {
+    show: 'next'
+});
+</pre>
+<h4 id="description_error-cases">Error cases</h4>
+<p>The <code>{ type: &#39;error&#39; }</code> wrapper is a unique one.  It allows for a string to be
+passed as an error message, just like the wrappers before.  For example:</p>
+<pre class="prettyprint linenums">
+rxStatus.setError('This is an error!');
+</pre>
+<p>It also allows for a specialized template to be specified as the error string
+with an <code>object:{}</code> as the second parameter containing the replacements for
+the template in the error string.  If in a proper format, the object can be
+automatically parsed using an <code>rxErrorFormatter</code> and displayed to the user.
+For example:</p>
+<pre class="prettyprint linenums">
+rxStatus.setError(
+    'Failed loading browsing history: ${message}',
+    {
+        message: 'User has previously cleared their history!'
+    }
+);
+</pre>
+<p>Please note that the replacement variable <code>${message}</code> in the error string
+maps one-to-one to the keys provided in the the error object.  One can specify
+any number of template variables to replace.  Not providing a balanced list
+of variables and their replacements will result in a
+<code>ReferenceError: &lt;replacement&gt; is not defined</code>.</p>
+<p>The following wrapper functions are available today.  Their names should be
+self explanatory:</p>
+<ul>
+<li>setLoading</li>
+<li>setSuccess</li>
+<li>setSuccessNext</li>
+<li>setSuccessImmediate</li>
+<li>setWarning</li>
+<li>setInfo</li>
+<li>setError</li>
+<li>complete &rarr; setSuccessImmediate</li>
+</ul>
+<p>The following are used to programmatically remove notifications from the
+screen:</p>
+<ul>
+<li>dismiss</li>
+<li>clear</li>
+</ul>
+<h3 id="description_utilities">Utilities</h3>
+<p>The <code>rxStatus</code> service requires that one provide a <code>$scope</code> object to keep
+tracking of state before any of the wrapper functions can be utilized. Since
+it is expected that almost all pages will make use of notifications, one can
+place the repeated setup of the <code>rxStatus</code> service in a page load event handler.
+This will allow all pages to gain an already setup <code>rxStatus</code> service for
+immediate use.  For example:</p>
+<pre class="prettyprint linenums">
+.run(function ($rootScope, rxStatus {
+    $rootScope.$on('$routeChangeSuccess', function () {
+        rxStatus.setScope($rootScope);
+    });
+});
+</pre>
+<p>Although hidden away in the app&#39;s bootstrap code, the above makes for a less
+repetitive call to <code>rxStatus.setScope()</code> at the beginning of each use.</p>
+</div></div>
+</div>

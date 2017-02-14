@@ -15,3 +15,59 @@
 .rxCopy-visual-regression > section > div {
   flex: 1 0 250px;
 }
+.layout-demo .base-box,
+.layout-demo .box,
+.layout-demo .flex-box,
+.layout-demo .small-box,
+.layout-demo .grow-box {
+  height: 50px;
+  color: white;
+  font-weight: bold;
+  padding: 20px;
+}
+.layout-demo .box {
+  width: 150px;
+  margin: 10px 15px;
+}
+.layout-demo .flex-box {
+  width: auto;
+}
+.layout-demo .dark-blue {
+  background-color: #0d47a1;
+}
+.layout-demo .light-blue {
+  background-color: #0d74d1;
+}
+.layout-demo .dark-green {
+  background-color: #2e7d32;
+}
+.layout-demo .light-green {
+  background-color: #4caf51;
+}
+.layout-demo .orange {
+  background-color: #ffc107;
+  color: #333333;
+}
+.layout-demo .small-box-container {
+  width: 95%;
+  height: 300px;
+  margin: 0 auto 10px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+}
+.layout-demo .small-box {
+  height: auto;
+  width: auto;
+  text-align: center;
+}
+.layout-demo .grow-box {
+  height: auto;
+}
+.layout-demo .layout-examples input[type="radio"] {
+  margin-right: 6px;
+}
+.layout-demo .layout-examples label {
+  margin: 10px 0 0 10px;
+}
+.layout-demo .flex-fix {
+  flex: 0 0 200px;
+}

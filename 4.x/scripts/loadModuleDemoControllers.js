@@ -5,8 +5,8 @@
 
 
 angular.module('demoApp')
-.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, Session) {
-    Session.getUserId = function () {
+.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {
+    rxAuth.getUserId = function () {
         return 'bert3000';
     };
 
@@ -22,7 +22,7 @@ angular.module('demoApp')
             return !_.isEmpty($rootScope.user);
         }
     );
-
+ 
     $scope.changeRoutes = function () {
         var newRoute = {
             linkText: 'Updated Route',
@@ -1172,14 +1172,14 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {
+.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
     };
 
     var itemsPerPage = 8;
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });
     $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;
 
     $scope.removeDatacenter = function (dc) {
@@ -1236,14 +1236,14 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {
+.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
     };
 
     var itemsPerPage = 8;
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });
     $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;
 
     $scope.removeDatacenter = function (dc) {
@@ -1308,8 +1308,8 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxSelectFilterSimpleCtrl', function ($scope, SelectFilter) {
-    $scope.filter = SelectFilter.create({
+.controller('rxSelectFilterSimpleCtrl', function ($scope, rxSelectFilter) {
+    $scope.filter = rxSelectFilter.create({
         properties: ['account', 'status'],
         selected: {
             account: ['A']
@@ -1450,8 +1450,8 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, PageTracking,
-                rxSortUtil, SelectFilter) {
+.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,
+                rxSortUtil, rxSelectFilter) {
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
     var makeServers = function (serverCount) {
@@ -1521,19 +1521,19 @@ angular.module('demoApp')
     $scope.clearFilter = function () {
         $scope.data.searchText = '';
     };
-    $scope.osFilter = SelectFilter.create({
+    $scope.osFilter = rxSelectFilter.create({
         properties: ['os'],
         available: {
             os: os
         }
     });
     $scope.serverInterface = serverInterface;
-    $scope.pagedServers = PageTracking.createInstance({ itemsPerPage: 25 });
+    $scope.pagedServers = rxPageTracker.createInstance({ itemsPerPage: 25 });
 });
 
 angular.module('demoApp')
-.controller('rxPaginateUiCtrl', function ($scope, PageTracking) {
-    $scope.pager = PageTracking.createInstance({ itemsPerPage: 3 });
+.controller('rxPaginateUiCtrl', function ($scope, rxPageTracker) {
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: 3 });
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
     var makeServers = function (serverCount) {
@@ -1641,128 +1641,6 @@ angular.module('demoApp')
 
 
 
-angular.module('demoApp')
-.controller('AuthSimpleCtrl', function ($scope, $window, Auth) {
-    $scope.hasRole = function () {
-        $window.alert('Has "superhero" Role? : ' + Auth.hasRole('superhero'));
-    };
-
-    $scope.isAuthenticated = function () {
-        $window.alert('Is Authenticated? : ' + Auth.isAuthenticated());
-    };
-});
-
-
-angular.module('demoApp')
-.controller('ErrorFormatterSimpleCtrl', function ($scope, ErrorFormatter) {
-    $scope.setErrorMsg = function (msg) {
-        var error = { message: msg };
-        $scope.errorMsg = ErrorFormatter.buildErrorMsg('Error: ${message}', error);
-    };
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-angular.module('demoApp')
-.controller('SessionSimpleCtrl', function ($scope, $window, Session) {
-    $scope.isAuthenticated = function () {
-        $window.alert(Session.isAuthenticated());
-    };
-});
-
-
-angular.module('demoApp')
-.controller('SessionStorageSimpleCtrl', function ($scope, $window, SessionStorage) {
-    $scope.setSideKick = function () {
-        SessionStorage.setItem('Batman', 'Robin');
-    };
-
-    $scope.getSideKick = function () {
-        $window.alert(SessionStorage.getItem('Batman'));
-    };
-});
-
-
-angular.module('demoApp')
-.controller('StatusSimpleCtrl', function ($scope, $rootScope, Status) {
-    Status.setScope($scope);
-
-    $scope.triggerRouteChangeSuccess = function () {
-        $rootScope.$broadcast('$routeChangeSuccess');
-    };
-
-    $scope.clear = function () {
-        Status.clear();
-        $scope.notify = undefined;
-    };
-
-    $scope.setLoading = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setLoading(msg);
-    };
-
-    $scope.setSuccess = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setSuccess(msg);
-    };
-
-    $scope.setSuccessNext = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setSuccessNext(msg);
-    };
-
-    $scope.setSuccessImmediate = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setSuccessImmediate(msg);
-    };
-
-    $scope.setWarning = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setWarning(msg);
-    };
-
-    $scope.setInfo = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setInfo(msg);
-    };
-
-    $scope.setError = function (msg) {
-        Status.clear();
-        $scope.notify = Status.setError(msg);
-    };
-
-    $scope.dismiss = function () {
-        $scope.notify && Status.dismiss($scope.notify);
-        $scope.notify = undefined;
-    };
-});
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1813,8 +1691,8 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('ApplySimpleCtrl', function ($scope, SelectFilter) {
-    $scope.filter = SelectFilter.create({
+.controller('ApplySimpleCtrl', function ($scope, rxSelectFilter) {
+    $scope.filter = rxSelectFilter.create({
         properties: ['account', 'status'],
         selected: {
             account: ['A']
@@ -1835,6 +1713,18 @@ angular.module('demoApp')
 .controller('rxAttributesCtrl', function ($scope) {
     $scope.customStyles = 'color: red; font-weight: bold;';
     $scope.customContent = '"Custom Content"';
+});
+
+
+angular.module('demoApp')
+.controller('rxAuthSimpleCtrl', function ($scope, $window, rxAuth) {
+    $scope.hasRole = function () {
+        $window.alert('Has "superhero" Role? : ' + rxAuth.hasRole('superhero'));
+    };
+
+    $scope.isAuthenticated = function () {
+        $window.alert('Is Authenticated? : ' + rxAuth.isAuthenticated());
+    };
 });
 
 
@@ -1933,6 +1823,8 @@ angular.module('demoApp')
 });
 
 
+
+
 angular.module('demoApp')
 .controller('rxDiskSizeCtrl', function ($scope) {
     $scope.sizeGB = 420;
@@ -1942,23 +1834,28 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('EnvironmentSimpleCtrl', function ($scope, rxEnvironment) {
+.controller('rxEnvironmentSimpleCtrl', function ($scope, rxEnvironment) {
     var environment = rxEnvironment.get();
     $scope.url = environment.url;
     $scope.name = environment.name;
 });
 
 
-angular.module('demoApp')
-.controller('rxEnvironmentMatchSimpleCtrl', function ($scope, Environment) {
-    $scope.Environment = Environment;
-});
+
+
 
 
 angular.module('demoApp')
-.controller('rxEnvironmentUrlSimpleCtrl', function ($scope, rxEnvironment) {
-    $scope.rxEnvironment = rxEnvironment;
+.controller('rxErrorFormatterSimpleCtrl', function ($scope, rxErrorFormatter) {
+    $scope.setErrorMsg = function (msg) {
+        var error = { message: msg };
+        $scope.errorMsg = rxErrorFormatter.buildErrorMsg('Error: ${message}', error);
+    };
 });
+
+
+
+
 
 
 
@@ -2000,6 +1897,8 @@ angular.module('demoApp')
 
 
 
+
+
 angular.module('demoApp')
 .controller('rxPageTitleSimpleCtrl', function ($scope, rxPageTitle) {
     $scope.changeTitle = function () {
@@ -2016,15 +1915,21 @@ angular.module('demoApp')
 
 
 
+
+
+
+
+
+
 angular.module('demoApp')
-.controller('rxPermissionSimpleCtrl', function ($scope, Session, rxNotify) {
+.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {
     rxNotify.add('Respect My Authority!!', {
         stack: 'permission',
         type: 'warning'
     });
 
     $scope.storeToken = function () {
-        Session.storeToken({
+        rxAuth.storeToken({
             access: {
                 user: {
                     roles: [{ name: 'test' }]
@@ -2034,7 +1939,7 @@ angular.module('demoApp')
     };
 
     $scope.clearToken = function () {
-        Session.logout();
+        rxAuth.logout();
     };
 });
 
@@ -2077,11 +1982,25 @@ angular.module('demoApp')
 
 
 
+
+
 angular.module('demoApp')
-.controller('rxSortEmptyTopSimpleCtrl', function ($scope, PageTracking, rxSortUtil) {
+.controller('rxSessionStorageSimpleCtrl', function ($scope, $window, rxSessionStorage) {
+    $scope.setSideKick = function () {
+        rxSessionStorage.setItem('Batman', 'Robin');
+    };
+
+    $scope.getSideKick = function () {
+        $window.alert(rxSessionStorage.getItem('Batman'));
+    };
+});
+
+
+angular.module('demoApp')
+.controller('rxSortEmptyTopSimpleCtrl', function ($scope, rxPageTracker, rxSortUtil) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sort = rxSortUtil.getDefault('name', false);
-    $scope.pager = PageTracking.createInstance();
+    $scope.pager = rxPageTracker.createInstance();
 
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
@@ -2112,6 +2031,61 @@ angular.module('demoApp')
 });
 
 
+
+
+angular.module('demoApp')
+.controller('rxStatusSimpleCtrl', function ($scope, $rootScope, rxStatus) {
+    rxStatus.setScope($scope);
+
+    $scope.triggerRouteChangeSuccess = function () {
+        $rootScope.$broadcast('$routeChangeSuccess');
+    };
+
+    $scope.clear = function () {
+        rxStatus.clear();
+        $scope.notify = undefined;
+    };
+
+    $scope.setLoading = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setLoading(msg);
+    };
+
+    $scope.setSuccess = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setSuccess(msg);
+    };
+
+    $scope.setSuccessNext = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setSuccessNext(msg);
+    };
+
+    $scope.setSuccessImmediate = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setSuccessImmediate(msg);
+    };
+
+    $scope.setWarning = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setWarning(msg);
+    };
+
+    $scope.setInfo = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setInfo(msg);
+    };
+
+    $scope.setError = function (msg) {
+        rxStatus.clear();
+        $scope.notify = rxStatus.setError(msg);
+    };
+
+    $scope.dismiss = function () {
+        $scope.notify && rxStatus.dismiss($scope.notify);
+        $scope.notify = undefined;
+    };
+});
 
 
 
@@ -2155,6 +2129,16 @@ angular.module('demoApp')
 
 
 
+angular.module('demoApp')
+.controller('rxTitleizeSimpleCtrl', function ($scope) {
+    $scope.sample = 'HELLO_welcome TO ENCore FRamework!';
+});
+
+
+
+
+
+
 
 
 angular.module('demoApp')
@@ -2167,10 +2151,6 @@ angular.module('demoApp')
 
 
 
-angular.module('demoApp')
-.controller('titleizeSimpleCtrl', function ($scope) {
-    $scope.sample = 'HELLO_welcome TO ENCore FRamework!';
-});
 
 
 

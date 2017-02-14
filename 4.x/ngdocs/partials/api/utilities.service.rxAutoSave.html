@@ -1,4 +1,4 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxAutoSave/scripts/rxAutoSave.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/9544378/src/utilities/rxAutoSave/scripts/rxAutoSave.js#L352" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAutoSave</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxAutoSave/scripts/rxAutoSave.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e0fb8ef/src/utilities/rxAutoSave/scripts/rxAutoSave.js#L353" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAutoSave</code>
 <div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
 </span>
 </div>
@@ -21,8 +21,8 @@ be saved independently of each other. <code>rxAutoSave</code> will also let you 
 appearing on the same page.</p>
 <p>By default, all values are stored in <a href="#/api/utilities.service:rxLocalStorage">rxLocalStoage</a> which interfaces with the
 browser&#39;s <code>localStorage</code> object. This means that if a user logs into a different computer, their stored values will
-not be present.  Use of <code>SessionStorage</code> is also supported out-of-the-box. If you wish to save form states elsewhere
-(for instance, to an API), see the &quot;Storage Location&quot; section below.</p>
+not be present.  Use of <code>rxSessionStorage</code> is also supported out-of-the-box. If you wish to save form states 
+elsewhere (for instance, to an API), see the &quot;Storage Location&quot; section below.</p>
 <h4 id="description_setting-up-your-template">Setting up your template</h4>
 <p>Nothing explicit needs to be done in your templates to add support for <code>rxAutoSave</code>. The only requirement is that all
 the <code>ng-model</code> values in a given form are stored within one object (<code>formData</code> below). For example, say you have the
@@ -197,12 +197,13 @@ when it should save. To turn off automatic saving, set up your instance as follo
 service, and keyed on the URL of the page, with a <code>rxAutoSave::</code> prefix. For example, if the above form were
 present at the URL <code>&#39;users/JonnyRocket/edit&#39;</code>, then the form data would be saved into the browser&#39;s <code>localStorage</code>
 at location <code>&#39;rxAutoSave::users/JonnyRocket/edit&#39;</code>.</p>
-<p>If you wish to use a different storage backend (<code>SessionStorage</code>, for instance), use the <code>storageBackend</code> parameter:</p>
+<p>If you wish to use a different storage backend (<code>rxSessionStorage</code>, for instance), use the <code>storageBackend</code> 
+parameter:</p>
 <pre class="prettyprint linenums">
-   var autosave = rxAutoSave($scope, 'formData', { storageBackend: SessionStorage });
+   var autosave = rxAutoSave($scope, 'formData', { storageBackend: rxSessionStorage });
 </pre>
 <p><code>storageBackend</code> requires that you pass it an object which has <code>getObject(key)</code> and <code>setObject(key, val)</code> methods.
-<code>rxLocalStorage</code> and <code>SessionStorage</code> are both provided by EncoreUI, and support this interface.</p>
+<code>rxLocalStorage</code> and <code>rxSessionStorage</code> are both provided by EncoreUI, and support this interface.</p>
 <p>You can use your own custom backends as well, as long as it supports <code>getObject(key)</code> and <code>setObject(key, val)</code>.</p>
 <h4 id="description_custom-storage-key-values">Custom Storage Key Values</h4>
 <p>Sometimes, it may be necessary to change how a key is formed for the specified <code>storageBackend</code>. As previously
@@ -226,7 +227,7 @@ just returns the original calculated key.</p>
 </div></td></tr><tr><td>variable</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>variable name corresponding to an object on the given scope</p>
 </div></td></tr><tr><td>options <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>usage options</p>
 </div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>clearOnSuccess <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Clear saved data on successful resolution of given promise.</p>
-</div> <p><em>(default: null)</em></p></td></tr><tr><td>keyShaping <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Sometimes, it may be necessary to change how a key is formed for the specified
+</div></td></tr><tr><td>keyShaping <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Sometimes, it may be necessary to change how a key is formed for the specified
 <code>storageBackend</code>.  Keys are calculated by prepending <code>&#39;rxAutoSave::&#39;</code> before the
 url. Your custom <code>keyShaping</code> function will take one parameter (<code>key</code>), to which
 you may modify to your specific needs.</p>
@@ -268,7 +269,7 @@ var autosave = rxAutoSave($scope, 'formData', {
 });
 </pre>
 </div></td></tr><tr><td>storageBackend <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Must be an object which has <code>getObject(key)</code> and <code>setObject(key, val)</code> methods.
-<code>rxLocalStorage</code> and <code>SessionStorage</code> are both provided by EncoreUI, and support
+<code>rxLocalStorage</code> and <code>rxSessionStorage</code> are both provided by EncoreUI, and support
 this interface.</p>
 <p>You can use your own custom backends as well, as long as it supports <code>getObject(key)</code>
 and <code>setObject(key, val)</code>.</p>

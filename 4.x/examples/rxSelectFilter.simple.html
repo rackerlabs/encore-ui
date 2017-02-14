@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="ticket in (filteredTickets = (tickets | Apply:filter))">
+      <tr ng-repeat="ticket in (filteredTickets = (tickets | rxApply:filter))">
         <td>{{ticket.account}}</td>
         <td>{{ticket.status}}</td>
         <td>{{ticket.description}}</td>

@@ -1,0 +1,24 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxSessionStorage/scripts/rxSessionStorage.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e0fb8ef/src/utilities/rxSessionStorage/scripts/rxSessionStorage.js#L24" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxSessionStorage</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxsessionstorage-page"><p>A simple wrapper for injecting the global variable sessionStorage
+for storing values in session storage. This service is similar to angular&#39;s
+$window and $document services.  The API works the same as the W3C&#39;s
+specification provided at: <a href="http://dev.w3.org/html5/webstorage/#storage-0">http://dev.w3.org/html5/webstorage/#storage-0</a>.
+Also includes to helper functions for getting and setting objects.</p>
+</div></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="utilities-service-page utilities-service-rxsessionstorage-page"><pre class="prettyprint linenums">
+rxSessionStorage.setItem('Batman', 'Robin'); // no return value
+rxSessionStorage.key(0); // returns 'Batman'
+rxSessionStorage.getItem('Batman'); // returns 'Robin'
+rxSessionStorage.removeItem('Batman'); // no return value
+rxSessionStorage.setObject('hero', {name:'Batman'}); // no return value
+rxSessionStorage.getObject('hero'); // returns { name: 'Batman'}
+rxSessionStorage.clear(); // no return value
+</pre>
+</div></div>
+</div>

@@ -84,7 +84,7 @@ angular.module('demoApp')
         ],
         "docs": {
             "md": "<p>This component is responsible for creating the HTML necessary for a common Encore layout. It builds out the main navigation, plus breadcrumbs and page titles.</p>\n",
-            "js": "angular.module('demoApp')\n.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, Session) {\n    Session.getUserId = function () {\n        return 'bert3000';\n    };\n\n    $scope.subtitle = 'With a subtitle';\n\n    $scope.changeSubtitle = function () {\n        $scope.subtitle = 'With a new subtitle at ' + Date.now();\n    };\n\n    rxVisibility.addMethod(\n        'isUserDefined',\n        function () {\n            return !_.isEmpty($rootScope.user);\n        }\n    );\n\n    $scope.changeRoutes = function () {\n        var newRoute = {\n            linkText: 'Updated Route',\n            childVisibility: 'true',\n            children: [\n                {\n                    linkText: 'New child route'\n                }\n            ]\n        };\n\n        encoreRoutes.setRouteByKey('accountLvlTools', newRoute);\n    };\n\n    // Fake navigation\n    var customApp = document.getElementById('custom-rxApp');\n    customApp.addEventListener('click', function (ev) {\n        var target = ev.target;\n\n        if (target.className.indexOf('item-link') > -1) {\n            // prevent the default jump to top\n            ev.preventDefault();\n\n            var href = target.getAttribute('href');\n\n            // update angular location (if href has a value)\n            if (!_.isEmpty(href)) {\n                // we need to prevent the window from scrolling (the demo does this)\n                // so we get the current scrollTop position\n                // and set it after the demo page has run '$routeChangeSuccess'\n                var currentScollTop = document.body.scrollTop;\n\n                $location.hash(href);\n\n                $rootScope.$apply();\n\n                $window.scrollTo(0, currentScollTop);\n            }\n        }\n    });\n\n    var searchDirective = [\n        'rx-app-search placeholder=\"Enter User\"',\n        'model=\"$root.user\"',\n        'pattern=\"/^([0-9a-zA-Z._ -]{2,})$/\"'\n    ].join(' ');\n\n    $scope.customMenu = [{\n        title: 'Example Menu',\n        children: [\n            {\n                href: 'Lvl1-1',\n                linkText: '1st Order Item'\n            },\n            {\n                linkText: '1st Order Item (w/o href) w/ Children',\n                childVisibility: [ 'isUserDefined' ],\n                childHeader: '<strong class=\"current-search\">Current User:</strong>' +\n                             '<span class=\"current-result\">{{$root.user}}</span>',\n                directive: searchDirective,\n                children: [\n                    {\n                        href: 'Lvl1-2-Lvl2-1',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [{\n                            href: 'Lvl1-2-Lvl2-1-Lvl3-1',\n                            linkText: '3rd Order Item'\n                        }]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-2',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-1',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-2',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-3',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-4',\n                                linkText: '3rd Order Item'\n                            }\n                        ]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-3',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            },\n            {\n                href: 'Lvl1-3',\n                linkText: '1st Order Item w/ Children',\n                children: [\n                    {\n                        href: 'Lvl1-3-Lvl2-1',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            }\n        ]\n    }];\n\n    // Load docs homepage ('Overview')\n    // NOTE: Trailing forward slash is not an accident.\n    // This is required to get Firefox to load the iframe.\n    //\n    // The resulting url should have double forward slashes `//`.\n    $scope.embedUrl = $location.absUrl().split('#')[0] + '/';\n});\n",
+            "js": "angular.module('demoApp')\n.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {\n    rxAuth.getUserId = function () {\n        return 'bert3000';\n    };\n\n    $scope.subtitle = 'With a subtitle';\n\n    $scope.changeSubtitle = function () {\n        $scope.subtitle = 'With a new subtitle at ' + Date.now();\n    };\n\n    rxVisibility.addMethod(\n        'isUserDefined',\n        function () {\n            return !_.isEmpty($rootScope.user);\n        }\n    );\n \n    $scope.changeRoutes = function () {\n        var newRoute = {\n            linkText: 'Updated Route',\n            childVisibility: 'true',\n            children: [\n                {\n                    linkText: 'New child route'\n                }\n            ]\n        };\n\n        encoreRoutes.setRouteByKey('accountLvlTools', newRoute);\n    };\n\n    // Fake navigation\n    var customApp = document.getElementById('custom-rxApp');\n    customApp.addEventListener('click', function (ev) {\n        var target = ev.target;\n\n        if (target.className.indexOf('item-link') > -1) {\n            // prevent the default jump to top\n            ev.preventDefault();\n\n            var href = target.getAttribute('href');\n\n            // update angular location (if href has a value)\n            if (!_.isEmpty(href)) {\n                // we need to prevent the window from scrolling (the demo does this)\n                // so we get the current scrollTop position\n                // and set it after the demo page has run '$routeChangeSuccess'\n                var currentScollTop = document.body.scrollTop;\n\n                $location.hash(href);\n\n                $rootScope.$apply();\n\n                $window.scrollTo(0, currentScollTop);\n            }\n        }\n    });\n\n    var searchDirective = [\n        'rx-app-search placeholder=\"Enter User\"',\n        'model=\"$root.user\"',\n        'pattern=\"/^([0-9a-zA-Z._ -]{2,})$/\"'\n    ].join(' ');\n\n    $scope.customMenu = [{\n        title: 'Example Menu',\n        children: [\n            {\n                href: 'Lvl1-1',\n                linkText: '1st Order Item'\n            },\n            {\n                linkText: '1st Order Item (w/o href) w/ Children',\n                childVisibility: [ 'isUserDefined' ],\n                childHeader: '<strong class=\"current-search\">Current User:</strong>' +\n                             '<span class=\"current-result\">{{$root.user}}</span>',\n                directive: searchDirective,\n                children: [\n                    {\n                        href: 'Lvl1-2-Lvl2-1',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [{\n                            href: 'Lvl1-2-Lvl2-1-Lvl3-1',\n                            linkText: '3rd Order Item'\n                        }]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-2',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-1',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-2',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-3',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-4',\n                                linkText: '3rd Order Item'\n                            }\n                        ]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-3',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            },\n            {\n                href: 'Lvl1-3',\n                linkText: '1st Order Item w/ Children',\n                children: [\n                    {\n                        href: 'Lvl1-3-Lvl2-1',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            }\n        ]\n    }];\n\n    // Load docs homepage ('Overview')\n    // NOTE: Trailing forward slash is not an accident.\n    // This is required to get Firefox to load the iframe.\n    //\n    // The resulting url should have double forward slashes `//`.\n    $scope.embedUrl = $location.absUrl().split('#')[0] + '/';\n});\n",
             "html": "<div ng-controller=\"rxAppCtrl\">\n  <h3>Standard rxApp</h3>\n  <rx-app id=\"standard-rxApp\">\n    <rx-page title=\"'Standard Page Title'\">\n      <p class=\"clear\">This is my page content</p>\n      <button ng-click=\"changeRoutes()\" class=\"button\">Change Routes</button>\n    </rx-page>\n  </rx-app>\n\n  <h3>Customized rxApp (collapsible)</h3>\n  <rx-app collapsible-nav=\"true\" site-title=\"My App\" id=\"custom-rxApp\" menu=\"customMenu\" new-instance=\"true\" hide-feedback=\"true\">\n    <rx-page\n      unsafe-html-title=\"'Customized Page <a href=&quot;http://rackspace.com&quot;>Title</a>'\"\n      subtitle=\"subtitle\"\n      status=\"alpha\"\n      account-number=\"12345\">\n\n      <p class=\"clear\">Click a link in the menu to see the active state change</p>\n      <p>Click the toggle to hide the menu</p>\n      <button ng-click=\"changeSubtitle()\" class=\"changeSubtitle button\">Change Subtitle</button>\n    </rx-page>\n  </rx-app>\n\n  <h3>Embedded rxApp</h3>\n  <p>\n    rxApp is smart enough to detect if it is loaded in an iframe and will hide\n    the left nav.\n  </p>\n  <iframe id=\"embedded-app\" ng-src=\"{{embedUrl}}\"></iframe>\n</div>\n\n<!--\nYou'll likely want to implement your HTML in your index.html file as:\n<div ng-app=\"sampleApp\">\n    <rx-app ng-view></rx-app>\n</div>\n\nAnd the template for each view/page will be something like:\n<rx-page title=\"'Example Page'\">\n    Example content\n</rx-page>\n-->\n",
             "less": ""
         }
@@ -795,7 +795,7 @@ angular.module('demoApp')
         ],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxBulkSelectAdvancedCtrl', function ($scope) {\n\n    $scope.datacenters = [\n        { name: 'ORD1', city: 'Chicago' },\n        { name: 'DFW1', city: 'Grapevine' },\n        { name: 'DFW2', city: 'Richardson' },\n        { name: 'IAD2', city: 'Ashburn' },\n        { name: 'IAD3', city: 'Ashburn' },\n        { name: 'LON1', city: 'West Drayton' },\n        { name: 'LON3', city: 'Berkshire' },\n        { name: 'LON5', city: 'Crawley' },\n        { name: 'HKG1', city: 'Hong Kong' },\n        { name: 'SYD2', city: 'Sydney' }\n    ];\n\n    // cloned to avoid interference with first demo table\n    $scope.validateDatacenters = _.cloneDeep($scope.datacenters);\n\n    $scope.filter = { keyword: '' };\n\n    $scope.getSelectedDatacenters = function () {\n        return _.cloneDeep(_.filter($scope.datacenters, { rowIsSelected: true }));\n    };\n\n})\n.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {\n    $scope.sort = rxSortUtil.getDefault('name');\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    var itemsPerPage = 8;\n    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });\n    $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;\n\n    $scope.removeDatacenter = function (dc) {\n        _.remove($scope.selectedDatacenters, dc);\n    };\n\n    $scope.submit = function () {\n        $scope.setState('working');\n\n        $scope.numCompleted = 0;\n\n        var delay = 1000;\n        $scope.selectedDatacenters.forEach(function (dc, i) {\n            $timeout(function () {\n                dc.status = 'pending';\n            }, i * delay);\n            $timeout(function () {\n                dc.status = i % 4 === 0 ? 'failure' : 'success';\n                $scope.numCompleted++;\n            }, ++i * delay);\n        });\n        $timeout(function () {\n            $scope.setState('complete');\n            $scope.errorsPresent = _.some($scope.selectedDatacenters, { status: 'failure' });\n        }, $scope.selectedDatacenters.length * delay);\n    };\n\n    $scope.cancel = $modalInstance.dismiss;\n});\n\nangular.module('demoApp')\n.controller('rxBulkSelectValidateCtrl', function ($scope) {\n\n    $scope.datacenters = [\n        { name: 'ORD1', city: 'Chicago' },\n        { name: 'DFW1', city: 'Grapevine' },\n        { name: 'DFW2', city: 'Richardson' },\n        { name: 'IAD2', city: 'Ashburn' },\n        { name: 'IAD3', city: 'Ashburn' },\n        { name: 'LON1', city: 'West Drayton' },\n        { name: 'LON3', city: 'Berkshire' },\n        { name: 'LON5', city: 'Crawley' },\n        { name: 'HKG1', city: 'Honk Kong' },\n        { name: 'SYD2', city: 'Sydney' }\n    ];\n\n    // cloned to avoid interference with first demo table\n    $scope.validateDatacenters = _.cloneDeep($scope.datacenters);\n\n    $scope.filter = { keyword: '' };\n\n    $scope.getSelectedDatacenters = function () {\n        return _.cloneDeep(_.where($scope.datacenters, { rowIsSelected: true }));\n    };\n\n})\n.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, PageTracking) {\n    $scope.sort = rxSortUtil.getDefault('name');\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    var itemsPerPage = 8;\n    $scope.pager = PageTracking.createInstance({ itemsPerPage: itemsPerPage });\n    $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;\n\n    $scope.removeDatacenter = function (dc) {\n        _.remove($scope.selectedDatacenters, dc);\n    };\n\n    $scope.submit = function () {\n        $scope.setState('working');\n\n        $scope.numCompleted = 0;\n\n        var delay = 1000;\n        $scope.selectedDatacenters.forEach(function (dc, i) {\n            $timeout(function () {\n                dc.status = 'pending';\n            }, i * delay);\n            $timeout(function () {\n                dc.status = i % 4 === 0 ? 'failure' : 'success';\n                $scope.numCompleted++;\n            }, ++i * delay);\n        });\n        $timeout(function () {\n            $scope.setState('complete');\n            $scope.errorsPresent = _.some($scope.selectedDatacenters, { status: 'failure' });\n        }, $scope.selectedDatacenters.length * delay);\n    };\n\n    $scope.cancel = $modalInstance.dismiss;\n});\n\nangular.module('demoApp')\n.controller('rxFloatingHeaderCtrl', function ($scope) {\n    $scope.searchText = '';\n    $scope.data = [\n        { name: 'First', value: 1 },\n        { name: 'A', value: 2 },\n        { name: 'B', value: 3 },\n        { name: 'C', value: 4 },\n        { name: 'D', value: 5 },\n        { name: 'E', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'Middle', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'G', value: 2 },\n        { name: 'H', value: 3 },\n        { name: 'I', value: 4 },\n        { name: 'J', value: 5 },\n        { name: 'K', value: 1 },\n        { name: 'Last', value: 2 }\n    ];\n\n    $scope.clearFilter = function () {\n        $scope.searchText = '';\n    };\n});\n\nangular.module('demoApp')\n.controller('rxSelectFilterSimpleCtrl', function ($scope, SelectFilter) {\n    $scope.filter = SelectFilter.create({\n        properties: ['account', 'status'],\n        selected: {\n            account: ['A']\n        }\n    });\n\n    $scope.tickets = [\n        { account: 'A', status: 'NEW', description: 'A new ticket' },\n        { account: 'A', status: 'IN_PROGRESS', description: 'Fix all the bugs' },\n        { account: 'B', status: 'TRANSFERRED', description: 'Don\\'t stop believing' },\n        { account: 'B', status: 'VENDOR', description: 'Hold on to that feeling' },\n        { account: 'A', status: 'TRANSFERRED', description: 'qwertyuiop' }\n    ];\n});\n\nangular.module('demoApp')\n.controller('rxSortableColumnSimpleCtrl', function ($scope, rxSortUtil) {\n    $scope.sort = rxSortUtil.getDefault('name', false);\n\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    $scope.talentPool = [\n        {\n            name: 'Andrew Yurisich',\n            jobTitle: 'Mailroom Associate IV'\n        },\n        {\n            name: 'Patrick Deuley',\n            jobTitle: 'Design Chaplain'\n        },\n        {\n            name: null,\n            jobTitle: 'Chief Mastermind'\n        },\n        {\n            jobTitle: 'Assistant Chief Mastermind'\n        },\n        {\n            name: 'Hussam Dawood',\n            jobTitle: 'Evangelist of Roger Enriquez'\n        },\n        {\n            name: 'Kerry Bowley',\n            jobTitle: 'Dev Mom'\n        },\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableFilteringExampleCtrl', function ($scope) {\n    $scope.people = [\n        { name: 'Patrick Deuley', occupation: 'Design Chaplain' },\n        { name: 'Hussam Dawood', occupation: 'Cat Lover' },\n        { name: 'Kevin Lamping', occupation: 'Framework Father' },\n        { name: 'Glynnis Ritchie', occupation: 'Serif Sheriff' },\n        { name: 'Freddy Knuth', occupation: 'Venezuelan Hurricane' },\n        { name: 'Chris Cantu', occupation: 'Texan Tornado' },\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableFilteringCollapsibleExampleCtrl', function ($scope) {\n    $scope.filter = { region: '' };\n\n    $scope.regions = [\n        { name: 'DFW', city: 'Dallas-Fort Worth' }, { name: 'ORD', city: 'Chicago' },\n        { name: 'IAD', city: 'Northern Virginia' }, { name: 'LON', city: 'London' },\n        { name: 'HKG', city: 'Hong Kong' }, { name: 'SYD', city: 'Sydney' }\n    ];\n\n    $scope.servers = [\n        { name: 'General1-1', ram: '1 GB', cpu: 1, disk: '20GB SSD', region: 'DFW' },\n        { name: 'General1-2', ram: '2 GB', cpu: 2, disk: '40GB SSD', region: 'ORD' },\n        { name: 'General1-4', ram: '4 GB', cpu: 4, disk: '80GB SSD', region: 'IAD' },\n        { name: 'General1-8', ram: '8 GB', cpu: 8, disk: '160GB SSD', region: 'LON' },\n        { name: 'I/O1-15', ram: '15 GB', cpu: 4, disk: '40GB SSD', region: 'HKG' },\n        { name: 'I/O1-30', ram: '30 GB', cpu: 8, disk: '40GB SSD', region: 'SYD' }\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableNestedMetadataExampleCtrl', function ($scope) {\n    $scope.people = [\n        {\n            name: 'Patrick Deuley',\n            occupation: 'Design Chaplain',\n            pet: {\n                name: 'Shelly',\n                animal: 'Turtle',\n                age: 1\n            }\n        },\n        {\n            name: 'Hussam Dawood',\n            occupation: 'Cat Lover',\n            pet: {\n                name: 'Sassy',\n                animal: 'Cat',\n                age: 6\n            }\n        }\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableNestedTableExampleCtrl', function ($scope) {\n    $scope.people = [\n        {\n            name: 'Patrick Deuley',\n            occupation: 'Design Chaplain',\n            pets: [\n                {\n                    name: 'Shelly',\n                    animal: 'Turtle',\n                    age: 1\n                },\n                {\n                    name: 'Spike',\n                    animal: 'Porcupine',\n                    age: 10\n                }\n            ]\n        },\n        {\n            name: 'Hussam Dawood',\n            occupation: 'Cat Lover',\n            pets: [\n                {\n                    name: 'Sassy',\n                    animal: 'Cat',\n                    age: 6\n                }\n            ]\n        }\n    ];\n});\n\nangular.module('demoApp')\n.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, PageTracking,\n                rxSortUtil, SelectFilter) {\n\n    var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];\n    var makeServers = function (serverCount) {\n        var servers = [];\n        for (var i = 1; i < serverCount + 1; i++) {\n            var server = {\n                id: i,\n                name: 'Server ' + i,\n                os: os[i % os.length]\n            };\n            servers.push(server);\n        }\n        return servers;\n    };\n\n    var allLazyServers = makeServers(701);\n\n    var serverInterface = {\n        getItems: function (pageNumber, itemsPerPage, params) {\n            var deferred = $q.defer();\n            var filterText = params.filterText;\n            var sortColumn = params.sortColumn;\n            var sortDirection = params.sortDirection;\n\n            if (sortColumn === 'name') {\n                sortColumn = 'id';\n            }\n\n            if (sortDirection === 'DESCENDING') {\n                sortColumn = '-' + sortColumn;\n            }\n\n            $timeout(function () {\n                var first = pageNumber * itemsPerPage;\n                var added = first + itemsPerPage;\n                var last = (added > allLazyServers.length) ? allLazyServers.length : added;\n\n                var filteredServers = $filter('filter')(allLazyServers, filterText);\n                filteredServers = $scope.osFilter.applyTo(filteredServers);\n                filteredServers = $filter('orderBy')(filteredServers, sortColumn);\n\n                // Return 100 items more than the user's `itemsPerPage`. i.e. if the\n                // user is asking for 25 items per page, return 125 in total\n                var lazyServers = filteredServers.slice(first, last + 100);\n\n                var response = {\n                    items: lazyServers,\n                    pageNumber: pageNumber,\n                    totalNumberOfItems: filteredServers.length\n                };\n\n                if (filterText === 'error') {\n                    deferred.reject();\n                } else {\n                    deferred.resolve(response);\n                }\n            }, 300);\n            return deferred.promise;\n        }\n    };\n\n    $scope.sort = rxSortUtil.getDefault('name', false);\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n    $scope.data = { searchText: '' };\n    $scope.clearFilter = function () {\n        $scope.data.searchText = '';\n    };\n    $scope.osFilter = SelectFilter.create({\n        properties: ['os'],\n        available: {\n            os: os\n        }\n    });\n    $scope.serverInterface = serverInterface;\n    $scope.pagedServers = PageTracking.createInstance({ itemsPerPage: 25 });\n});\n\nangular.module('demoApp')\n.controller('rxPaginateUiCtrl', function ($scope, PageTracking) {\n    $scope.pager = PageTracking.createInstance({ itemsPerPage: 3 });\n\n    var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];\n    var makeServers = function (serverCount) {\n        var servers = [];\n        for (var i = 1; i < serverCount + 1; i++) {\n            var server = {\n                id: i,\n                name: 'Server ' + i,\n                os: os[i % os.length]\n            };\n            servers.push(server);\n        }\n        return servers;\n    };\n\n    $scope.servers = makeServers(21);\n\n    $scope.removeServers = function () {\n        if ($scope.servers.length > 2) {\n            $scope.servers = $scope.servers.splice(2);\n        }\n    };\n\n    $scope.addServers = function () {\n        $scope.servers = $scope.servers.concat(makeServers(2));\n    };\n});\n\nangular.module('demoApp')\n.controller('rxStatusColumnCtrl', function ($scope, rxStatusMappings, rxSortUtil) {\n    $scope.servers = [\n        { status: 'ACTIVE', title: 'ACTIVE status' },\n        { status: 'ERROR', title: 'ERROR status' },\n        { status: 'DISABLED', title: 'DISABLED status' },\n        { status: 'DELETED', title: 'DELETED status mapped to ERROR' },\n        { status: 'UNKNOWN', title: 'UNKNOWN status mapped to ERROR' },\n        { status: 'RESCUE', title: 'RESCUE status mapped to INFO' },\n        { status: 'SUSPENDED', title: 'SUSPENDED status mapped to WARNING' },\n        { status: 'REBUILD', title: 'REBUILD status mapped to PENDING' },\n        { status: 'RESIZE', title: 'RESIZE status mapped to PENDING' },\n        { status: 'MIGRATING', title: 'MIGRATING status mapped to PENDING' },\n        { status: 'DELETING', title: 'DELETING status mapped to PENDING, using `fooApi` mapping', api: 'fooApi' }\n    ];\n\n    // We have a few different ways of adding mappings. We've tried to show them all here\n    rxStatusMappings.addGlobal({\n        'DELETING': 'PENDING'\n    });\n    rxStatusMappings.mapToInfo('RESCUE');\n    rxStatusMappings.mapToWarning('SUSPENDED');\n    rxStatusMappings.mapToPending(['REBUILD','RESIZE','MIGRATING']);\n    rxStatusMappings.mapToError(['DELETED', 'UNKNOWN']);\n    rxStatusMappings.addAPI('fooApi', { 'DELETING': 'PENDING' });\n    rxStatusMappings.mapToPending('SomeApiSpecificStatus', 'fooApi');\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n    $scope.sort = rxSortUtil.getDefault('status');\n});\n",
+            "js": "angular.module('demoApp')\n.controller('rxBulkSelectAdvancedCtrl', function ($scope) {\n\n    $scope.datacenters = [\n        { name: 'ORD1', city: 'Chicago' },\n        { name: 'DFW1', city: 'Grapevine' },\n        { name: 'DFW2', city: 'Richardson' },\n        { name: 'IAD2', city: 'Ashburn' },\n        { name: 'IAD3', city: 'Ashburn' },\n        { name: 'LON1', city: 'West Drayton' },\n        { name: 'LON3', city: 'Berkshire' },\n        { name: 'LON5', city: 'Crawley' },\n        { name: 'HKG1', city: 'Hong Kong' },\n        { name: 'SYD2', city: 'Sydney' }\n    ];\n\n    // cloned to avoid interference with first demo table\n    $scope.validateDatacenters = _.cloneDeep($scope.datacenters);\n\n    $scope.filter = { keyword: '' };\n\n    $scope.getSelectedDatacenters = function () {\n        return _.cloneDeep(_.filter($scope.datacenters, { rowIsSelected: true }));\n    };\n\n})\n.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {\n    $scope.sort = rxSortUtil.getDefault('name');\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    var itemsPerPage = 8;\n    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });\n    $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;\n\n    $scope.removeDatacenter = function (dc) {\n        _.remove($scope.selectedDatacenters, dc);\n    };\n\n    $scope.submit = function () {\n        $scope.setState('working');\n\n        $scope.numCompleted = 0;\n\n        var delay = 1000;\n        $scope.selectedDatacenters.forEach(function (dc, i) {\n            $timeout(function () {\n                dc.status = 'pending';\n            }, i * delay);\n            $timeout(function () {\n                dc.status = i % 4 === 0 ? 'failure' : 'success';\n                $scope.numCompleted++;\n            }, ++i * delay);\n        });\n        $timeout(function () {\n            $scope.setState('complete');\n            $scope.errorsPresent = _.some($scope.selectedDatacenters, { status: 'failure' });\n        }, $scope.selectedDatacenters.length * delay);\n    };\n\n    $scope.cancel = $modalInstance.dismiss;\n});\n\nangular.module('demoApp')\n.controller('rxBulkSelectValidateCtrl', function ($scope) {\n\n    $scope.datacenters = [\n        { name: 'ORD1', city: 'Chicago' },\n        { name: 'DFW1', city: 'Grapevine' },\n        { name: 'DFW2', city: 'Richardson' },\n        { name: 'IAD2', city: 'Ashburn' },\n        { name: 'IAD3', city: 'Ashburn' },\n        { name: 'LON1', city: 'West Drayton' },\n        { name: 'LON3', city: 'Berkshire' },\n        { name: 'LON5', city: 'Crawley' },\n        { name: 'HKG1', city: 'Honk Kong' },\n        { name: 'SYD2', city: 'Sydney' }\n    ];\n\n    // cloned to avoid interference with first demo table\n    $scope.validateDatacenters = _.cloneDeep($scope.datacenters);\n\n    $scope.filter = { keyword: '' };\n\n    $scope.getSelectedDatacenters = function () {\n        return _.cloneDeep(_.where($scope.datacenters, { rowIsSelected: true }));\n    };\n\n})\n.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {\n    $scope.sort = rxSortUtil.getDefault('name');\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    var itemsPerPage = 8;\n    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: itemsPerPage });\n    $scope.showPagination = itemsPerPage < $scope.selectedDatacenters.length;\n\n    $scope.removeDatacenter = function (dc) {\n        _.remove($scope.selectedDatacenters, dc);\n    };\n\n    $scope.submit = function () {\n        $scope.setState('working');\n\n        $scope.numCompleted = 0;\n\n        var delay = 1000;\n        $scope.selectedDatacenters.forEach(function (dc, i) {\n            $timeout(function () {\n                dc.status = 'pending';\n            }, i * delay);\n            $timeout(function () {\n                dc.status = i % 4 === 0 ? 'failure' : 'success';\n                $scope.numCompleted++;\n            }, ++i * delay);\n        });\n        $timeout(function () {\n            $scope.setState('complete');\n            $scope.errorsPresent = _.some($scope.selectedDatacenters, { status: 'failure' });\n        }, $scope.selectedDatacenters.length * delay);\n    };\n\n    $scope.cancel = $modalInstance.dismiss;\n});\n\nangular.module('demoApp')\n.controller('rxFloatingHeaderCtrl', function ($scope) {\n    $scope.searchText = '';\n    $scope.data = [\n        { name: 'First', value: 1 },\n        { name: 'A', value: 2 },\n        { name: 'B', value: 3 },\n        { name: 'C', value: 4 },\n        { name: 'D', value: 5 },\n        { name: 'E', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'Middle', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'F', value: 1 },\n        { name: 'G', value: 2 },\n        { name: 'H', value: 3 },\n        { name: 'I', value: 4 },\n        { name: 'J', value: 5 },\n        { name: 'K', value: 1 },\n        { name: 'Last', value: 2 }\n    ];\n\n    $scope.clearFilter = function () {\n        $scope.searchText = '';\n    };\n});\n\nangular.module('demoApp')\n.controller('rxSelectFilterSimpleCtrl', function ($scope, rxSelectFilter) {\n    $scope.filter = rxSelectFilter.create({\n        properties: ['account', 'status'],\n        selected: {\n            account: ['A']\n        }\n    });\n\n    $scope.tickets = [\n        { account: 'A', status: 'NEW', description: 'A new ticket' },\n        { account: 'A', status: 'IN_PROGRESS', description: 'Fix all the bugs' },\n        { account: 'B', status: 'TRANSFERRED', description: 'Don\\'t stop believing' },\n        { account: 'B', status: 'VENDOR', description: 'Hold on to that feeling' },\n        { account: 'A', status: 'TRANSFERRED', description: 'qwertyuiop' }\n    ];\n});\n\nangular.module('demoApp')\n.controller('rxSortableColumnSimpleCtrl', function ($scope, rxSortUtil) {\n    $scope.sort = rxSortUtil.getDefault('name', false);\n\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    $scope.talentPool = [\n        {\n            name: 'Andrew Yurisich',\n            jobTitle: 'Mailroom Associate IV'\n        },\n        {\n            name: 'Patrick Deuley',\n            jobTitle: 'Design Chaplain'\n        },\n        {\n            name: null,\n            jobTitle: 'Chief Mastermind'\n        },\n        {\n            jobTitle: 'Assistant Chief Mastermind'\n        },\n        {\n            name: 'Hussam Dawood',\n            jobTitle: 'Evangelist of Roger Enriquez'\n        },\n        {\n            name: 'Kerry Bowley',\n            jobTitle: 'Dev Mom'\n        },\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableFilteringExampleCtrl', function ($scope) {\n    $scope.people = [\n        { name: 'Patrick Deuley', occupation: 'Design Chaplain' },\n        { name: 'Hussam Dawood', occupation: 'Cat Lover' },\n        { name: 'Kevin Lamping', occupation: 'Framework Father' },\n        { name: 'Glynnis Ritchie', occupation: 'Serif Sheriff' },\n        { name: 'Freddy Knuth', occupation: 'Venezuelan Hurricane' },\n        { name: 'Chris Cantu', occupation: 'Texan Tornado' },\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableFilteringCollapsibleExampleCtrl', function ($scope) {\n    $scope.filter = { region: '' };\n\n    $scope.regions = [\n        { name: 'DFW', city: 'Dallas-Fort Worth' }, { name: 'ORD', city: 'Chicago' },\n        { name: 'IAD', city: 'Northern Virginia' }, { name: 'LON', city: 'London' },\n        { name: 'HKG', city: 'Hong Kong' }, { name: 'SYD', city: 'Sydney' }\n    ];\n\n    $scope.servers = [\n        { name: 'General1-1', ram: '1 GB', cpu: 1, disk: '20GB SSD', region: 'DFW' },\n        { name: 'General1-2', ram: '2 GB', cpu: 2, disk: '40GB SSD', region: 'ORD' },\n        { name: 'General1-4', ram: '4 GB', cpu: 4, disk: '80GB SSD', region: 'IAD' },\n        { name: 'General1-8', ram: '8 GB', cpu: 8, disk: '160GB SSD', region: 'LON' },\n        { name: 'I/O1-15', ram: '15 GB', cpu: 4, disk: '40GB SSD', region: 'HKG' },\n        { name: 'I/O1-30', ram: '30 GB', cpu: 8, disk: '40GB SSD', region: 'SYD' }\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableNestedMetadataExampleCtrl', function ($scope) {\n    $scope.people = [\n        {\n            name: 'Patrick Deuley',\n            occupation: 'Design Chaplain',\n            pet: {\n                name: 'Shelly',\n                animal: 'Turtle',\n                age: 1\n            }\n        },\n        {\n            name: 'Hussam Dawood',\n            occupation: 'Cat Lover',\n            pet: {\n                name: 'Sassy',\n                animal: 'Cat',\n                age: 6\n            }\n        }\n    ];\n});\n\nangular.module('demoApp')\n.controller('tableNestedTableExampleCtrl', function ($scope) {\n    $scope.people = [\n        {\n            name: 'Patrick Deuley',\n            occupation: 'Design Chaplain',\n            pets: [\n                {\n                    name: 'Shelly',\n                    animal: 'Turtle',\n                    age: 1\n                },\n                {\n                    name: 'Spike',\n                    animal: 'Porcupine',\n                    age: 10\n                }\n            ]\n        },\n        {\n            name: 'Hussam Dawood',\n            occupation: 'Cat Lover',\n            pets: [\n                {\n                    name: 'Sassy',\n                    animal: 'Cat',\n                    age: 6\n                }\n            ]\n        }\n    ];\n});\n\nangular.module('demoApp')\n.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,\n                rxSortUtil, rxSelectFilter) {\n\n    var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];\n    var makeServers = function (serverCount) {\n        var servers = [];\n        for (var i = 1; i < serverCount + 1; i++) {\n            var server = {\n                id: i,\n                name: 'Server ' + i,\n                os: os[i % os.length]\n            };\n            servers.push(server);\n        }\n        return servers;\n    };\n\n    var allLazyServers = makeServers(701);\n\n    var serverInterface = {\n        getItems: function (pageNumber, itemsPerPage, params) {\n            var deferred = $q.defer();\n            var filterText = params.filterText;\n            var sortColumn = params.sortColumn;\n            var sortDirection = params.sortDirection;\n\n            if (sortColumn === 'name') {\n                sortColumn = 'id';\n            }\n\n            if (sortDirection === 'DESCENDING') {\n                sortColumn = '-' + sortColumn;\n            }\n\n            $timeout(function () {\n                var first = pageNumber * itemsPerPage;\n                var added = first + itemsPerPage;\n                var last = (added > allLazyServers.length) ? allLazyServers.length : added;\n\n                var filteredServers = $filter('filter')(allLazyServers, filterText);\n                filteredServers = $scope.osFilter.applyTo(filteredServers);\n                filteredServers = $filter('orderBy')(filteredServers, sortColumn);\n\n                // Return 100 items more than the user's `itemsPerPage`. i.e. if the\n                // user is asking for 25 items per page, return 125 in total\n                var lazyServers = filteredServers.slice(first, last + 100);\n\n                var response = {\n                    items: lazyServers,\n                    pageNumber: pageNumber,\n                    totalNumberOfItems: filteredServers.length\n                };\n\n                if (filterText === 'error') {\n                    deferred.reject();\n                } else {\n                    deferred.resolve(response);\n                }\n            }, 300);\n            return deferred.promise;\n        }\n    };\n\n    $scope.sort = rxSortUtil.getDefault('name', false);\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n    $scope.data = { searchText: '' };\n    $scope.clearFilter = function () {\n        $scope.data.searchText = '';\n    };\n    $scope.osFilter = rxSelectFilter.create({\n        properties: ['os'],\n        available: {\n            os: os\n        }\n    });\n    $scope.serverInterface = serverInterface;\n    $scope.pagedServers = rxPageTracker.createInstance({ itemsPerPage: 25 });\n});\n\nangular.module('demoApp')\n.controller('rxPaginateUiCtrl', function ($scope, rxPageTracker) {\n    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: 3 });\n\n    var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];\n    var makeServers = function (serverCount) {\n        var servers = [];\n        for (var i = 1; i < serverCount + 1; i++) {\n            var server = {\n                id: i,\n                name: 'Server ' + i,\n                os: os[i % os.length]\n            };\n            servers.push(server);\n        }\n        return servers;\n    };\n\n    $scope.servers = makeServers(21);\n\n    $scope.removeServers = function () {\n        if ($scope.servers.length > 2) {\n            $scope.servers = $scope.servers.splice(2);\n        }\n    };\n\n    $scope.addServers = function () {\n        $scope.servers = $scope.servers.concat(makeServers(2));\n    };\n});\n\nangular.module('demoApp')\n.controller('rxStatusColumnCtrl', function ($scope, rxStatusMappings, rxSortUtil) {\n    $scope.servers = [\n        { status: 'ACTIVE', title: 'ACTIVE status' },\n        { status: 'ERROR', title: 'ERROR status' },\n        { status: 'DISABLED', title: 'DISABLED status' },\n        { status: 'DELETED', title: 'DELETED status mapped to ERROR' },\n        { status: 'UNKNOWN', title: 'UNKNOWN status mapped to ERROR' },\n        { status: 'RESCUE', title: 'RESCUE status mapped to INFO' },\n        { status: 'SUSPENDED', title: 'SUSPENDED status mapped to WARNING' },\n        { status: 'REBUILD', title: 'REBUILD status mapped to PENDING' },\n        { status: 'RESIZE', title: 'RESIZE status mapped to PENDING' },\n        { status: 'MIGRATING', title: 'MIGRATING status mapped to PENDING' },\n        { status: 'DELETING', title: 'DELETING status mapped to PENDING, using `fooApi` mapping', api: 'fooApi' }\n    ];\n\n    // We have a few different ways of adding mappings. We've tried to show them all here\n    rxStatusMappings.addGlobal({\n        'DELETING': 'PENDING'\n    });\n    rxStatusMappings.mapToInfo('RESCUE');\n    rxStatusMappings.mapToWarning('SUSPENDED');\n    rxStatusMappings.mapToPending(['REBUILD','RESIZE','MIGRATING']);\n    rxStatusMappings.mapToError(['DELETED', 'UNKNOWN']);\n    rxStatusMappings.addAPI('fooApi', { 'DELETING': 'PENDING' });\n    rxStatusMappings.mapToPending('SomeApiSpecificStatus', 'fooApi');\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n    $scope.sort = rxSortUtil.getDefault('status');\n});\n",
             "html": "<h2>\n  <rx-permalink>Bulk Select</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxBulkSelect/\">View API</a>\n</h2>\n<p>\n  The rxBulkSelect directive is used to perform actions on multiple items\n  in a table.There are no directives provided for the modal, but it should\n  follow a few design conventions:\n</p>\n<ul class=\"list\">\n  <li>\n    The first view has a warning at the top, and a table listing the selected\n    items. The table should be paginated with 8 items per page, and items may\n    be removed via an \"X\" icon (see the Delete \"X\" action).\n  </li>\n  <li>\n    In the second view, the table has a status column with text describing\n    the state of each item, and another column with an icon to indicate\n    the state. A progressbar should be included as well as a link that\n    opens the current page in a new tab.\n  </li>\n  <li>\n    Once the process is complete a \"Return to [x]\" button should appear\n    in the footer, and the progressbar should be replaced with some text\n    indicating the process is complete.\n  </li>\n</ul>\n<rx-example name=\"rxBulkSelect.advanced\"></rx-example>\n\n<h3>Bulk Selection Validation</h3>\n<p>\n  To validate bulk selection in a form, use the rxBulkSelectValidate directive.\n</p>\n<rx-example name=\"rxBulkSelect.validate\"></rx-example>\n\n<h2>\n  <rx-permalink>Status Column</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxStatusColumn/\">View API</a>\n</h2>\n<p>\n  To add status columns to table rows, use the rxStatusColumn directive.\n</p>\n<rx-example name=\"table.statusColumn\"></rx-example>\n\n<h2><rx-permalink>Basic Tables</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Tables have default styles: regular rows have white backgrounds, while\n    headers use white text with a gray background. An additional\n    <code>.table-striped</code> class is available for alternate row striping.\n  </li>\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> You can use tables to show\n    data-table related details, such as listing of objects.\n  </li>\n  <li>\n    If you need to show summary-style important pieces of metadata that aren't\n    necessarily related to each other, consider using an\n    <a href=\"#/elements/Metadata\">Metadata</a> element.\n  </li>\n  <li>\n    In Support Services, some exceptions exist where it is appropriate to use\n    different table styling. See the\n    <a href=\"#/elements/tables#non-data-tables\">Non-Data based Tables</a>\n    section for more information.\n  </li>\n</ul>\n<rx-example name=\"table.basic\"></rx-example>\n\n<h2><rx-permalink>Floating Header</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    The rxFloatingHeader directive maintains the visibility of column titles in a table\n    as a user scrolls down the page.\n  </li>\n  <li>\n    A common pattern is to include a filter with tables.\n    You can have that as part of the floating header by setting\n    it in a separate <code>&lt;tr&gt;</code> element.\n  </li>\n</ul>\n<rx-example name=\"rxFloatingHeader\"></rx-example>\n\n<rx-debug>\n  <h2>Non-filtered floating header</h2>\n  <table rx-floating-header class=\"e2e-no-filter\">\n    <thead>\n      <tr>\n        <th>Column One Header</th>\n        <th>Column Two Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr class=\"first-row\">\n        <td>table1 data1</td>\n        <td>table1 data1</td>\n      </tr>\n      <tr>\n        <td>table1 data2</td>\n        <td>table1 data2</td>\n      </tr>\n      <tr>\n        <td>table1 data3</td>\n        <td>table1 data3</td>\n      </tr>\n      <tr class=\"middle-row\">\n        <td>table1 data4</td>\n        <td>table1 data4</td>\n      </tr>\n      <tr>\n        <td>table1 data5</td>\n        <td>table1 data5</td>\n      </tr>\n      <tr class=\"last-row\">\n        <td>table1 data6</td>\n        <td>table1 data6</td>\n      </tr>\n    </tbody>\n  </table>\n</rx-debug>\n\n<h2><rx-permalink>Directives</rx-permalink></h2>\n\n<h3><rx-permalink>Cog Menus via rxActionMenu</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    For implementation and examples, see the\n    <a href=\"#/elements/ActionMenu\">ActionMenu</a> element.\n  </li>\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> If you need to show\n    actionable items for every row, cogs are helpful. For example: most main\n    table listings show cog menus with actionable items, such as Cloud Server\n    pages showing FirstGen/NextGen actions or Cloud Block Storage Volumes.\n  </li>\n  <li>\n    To help you choose which icons and colors to use, read more about\n    <a href=\"#/styles/links\">icons and colors here</a>.\n  </li>\n  <li>\n    There may be cases where an action is not available on a particular row.\n    In this scenario, you can disable those links using the\n    <code>.disabled</code> class.\n  </li>\n  <li>\n    The <code>.actions</code> class is used on a column header\n    (<code>th</code> tag) to add a 15px width for action cogs in the\n    table body.\n  </li>\n  <li>\n    Are you using LBaaS connection nodes or Support Service user tables?\n    There is a design exception to these tables described in the\n    <a href=\"#/elements/tables#delete-x-action\">Delete \"X\" actions</a> section.\n  </li>\n</ul>\n<rx-example name=\"table.actionMenu\"></rx-example>\n\n<h2>\n  <rx-permalink>Table Pagination</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxPaginate/\">View API</a>\n</h2>\n<ul class=\"list\">\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> To show how mark-up will be\n    implemented, pagination is visible in this example. The pagination\n    directive doesn't display if there is only one page of data available. It\n    is hidden using AngularJS.\n  </li>\n  <li>\n    It's a known issue that the footer wraps into a second line, if the table\n    is 50% of the screen. Use the <code>display:none</code> CSS property to\n    hide all elements not directly related to pagination. See the CSS example\n    below. This has not been implemented in EncoreUI.\n  </li>\n</ul>\n<pre>\n  .my-custom-class-name .pagination {\n      &amp; > li.nth-child(1) { display: none; }\n      &amp; > li.nth-child(2) { display: none; }\n      .pagination-per-page { display: none; }\n  }\n</pre>\n\n<h3><rx-permalink>UI-Based Pagination</rx-permalink></h3>\n\n<ul class=\"list\">\n  <li>\n    UI-based pagination, where all items are retrieved at once, and paginated in the UI\n  </li>\n</ul>\n<rx-example name=\"table.paginate.ui\"></rx-example>\n\n<rx-debug>\n  <div ng-controller=\"rxPaginateUiCtrl\">\n    <h3>Non-displayed pagination</h3>\n    <rx-paginate\n      id=\"rx-paginate-hidden\"\n      page-tracking=\"pager\"\n      ng-hide=\"true\">\n    </rx-paginate>\n  </div>\n</rx-debug>\n\n<h3><rx-permalink>API-Based Pagination</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Server-side pagination, where the pagination directive works with a paginated API\n  </li>\n  <li>\n      <p>\n        The API used by this demo is returning 100 items more than the user's selected <code>itemsPerPage</code>. If the\n        user's <code>itemsPerPage</code> is 25, then the API will return 125 items on each request. This means with the\n        default <code>itemsPerPage</code> of 25, five pages of results are coming back at a time. You should be able to\n        click through pages 1-5 without a loading message, and then the loading message will appear for page 6.\n      </p>\n\n      <p>\n        Click the \"Refresh\" button to see how the current page can be reloaded without the user interacting with the\n        <code>&lt;rx-paginate&gt;</code> buttons.\n      </p>\n\n      <p>Enter a search string of \"error\" to see the default error handling.</p>\n  </li>\n</ul>\n<rx-example name=\"table.paginate.api\"></rx-example>\n\n<h2><rx-permalink>Design Patterns</rx-permalink></h2>\n\n<h3><rx-permalink>Null Pattern</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> If you have no table data,\n    choose a default message to inform your user. Encore shows data table\n    headers to communicate this.\n  </li>\n</ul>\n<rx-example name=\"table.zeroData\"></rx-example>\n\n<h3><rx-permalink>Delete \"X\" Action</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> For data tables involving\n    objects that only require deleting (tables related to LBaaS connection\n    nodes and Support Service user tables) there's a design pattern that\n    replaces the cog with an X.\n  </li>\n  <li>\n    Add the <code>.delete-x</code> class to the icon element to automatically\n    apply the red hover style.  This should always be done when using this\n    design pattern.\n  </li>\n  <li>\n    For some examples, view\n    <a href=\"https://github.com/rackerlabs/supportservice-ui/search?utf8=%E2%9C%93&q=times\">\n      these set of tables used in Support Services\n    </a>.\n  </li>\n</ul>\n<rx-example name=\"table.delete\"></rx-example>\n\n<h4><rx-permalink>Other Single Action</rx-permalink></h4>\n<ul class=\"list\">\n  <li>\n    A button link is used for tables where each row has a single\n    action that is not a deletion.\n  </li>\n  <li>\n    If the action is unavailable for a row, the link should be\n    disabled and have a tooltip indicating why.\n  </li>\n</ul>\n<rx-example name=\"table.singleAction\"></rx-example>\n\n<h3><rx-permalink>Status Columns</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> You can add consistency and\n    color code your status columns using the <code>.rx-status-column</code>\n    class. Ticket Queues have their own styling that predates this. Your new\n    project should use\n    <a href=\"#/elements/Tables#status-column\">rxStatusColumn</a>. However, if\n    rxStatusColumn classes are not suitable, please send feedback through the\n    \"Submit Feedback\" link.\n  </li>\n</ul>\n\n<h2><rx-permalink>Filters</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> Tables have also been used\n    for filtering. In the past there was no common design pattern for this,\n    and different products implemented it on their own:\n    <ul class=\"list\">\n      <li>\n        Data-based filters, seen in Encore Cloud (Servers, Volumes, Images,\n        Database, Load Balancers)\n      </li>\n      <li>Ticket Queues (Filtering by ticket queues and status)</li>\n      <li>Billing (Filtering by billing data and transactional status)</li>\n    </ul>\n  </li>\n  <li>\n    You now have a standard way of adding table filters using\n    <a href=\"#/elements/Tables#floating-header\">rxFloatingHeader</a>.\n    You can add a new <code>&lt;tr&gt;</code> into the\n    <code>&lt;thead&gt;</code> of the table.\n    The <code>.rx-floating-header</code> class will add appropriate\n    styling.\n  </li>\n</ul>\n<rx-example name=\"table.filtering\"></rx-example>\n\n<h3><rx-permalink>Collapsible Component for Table Filters</rx-permalink></h3>\n<ul class=\"list\">\n  <li>You can add filters inside of a collapsible element.</li>\n  <li>The initial display can be expanded or collapsed.</li>\n  <li>\n    To show and hide the inner contents while keeping the header and\n    border visible, you can use a chevron.\n  </li>\n</ul>\n<rx-example name=\"table.filteringCollapsible\"></rx-example>\n\n<h3><rx-permalink>Multi-Select Filters</rx-permalink></h3>\n<p>\n  The rxSelectFilter component that provides a multi-select dropdown interface intended for table filtering.\n</p>\n<rx-example name=\"rxSelectFilter.simple\"></rx-example>\n\n<h2><rx-permalink>Nested Content</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    When a dataset includes a parent-child relationship, the nested\n    tables style should be used to optionally show the related content.\n  </li>\n  <li>\n    <span class=\"msg-info\">ENCORE-SPECIFIC:</span> Use the double chevron in\n    the right most column as the toggle switch for the hidden content.\n  </li>\n</ul>\n\n<h3><rx-permalink>Nested Table</rx-permalink></h3>\n<rx-example name=\"table.nestedTable\"></rx-example>\n\n<h3><rx-permalink>Nested Metadata</rx-permalink></h3>\n<rx-example name=\"table.nestedMetadata\"></rx-example>\n\n<h3>\n  <rx-permalink>Sortable Column</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxSortableColumn/\">View API</a>\n</h3>\n<ul class=\"list\">\n  <li>\n    The rxSortableColumn component provides functionality to sort a table on a single property value.\n  </li>\n  <li>\n    <p>\n      Note: The demo table is also using <code>rx-floating-header</code>, which is not required.\n      We've only done this to illustrate that <code>rxSortableColumn</code> works properly with\n      <code>rxFloatingHeader</code>. The table is also using <code>rxSortEmptyTop</code>.\n    </p>\n  </li>\n</ul>\n<rx-example name=\"rxSortableColumn.simple\"></rx-example>\n\n<rx-debug>\n  <h3>Testing table for protractor tests.</h3>\n  <table\n     id=\"sortable-column-testing-table-errors\"\n     rx-floating-header\n     class=\"sortable-column-table\">\n    <thead>\n      <tr>\n        <th scope=\"col\">\n          <rx-sortable-column\n             sort-method=\"sortCol\"\n             sort-property=\"none\"\n             predicate=\"sort.predicate\"\n             reverse=\"sort.reverse\">\n            Testing Sort Errors (see Protractor Tab)\n          </rx-sortable-column>\n        </th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr ng-repeat=\"resource in talentPool | rxSortEmptyTop:sort.predicate:sort.reverse\">\n        <th scope=\"row\" class=\"talent-name\">\n          {{resource.name}}\n        </th>\n        <td class=\"talent-job\">\n          {{resource.jobTitle}}\n        </td>\n      </tr>\n    </tbody>\n  </table>\n</rx-debug>\n\n<h2>UI Roadmap / Possible Future-work</h2><!-- TODO: Do we keep? -->\n<ul class=\"list\">\n  <li>\n    Checkboxes for table rows with design patterns related to\n    \"Select/Unselect All\" behavior\n  </li>\n  <li>Loading Styles for Tables</li>\n  <li>Submit actions for Server-Side Filtering</li>\n</ul>\n\n<h2>\n  <rx-permalink>Known Bugs and Workarounds</rx-permalink>\n</h2>\n\n<h3>\n  <rx-permalink>Inconsistent Column Widths when Paginated</rx-permalink>\n</h3>\n<p>\n  HTML tables are fickle and will resize columns dynamically based on cell\n  content. When navigating between paginated data, cell content length may\n  fluctuate, causing the column width to resize unexpectedly.\n</p>\n\n<h4>Workaround</h4>\n<p>\n  The simple solution is to apply a unique custom CSS class (e.g.\n  <code>.column-*</code>) to both the column header (<code>th</code>) and the\n  body cell (<code>td</code>). With this custom CSS class, you must set an\n  explicit <code>width</code> value in CSS, so that the header and data remain\n  consistent.\n</p>\n<ol class=\"list\">\n  <li>\n    <b>Important:</b> make sure to leave at least one fluid column so that the\n    browser can adjust the table width dynamically based on the viewport size.\n    <ul class=\"list bulleted\">\n      <li>\n        If you set every column width, you may end up with unexpected column\n        sizes, because there is a conflict between the summed pixel width vs\n        the 100% table width styling applied to all tables.\n      </li>\n    </ul>\n  </li>\n</ol>\n\n<h3>\n  <rx-permalink>Misaligned Columns with Floating Headers</rx-permalink>\n</h3>\n<p>\n  The floating header that you see on the page is a copy of the original\n  table header and ends up being rendered outside the context of the normal\n  table document flow. This causes the browser to ignore the header widths,\n  resulting in the header and body columns receiving different widths.\n</p>\n\n<h4>Workaround</h4>\n<p>\n  The workaround is the same as the \"Inconsistent Column Widths when Paginated\"\n  solution above, but with one caveat.\n</p>\n<ol class=\"list\">\n  <li>\n    <b>Important:</b> Set <code>th, td { box-sizing: border-box; }</code> for\n    cells in your table.\n    <ul class=\"list bulleted\">\n      <li>\n        Without this, floating header logic will incorrectly calculate\n        header widths.\n      </li>\n    </ul>\n  </li>\n</ol>\n",
             "less": ""
         }
@@ -933,174 +933,6 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "Auth",
-        "stability": "stable",
-        "description": "Provides logic for authenticating, validating permissions, and managing sessions.",
-        "api": "service:Auth",
-        "keywords": [],
-        "name": "Auth",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Auth/scripts/Auth.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('AuthSimpleCtrl', function ($scope, $window, Auth) {\n    $scope.hasRole = function () {\n        $window.alert('Has \"superhero\" Role? : ' + Auth.hasRole('superhero'));\n    };\n\n    $scope.isAuthenticated = function () {\n        $window.alert('Is Authenticated? : ' + Auth.isAuthenticated());\n    };\n});\n",
-            "html": "<p>\n  Provides logic for authenticating, validating permissions, and managing sessions.\n</p>\n\n<rx-example name=\"Auth.simple\"></rx-example>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "ErrorFormatter",
-        "stability": "stable",
-        "description": "Provides a helper method to parse and format error objects.",
-        "api": "service:ErrorFormatter",
-        "keywords": [],
-        "name": "ErrorFormatter",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/ErrorFormatter/scripts/ErrorFormatter.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('ErrorFormatterSimpleCtrl', function ($scope, ErrorFormatter) {\n    $scope.setErrorMsg = function (msg) {\n        var error = { message: msg };\n        $scope.errorMsg = ErrorFormatter.buildErrorMsg('Error: ${message}', error);\n    };\n});\n",
-            "html": "<p>\n  Provides a helper method to parse and format error objects.\n</p> \n\n<rx-example name=\"ErrorFormatter.simple\"></rx-example>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "Identity",
-        "stability": "stable",
-        "description": "This is a component designed to aid interaction with Rackspace's Identity API.",
-        "api": "service:Identity",
-        "keywords": [],
-        "name": "Identity",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Identity/scripts/Identity.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  This is a component designed to aid interaction with Rackspace's Identity API.\n</p>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "NotifyProperties",
-        "stability": "prototype",
-        "description": "Provides a registration service for directive, controller, or other service notification updates.",
-        "api": "service:NotifyProperties",
-        "keywords": [],
-        "name": "NotifyProperties",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/NotifyProperties/scripts/NotifyProperties.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Provides a registration service that allows directives, controllers, or other services to watch for\n  external property changes.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "Page",
-        "stability": "stable",
-        "description": "Pagination filter that is used to limit the number of pages shown.",
-        "api": "filter:Page",
-        "keywords": [],
-        "name": "Page",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Page/scripts/Page.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Pagination filter that is used to limit the number of pages shown.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "PageTracking",
-        "stability": "stable",
-        "description": "Used with pagination objects to store/control page display of data tables and other items.",
-        "api": "service:PageTracking",
-        "keywords": [],
-        "name": "PageTracking",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/PageTracking/scripts/PageTracking.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Used with pagination objects to store/control page display of data tables and other items.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "Paginate",
-        "stability": "stable",
-        "description": "Pagination filter that is used to calculate the division in the items list for the paging.",
-        "api": "filter:Paginate",
-        "keywords": [],
-        "name": "Paginate",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Paginate/scripts/Paginate.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Pagination filter that is used to calculate the division in the items list for the paging.\n</p>",
-            "less": ""
-        }
-    },
-    {
         "displayName": "PaginatedItemsSummary",
         "stability": "stable",
         "description": "Provides a formatted string with the current range of items in total items.",
@@ -1121,125 +953,6 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Provides a formatted string with the current range of items in total items, for example \"26-50 of 500 items\".\n</p>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "Permission",
-        "stability": "stable",
-        "description": "Simple service for accessing roles and permissions for a user.",
-        "api": "service:Permission",
-        "keywords": [],
-        "name": "Permission",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Permission/scripts/Permission.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Simple service for accessing roles and permissions for a user.\n</p>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "SelectFilter",
-        "stability": "prototype",
-        "description": "A prototype for creating objects that can be used for filtering arrays.",
-        "api": "service:SelectFilter",
-        "keywords": [],
-        "name": "SelectFilter",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/SelectFilter/scripts/SelectFilter.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  A prototype for creating objects that can be used for filtering arrays.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "Session",
-        "stability": "stable",
-        "description": "Manages user session",
-        "api": "service:Session",
-        "keywords": [],
-        "name": "Session",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Session/scripts/Session.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('SessionSimpleCtrl', function ($scope, $window, Session) {\n    $scope.isAuthenticated = function () {\n        $window.alert(Session.isAuthenticated());\n    };\n});\n",
-            "html": "<p>\n  Manages a user session.\n</p>\n\n<rx-example name=\"Session.simple\"></rx-example>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "SessionStorage",
-        "stability": "stable",
-        "description": "",
-        "keywords": [],
-        "name": "SessionStorage",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/SessionStorage/scripts/SessionStorage.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('SessionStorageSimpleCtrl', function ($scope, $window, SessionStorage) {\n    $scope.setSideKick = function () {\n        SessionStorage.setItem('Batman', 'Robin');\n    };\n\n    $scope.getSideKick = function () {\n        $window.alert(SessionStorage.getItem('Batman'));\n    };\n});\n",
-            "html": "<p>\n  A component that provides a simple wrapper around the global\n  <code>sessionStorage</code> object for interacting with session storage.\n</p>\n\n<rx-example name=\"SessionStorage.simple\"></rx-example>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "Status",
-        "stability": "stable",
-        "description": "Manages notifications for rxNotify",
-        "api": "service:Status",
-        "keywords": [],
-        "name": "Status",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Status/scripts/Status.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('StatusSimpleCtrl', function ($scope, $rootScope, Status) {\n    Status.setScope($scope);\n\n    $scope.triggerRouteChangeSuccess = function () {\n        $rootScope.$broadcast('$routeChangeSuccess');\n    };\n\n    $scope.clear = function () {\n        Status.clear();\n        $scope.notify = undefined;\n    };\n\n    $scope.setLoading = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setLoading(msg);\n    };\n\n    $scope.setSuccess = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setSuccess(msg);\n    };\n\n    $scope.setSuccessNext = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setSuccessNext(msg);\n    };\n\n    $scope.setSuccessImmediate = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setSuccessImmediate(msg);\n    };\n\n    $scope.setWarning = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setWarning(msg);\n    };\n\n    $scope.setInfo = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setInfo(msg);\n    };\n\n    $scope.setError = function (msg) {\n        Status.clear();\n        $scope.notify = Status.setError(msg);\n    };\n\n    $scope.dismiss = function () {\n        $scope.notify && Status.dismiss($scope.notify);\n        $scope.notify = undefined;\n    };\n});\n",
-            "html": "<p>\n  Manages <a href=\"#/elements/Notifications\">Notifications</a>.\n</p>\n\n<rx-example name=\"Status.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -1268,104 +981,8 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "TokenInterceptor",
-        "stability": "stable",
-        "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
-        "api": "service:TokenInterceptor",
-        "keywords": [],
-        "name": "TokenInterceptor",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/TokenInterceptor/scripts/TokenInterceptor.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Adds an authorization token to all HTTP requests.  This allows access to system services for\n  authenticated users.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "UnauthorizedInterceptor",
-        "stability": "stable",
-        "description": "Redirects users to the login page, when user authentication fails during a system service request.",
-        "api": "service:UnauthorizedInterceptor",
-        "keywords": [],
-        "name": "UnauthorizedInterceptor",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/UnauthorizedInterceptor/scripts/UnauthorizedInterceptor.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Redirects users to the login page, when user authentication fails during a system service request.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "UtcOffsets",
-        "stability": "prototype",
-        "description": "List of known UTC offset values",
-        "api": "constant:UtcOffsets",
-        "keywords": [],
-        "name": "UtcOffsets",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/UtcOffsets/scripts/UtcOffsets.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  List of known UTC Offset Values as found at\n  <a href=\"https://en.wikipedia.org/wiki/List_of_UTC_time_offsets\"\n    target=\"_blank\">\n    https://en.wikipedia.org/wiki/List_of_UTC_time_offsets\n  </a>.\n</p>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "devicePaths",
-        "stability": "stable",
-        "description": "Device Paths configuration",
-        "api": "value:devicePaths",
-        "keywords": [],
-        "name": "devicePaths",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/devicePaths/scripts/devicePaths.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Provides configuration for device paths.\n</p>",
-            "less": ""
-        }
-    },
-    {
         "displayName": "encoreRoutes",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Allows apps to make updates to the navigation.",
         "api": "service:encoreRoutes",
         "keywords": [],
@@ -1384,54 +1001,6 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Allows apps to make updates to the navigation.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "feedbackApi",
-        "stability": "stable",
-        "description": "Provides the feedback URL.",
-        "api": "constant:feedbackApi",
-        "keywords": [],
-        "name": "feedbackApi",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/feedbackApi/scripts/feedbackApi.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Provides the feedback URL.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "feedbackTypes",
-        "stability": "stable",
-        "description": "Provides default feedback types with placeholder text.",
-        "api": "value:feedbackTypes",
-        "keywords": [],
-        "name": "feedbackTypes",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/feedbackTypes/scripts/feedbackTypes.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Provides default feedback types.\n</p>\n",
             "less": ""
         }
     },
@@ -1535,7 +1104,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxAppRoutes",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Manage application routes and states of routes.",
         "api": "service:rxAppRoutes",
         "keywords": [],
@@ -1559,8 +1128,8 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxApply",
-        "stability": "prototype",
-        "description": "Used to apply an instance of SelectFilter to an array.",
+        "stability": "stable",
+        "description": "Used to apply an instance of rxSelectFilter to an array.",
         "api": "filter:rxApply",
         "keywords": [
             "Apply"
@@ -1578,8 +1147,8 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('ApplySimpleCtrl', function ($scope, SelectFilter) {\n    $scope.filter = SelectFilter.create({\n        properties: ['account', 'status'],\n        selected: {\n            account: ['A']\n        }\n    });\n\n    $scope.tickets = [\n        { account: 'A', status: 'NEW', description: 'Open a new service ticket.' },\n        { account: 'A', status: 'IN_PROGRESS', description: 'Updating server status.' },\n        { account: 'B', status: 'TRANSFERRED', description: 'Transferred account to ORD region.' },\n        { account: 'B', status: 'VENDOR', description: 'Added new third-party vendor service.' },\n        { account: 'A', status: 'TRANSFERRED', description: 'Transferred account to IAD region.' }\n    ];\n});\n",
-            "html": "<p>\n  Used to apply an instance of <code><a href=\"#/utilities/SelectFilter\">SelectFilter</a></code> to an array.\n</p>\n\n<rx-example name=\"rxApply.simple\"></rx-example>\n",
+            "js": "angular.module('demoApp')\n.controller('ApplySimpleCtrl', function ($scope, rxSelectFilter) {\n    $scope.filter = rxSelectFilter.create({\n        properties: ['account', 'status'],\n        selected: {\n            account: ['A']\n        }\n    });\n\n    $scope.tickets = [\n        { account: 'A', status: 'NEW', description: 'Open a new service ticket.' },\n        { account: 'A', status: 'IN_PROGRESS', description: 'Updating server status.' },\n        { account: 'B', status: 'TRANSFERRED', description: 'Transferred account to ORD region.' },\n        { account: 'B', status: 'VENDOR', description: 'Added new third-party vendor service.' },\n        { account: 'A', status: 'TRANSFERRED', description: 'Transferred account to IAD region.' }\n    ];\n});\n",
+            "html": "<p>\n  Used to apply an instance of <code><a href=\"#/utilities/rxSelectFilter\">rxSelectFilter</a></code> to an array.\n</p>\n\n<rx-example name=\"rxApply.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -1608,6 +1177,32 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxAttributesCtrl', function ($scope) {\n    $scope.customStyles = 'color: red; font-weight: bold;';\n    $scope.customContent = '\"Custom Content\"';\n});\n",
             "html": "<p>\n  <code>rxAttributes</code> allows to add attributes based on a value in scope being defined or not.\n</p>\n\n<rx-example name=\"rxAttributes.demo\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxAuth",
+        "stability": "stable",
+        "description": "Provides logic for authenticating, validating permissions, and managing sessions.",
+        "api": "service:rxAuth",
+        "keywords": [
+            "Auth"
+        ],
+        "name": "rxAuth",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxAuth/scripts/rxAuth.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxAuthSimpleCtrl', function ($scope, $window, rxAuth) {\n    $scope.hasRole = function () {\n        $window.alert('Has \"superhero\" Role? : ' + rxAuth.hasRole('superhero'));\n    };\n\n    $scope.isAuthenticated = function () {\n        $window.alert('Is Authenticated? : ' + rxAuth.isAuthenticated());\n    };\n});\n",
+            "html": "<p>\n  Provides logic for authenticating, validating permissions, and managing sessions.\n</p>\n\n<rx-example name=\"rxAuth.simple\"></rx-example>",
             "less": ""
         }
     },
@@ -1892,6 +1487,32 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "rxDevicePaths",
+        "stability": "stable",
+        "description": "Device Paths configuration",
+        "api": "value:rxDevicePaths",
+        "keywords": [
+            "devicePaths"
+        ],
+        "name": "rxDevicePaths",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxDevicePaths/scripts/rxDevicePaths.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Provides configuration for device paths.\n</p>",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxDiskSize",
         "stability": "stable",
         "description": "Converts raw GB disk size into a more readable format",
@@ -1936,7 +1557,7 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('EnvironmentSimpleCtrl', function ($scope, rxEnvironment) {\n    var environment = rxEnvironment.get();\n    $scope.url = environment.url;\n    $scope.name = environment.name;\n});\n",
+            "js": "angular.module('demoApp')\n.controller('rxEnvironmentSimpleCtrl', function ($scope, rxEnvironment) {\n    var environment = rxEnvironment.get();\n    $scope.url = environment.url;\n    $scope.name = environment.name;\n});\n",
             "html": "<p>\n  Allows environments to be defined, and retrieving the current environment based on location.\n</p>\n\n<rx-example name=\"rxEnvironment.simple\"></rx-example>",
             "less": ""
         }
@@ -1960,7 +1581,7 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxEnvironmentMatchSimpleCtrl', function ($scope, Environment) {\n    $scope.Environment = Environment;\n});\n",
+            "js": "",
             "html": "<p>\n  Checks if current environment matches target environment.\n</p>\n\n<rx-example name=\"rxEnvironmentMatch.simple\"></rx-example>\n",
             "less": ""
         }
@@ -1984,8 +1605,34 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxEnvironmentUrlSimpleCtrl', function ($scope, rxEnvironment) {\n    $scope.rxEnvironment = rxEnvironment;\n});\n",
+            "js": "",
             "html": "<p>\n  Builds a URL based on current environment.\n</p>\n\n<rx-example name=\"rxEnvironmentUrl.simple\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxErrorFormatter",
+        "stability": "stable",
+        "description": "Provides a helper method to parse and format error objects.",
+        "api": "service:rxErrorFormatter",
+        "keywords": [
+            "ErrorFormatter"
+        ],
+        "name": "rxErrorFormatter",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxErrorFormatter/scripts/rxErrorFormatter.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxErrorFormatterSimpleCtrl', function ($scope, rxErrorFormatter) {\n    $scope.setErrorMsg = function (msg) {\n        var error = { message: msg };\n        $scope.errorMsg = rxErrorFormatter.buildErrorMsg('Error: ${message}', error);\n    };\n});\n",
+            "html": "<p>\n  Provides a helper method to parse and format error objects.\n</p> \n\n<rx-example name=\"rxErrorFormatter.simple\"></rx-example>",
             "less": ""
         }
     },
@@ -2015,6 +1662,32 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Allows custom favicons between local, staging and production environments.\n</p>\n<p>See favicon of this site for an example of this. \n   On <a href=\"http://rackerlabs.github.io/encore-ui/\">the live site</a>, the favicon will be a dark blue book. \n   On <a href=\"http://localhost:9001\">the local site</a>, it will be a light blue book.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxFeedbackApi",
+        "stability": "stable",
+        "description": "Provides the feedback URL.",
+        "api": "constant:rxFeedbackApi",
+        "keywords": [
+            "feedbackApi"
+        ],
+        "name": "rxFeedbackApi",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxFeedbackApi/scripts/rxFeedbackApi.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Provides the feedback URL.\n</p>",
             "less": ""
         }
     },
@@ -2063,6 +1736,32 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Service that supports the customization of user feedback endpoints.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxFeedbackTypes",
+        "stability": "stable",
+        "description": "Provides default feedback types with placeholder text.",
+        "api": "value:rxFeedbackTypes",
+        "keywords": [
+            "feedbackTypes"
+        ],
+        "name": "rxFeedbackTypes",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxFeedbackTypes/scripts/rxFeedbackTypes.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Provides default feedback types.\n</p>\n",
             "less": ""
         }
     },
@@ -2299,6 +1998,32 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "rxNotifyProperties",
+        "stability": "prototype",
+        "description": "Provides a registration service for directive, controller, or other service notification updates.",
+        "api": "service:rxNotifyProperties",
+        "keywords": [
+            "NotifyProperties"
+        ],
+        "name": "rxNotifyProperties",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxNotifyProperties/scripts/rxNotifyProperties.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Provides a registration service that allows directives, controllers, or other services to watch for\n  external property changes.\n</p>",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxPageTitle",
         "stability": "stable",
         "description": "Provides a service that manages page titles.",
@@ -2319,6 +2044,84 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxPageTitleSimpleCtrl', function ($scope, rxPageTitle) {\n    $scope.changeTitle = function () {\n        rxPageTitle.setTitle($scope.newTitle);\n    };\n\n    $scope.refreshTitle = function () {\n        $scope.pageTitle = rxPageTitle.getTitle();\n    };\n\n    $scope.refreshTitle();\n});\n",
             "html": "<p>\n  Provides a service that manages page titles.\n</p>\n\n<rx-example name=\"rxPageTitle.simple\"></rx-example>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxPageTracker",
+        "stability": "stable",
+        "description": "Used with pagination objects to store/control page display of data tables and other items.",
+        "api": "service:rxPageTracker",
+        "keywords": [
+            "PageTracking"
+        ],
+        "name": "rxPageTracker",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxPageTracker/scripts/rxPageTracker.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Used with pagination objects to store/control page display of data tables and other items.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxPager",
+        "stability": "stable",
+        "description": "Pagination filter that is used to limit the number of pages shown.",
+        "api": "filter:rxPager",
+        "keywords": [
+            "Page"
+        ],
+        "name": "rxPager",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxPager/scripts/rxPager.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Pagination filter that is used to limit the number of pages shown.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxPaginate",
+        "stability": "stable",
+        "description": "Pagination filter that is used to calculate the division in the items list for the paging.",
+        "api": "filter:rxPaginate",
+        "keywords": [
+            "Paginate"
+        ],
+        "name": "rxPaginate",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxPaginate/scripts/rxPaginate.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Pagination filter that is used to calculate the division in the items list for the paging.\n</p>",
             "less": ""
         }
     },
@@ -2370,7 +2173,7 @@ angular.module('demoApp')
         ],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, Session, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        Session.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        Session.logout();\n    };\n});\n",
+            "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        rxAuth.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        rxAuth.logout();\n    };\n});\n",
             "html": "<p>\n  The rxPermission utility provides functionality to perform checks against existing user permissions in EncoreUI.\n</p>\n\n<h3><rx-permalink>rxPermission</rx-permalink></h3>\n<rx-example name=\"rxPermission.simple\"></rx-example>\n",
             "less": ""
         }
@@ -2448,6 +2251,57 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "rxSelectFilter",
+        "stability": "prototype",
+        "description": "A prototype for creating objects that can be used for filtering arrays.",
+        "api": "service:rxSelectFilter",
+        "keywords": [
+            "SelectFilter"
+        ],
+        "name": "rxSelectFilter",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxSelectFilter/scripts/rxSelectFilter.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  A prototype for creating objects that can be used for filtering arrays.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxSessionStorage",
+        "stability": "stable",
+        "description": "",
+        "keywords": [
+            "SessionStorage"
+        ],
+        "name": "rxSessionStorage",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxSessionStorage/scripts/rxSessionStorage.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxSessionStorageSimpleCtrl', function ($scope, $window, rxSessionStorage) {\n    $scope.setSideKick = function () {\n        rxSessionStorage.setItem('Batman', 'Robin');\n    };\n\n    $scope.getSideKick = function () {\n        $window.alert(rxSessionStorage.getItem('Batman'));\n    };\n});\n",
+            "html": "<p>\n  A component that provides a simple wrapper around the global\n  <code>sessionStorage</code> object for interacting with session storage.\n</p>\n\n<rx-example name=\"rxSessionStorage.simple\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxSortEmptyTop",
         "stability": "stable",
         "description": "Moves rows with an empty predicate in ascending and descending order.",
@@ -2466,7 +2320,7 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxSortEmptyTopSimpleCtrl', function ($scope, PageTracking, rxSortUtil) {\n    $scope.sort = rxSortUtil.getDefault('name');\n    $scope.sort = rxSortUtil.getDefault('name', false);\n    $scope.pager = PageTracking.createInstance();\n\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    $scope.serverVolumes = [\n        {\n            name: 'Monitor Agent 4',\n            volumeId: 'a44079a5-040b-495f-be22-35994ea03cc5'\n        },\n        {\n            name: 'Stress Volume 33',\n            volumeId: '65d89e82-9363-482e-92d1-f3f7d4f135a7'\n        },\n        {\n            name: null,\n            volumeId: '0a87a764-45f0-4a1e-8dbf-20d76291022d'\n        },\n        {\n            name: 'Stress Volume 24',\n            volumeId: ''\n        },\n        {\n            name: null,\n            volumeId: 'be827f83-8d4c-4d4c-afc3-4c9bf0fdfe00'\n        },\n    ];\n});\n",
+            "js": "angular.module('demoApp')\n.controller('rxSortEmptyTopSimpleCtrl', function ($scope, rxPageTracker, rxSortUtil) {\n    $scope.sort = rxSortUtil.getDefault('name');\n    $scope.sort = rxSortUtil.getDefault('name', false);\n    $scope.pager = rxPageTracker.createInstance();\n\n    $scope.sortCol = function (predicate) {\n        return rxSortUtil.sortCol($scope, predicate);\n    };\n\n    $scope.serverVolumes = [\n        {\n            name: 'Monitor Agent 4',\n            volumeId: 'a44079a5-040b-495f-be22-35994ea03cc5'\n        },\n        {\n            name: 'Stress Volume 33',\n            volumeId: '65d89e82-9363-482e-92d1-f3f7d4f135a7'\n        },\n        {\n            name: null,\n            volumeId: '0a87a764-45f0-4a1e-8dbf-20d76291022d'\n        },\n        {\n            name: 'Stress Volume 24',\n            volumeId: ''\n        },\n        {\n            name: null,\n            volumeId: 'be827f83-8d4c-4d4c-afc3-4c9bf0fdfe00'\n        },\n    ];\n});\n",
             "html": "<p>\n  Moves rows with an empty predicate to the top of the column in\n  ascending order, and to the bottom in descending order.\n</p>\n\n<rx-example name='rxSortEmptyTop.simple'></rx-example>",
             "less": ""
         }
@@ -2492,6 +2346,32 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Service which provides utility methods for sorting collections.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxStatus",
+        "stability": "stable",
+        "description": "Manages notifications for rxNotify",
+        "api": "service:rxStatus",
+        "keywords": [
+            "Status"
+        ],
+        "name": "rxStatus",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxStatus/scripts/rxStatus.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxStatusSimpleCtrl', function ($scope, $rootScope, rxStatus) {\n    rxStatus.setScope($scope);\n\n    $scope.triggerRouteChangeSuccess = function () {\n        $rootScope.$broadcast('$routeChangeSuccess');\n    };\n\n    $scope.clear = function () {\n        rxStatus.clear();\n        $scope.notify = undefined;\n    };\n\n    $scope.setLoading = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setLoading(msg);\n    };\n\n    $scope.setSuccess = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setSuccess(msg);\n    };\n\n    $scope.setSuccessNext = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setSuccessNext(msg);\n    };\n\n    $scope.setSuccessImmediate = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setSuccessImmediate(msg);\n    };\n\n    $scope.setWarning = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setWarning(msg);\n    };\n\n    $scope.setInfo = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setInfo(msg);\n    };\n\n    $scope.setError = function (msg) {\n        rxStatus.clear();\n        $scope.notify = rxStatus.setError(msg);\n    };\n\n    $scope.dismiss = function () {\n        $scope.notify && rxStatus.dismiss($scope.notify);\n        $scope.notify = undefined;\n    };\n});\n",
+            "html": "<p>\n  Manages <a href=\"#/elements/Notifications\">Notifications</a>.\n</p>\n\n<rx-example name=\"rxStatus.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -2622,6 +2502,32 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "rxTitleize",
+        "stability": "stable",
+        "description": "Convert a string to title case, stripping out underscores and all uppercase words.",
+        "api": "filter:rxTitleize",
+        "keywords": [
+            "titleize"
+        ],
+        "name": "rxTitleize",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxTitleize/scripts/rxTitleize.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxTitleizeSimpleCtrl', function ($scope) {\n    $scope.sample = 'HELLO_welcome TO ENCore FRamework!';\n});\n",
+            "html": "<p>\n  Convert a string to title case, stripping out underscores and all uppercase words.\n</p>\n\n<rx-example name=\"rxTitleize.simple\"></rx-example>\n\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxToggle",
         "stability": "stable",
         "description": "",
@@ -2645,6 +2551,58 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  This component provides an attribute directive to handle\n  toggling a boolean scopeproperty for show/hide purposes\n  (normally used in conjunction with ng-show to toggle hidden content).\n</p>\n\n<rx-example name=\"rxToggle.simple\"></rx-example>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxTokenInterceptor",
+        "stability": "stable",
+        "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
+        "api": "service:rxTokenInterceptor",
+        "keywords": [
+            "TokenInterceptor"
+        ],
+        "name": "rxTokenInterceptor",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxTokenInterceptor/scripts/rxTokenInterceptor.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Adds an authorization token to all HTTP requests.  This allows access to system services for\n  authenticated users.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxUnauthorizedInterceptor",
+        "stability": "stable",
+        "description": "Redirects users to the login page, when user authentication fails during a system service request.",
+        "api": "service:rxUnauthorizedInterceptor",
+        "keywords": [
+            "UnauthorizedInterceptor"
+        ],
+        "name": "rxUnauthorizedInterceptor",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxUnauthorizedInterceptor/scripts/rxUnauthorizedInterceptor.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Redirects users to the login page, when user authentication fails during a system service request.\n</p>",
             "less": ""
         }
     },
@@ -2673,8 +2631,60 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "rxVisibility",
+        "displayName": "rxUrlUtils",
         "stability": "stable",
+        "description": "Set of utility functions to break apart/compare URLs.",
+        "api": "service:rxUrlUtils",
+        "keywords": [
+            "urlUtils"
+        ],
+        "name": "rxUrlUtils",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxUrlUtils/scripts/rxUrlUtils.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Set of utility functions to break apart/compare URLs.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxUtcOffsets",
+        "stability": "prototype",
+        "description": "List of known UTC offset values",
+        "api": "constant:rxUtcOffsets",
+        "keywords": [
+            "UtcOffsets"
+        ],
+        "name": "rxUtcOffsets",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxUtcOffsets/scripts/rxUtcOffsets.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  List of known UTC Offset Values as found at\n  <a href=\"https://en.wikipedia.org/wiki/List_of_UTC_time_offsets\"\n    target=\"_blank\">\n    https://en.wikipedia.org/wiki/List_of_UTC_time_offsets\n  </a>.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxVisibility",
+        "stability": "deprecated",
         "description": "Provides an interface for adding new visibility methods for nav menus.",
         "api": "service:rxVisibility",
         "keywords": [],
@@ -2698,7 +2708,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxVisibilityPathParams",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Returns an object with name and method params that can be passed to rxVisibility.addMethod().",
         "api": "service:rxVisibilityPathParams",
         "keywords": [],
@@ -2721,74 +2731,28 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "titleize",
-        "stability": "stable",
-        "description": "Convert a string to title case, stripping out underscores and all uppercase words.",
-        "api": "filter:titleize",
-        "keywords": [],
-        "name": "titleize",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/titleize/scripts/titleize.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('titleizeSimpleCtrl', function ($scope) {\n    $scope.sample = 'HELLO_welcome TO ENCore FRamework!';\n});\n",
-            "html": "<p>\n  Convert a string to title case, stripping out underscores and all uppercase words.\n</p>\n\n<rx-example name=\"titleize.simple\"></rx-example>\n\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "urlUtils",
-        "stability": "stable",
-        "description": "Set of utility functions to break apart/compare URLs.",
-        "api": "service:urlUtils",
-        "keywords": [],
-        "name": "urlUtils",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/urlUtils/scripts/urlUtils.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Set of utility functions to break apart/compare URLs.\n</p>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "xor",
+        "displayName": "rxXor",
         "stability": "prototype",
-        "description": "xor filter",
-        "api": "filter:xor",
-        "keywords": [],
-        "name": "xor",
+        "description": "rxXor filter",
+        "api": "filter:rxXor",
+        "keywords": [
+            "xor"
+        ],
+        "name": "rxXor",
         "moduleName": "'encore.ui.utilities'",
         "category": "utilities",
         "isLegacy": false,
         "hasApi": true,
         "isCategory": false,
         "srcFiles": [
-            "src/utilities/xor/scripts/xor.js"
+            "src/utilities/rxXor/scripts/rxXor.js"
         ],
         "tplFiles": [],
         "tplJsFiles": [],
         "docs": {
             "md": "",
             "js": "",
-            "html": "<p>xor filter</p>\n",
+            "html": "<p>rxXor filter</p>\n",
             "less": ""
         }
     }

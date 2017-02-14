@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxPageTracker/scripts/rxPageTracker.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxPageTracker/scripts/rxPageTracker.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(86 / 86)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">96.55% <small>(28 / 29)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(26 / 26)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(86 / 86)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxPageTracker/scripts/</a> &#187; rxPageTracker.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">58</span>
+<span class="cline-any cline-yes">58</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1476</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">153</span>
+<span class="cline-any cline-yes">153</span>
+<span class="cline-any cline-yes">153</span>
+<span class="cline-any cline-yes">153</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23</span>
+<span class="cline-any cline-yes">23</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">38</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">166</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">166</span>
+<span class="cline-any cline-yes">138</span>
+<span class="cline-any cline-yes">138</span>
+<span class="cline-any cline-yes">138</span>
+<span class="cline-any cline-yes">138</span>
+<span class="cline-any cline-yes">70</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">138</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">150</span>
+<span class="cline-any cline-yes">150</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">150</span>
+<span class="cline-any cline-yes">85</span>
+<span class="cline-any cline-yes">85</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">65</span>
+<span class="cline-any cline-yes">65</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">540</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">536</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">1781</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">702</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">141</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">242</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-yes">432</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxPageTracker
+ * @description
+ * This is the data service that can be used in conjunction with the pagination
+ * objects to store/control page display of data tables and other items.
+ * This is intended to be used with {@link elements.directive:rxPaginate}
+ * @namespace rxPageTracker
+ *
+ * @example
+ * &lt;pre&gt;
+ * $scope.pager = rxPageTracker.createInstance({showAll: true, itemsPerPage: 15});
+ * &lt;/pre&gt;
+ * &lt;pre&gt;
+ * &lt;rx-paginate page-tracking="pager"&gt;&lt;/rx-paginate&gt;
+ * &lt;/pre&gt;
+ */
+.factory('rxPageTracker', function ($q, rxLocalStorage, rxPaginateUtils) {
+    var rxPageTracker = {
+        /**
+         * @ngdoc method
+         * @name utilities.service:rxPageTracker#createInstance
+         * @methodOf utilities.service:rxPageTracker
+         * @param {Object=} options Configuration options for the pager
+         * @param {Number=} [options.itemsPerPage=200]
+         * The default number of items to display per page. If you choose a
+         * value that is not in the default set to itemsPerPage options
+         * (50, 200, 350, 500), then that value will be inserted into that
+         * list in the appropriate place
+         * @param {Number[]=} [options.itemSizeList=(50, 200, 350, 500)]
+         * The "items per page" options to give to the user. As these same
+         * values are used all throughout Encore, you probably should not alter
+         * them for your table.
+         * @param {Boolean=} [options.persistItemsPerPage=true]
+         * Whether or not a change to this pager's itemsPerPage should be
+         * persisted globally to all other pagers
+         * @param {Number=} [options.pagesToShow=5]
+         * This is the number of page numbers to show in the pagination controls
+         * @param {Boolean=} [options.showAll=false]
+         * This is used to determine whether or not to use the pagination. If
+         * `true`, then all items will be displayed, i.e. pagination will not
+         * be used
+         *
+         * @description This is used to generate the instance of the
+         * rxPageTracker object. It takes an optional `options` object,
+         * allowing you to customize the default pager behaviour.
+         *
+         * @return {Object} A new pager instance to be passed to the
+         * `page-tracking` attribute of `&lt;rx-paginate&gt;`
+         * (see {@link rxPaginate.directive:rxPaginate})
+         */
+        createInstance: function (options) {
+            options = options ? options : {};
+            var tracking = new rxPageTrackerObject(options);
+            return tracking.pager;
+        },
+&nbsp;
+        /*
+        * @method userSelectedItemsPerPage This method sets a new global itemsPerPage value
+        */
+        userSelectedItemsPerPage: function (itemsPerPage) {
+            rxLocalStorage.setItem('rxItemsPerPage', itemsPerPage);
+        }
+    };
+&nbsp;
+    function rxPageTrackerObject (opts) {
+        var pager = _.defaults(_.cloneDeep(opts), {
+            itemsPerPage: 200,
+            persistItemsPerPage: true,
+            pagesToShow: 5,
+            pageNumber: 0,
+            pageInit: false,
+            total: 0,
+            showAll: false,
+            itemSizeList: [50, 200, 350, 500]
+        });
+&nbsp;
+        // This holds all the items we've received. For UI pagination,
+        // this will be the entire set. For API pagination, this will be
+        // whatever chunk of data the API decided to send us
+        pager.localItems = [];
+&nbsp;
+        var itemsPerPage = pager.itemsPerPage;
+        var itemSizeList = pager.itemSizeList;
+&nbsp;
+        // If itemSizeList doesn't contain the desired itemsPerPage,
+        // then find the right spot in itemSizeList and insert the
+        // itemsPerPage value
+        if (!_.includes(itemSizeList, itemsPerPage)) {
+            var index = _.sortedIndex(itemSizeList, itemsPerPage);
+            itemSizeList.splice(index, 0, itemsPerPage);
+        }
+&nbsp;
+        var selectedItemsPerPage = parseInt(rxLocalStorage.getItem('rxItemsPerPage'));
+&nbsp;
+        // If the user has chosen a desired itemsPerPage, make sure we're respecting that
+        // However, a value specified in the options will take precedence
+        if (!opts.itemsPerPage &amp;&amp; !_.isNaN(selectedItemsPerPage) &amp;&amp; _.includes(itemSizeList, selectedItemsPerPage)) {
+            pager.itemsPerPage = selectedItemsPerPage;
+        }
+&nbsp;
+        Object.defineProperties(pager, {
+            'items': {
+                // This returns the slice of data for whatever current page the user is on.
+                // It is used for server-side pagination.
+                get: function () {
+                    var info = rxPaginateUtils.firstAndLast(pager.pageNumber, pager.itemsPerPage, pager.total);
+                    return pager.localItems.slice(info.first - pager.cacheOffset, info.last - pager.cacheOffset);
+                }
+            },
+&nbsp;
+            'totalPages': {
+                get: function () { return Math.ceil(pager.total / pager.itemsPerPage); }
+            }
+        });
+&nbsp;
+        function updateCache (pager, pageNumber, localItems) {
+            var numberOfPages = Math.floor(localItems.length / pager.itemsPerPage);
+            var cachedPages = numberOfPages ? _.range(pageNumber, pageNumber + numberOfPages) : [pageNumber];
+            pager.cachedPages = !_.isEmpty(cachedPages) ? cachedPages : <span class="branch-1 cbranch-no" title="branch not covered" >[pageNumber];</span>
+            pager.cacheOffset = pager.cachedPages[0] * pager.itemsPerPage;
+        }
+&nbsp;
+        updateCache(pager, 0, pager.localItems);
+&nbsp;
+        var updateItems = function (pageNumber) {
+            // This is the function that gets used when doing UI pagination,
+            // thus we're not waiting for the pageNumber to come back from a service,
+            // so we should set it right away. We can also return an empty items list,
+            // because for UI pagination, the items themselves come in through the Pagination
+            // filter
+            pager.pageNumber = pageNumber;
+            var data = {
+                items: [],
+                pageNumber: pageNumber,
+                totalNumberOfItems: pager.total
+            };
+            return $q.when(data);
+        };
+        pager.updateItemsFn = function (fn) {
+            updateItems = fn;
+        };
+&nbsp;
+        // Used by rxPaginate to tell the pager that it should grab
+        // new items from itemsPromise, where itemsPromise is the promise
+        // returned by a product's getItems() method.
+        // Set shouldUpdateCache to false if the pager should not update its cache with these values
+        pager.newItems = function (itemsPromise, shouldUpdateCache) {
+            if (_.isUndefined(shouldUpdateCache)) {
+                shouldUpdateCache = true;
+            }
+            return itemsPromise.then(function (data) {
+                pager.pageNumber = data.pageNumber;
+                pager.localItems = data.items;
+                pager.total = data.totalNumberOfItems;
+                if (shouldUpdateCache) {
+                    updateCache(pager, pager.pageNumber, data.items);
+                }
+                return data;
+            });
+        };
+&nbsp;
+        // 0-based page number
+        // opts: An object containing:
+        //  forceCacheUpdate: true/false, whether or not to flush the cache
+        //  itemsPerPage: If specificed, request this many items for the page, instead of
+        //                using pager.itemsPerPage
+        pager.goToPage = function (n, opts) {
+            opts = opts || {};
+            var shouldUpdateCache = true;
+&nbsp;
+            // If the desired page number is currently cached, then just reuse
+            // our `localItems` cache, rather than going back to the API.
+            // By setting `updateCache` to false, it ensures that the current
+            // pager.cacheOffset and pager.cachedPages values stay the
+            // same
+            if (!opts.forceCacheUpdate &amp;&amp; _.includes(pager.cachedPages, n)) {
+                shouldUpdateCache = false;
+                return pager.newItems($q.when({
+                    pageNumber: n,
+                    items: pager.localItems,
+                    totalNumberOfItems: pager.total
+                }), shouldUpdateCache);
+            }
+&nbsp;
+            var itemsPerPage = opts.itemsPerPage || pager.itemsPerPage;
+            return pager.newItems(updateItems(n, itemsPerPage), shouldUpdateCache);
+        };
+&nbsp;
+        // This tells the pager to go to the current page, but ensure no cached
+        // values are used. Can be used by page controllers when they want
+        // to force an update
+        pager.refresh = function (stayOnCurrentPage) {
+            var pageNumber = stayOnCurrentPage ? pager.currentPage() : 0;
+            return pager.goToPage(pageNumber, { forceCacheUpdate: true });
+        };
+&nbsp;
+        pager.isFirstPage = function () {
+            return pager.isPage(0);
+        };
+&nbsp;
+        pager.isLastPage = function () {
+            return pager.isPage(_.max([0, pager.totalPages - 1]));
+        };
+&nbsp;
+        pager.isPage = function (n) {
+            return pager.pageNumber === n;
+        };
+&nbsp;
+        pager.isPageNTheLastPage = function (n) {
+            return pager.totalPages - 1 === n;
+        };
+&nbsp;
+        pager.currentPage = function () {
+            return pager.pageNumber;
+        };
+&nbsp;
+        pager.goToFirstPage = function () {
+            pager.goToPage(0);
+        };
+&nbsp;
+        pager.goToLastPage = function () {
+            pager.goToPage(_.max([0, pager.totalPages - 1]));
+        };
+&nbsp;
+        pager.goToPrevPage = function () {
+            pager.goToPage(pager.currentPage() - 1);
+        };
+&nbsp;
+        pager.goToNextPage = function () {
+            pager.goToPage(pager.currentPage() + 1);
+        };
+&nbsp;
+        pager.isEmpty = function () {
+            return pager.total === 0;
+        };
+&nbsp;
+        pager.setItemsPerPage = function (numItems) {
+            var opts = {
+                forceCacheUpdate: true,
+                itemsPerPage: numItems
+            };
+            return pager.goToPage(0, opts).then(function (data) {
+                // Wait until we get the data back from the API before we
+                // update itemsPerPage. This ensures that we don't show
+                // a "weird" number of items in a table
+                pager.itemsPerPage = numItems;
+                // Now that we've "officially" changed the itemsPerPage,
+                // we have to update all the cache values
+                updateCache(pager, data.pageNumber, data.items);
+&nbsp;
+                // Persist this itemsPerPage as the new global value
+                if (pager.persistItemsPerPage) {
+                    rxPageTracker.userSelectedItemsPerPage(numItems);
+                }
+            });
+        };
+&nbsp;
+        pager.isItemsPerPage = function (numItems) {
+            return pager.itemsPerPage === numItems;
+        };
+&nbsp;
+        this.pager = pager;
+&nbsp;
+        pager.goToPage(pager.pageNumber);
+&nbsp;
+    }
+&nbsp;
+    return rxPageTracker;
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Feb 14 2017 17:36:31 GMT-0600 (CST)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

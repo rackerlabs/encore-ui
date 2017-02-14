@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">utilities/rxAppRoutes/scripts/rxAppRoutes.js</span></h1>
     <h2>
-        Statements: <span class="metric">94.44% <small>(68 / 72)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">94.52% <small>(69 / 73)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">95% <small>(19 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">87.5% <small>(21 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">94.44% <small>(68 / 72)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">94.52% <small>(69 / 73)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxAppRoutes/scripts/</a> &#187; rxAppRoutes.js</div>
@@ -198,11 +198,21 @@
 171
 172
 173
-174</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+174
+175
+176
+177
+178
+179</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -373,16 +383,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
 /**
+ * @deprecated This service will be removed in EncoreUI 4.0.0
  * @ngdoc service
  * @name utilities.service:rxAppRoutes
  * @description
  * Manages page routes, building urls and marking them as active on route change.
  */
-.factory('rxAppRoutes', function ($rootScope, $log, urlUtils, $q) {
+.factory('rxAppRoutes', function ($rootScope, $log, rxUrlUtils, $q) {
+    console.warn(
+        'DEPRECATED: rxAppRoutes will be removed in EncoreUI 4.0.0'
+    );
+&nbsp;
     var AppRoutes = function (routes) {
         routes = routes || [];
         // we need to get the current path on page load
-        var currentPathChunks = urlUtils.getCurrentPathChunks();
+        var currentPathChunks = rxUrlUtils.getCurrentPathChunks();
         var loadingDeferred = $q.defer();
 &nbsp;
         // if the routes were already passed in, then we can immediately
@@ -394,7 +409,7 @@
         var setDynamicProperties = function (routes, extraUrlContext) {
             _.each(routes, function (route) {
                 // build out url for current route
-                route.url = urlUtils.buildUrl(route.href, extraUrlContext);
+                route.url = rxUrlUtils.buildUrl(route.href, extraUrlContext);
 &nbsp;
                 // check if any children exist, if so, build their URLs as well
                 if (route.children) {
@@ -403,7 +418,7 @@
 &nbsp;
                 // set active state (this needs to go after the recursion,
                 // so that the URL is built for all the children)
-                route.active = urlUtils.isActive(route, currentPathChunks);
+                route.active = rxUrlUtils.isActive(route, currentPathChunks);
             });
 &nbsp;
             return routes;
@@ -464,7 +479,7 @@
 &nbsp;
         $rootScope.$on('$locationChangeSuccess', function () {
             // NOTE: currentPath MUST be updated before routes
-            currentPathChunks = urlUtils.getCurrentPathChunks();
+            currentPathChunks = rxUrlUtils.getCurrentPathChunks();
 &nbsp;
             routes = setDynamicProperties(routes);
         });
@@ -473,10 +488,10 @@
             /**
              * Finds the indexes/path to a route. Will return last match if duplicate keys exist
              * @see setRouteByKey for actual use
-             * @param  {string} key Route Key
+             * @param  {String} key Route Key
              * @example
              *     var myRouteIndex = rxAppRoutes.getIndexByKey('myKey'); // [0, 2, 0]
-             * @return {array|undefined} array of indexes describing path to route (or undefined if not found)
+             * @return {Array|undefined} Array of indexes describing path to route (or undefined if not found)
              */
             getIndexByKey: function (key) {
                 return loadingDeferred.promise.then(function () {
@@ -500,7 +515,7 @@
 &nbsp;
             isActiveByKey: function (key) {
                 return this.getRouteByKey(key).then(function (route) {
-                    return urlUtils.isActive(route, urlUtils.getCurrentPathChunks());
+                    return rxUrlUtils.isActive(route, rxUrlUtils.getCurrentPathChunks());
                 }, <span class="fstat-no" title="function not covered" >function () {</span>
 <span class="cstat-no" title="statement not covered" >                    return $q.reject();</span>
                 });
@@ -508,9 +523,9 @@
             },
             /**
              * functionality to update routes based on their key
-             * @param {string} key Route key used to identify it in navigation
-             * @param {object} routeInfo Information used to overwrite original properties
-             * @return {boolean} true if successfully updated, false if key not found
+             * @param {String} key Route key used to identify it in navigation
+             * @param {Object} routeInfo Information used to overwrite original properties
+             * @return {Boolean} true if successfully updated, false if key not found
              */
             setRouteByKey: function (key, routeInfo) {
                 return this.getIndexByKey(key).then(function (routeIndex) {
@@ -549,7 +564,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 15 2016 14:19:37 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Feb 14 2017 17:36:31 GMT-0600 (CST)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

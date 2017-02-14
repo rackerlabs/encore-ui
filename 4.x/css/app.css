@@ -522,6 +522,28 @@ rx-permalink .permalink:hover .icon:hover {
 .info-panel .info-title {
   box-sizing: content-box;
 }
+/* rxActionMenu border-box corrections */
+/* TODO: migrate this back into src/elements/ActionMenu */
+.action-list {
+  min-width: 254px;
+}
+.action-list:before {
+  left: auto;
+  right: -3px;
+}
+/* rxModalAction border-box corrections */
+/* TODO: migrate back into src/elements/Modals */
+.modal-body {
+  max-height: 423px;
+}
+/* rxDatePicker border-box corrections */
+/* TODO: migrate back into src/element/Forms#date-picker */
+rx-date-picker .popup {
+  width: auto;
+}
+rx-date-picker .popup .calendar {
+  width: 210px;
+}
 html {
   box-sizing: border-box;
 }
