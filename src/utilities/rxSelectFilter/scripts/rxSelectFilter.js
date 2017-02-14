@@ -65,7 +65,7 @@ angular.module('encore.ui.utilities')
  * Instances of `rxSelectFilter` have an `applyTo()` method, which applies the
  * filter's internal state of selected options to the array. This will not
  * often be called directly, but instead used by the
- * {@link utilities.filter:Apply Apply} filter. As stated previously,
+ * {@link utilities.filter:rxApply rxApply} filter. As stated previously,
  * the first call of `applyTo()` will initialize any
  * `properties` that have not been defined in `available` or `selected`.
  * <pre>
@@ -178,19 +178,4 @@ angular.module('encore.ui.utilities')
             return filter;
         }
     };
-})
-
-/**
- * @deprecated
- * Please use rxSelectFilter instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:SelectFilter
- * @requires utilities.service:rxSelectFilter
- */
-.service('SelectFilter', function (rxSelectFilter) {
-    console.warn(
-        'DEPRECATED: SelectFilter - Please use rxSelectFilter. ' +
-        'SelectFilter will be removed in EncoreUI 4.0.0'
-    );
-    return rxSelectFilter;
-});;
+});

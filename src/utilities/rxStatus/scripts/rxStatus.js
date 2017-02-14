@@ -344,19 +344,4 @@ angular.module('encore.ui.utilities')
     };
 
     return status;
-})
-
-/**
- * @deprecated
- * Please use rxStatus instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:Status
- * @requires utilities.service:rxStatus
- */
-.service('Status', function (rxStatus) {
-    console.warn (
-        'DEPRECATED: Status - Please use rxStatus. ' +
-        'Status will be removed in EncoreUI 4.0.0'
-    );
-    return rxStatus;
 });

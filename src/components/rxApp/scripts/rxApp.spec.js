@@ -8,7 +8,7 @@ describe('encore.ui.rxApp', function () {
     describe('rxApp', function () {
         describe('default', function () {
             var scope, scopeCustomNav, collapsibleScope, compile, rootScope, el, elCustom, elCollapsible,
-                httpMock, cdnPath, cdnGet;
+                httpMock, cdnPath, cdnGet, rxAuth;
             var standardTemplate = '<rx-app></rx-app>';
             var collapsibleTemplate = '<rx-app collapsible-nav="true"></rx-app>';
             var customTemplate = '<rx-app site-title="My App" menu="customNav" new-instance="true"' +
@@ -41,10 +41,6 @@ describe('encore.ui.rxApp', function () {
                 add: sinon.stub()
             };
 
-            var mockSession = {
-                getUserId: sinon.stub().returns('rack0000')
-            };
-
             beforeEach(function () {
                 // load module
                 module('encore.ui.rxApp');
@@ -61,15 +57,17 @@ describe('encore.ui.rxApp', function () {
 
                 module(function ($provide) {
                     $provide.value('rxNotify', mockNotify);
-                    $provide.value('Session', mockSession);
                 });
 
                 // Inject in angular constructs
-                inject(function ($rootScope, $compile, encoreRoutes, $httpBackend, routesCdnPath, rxLocalStorage) {
+                inject(function ($rootScope, $compile, encoreRoutes, $httpBackend, routesCdnPath, rxLocalStorage, 
+                _rxAuth_) {
                     rootScope = $rootScope;
                     compile = $compile;
                     httpMock = $httpBackend;
                     cdnPath = routesCdnPath;
+                    rxAuth = _rxAuth_;
+                    rxAuth.getUserId = sinon.stub().returns('rack0000');
 
                     rxLocalStorage.clear();
                 });
@@ -172,7 +170,7 @@ describe('encore.ui.rxApp', function () {
                 });
 
                 it('should set the user name from the session', function () {
-                    expect(mockSession.getUserId).to.have.been.called;
+                    expect(rxAuth.getUserId).to.have.been.called;
                     expect(el.isolateScope().userId).to.equal('rack0000');
                 });
             });

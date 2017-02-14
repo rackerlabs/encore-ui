@@ -13,7 +13,7 @@
           <a ng-click="pageTracking.goToPrevPage()" ng-hide="pageTracking.isFirstPage()">« Prev</a>
         </div>
 
-        <div ng-repeat="n in pageTracking | Page" ng-class="{active: pageTracking.isPage(n), 'page-number-last': pageTracking.isPageNTheLastPage(n)}" class="pagination-page">
+        <div ng-repeat="n in pageTracking | rxPager" ng-class="{active: pageTracking.isPage(n), 'page-number-last': pageTracking.isPageNTheLastPage(n)}" class="pagination-page">
           <a ng-click="pageTracking.goToPage(n)">{{n + 1}}</a>
         </div>
 

@@ -1,8 +1,7 @@
 (function () {
     angular
         .module('encore.ui.utilities')
-        .filter('rxXor', rxXorFilter)
-        .filter('xor', xorFilter);
+        .filter('rxXor', rxXorFilter);
 
     /**
      * @ngdoc filter
@@ -19,21 +18,4 @@
             return _.xor.apply(_, arguments);
         };
     }//rxXorFilter
-
-    /**
-     * @deprecated
-     * Use rxXor instead. This filter will be removed on the 4.0.0 release.
-     * @ngdoc filter
-     * @name utilities.filter:xor
-     * @requires utilities.filter:rxXor
-     */
-    function xorFilter () {
-        return function (a, b) {
-            console.warn(
-                'DEPRECATED: xor - Please use rxXor. ' +
-                'xor will be removed in EncoreUI 4.0.0'
-            );
-            return rxXorFilter()(a, b);
-        };
-    }//xorFilter
 })();

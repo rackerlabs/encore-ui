@@ -142,7 +142,7 @@ angular.module('encore.ui.elements')
  * @param {String} description User-submitted feedback
  *
  */
-.directive('rxFeedback', function (rxFeedbackTypes, $location, rxFeedbackSvc, rxScreenshotSvc, rxNotify, Session) {
+.directive('rxFeedback', function (rxFeedbackTypes, $location, rxFeedbackSvc, rxScreenshotSvc, rxNotify, rxAuth) {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxFeedback.html',
@@ -191,7 +191,7 @@ angular.module('encore.ui.elements')
 
             if (!_.isFunction(scope.sendFeedback)) {
                 scope.sendFeedback = function (feedback) {
-                    feedback.sso = Session.getUserId();
+                    feedback.sso = rxAuth.getUserId();
 
                     var root = document.querySelector('.rx-app');
 

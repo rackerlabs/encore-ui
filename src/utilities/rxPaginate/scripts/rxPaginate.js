@@ -1,8 +1,7 @@
 (function () {
     angular
         .module('encore.ui.utilities')
-        .filter('rxPaginate', rxPaginateFilter)
-        .filter('Paginate', PaginateFilter);
+        .filter('rxPaginate', rxPaginateFilter);
 
     /**
      * @ngdoc filter
@@ -45,21 +44,4 @@
             }
         };
     }//rxPaginateFilter
-
-    /**
-     * @deprecated
-     * Use rxPaginate instead. This filter will be removed on the 4.0.0 release.
-     * @ngdoc filter
-     * @name utilities.filter:Paginate
-     * @requires utilities.filter:rxPaginate
-     */
-    function PaginateFilter (rxPageTracker, rxPaginateUtils) {
-        return function (items, pager) {
-            console.warn(
-                'DEPRECATED: Paginate - Please use rxPaginate. ' +
-                'Paginate will be removed in EncoreUI 4.0.0'
-            );           
-            return rxPaginateFilter(rxPageTracker, rxPaginateUtils)(items, pager);
-        };
-    }//PaginateFilter
 })();

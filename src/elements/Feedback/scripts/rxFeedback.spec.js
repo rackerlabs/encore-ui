@@ -47,7 +47,7 @@ describe('rxFeedback', function () {
         module(function ($provide) {
             $provide.value('rxNotify', notifySvcMock);
             $provide.value('rxScreenshotSvc', screenshotSvcMock);
-            $provide.value('Session', sessionSvcMock);
+            $provide.value('rxAuth', sessionSvcMock);
             $provide.value('$location', locationMock);
         });
 
