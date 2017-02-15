@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">components/rxPaginate/scripts/rxPaginate.js</span></h1>
     <h2>
-        Statements: <span class="metric">95% <small>(38 / 40)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">75% <small>(15 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">87.5% <small>(7 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">95% <small>(38 / 40)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">96.43% <small>(54 / 56)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">77.27% <small>(17 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">92.31% <small>(12 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">96.43% <small>(54 / 56)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">components/rxPaginate/scripts/</a> &#187; rxPaginate.js</div>
@@ -165,7 +165,40 @@
 138
 139
 140
-141</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -209,10 +242,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">20</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -231,7 +271,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">20</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8</span>
 <span class="cline-any cline-yes">17</span>
 <span class="cline-any cline-yes">17</span>
@@ -305,6 +344,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.rxPaginate')
 /**
  * @ngdoc directive
@@ -337,7 +403,10 @@
         templateUrl: 'templates/rxPaginate.html',
         replace: true,
         restrict: 'E',
-        require: '?^rxLoadingOverlay',
+        require: [
+            '?^rxLoadingOverlay',
+            '?^rxFloatingHeader'
+        ],
         scope: {
             pageTracking: '=',
             numberOfPages: '@',
@@ -347,15 +416,19 @@
             sortColumn: '=?',
             sortDirection: '=?'
         },
-        link: function (scope, element, attrs, rxLoadingOverlayCtrl) {
-&nbsp;
+        link: function (scope, element, attrs, ctrls) {
             var errorMessage = attrs.errorMessage;
 &nbsp;
-            rxLoadingOverlayCtrl = rxLoadingOverlayCtrl || {
+            var rxLoadingOverlayCtrl = ctrls[0] || {
                 show: _.noop,
                 hide: _.noop,
                 showAndHide: _.noop
             };
+&nbsp;
+            var rxFloatingHeaderCtrl = ctrls[1] || {
+                reapply: _.noop
+            };
+&nbsp;
             // We need to find the `&lt;table&gt;` that contains
             // this `&lt;rx-paginate&gt;`
             var parentElement = element.parent();
@@ -371,7 +444,6 @@
 &nbsp;
             // Everything here is restricted to using server-side pagination
             if (!_.isUndefined(scope.serverInterface)) {
-&nbsp;
                 var params = function () {
                     var direction = scope.sortDirection ? 'DESCENDING' : 'ASCENDING';
                     return {
@@ -439,9 +511,36 @@
                 }
 &nbsp;
                 notifyPageTracking();
-&nbsp;
             }
 &nbsp;
+            /*
+             * Wrap pageTracking functions to reapply floating header
+             * when navigating to another page of data.
+             */
+            scope.goToFirstPage = function () {
+                rxFloatingHeaderCtrl.reapply();
+                scope.pageTracking.goToFirstPage();
+            };
+&nbsp;
+            scope.goToPrevPage = function () {
+                rxFloatingHeaderCtrl.reapply();
+                scope.pageTracking.goToPrevPage();
+            };
+&nbsp;
+            scope.goToPage = function (n) {
+                rxFloatingHeaderCtrl.reapply();
+                scope.pageTracking.goToPage(n);
+            };
+&nbsp;
+            scope.goToNextPage = function () {
+                rxFloatingHeaderCtrl.reapply();
+                scope.pageTracking.goToNextPage();
+            };
+&nbsp;
+            scope.goToLastPage = function () {
+                rxFloatingHeaderCtrl.reapply();
+                scope.pageTracking.goToLastPage();
+            };
         }
     };
 });
@@ -450,7 +549,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Dec 16 2016 14:04:23 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 15 2017 14:12:17 GMT-0600 (CST)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>
