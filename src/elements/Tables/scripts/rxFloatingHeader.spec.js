@@ -1,5 +1,5 @@
 describe('rxFloatingHeader', function () {
-    var scope, compile, el;
+    var scope, compile, el, $timeout, headerInputs;
     var validTemplate =
         '<table rx-floating-header>' +
             '<thead>' +
@@ -46,7 +46,6 @@ describe('rxFloatingHeader', function () {
             setScrollTop: function (val) { scrollTop = val; },
         };
     };
-
     var mockJq = rxDOMHelper();
 
     beforeEach(function () {
@@ -58,40 +57,78 @@ describe('rxFloatingHeader', function () {
         });
 
         // Inject in angular constructs
-        inject(function ($location, $rootScope, $compile) {
+        inject(function ($location, $rootScope, $compile, _$timeout_) {
             scope = $rootScope.$new();
             compile = $compile;
+            $timeout = _$timeout_;
         });
 
         el = helpers.createDirective(validTemplate, compile, scope);
         scope.$digest();
+
+        $timeout.flush();
     });
 
-    it('should apply .filter-header to headers and inputs', function () {
-        var ths = el.find('th');
-        var inputs = el.find('input');
+    describe('header', function () {
+        var header, headerCells, cell;
 
-        // .filter-header should only be added to the <th> which has an <input>,
-        // in this case the first <th>
-        expect(ths, 'three th elements').to.have.length(3);
-        expect(ths.eq(0).hasClass('filter-header'), 'first th').to.be.true;
-        expect(ths.eq(1).hasClass('filter-header'), 'second th').to.be.false;
-        expect(ths.eq(2).hasClass('filter-header'), 'third th').to.be.false;
+        before(function () {
+            header = el.find('thead');;
+            headerCells = header.find('th');
+            headerInputs = el.find('input');
+        });
 
-        expect(inputs, 'one input').to.have.length(1);
+        it('should have 3 cells', function () {
+            expect(headerCells).to.have.length(3);
+        });
+
+        it('should have one <input> element with "filter-box" class', function () {
+            expect(headerInputs).to.have.length(1);
+            expect(headerInputs.eq(0).hasClass('filter-box')).to.be.true;
+        });
+
+        describe('first cell', function () {
+            beforeEach(function () {
+                cell = headerCells.eq(0);
+            });
+
+            it('should have "filter-header" class', function () {
+                expect(cell.hasClass('filter-header')).to.be.true;
+            });
+        });//first cell
+
+        describe('second cell', function () {
+            beforeEach(function () {
+                cell = headerCells.eq(1);
+            });
+
+            it('should not have "filter-header" class', function () {
+                expect(cell.hasClass('filter-header')).to.be.false;
+            });
+        });//second cell
+
+        describe('third cell', function () {
+            beforeEach(function () {
+                cell = headerCells.eq(2);
+            });
+
+            it('should not have "filter-header" class', function () {
+                expect(cell.hasClass('filter-header')).to.be.false;
+            });
+        });//third cell
     });
 
     it('should add .rx-floating-header when we scroll past the header', function () {
-        scope.updateHeaders();
+        scope.update();
         expect(el.find('thead tr').hasClass('rx-floating-header')).to.be.true;
     });
 
     it('should remove .rx-floating-header when we scroll back up', function () {
-        scope.updateHeaders();
+        scope.update();
         expect(el.find('thead tr').hasClass('rx-floating-header'), 'add class').to.be.true;
 
         mockJq.setShouldFloat(false);
-        scope.updateHeaders();
+        scope.update();
         expect(el.find('thead tr').hasClass('rx-floating-header'), 'removed class').to.be.false;
     });
 });

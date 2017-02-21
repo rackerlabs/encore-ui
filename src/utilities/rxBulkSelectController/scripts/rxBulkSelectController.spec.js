@@ -39,6 +39,7 @@ describe('utilities:rxBulkSelectController', function () {
         beforeEach(function () {
             ctrlScope = rootScope.$new();
             ctrlScope.tableElement = {};
+            ctrlScope._rxFloatingHeaderCtrl = { reapply: _.noop };
             ctrlScope.selectedKey = 'rowIsSelected';
             ctrlScope.bulkSource = scope.servers;
 

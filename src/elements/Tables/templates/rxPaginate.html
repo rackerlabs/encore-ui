@@ -7,21 +7,21 @@
     <div flex="100" flex-order="1" flex-gt-md="40" flex-order-gt-md="2" flex-gt-lg="35">
       <div class="page-links" layout="row" layout-align="center">
         <div ng-class="{disabled: pageTracking.isFirstPage()}" class="pagination-first">
-          <a hide show-gt-lg ng-click="pageTracking.goToFirstPage()" ng-hide="pageTracking.isFirstPage()">First</a>
+          <a hide show-gt-lg ng-click="goToFirstPage()" ng-hide="pageTracking.isFirstPage()">First</a>
         </div>
         <div ng-class="{disabled: pageTracking.isFirstPage()}" class="pagination-prev">
-          <a ng-click="pageTracking.goToPrevPage()" ng-hide="pageTracking.isFirstPage()">« Prev</a>
+          <a ng-click="goToPrevPage()" ng-hide="pageTracking.isFirstPage()">« Prev</a>
         </div>
 
         <div ng-repeat="n in pageTracking | Page" ng-class="{active: pageTracking.isPage(n), 'page-number-last': pageTracking.isPageNTheLastPage(n)}" class="pagination-page">
-          <a ng-click="pageTracking.goToPage(n)">{{n + 1}}</a>
+          <a ng-click="goToPage(n)">{{n + 1}}</a>
         </div>
 
         <div ng-class="{disabled: pageTracking.isLastPage() || pageTracking.isEmpty()}" class="pagination-next">
-          <a ng-click="pageTracking.goToNextPage()" ng-hide="pageTracking.isLastPage() || pageTracking.isEmpty()"> Next »</a>
+          <a ng-click="goToNextPage()" ng-hide="pageTracking.isLastPage() || pageTracking.isEmpty()"> Next »</a>
         </div>
         <div ng-class="{disabled: pageTracking.isLastPage()}" class="pagination-last">
-          <a hide show-gt-lg ng-click="pageTracking.goToLastPage()" ng-hide="pageTracking.isLastPage()">Last</a>
+          <a hide show-gt-lg ng-click="goToLastPage()" ng-hide="pageTracking.isLastPage()">Last</a>
         </div>
       </div>
     </div>
