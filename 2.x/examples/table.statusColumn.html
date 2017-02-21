@@ -1,4 +1,4 @@
-<table 
+<table
   ng-controller="rxStatusColumnCtrl"
   class="table-striped demo-status-column-table">
   <thead>
@@ -12,17 +12,15 @@
           Status
         </rx-sortable-column>
       </th>
-      <th class="column-title">
-        Title
-      </th>
+      <th>Title</th>
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="server in servers | orderBy: sort.predicate:sort.reverse">
       <!-- Both `api` and `tooltip-content` are optional -->
-      <td rx-status-column 
-        status="{{ server.status }}" 
-        api="{{ server.api }}" 
+      <td rx-status-column
+        status="{{ server.status }}"
+        api="{{ server.api }}"
         tooltip-content="{{ server.status }}">
       </td>
       <td>{{ server.title }}</td>
