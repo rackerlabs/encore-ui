@@ -1,6 +1,5 @@
 angular.module('demoApp')
 .controller('rxFloatingHeaderCtrl', function ($scope) {
-    $scope.searchText = '';
     $scope.data = [
         { name: 'First', value: 1 },
         { name: 'A', value: 2 },
@@ -25,8 +24,4 @@ angular.module('demoApp')
         { name: 'K', value: 1 },
         { name: 'Last', value: 2 }
     ];
-
-    $scope.clearFilter = function () {
-        $scope.searchText = '';
-    };
 });

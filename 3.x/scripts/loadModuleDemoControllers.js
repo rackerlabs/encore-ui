@@ -5,8 +5,8 @@
 
 
 angular.module('demoApp')
-.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, Session) {
-    Session.getUserId = function () {
+.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {
+    rxAuth.getUserId = function () {
         return 'bert3000';
     };
 
@@ -22,7 +22,7 @@ angular.module('demoApp')
             return !_.isEmpty($rootScope.user);
         }
     );
-
+ 
     $scope.changeRoutes = function () {
         var newRoute = {
             linkText: 'Updated Route',
@@ -1263,7 +1263,6 @@ angular.module('demoApp')
 
 angular.module('demoApp')
 .controller('rxFloatingHeaderCtrl', function ($scope) {
-    $scope.searchText = '';
     $scope.data = [
         { name: 'First', value: 1 },
         { name: 'A', value: 2 },
@@ -1288,10 +1287,6 @@ angular.module('demoApp')
         { name: 'K', value: 1 },
         { name: 'Last', value: 2 }
     ];
-
-    $scope.clearFilter = function () {
-        $scope.searchText = '';
-    };
 });
 
 angular.module('demoApp')
@@ -1634,8 +1629,6 @@ angular.module('demoApp')
 
 
 
-
-
 angular.module('demoApp')
 .controller('SessionSimpleCtrl', function ($scope, $window, Session) {
     $scope.isAuthenticated = function () {
@@ -1912,6 +1905,8 @@ angular.module('demoApp')
 
     $scope.refreshTitle();
 });
+
+
 
 
 

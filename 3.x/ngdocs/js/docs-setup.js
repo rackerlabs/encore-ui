@@ -622,7 +622,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "rxOptionTable",
       "shortDescription": "This directive is used to build a table of radio/checkbox inputs.",
-      "keywords": "allowed alongside angularjs api array attribute attributes base build callback checkbox checkboxes checked column columns data default demonstration determine directive disable-fn disabled disableoption display empty empty-message encoreui example excluded expressions falsevalue field-id fieldid function generated identifiers include initial input inputs key label load markup match message model ng-required object objects option optional parameters passed populate preselected preselection preseleted-values properties radio radios removed required rowid rxoptiontable samples selected table tableid tie true type unique values"
+      "keywords": "allowed alongside angularjs api array attribute attributes base build callback checkbox checkboxes checked column columns data default demonstration determine directive disable-fn disabled disablefn disableoption display empty emptymessage encoreui example excluded expressions falsevalue fieldid function generated identifiers include initial input inputs key label load markup match message model ng-required object objects option optional parameters passed populate preselected preselection preseleted-values properties radio radios removed required rowid rxoptiontable samples selected selectedlabel table tableid tie true type unique values"
     },
     {
       "section": "api",
@@ -769,8 +769,7 @@ NG_DOCS={
       "shortName": "Paginate",
       "type": "filter",
       "moduleName": "utilities",
-      "shortDescription": "This is the pagination filter that is used to calculate the division in the",
-      "keywords": "api calculate created current division filter instance items list object pager pagination paging rxpagetracker service sliced utilities"
+      "keywords": "api filter release removed rxpaginate utilities"
     },
     {
       "section": "api",
@@ -879,6 +878,15 @@ NG_DOCS={
       "moduleName": "utilities",
       "shortDescription": "This is the pagination filter that is used to limit the number of pages",
       "keywords": "api created displayed filter instance limit list number numbers pager pagination rxpagetracker service utilities"
+    },
+    {
+      "section": "api",
+      "id": "utilities.filter:rxPaginate",
+      "shortName": "rxPaginate",
+      "type": "filter",
+      "moduleName": "utilities",
+      "shortDescription": "This is the pagination filter that is used to calculate the division in the",
+      "keywords": "api calculate created current division filter instance items list object pager pagination paging rxpagetracker service sliced utilities"
     },
     {
       "section": "api",
@@ -1022,8 +1030,7 @@ NG_DOCS={
       "shortName": "Permission",
       "type": "service",
       "moduleName": "utilities",
-      "shortDescription": "Simple service for accessing roles and permissions for a user.",
-      "keywords": "_every_ _one_ accessing api array associated check checks exact false fetch format getroles hasallroles hasrole list method permission permissions role roles service session simple tied token true user utilities"
+      "keywords": "api item release removed rxauth service utilities"
     },
     {
       "section": "api",
@@ -1032,7 +1039,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "utilities",
       "shortDescription": "routesCdnPath is configured as a .provider. This is to allow users to override the URL used when in a",
-      "keywords": "allow api app automatically case config configuration configured customurl depending documenting encore-ui-nav environment example file find folder framework hascustomurl intended js json live local main mynav null override people point provider pull reason repository requests routescdnpath routescdnpathprovider service set stuff submitting test true url users utilities versions"
+      "keywords": "allow api app automatically case config configuration configured customurl depending deprecated documenting encore-ui-nav encoreui environment example file find folder framework hascustomurl intended js json live local main mynav null override people point provider pull reason removed repository requests routescdnpath routescdnpathprovider service set stuff submitting test true url users utilities versions"
     },
     {
       "section": "api",
@@ -1049,8 +1056,8 @@ NG_DOCS={
       "shortName": "rxAuth",
       "type": "service",
       "moduleName": "utilities",
-      "shortDescription": "Service which provides an entire solution for authenticating, user session management",
-      "keywords": "api array authenticating broken components customization entire errorcallback expired facilitate getroles gettoken hasrole isauthenticated iscurrent login loginwithjson logout logs management password permission permissions promise re-use returns role roles rxauth service services session smaller solution stored stores storetoken successcallback token true ui user utilities valid wrapper"
+      "shortDescription": "Service which provides an entire solution for authenticating user session management",
+      "keywords": "_every_ _one_ api associated authenticated authenticates authenticating body cached callback check checks credential credentials current defined dot entire error exact exists expiration false fetch format function getbykey getroles gettoken gettokenid getuserid getusername hasallroles hasrole identity isauthenticated iscurrent json key list login loginwithjson logout logs management object older payload permissions promise return returns role roles rxauth service session solution stores storetoken success throwing tied token true ui undefined user utilities valid walks"
     },
     {
       "section": "api",
@@ -1345,8 +1352,7 @@ NG_DOCS={
       "shortName": "Session",
       "type": "service",
       "moduleName": "utilities",
-      "shortDescription": "Service for managing user session in encore-ui.",
-      "keywords": "api encore-ui expired gettoken isauthenticated iscurrent logout logs managing returns service session stored stores storetoken token true user utilities valid"
+      "keywords": "api item release removed rxauth service utilities"
     },
     {
       "section": "api",
@@ -1371,7 +1377,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "utilities",
       "shortDescription": "Manipulates required references to $scope input for proper notification functionality.",
-      "keywords": "$on $rootscope $routechangesuccess $scope api forcibly function functionality input manipulates notification proper references required rxstatus scope service set setscope utilities"
+      "keywords": "$on $rootscope $routechangesuccess $scope api encoreui forcibly function functionality input manipulates notification proper references removed required rxstatus scope service set setscope utilities"
     },
     {
       "section": "api",

@@ -1,22 +1,12 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/Session/scripts/Session.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/136e3bc/src/utilities/Session/scripts/Session.js#L20" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Session</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/Session/scripts/Session.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/621deef/src/utilities/Session/scripts/Session.js#L9" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Session</code>
 <div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
 </span>
 </div>
 </h1>
-<div><h2 id="description">Description</h2>
-<div class="description"><div class="utilities-service-page utilities-service-session-page"><p>Service for managing user session in encore-ui.</p>
-</div></div>
+<div><fieldset class="deprecated"><legend>Deprecated API</legend>
+Please use rxAuth instead. This item will be removed on the 4.0.0 release.</fieldset>
 <h2 id="dependencies">Dependencies</h2>
-<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:rxLocalStorage">rxLocalStorage</a></code>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:rxAuth">rxAuth</a></code>
 </li>
 </ul>
-<h2 id="example">Example</h2>
-<div class="example"><div class="utilities-service-page utilities-service-session-page"><pre class="prettyprint linenums">
-Session.getToken(); // Returns the stored token
-Session.storeToken(token); // Stores token
-Session.logout(); // Logs user off
-Session.isCurrent(); // Returns true/false if the token has expired.
-Session.isAuthenticated(); // Returns true/false if the user token is valid.
-</pre>
-</div></div>
 </div>

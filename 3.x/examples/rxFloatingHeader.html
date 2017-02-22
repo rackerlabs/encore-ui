@@ -1,5 +1,5 @@
 <div ng-controller="rxFloatingHeaderCtrl">
-  <table rx-floating-header class="e2e-filter table-demo--floating-header">
+  <table rx-floating-header class="e2e-filter">
     <thead>
       <tr>
         <th colspan="2">
@@ -9,8 +9,8 @@
         </th>
       </tr>
       <tr>
-        <th class="column-name">Column One Header</th>
-        <th class="column-value">Column Two Header</th>
+        <th>Column One Header</th>
+        <th>Column Two Header</th>
       </tr>
     </thead>
 
@@ -18,8 +18,8 @@
       <tr ng-repeat="datum in data | filter:searchText"
         class="row_{{datum.value}}"
         ng-class="{'first-row': $index===0, 'middle-row': $index===11, 'last-row': $index===21}">
-        <td class="column-name">{{datum.name}}</td>
-        <td class="column-value">{{datum.value}}</td>
+        <td>{{datum.name}}</td>
+        <td>{{datum.value}}</td>
       </tr>
     </tbody>
   </table>

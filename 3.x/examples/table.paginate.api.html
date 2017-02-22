@@ -28,7 +28,7 @@
         </th>
       </tr>
       <tr>
-        <th class="column-name">
+        <th>
           <rx-sortable-column
             sort-method="sortCol(property)"
             sort-property="name"
@@ -37,7 +37,7 @@
             Name
           </rx-sortable-column>
         </th>
-        <th class="column-os">
+        <th>
           <rx-sortable-column
             sort-method="sortCol(property)"
             sort-property="os"
@@ -51,8 +51,8 @@
 
     <tbody>
       <tr ng-repeat="server in pagedServers.items">
-        <td class="column-name">{{server.name}}</td>
-        <td class="column-os">{{server.os}}</td>
+        <td>{{server.name}}</td>
+        <td>{{server.os}}</td>
       </tr>
     </tbody>
 

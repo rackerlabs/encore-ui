@@ -1,39 +1,12 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/Permission/scripts/Permission.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/136e3bc/src/utilities/Permission/scripts/Permission.js#L16" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Permission</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/Permission/scripts/Permission.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/621deef/src/utilities/Permission/scripts/Permission.js#L9" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Permission</code>
 <div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
 </span>
 </div>
 </h1>
-<div><h2 id="description">Description</h2>
-<div class="description"><div class="utilities-service-page utilities-service-permission-page"><p>Simple service for accessing roles and permissions for a user.</p>
-</div></div>
+<div><fieldset class="deprecated"><legend>Deprecated API</legend>
+Please use rxAuth instead. This item will be removed on the 4.0.0 release.</fieldset>
 <h2 id="dependencies">Dependencies</h2>
-<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:Session">Session</a></code>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:rxAuth">rxAuth</a></code>
 </li>
 </ul>
-<div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/rackerlabs/encore-ui/blob/136e3bc/src/utilities/Permission/scripts/Permission.js#L58" class="view-source icon-eye-open"> </a><h3 id="methods_getroles">getRoles()</h3>
-<div class="getroles"><div class="getroles-page"><p>Fetch all the roles tied to the user (in the exact format available in their Session token).</p>
-</div><h5 id="methods_getroles_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="getroles-page"><p>List of all roles associated to the user.</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/136e3bc/src/utilities/Permission/scripts/Permission.js#L85" class="view-source icon-eye-open"> </a><h3 id="methods_hasallroles">hasAllRoles(roles)</h3>
-<div class="hasallroles"><div class="hasallroles-page"><p>Checks if user has <em>every</em> role in given list.</p>
-</div><h5 id="methods_hasallroles_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roles</td><td><a href="" class="label type-hint type-hint-string">String[]</a></td><td><div class="hasallroles-page"><p>List of roles to check against</p>
-</div></td></tr></tbody></table><h5 id="methods_hasallroles_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="hasallroles-page"><p>True if user has <em>every</em> role in given list; otherwise, False.</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/136e3bc/src/utilities/Permission/scripts/Permission.js#L72" class="view-source icon-eye-open"> </a><h3 id="methods_hasrole">hasRole(roles)</h3>
-<div class="hasrole"><div class="hasrole-page"><p>Check if user has at least <em>one</em> of the given roles.</p>
-</div><h5 id="methods_hasrole_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roles</td><td><a href="" class="label type-hint type-hint-string">String[]</a></td><td><div class="hasrole-page"><p>List of roles to check against</p>
-</div></td></tr></tbody></table><h5 id="methods_hasrole_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="hasrole-page"><p>True if user has at least <em>one</em> of the given roles; otherwise, False.</p>
-</div></td></tr></table></div>
-</li>
-</ul>
-</div>
-<h2 id="example">Example</h2>
-<div class="example"><div class="utilities-service-page utilities-service-permission-page"><pre class="prettyprint linenums">
-Permission.getRoles() //returns an array of roles for a user
-Permission.hasRole(role) //returns true/false if user has specified role
-</pre>
-</div></div>
 </div>

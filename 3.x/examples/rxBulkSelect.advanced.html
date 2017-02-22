@@ -2,7 +2,7 @@
   <table rx-bulk-select
     bulk-source="datacenters"
     selected-key="rowIsSelected"
-    class="table-striped table-demo--bulk-select"
+    class="table-striped"
     rx-floating-header>
 
     <thead>
@@ -23,18 +23,18 @@
         </th>
       </tr>
       <tr>
-        <th class="column-action" rx-bulk-select-header-check></th>
-        <th class="column-name">Name</th>
-        <th class="column-city">City</th>
+        <th rx-bulk-select-header-check></th>
+        <th>Name</th>
+        <th>City</th>
       </tr>
     </thead>
 
     <tbody>
       <tr ng-repeat="dc in datacenters | filter:filter.keyword"
         ng-class="{selected: dc.rowIsSelected}">
-        <td class="column-action" rx-bulk-select-row row="dc"></td>
-        <td class="column-name">{{ dc.name }}</td>
-        <td class="column-city">{{ dc.city }}</td>
+        <td rx-bulk-select-row row="dc"></td>
+        <td>{{ dc.name }}</td>
+        <td>{{ dc.city }}</td>
       </tr>
     </tbody>
   </table>
@@ -42,7 +42,9 @@
   <script type="text/ng-template" id="shutdownDatacenters.html">
     <rx-modal-form
       title="Shut Down Datacenters"
-      submit-text="Shut Down Datacenters">
+      submit-text="Shut Down Datacenters"
+      class="rx-example">
+
       <div ng-switch="state">
         <div ng-switch-when="editing">
           <rx-notification type="warning">
@@ -71,10 +73,10 @@
 
       <br />
 
-      <table class="table-striped batch-action-modal-table table-demo--bulk-select">
+      <table class="table-striped batch-action-modal-table table-demo--batch-action">
         <thead>
           <tr>
-            <th class="column-name">
+            <th>
               <rx-sortable-column
                 sort-method="sortCol(property)"
                 sort-property="name"
@@ -83,8 +85,8 @@
                 Name
               </rx-sortable-column>
             </th>
-            <th class="column-city" ng-if="state === 'editing'">City</th>
-            <th class="column-status" ng-if="state !== 'editing'">
+            <th ng-if="state === 'editing'">City</th>
+            <th ng-if="state !== 'editing'">
               <rx-sortable-column
                 sort-method="sortCol(property)"
                 sort-property="status"
@@ -98,17 +100,17 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="dc in selectedDatacenters | orderBy: sort.predicate:sort.reverse | Paginate:pager">
-            <td class="column-name">{{ dc.name }}</td>
+          <tr ng-repeat="dc in selectedDatacenters | orderBy: sort.predicate:sort.reverse | rxPaginate:pager">
+            <td>{{ dc.name }}</td>
 
             <!-- EDITING -->
-            <td class="column-city" ng-if="state === 'editing'">{{ dc.city }}</td>
+            <td ng-if="state === 'editing'">{{ dc.city }}</td>
             <td class="column-action" ng-if="state === 'editing'">
               <i class="fa fa-times" ng-click="removeDatacenter(dc)"></i>
             </td>
 
             <!-- PROCESSING -->
-            <td class="column-status status--{{dc.status}}" ng-if="state !== 'editing'">
+            <td class="status--{{dc.status}}" ng-if="state !== 'editing'">
               <span ng-switch="dc.status">
                 <span ng-switch-when="pending">Shutting down...</span>
                 <span ng-switch-when="success">Successfully shut down!</span>
@@ -116,7 +118,7 @@
                 <span ng-switch-default>Queued to shut down...</span>
               </span>
             </td>
-            <td class="column-action status--{{dc.status}}" ng-if="state !== 'editing'">
+            <td class="status--{{dc.status}}" ng-if="state !== 'editing'">
               <span ng-switch="dc.status">
                 <i ng-switch-when="success" class="fa fa-lg fa-check-circle-o"></i>
                 <i ng-switch-when="failure" class="fa fa-lg fa-ban"></i>

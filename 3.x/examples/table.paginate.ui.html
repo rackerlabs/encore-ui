@@ -2,15 +2,15 @@
   <table class="table-striped table-demo--ui-pagination">
     <thead>
       <tr>
-        <th class="column-name">Name</th>
-        <th class="column-os">OS</th>
+        <th>Name</th>
+        <th>OS</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr ng-repeat="server in servers | orderBy: sorter.predicate:sorter.reverse | Paginate:pager ">
-        <td class="column-name">{{server.name}}</td>
-        <td class="column-os">{{server.os}}</td>
+      <tr ng-repeat="server in servers | orderBy: sorter.predicate:sorter.reverse | rxPaginate:pager ">
+        <td>{{server.name}}</td>
+        <td>{{server.os}}</td>
       </tr>
     </tbody>
 

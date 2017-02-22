@@ -63,6 +63,7 @@ exports.rxMisc = {
      * rounded with Math.round() which doesn't use bankers' rounding for negative numbers.
      * NOTE: AngularJS representation of negative currency changes in
      * [AngularJS v1.4.4](https://code.angularjs.org/1.4.4/docs/api/ng/filter/currency)
+     * @deprecated rxMisc.currencyToPennies will be removed in rxPageObjects 4.0.0
      * @param {string|array&lt;string>} currencyStringOrArray - Raw text or an array of raw texts as output by Angular's
      * `currency` filter.
      *
@@ -74,6 +75,9 @@ exports.rxMisc = {
      * expect(encore.rxMisc.currencyToPennies(['$0.01', '($100 AUS)', '$150.14'])).to.eql([1, -10000, 15014]);
      */
     currencyToPennies: function (currencyStringOrArray) {
+        console.warn(
+            'DEPRECATED: rxMisc.currencyToPennies will be removed in rxPageObjects 4.0.0'
+        );
         var convert = function (currencyString) {
             var resFloat = parseFloat(currencyString.split(' ')[0].replace(/[,$()]/g, '').trim());
 
@@ -100,6 +104,7 @@ exports.rxMisc = {
      * javascript, then you shouldn't use this function. If that is the case, see the link to the
      * Encore-UI styleguide listed in the "See" addendum below. There should be no need to manipulate
      * a date's text to create a valid date object if you are following the styleguide.
+     * @deprecated rxMisc.newDate will be removed in rxPageObjects 4.0.0
      * @param {String} dateText - Text that represents the date object in the UI.
      * @returns {Date}
      * @example
@@ -120,6 +125,9 @@ exports.rxMisc = {
      * }
      */
     newDate: function (dateText) {
+        console.warn(
+            'DEPRECATED: rxMisc.newDate will be removed in rxPageObjects 4.0.0'
+        );
         return new Date(dateText);
     },
 
@@ -127,6 +135,7 @@ exports.rxMisc = {
      * @function
      * @description Utility function to negate a value in a `.then` callback using shorthand.
      * @param {*} value - The value to toggle. Runs the `!` operator on the value.
+     * @deprecated rxMisc.negate will be removed in rxPageObjects 4.0.0
      * @returns {*} Whatever happens when you run `!value` on `value`. Use with caution!
      * @example
      * var myPage = {
@@ -142,12 +151,16 @@ exports.rxMisc = {
      * };
      */
     negate: function (value) {
+        console.warn(
+            'DEPRECATED: rxMisc.negate will be removed in rxPageObjects 4.0.0'
+        );
         return !value;
     },
 
     /**
      * @description A list of common strings that appear in the UI that represent `null` to a page object.
      * Add to this list yourself or create a new one in this namespace for your application.
+     * @deprecated rxMisc.nullValueMatches will be removed in rxPageObjects 4.0.0
      * @example
      * var userPage {
      *     get emailPreferences() { return element(by.model('email.preferences')).getText(); }
@@ -169,6 +182,7 @@ exports.rxMisc = {
      * `fallbackReturnValue`, which will over ride the default `null` response into something else you'd prefer.
      * This is useful when applications feature use of `ng-if` to control various messages to the user.
      * @function
+     * @deprecated rxMisc.unless will be removed in rxPageObjects 4.0.0
      * @param {ElementFinder} elem - The ElementFinder that may or may not be present, or displayed, or valid.
      * @param {Function} [innerFn=getText()] -
      * Function to call on the element should it be present, displayed, and valid.
@@ -204,6 +218,9 @@ exports.rxMisc = {
      * }
      */
     unless: function (elem, innerFn, fallbackReturnValue) {
+        console.warn(
+            'DEPRECATED: rxMisc.unless will be removed in rxPageObjects 4.0.0'
+        );
         if (fallbackReturnValue === undefined) {
             fallbackReturnValue = null;
         }
@@ -321,6 +338,7 @@ exports.rxMisc = {
      * @property {Promise&lt;Number>} y - The number of pixels from the upper edge of the current scroll location.
      * @description The current scroll location, given as an _immediate_ object (not a promise of an object)
      * with members `x`/`y`, which are coordinates that _are_ returned as promises.
+     * @deprecated rxMisc.scrollPosition will be removed in rxPageObjects 4.0.0
      * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
      * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollX
      * @example
@@ -334,10 +352,16 @@ exports.rxMisc = {
      */
     scrollPosition: {
         get x () {
+            console.warn(
+                'DEPRECATED: rxMisc.scrollPosition will be removed in rxPageObjects 4.0.0'
+            );
             return browser.executeScript('return window.scrollX;');
         },
 
         get y () {
+            console.warn(
+                'DEPRECATED: rxMisc.scrollPosition will be removed in rxPageObjects 4.0.0'
+            );
             return browser.executeScript('return window.scrollY;');
         }
     },
@@ -345,6 +369,7 @@ exports.rxMisc = {
     /**
      * @function
      * @description Whether or not `e1` and `e2` have the same Y coordinates.
+     * @deprecated rxMisc.compareYLocations will be removed in rxPageObjects 4.0.0
      * @param {ElementFinder|ElementArrayFinder} e1 First element to compare Y locations against.
      * @param {ElementFinder|ElementArrayFinder} e2 Second element to compare Y locations against.
      * @returns {Boolean}
@@ -356,12 +381,16 @@ exports.rxMisc = {
      * expect(encore.rxMisc.compareYLocations(firstThing, lastThing)).to.eventually.be.true;
      */
     compareYLocations: function (e1, e2) {
+        console.warn(
+            'DEPRECATED: rxMisc.compareYLocations will be removed in rxPageObjects 4.0.0'
+        );
         return this.compareLocations(e1, e2, 'y');
     },
 
     /**
      * @function
      * @description Whether or not `e1` and `e2` have the same X coordinates.
+     * @deprecated rxMisc.compareXLocations will be removed in rxPageObjects 4.0.0
      * @param {ElementFinder|ElementArrayFinder} e1 First element to compare X locations against.
      * @param {ElementFinder|ElementArrayFinder} e2 Second element to compare X locations against.
      * @returns {Boolean}
@@ -373,6 +402,9 @@ exports.rxMisc = {
      * expect(encore.rxMisc.compareXLocations(firstThing, lastThing)).to.eventually.be.true;
      */
     compareXLocations: function (e1, e2) {
+        console.warn(
+            'DEPRECATED: rxMisc.compareXLocations will be removed in rxPageObjects 4.0.0'
+        );
         return this.compareLocations(e1, e2, 'x');
     },
 
@@ -408,11 +440,15 @@ exports.rxMisc = {
     /**
      * @private
      * @function
+     * @deprecated rxMisc.transformLocation will be removed in rxPageObjects 4.0.0
      * @param {ElementFinder} e1 First element to compare locations against.
      * @param {ElementFinder} e2 Second element to compare locations against.
      * @param {String} attribute attribute to compare ('x' or 'y')
      */
     compareLocations: function (e1, e2, attribute) {
+        console.warn(
+            'DEPRECATED: rxMisc.transformLocation will be removed in rxPageObjects 4.0.0'
+        );
         var promises = [
             this.transformLocation(e1, attribute),
             this.transformLocation(e2, attribute)
@@ -433,13 +469,13 @@ exports.rxMisc = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxOptionTable.html">exercise/rxOptionTable</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxOptionTable.html">rxOptionTable</a></li><li><a href="rxOptionTable.row.html">rxOptionTable.row</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxOptionTable.html">exercise/rxOptionTable</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxOptionTable.html">rxOptionTable</a></li><li><a href="rxOptionTable.row.html">rxOptionTable.row</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Jan 25 2017 13:52:07 GMT-0600 (CST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Feb 22 2017 13:37:11 GMT-0600 (CST)
 </footer>
 
 <script> prettyPrint(); </script>
