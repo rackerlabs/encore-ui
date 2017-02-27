@@ -83,7 +83,7 @@ angular.module('encore.ui.utilities')
  *
  * ## Using the Page Stack
  *
- * The default notification stack is added by default to the `rxPage` template (see {@link rxApp}), so it should be
+ * The default notification stack is added by default to the `rxPage` template (see rxApp), so it should be
  * ready to use without any work (unless your app uses a custom template).  The
  * {@link elements.directive:rxNotifications rxNotifications} directive will gather all notifications for a particular
  * stack into a single point on the page.  By default, this directive will collect all notifications in the `page`
