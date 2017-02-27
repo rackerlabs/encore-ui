@@ -1,16 +1,7 @@
-function genericRouteController (title, breadcrumbs) {
-    var crumbs = [];
+function genericRouteController (title) {
     title = title || '';
 
-    return function (rxBreadcrumbsSvc, rxPageTitle) {
-        var titleCrumb = { name: title };
-        if (breadcrumbs === undefined) {
-            crumbs = titleCrumb
-        } else {
-            crumbs = breadcrumbs.concat(titleCrumb);
-        }
-        rxBreadcrumbsSvc.set(crumbs);
-
+    return function (rxPageTitle) {
         rxPageTitle.setTitle(title);
     }
 }//genericRouteController
@@ -23,12 +14,7 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
         })
         .when('/overview', {
             templateUrl: 'templates/overview.html',
-            controller: function (rxBreadcrumbsSvc, rxPageTitle) {
-                rxBreadcrumbsSvc.set([
-                    { name: '', path: '' }
-                ]);
-                rxPageTitle.setTitle('Overview');
-            }
+            controller: genericRouteController('Overview')
         })
 
         /* Layout */
@@ -141,16 +127,13 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             controller: genericRouteController('Not Found')
         });
 })
-.run(function ($rootScope, $anchorScroll, rxEnvironment, rxBreadcrumbsSvc,
-               rxPageTitle, $timeout) {
+.run(function ($rootScope, $anchorScroll, rxEnvironment, rxPageTitle, $timeout) {
     var baseGithubUrl = '//rackerlabs.github.io/encore-ui/';
     rxEnvironment.add({
         name: 'ghPages',
         pattern: /\/\/rackerlabs.github.io/,
         url: baseGithubUrl + '{{path}}'
     });
-
-    rxBreadcrumbsSvc.setHome('#/overview', 'Overview');
 
     rxPageTitle.setSuffix(' - EncoreUI');
 
