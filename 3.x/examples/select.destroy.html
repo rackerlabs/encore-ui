@@ -1,0 +1,35 @@
+<form rx-form ng-controller="selectDestroyCtrl">
+  <rx-form-section controlled-width>
+    <rx-field>
+      <rx-field-content>
+        <rx-input>
+          <input 
+            rx-radio
+            id="radDestroyed"
+            value="destroyed"
+            ng-model="radCreateDestroy" />
+          <label for="radDestroyed">Destroyed</label>
+        </rx-input>
+        <rx-input>
+          <input 
+            rx-radio
+            id="radCreated"
+            value="created"
+            ng-model="radCreateDestroy" />
+          <label for="radCreated">Created</label>
+        </rx-input>
+        <p>
+          The following select is <code>{{radCreateDestroy}}</code>:
+        </p>
+        <rx-input>
+          <select
+            rx-select
+            id="selTargetCreated"
+            ng-if="radCreateDestroy === 'created'">
+            <option>CREATED!</option>
+          </select>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

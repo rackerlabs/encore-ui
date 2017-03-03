@@ -1,5 +1,5 @@
 angular.module('demoApp')
-.controller('rxActionMenuCtrl', function ($scope, rxNotify) {
+.controller('actionMenuSimpleCtrl', function ($scope, rxNotify) {
     $scope.add = function () {
         rxNotify.add('Added!', {
             type: 'success',

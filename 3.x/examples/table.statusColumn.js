@@ -1,5 +1,5 @@
 angular.module('demoApp')
-.controller('rxStatusColumnCtrl', function ($scope, rxStatusMappings, rxSortUtil) {
+.controller('tableStatusColumnCtrl', function ($scope, rxStatusMappings, rxSortUtil) {
     $scope.servers = [
         { status: 'ACTIVE', title: 'ACTIVE status' },
         { status: 'ERROR', title: 'ERROR status' },

@@ -1,0 +1,143 @@
+<div ng-controller="bulkSelectAdvancedCtrl">
+  <table rx-bulk-select
+    bulk-source="datacenters"
+    selected-key="rowIsSelected"
+    class="table-striped"
+    rx-floating-header>
+
+    <thead>
+      <tr>
+        <th colspan="3" class="filter-header">
+          <rx-search-box ng-model="filter.keyword" rx-placeholder="'Filter by any...'"></rx-search-box>
+          <rx-batch-actions>
+            <li class="actions-item">
+              <rx-modal-action
+                template-url="shutdownDatacenters.html"
+                pre-hook="this.selectedDatacenters = getSelectedDatacenters()"
+                controller="shutDownDatacentersCtrl"
+                classes="msg-info">
+                <i class="fa fa-fw fa-power-off"></i> Shutdown Selected Datacenters
+              </rx-modal-action>
+            </li>
+          </rx-batch-actions>
+        </th>
+      </tr>
+      <tr>
+        <th rx-bulk-select-header-check></th>
+        <th>Name</th>
+        <th>City</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="dc in datacenters | filter:filter.keyword"
+        ng-class="{selected: dc.rowIsSelected}">
+        <td rx-bulk-select-row row="dc"></td>
+        <td>{{ dc.name }}</td>
+        <td>{{ dc.city }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script type="text/ng-template" id="shutdownDatacenters.html">
+    <rx-modal-form
+      title="Shut Down Datacenters"
+      submit-text="Shut Down Datacenters"
+      class="rx-example">
+
+      <div ng-switch="state">
+        <div ng-switch-when="editing">
+          <rx-notification type="warning">
+            Are you sure you want to shut down these datacenters?
+          </rx-notification>
+        </div>
+        <div ng-switch-when="complete">
+          Batch process complete! <span ng-if="errorsPresent">See table below to make note of any failures.</span>
+        </div>
+        <div ng-switch-when="working">
+          <div>
+            Batch request to shut down datacenters in progress.
+            Please <a href="#/components/rxBulkSelect"
+            target="_blank">open a new tab to continue reading rxBulkSelect
+            documentation.</a>
+          </div>
+          <br />
+          <progressbar
+            class="progress-striped"
+            ng-class="{active: numCompleted === selectedDatacenters.length}"
+            value="numCompleted" max="selectedDatacenters.length">
+            {{ numCompleted }} of {{ selectedDatacenters.length }} processed
+          </progressbar>
+        </div>
+      </div>
+
+      <br />
+
+      <table class="table-striped batch-action-modal-table table-demo--batch-action">
+        <thead>
+          <tr>
+            <th>
+              <rx-sortable-column
+                sort-method="sortCol(property)"
+                sort-property="name"
+                predicate="sort.predicate"
+                reverse="sort.reverse">
+                Name
+              </rx-sortable-column>
+            </th>
+            <th ng-if="state === 'editing'">City</th>
+            <th ng-if="state !== 'editing'">
+              <rx-sortable-column
+                sort-method="sortCol(property)"
+                sort-property="status"
+                predicate="sort.predicate"
+                reverse="sort.reverse">
+                Status
+              </rx-sortable-column>
+            </th>
+            <th class="column-action"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="dc in selectedDatacenters | orderBy: sort.predicate:sort.reverse | rxPaginate:pager">
+            <td>{{ dc.name }}</td>
+            <!-- EDITING -->
+            <td ng-if="state === 'editing'">{{ dc.city }}</td>
+            <td class="column-action" ng-if="state === 'editing'">
+              <i class="fa fa-times" ng-click="removeDatacenter(dc)"></i>
+            </td>
+
+            <!-- PROCESSING -->
+            <td class="status--{{dc.status}}" ng-if="state !== 'editing'">
+              <span ng-switch="dc.status">
+                <span ng-switch-when="pending">Shutting down...</span>
+                <span ng-switch-when="success">Successfully shut down!</span>
+                <span ng-switch-when="failure">Failed to shut down.</span>
+                <span ng-switch-default>Queued to shut down...</span>
+              </span>
+            </td>
+            <td class="status--{{dc.status}}" ng-if="state !== 'editing'">
+              <span ng-switch="dc.status">
+                <i ng-switch-when="success" class="fa fa-lg fa-check-circle-o"></i>
+                <i ng-switch-when="failure" class="fa fa-lg fa-ban"></i>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot ng-if="showPagination">
+          <tr class="paginate-area">
+            <td colspan="3">
+              <rx-paginate page-tracking="pager"></rx-paginate>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </rx-modal-form>
+    <rx-modal-footer state="complete">
+      <button class="button finish" ng-click="cancel()">Return to Datacenters</button>
+    </rx-modal-footer>
+  </script>
+</div>
+

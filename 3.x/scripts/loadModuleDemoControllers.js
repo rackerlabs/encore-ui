@@ -327,7 +327,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('rxActionMenuCtrl', function ($scope, rxNotify) {
+.controller('actionMenuSimpleCtrl', function ($scope, rxNotify) {
     $scope.add = function () {
         rxNotify.add('Added!', {
             type: 'success',
@@ -347,7 +347,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('BreadcrumbsSimpleCtrl', function ($scope, rxBreadcrumbsSvc) {
+.controller('breadcrumbsSimpleCtrl', function ($scope, rxBreadcrumbsSvc) {
     rxBreadcrumbsSvc.set([{
         path: '#/elements',
         name: 'Elements',
@@ -374,12 +374,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('buttonGroupExampleCtrl', function ($scope) {
-    $scope.status = 'off';
-});
-
-angular.module('demoApp')
-.controller('rxButtonDisableCtrl', function ($scope, $timeout) {
+.controller('buttonDisableCtrl', function ($scope, $timeout) {
     $scope.status = {
         loading: false,
         disable: true
@@ -395,7 +390,12 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxButtonSimpleCtrl', function ($scope, $timeout) {
+.controller('buttonGroupExampleCtrl', function ($scope) {
+    $scope.status = 'off';
+});
+
+angular.module('demoApp')
+.controller('buttonSimpleCtrl', function ($scope, $timeout) {
     $scope.isLoading = false;
 
     $scope.login = function () {
@@ -498,7 +498,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('rxCharacterCountCtrl', function ($scope) {
+.controller('characterCountDocsCtrl', function ($scope) {
     $scope.data = {
         comment1: '',
         comment2: '',
@@ -510,7 +510,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxCheckboxCtrl', function ($scope) {
+.controller('checkboxDocsCtrl', function ($scope) {
     $scope.chkValidEnabledOne = true;
     $scope.chkValidEnabledTwo = false;
     $scope.chkValidDisabledOne = true;
@@ -527,7 +527,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxDatePickerCtrl', function ($scope) {
+.controller('datePickerDocsCtrl', function ($scope) {
     $scope.enabledValid = '2015-12-15';
     $scope.disabledValid = '2015-12-15';
 
@@ -536,12 +536,12 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxMultiSelectCtrl', function ($scope) {
+.controller('multiSelectDocsCtrl', function ($scope) {
     $scope.classification = [];
 });
 
 angular.module('demoApp')
-.controller('rxRadioCtrl', function ($scope) {
+.controller('radioDocsCtrl', function ($scope) {
     $scope.validEnabled = 1;
     $scope.validDisabled = 1;
     $scope.validNgDisabled = 1;
@@ -554,7 +554,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxSelectCtrl', function ($scope) {
+.controller('selectDocsCtrl', function ($scope) {
     $scope.validEnabled = 3;
     $scope.validNgDisabled = 'na';
     $scope.validDisabled = 'na';
@@ -567,12 +567,36 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxTimePickerCtrl', function ($scope) {
+.controller('timePickerDocsCtrl', function ($scope) {
     $scope.enabledValid = '06:00-06:00';
     $scope.disabledValid = '20:00+08:00';
 
     $scope.enabledInvalid = '17:45+05:00';
     $scope.disabledInvalid = '05:15+00:00';
+});
+
+angular.module('demoApp')
+.controller('checkboxShowHideCtrl', function ($scope) {
+    $scope.amSure = false;
+    $scope.amReallySure = false;
+
+    $scope.$watch('amSure', function (newVal) {
+        if (newVal === false) {
+            $scope.amReallySure = false;
+        }
+    });
+});
+
+angular.module('demoApp')
+.controller('datePickerEmptyCtrl', function ($scope) {
+    $scope.emptyDate = '';
+
+    $scope.undefinedDate = undefined;
+});
+
+angular.module('demoApp')
+.controller('datePickerSimpleCtrl', function ($scope) {
+    $scope.dateModel = moment(new Date()).format('YYYY-MM-DD');
 });
 
 angular.module('demoApp')
@@ -882,57 +906,33 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxCheckboxShowHideCtrl', function ($scope) {
-    $scope.amSure = false;
-    $scope.amReallySure = false;
-
-    $scope.$watch('amSure', function (newVal) {
-        if (newVal === false) {
-            $scope.amReallySure = false;
-        }
-    });
-});
-
-angular.module('demoApp')
-.controller('rxDatePickerEmptyCtrl', function ($scope) {
-    $scope.emptyDate = '';
-
-    $scope.undefinedDate = undefined;
-});
-
-angular.module('demoApp')
-.controller('rxDatePickerSimpleCtrl', function ($scope) {
-    $scope.dateModel = moment(new Date()).format('YYYY-MM-DD');
-});
-
-angular.module('demoApp')
-.controller('rxMultiSelectSimpleCtrl', function ($scope) {
+.controller('multiSelectSimpleCtrl', function ($scope) {
     $scope.classification = [];
 });
 
 angular.module('demoApp')
-.controller('rxRadioDestroyCtrl', function ($scope) {
+.controller('radioDestroyCtrl', function ($scope) {
     $scope.radCreateDestroy = 'destroyed';
 });
 
 angular.module('demoApp')
-.controller('rxSearchBoxCustomCtrl', function ($scope) {
+.controller('searchBoxCustomCtrl', function ($scope) {
     $scope.filterPlaceholder = 'Filter by any...';
 });
 
 angular.module('demoApp')
-.controller('rxSelectDestroyCtrl', function ($scope) {
+.controller('selectDestroyCtrl', function ($scope) {
     $scope.radCreateDestroy = 'destroyed';
 });
 
 angular.module('demoApp')
-.controller('rxTimePickerSimpleCtrl', function ($scope) {
+.controller('timePickerSimpleCtrl', function ($scope) {
     $scope.emptyValue = '';
     $scope.predefinedValue = '22:10-10:00';
 });
 
 angular.module('demoApp')
-.controller('rxToggleSwitchAsyncCtrl', function ($scope, $timeout, rxNotify) {
+.controller('toggleSwitchAsyncCtrl', function ($scope, $timeout, rxNotify) {
     $scope.toggle3 = true;
     $scope.toggle5 = true;
 
@@ -989,7 +989,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('rxModalMultiViewCtrl', function ($scope, $modalInstance, $timeout, rxNotify) {
+.controller('modalMultiViewCtrl', function ($scope, $modalInstance, $timeout, rxNotify) {
     var complete = function () {
         $scope.loaded = true;
         $scope.setState('complete');
@@ -1128,13 +1128,13 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('SpinnerSimpleCtrl', function ($scope) {
+.controller('spinnerSimpleCtrl', function ($scope) {
     $scope.loading = true;
 });
 
 
 angular.module('demoApp')
-.controller('rxBulkSelectAdvancedCtrl', function ($scope) {
+.controller('bulkSelectAdvancedCtrl', function ($scope) {
 
     $scope.datacenters = [
         { name: 'ORD1', city: 'Chicago' },
@@ -1159,7 +1159,7 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
+.controller('shutDownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
@@ -1198,7 +1198,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxBulkSelectValidateCtrl', function ($scope) {
+.controller('bulkSelectValidateCtrl', function ($scope) {
 
     $scope.datacenters = [
         { name: 'ORD1', city: 'Chicago' },
@@ -1223,7 +1223,7 @@ angular.module('demoApp')
     };
 
 })
-.controller('ShutdownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
+.controller('shutDownDatacentersCtrl', function ($scope, $modalInstance, $timeout, rxSortUtil, rxPageTracker) {
     $scope.sort = rxSortUtil.getDefault('name');
     $scope.sortCol = function (predicate) {
         return rxSortUtil.sortCol($scope, predicate);
@@ -1262,35 +1262,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxFloatingHeaderCtrl', function ($scope) {
-    $scope.data = [
-        { name: 'First', value: 1 },
-        { name: 'A', value: 2 },
-        { name: 'B', value: 3 },
-        { name: 'C', value: 4 },
-        { name: 'D', value: 5 },
-        { name: 'E', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'Middle', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'F', value: 1 },
-        { name: 'G', value: 2 },
-        { name: 'H', value: 3 },
-        { name: 'I', value: 4 },
-        { name: 'J', value: 5 },
-        { name: 'K', value: 1 },
-        { name: 'Last', value: 2 }
-    ];
-});
-
-angular.module('demoApp')
-.controller('rxSelectFilterSimpleCtrl', function ($scope, rxSelectFilter) {
+.controller('selectFilterSimpleCtrl', function ($scope, rxSelectFilter) {
     $scope.filter = rxSelectFilter.create({
         properties: ['account', 'status'],
         selected: {
@@ -1308,7 +1280,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxSortableColumnSimpleCtrl', function ($scope, rxSortUtil) {
+.controller('sortableColumnSimpleCtrl', function ($scope, rxSortUtil) {
     $scope.sort = rxSortUtil.getDefault('name', false);
 
     $scope.sortCol = function (predicate) {
@@ -1343,96 +1315,7 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('tableFilteringExampleCtrl', function ($scope) {
-    $scope.people = [
-        { name: 'Patrick Deuley', occupation: 'Design Chaplain' },
-        { name: 'Hussam Dawood', occupation: 'Cat Lover' },
-        { name: 'Kevin Lamping', occupation: 'Framework Father' },
-        { name: 'Glynnis Ritchie', occupation: 'Serif Sheriff' },
-        { name: 'Freddy Knuth', occupation: 'Venezuelan Hurricane' },
-        { name: 'Chris Cantu', occupation: 'Texan Tornado' },
-    ];
-});
-
-angular.module('demoApp')
-.controller('tableFilteringCollapsibleExampleCtrl', function ($scope) {
-    $scope.filter = { region: '' };
-
-    $scope.regions = [
-        { name: 'DFW', city: 'Dallas-Fort Worth' }, { name: 'ORD', city: 'Chicago' },
-        { name: 'IAD', city: 'Northern Virginia' }, { name: 'LON', city: 'London' },
-        { name: 'HKG', city: 'Hong Kong' }, { name: 'SYD', city: 'Sydney' }
-    ];
-
-    $scope.servers = [
-        { name: 'General1-1', ram: '1 GB', cpu: 1, disk: '20GB SSD', region: 'DFW' },
-        { name: 'General1-2', ram: '2 GB', cpu: 2, disk: '40GB SSD', region: 'ORD' },
-        { name: 'General1-4', ram: '4 GB', cpu: 4, disk: '80GB SSD', region: 'IAD' },
-        { name: 'General1-8', ram: '8 GB', cpu: 8, disk: '160GB SSD', region: 'LON' },
-        { name: 'I/O1-15', ram: '15 GB', cpu: 4, disk: '40GB SSD', region: 'HKG' },
-        { name: 'I/O1-30', ram: '30 GB', cpu: 8, disk: '40GB SSD', region: 'SYD' }
-    ];
-});
-
-angular.module('demoApp')
-.controller('tableNestedMetadataExampleCtrl', function ($scope) {
-    $scope.people = [
-        {
-            name: 'Patrick Deuley',
-            occupation: 'Design Chaplain',
-            pet: {
-                name: 'Shelly',
-                animal: 'Turtle',
-                age: 1
-            }
-        },
-        {
-            name: 'Hussam Dawood',
-            occupation: 'Cat Lover',
-            pet: {
-                name: 'Sassy',
-                animal: 'Cat',
-                age: 6
-            }
-        }
-    ];
-});
-
-angular.module('demoApp')
-.controller('tableNestedTableExampleCtrl', function ($scope) {
-    $scope.people = [
-        {
-            name: 'Patrick Deuley',
-            occupation: 'Design Chaplain',
-            pets: [
-                {
-                    name: 'Shelly',
-                    animal: 'Turtle',
-                    age: 1
-                },
-                {
-                    name: 'Spike',
-                    animal: 'Porcupine',
-                    age: 10
-                }
-            ]
-        },
-        {
-            name: 'Hussam Dawood',
-            occupation: 'Cat Lover',
-            pets: [
-                {
-                    name: 'Sassy',
-                    animal: 'Cat',
-                    age: 6
-                }
-            ]
-        }
-    ];
-});
-
-angular.module('demoApp')
-.controller('rxPaginateApiCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,
+.controller('tableApiPaginationCtrl', function ($scope, $q, $timeout, $filter, rxPageTracker,
                 rxSortUtil, rxSelectFilter) {
 
     var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
@@ -1514,38 +1397,124 @@ angular.module('demoApp')
 });
 
 angular.module('demoApp')
-.controller('rxPaginateUiCtrl', function ($scope, rxPageTracker) {
-    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: 3 });
-
-    var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
-    var makeServers = function (serverCount) {
-        var servers = [];
-        for (var i = 1; i < serverCount + 1; i++) {
-            var server = {
-                id: i,
-                name: 'Server ' + i,
-                os: os[i % os.length]
-            };
-            servers.push(server);
-        }
-        return servers;
-    };
-
-    $scope.servers = makeServers(21);
-
-    $scope.removeServers = function () {
-        if ($scope.servers.length > 2) {
-            $scope.servers = $scope.servers.splice(2);
-        }
-    };
-
-    $scope.addServers = function () {
-        $scope.servers = $scope.servers.concat(makeServers(2));
-    };
+.controller('tableFilteringExampleCtrl', function ($scope) {
+    $scope.people = [
+        { name: 'Patrick Deuley', occupation: 'Design Chaplain' },
+        { name: 'Hussam Dawood', occupation: 'Cat Lover' },
+        { name: 'Kevin Lamping', occupation: 'Framework Father' },
+        { name: 'Glynnis Ritchie', occupation: 'Serif Sheriff' },
+        { name: 'Freddy Knuth', occupation: 'Venezuelan Hurricane' },
+        { name: 'Chris Cantu', occupation: 'Texan Tornado' },
+    ];
 });
 
 angular.module('demoApp')
-.controller('rxStatusColumnCtrl', function ($scope, rxStatusMappings, rxSortUtil) {
+.controller('tableFilteringCollapsibleExampleCtrl', function ($scope) {
+    $scope.filter = { region: '' };
+
+    $scope.regions = [
+        { name: 'DFW', city: 'Dallas-Fort Worth' }, { name: 'ORD', city: 'Chicago' },
+        { name: 'IAD', city: 'Northern Virginia' }, { name: 'LON', city: 'London' },
+        { name: 'HKG', city: 'Hong Kong' }, { name: 'SYD', city: 'Sydney' }
+    ];
+
+    $scope.servers = [
+        { name: 'General1-1', ram: '1 GB', cpu: 1, disk: '20GB SSD', region: 'DFW' },
+        { name: 'General1-2', ram: '2 GB', cpu: 2, disk: '40GB SSD', region: 'ORD' },
+        { name: 'General1-4', ram: '4 GB', cpu: 4, disk: '80GB SSD', region: 'IAD' },
+        { name: 'General1-8', ram: '8 GB', cpu: 8, disk: '160GB SSD', region: 'LON' },
+        { name: 'I/O1-15', ram: '15 GB', cpu: 4, disk: '40GB SSD', region: 'HKG' },
+        { name: 'I/O1-30', ram: '30 GB', cpu: 8, disk: '40GB SSD', region: 'SYD' }
+    ];
+});
+
+angular.module('demoApp')
+.controller('tableFloatingHeaderCtrl', function ($scope) {
+    $scope.data = [
+        { name: 'First', value: 1 },
+        { name: 'A', value: 2 },
+        { name: 'B', value: 3 },
+        { name: 'C', value: 4 },
+        { name: 'D', value: 5 },
+        { name: 'E', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'Middle', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'F', value: 1 },
+        { name: 'G', value: 2 },
+        { name: 'H', value: 3 },
+        { name: 'I', value: 4 },
+        { name: 'J', value: 5 },
+        { name: 'K', value: 1 },
+        { name: 'Last', value: 2 }
+    ];
+});
+
+angular.module('demoApp')
+.controller('tableNestedMetadataExampleCtrl', function ($scope) {
+    $scope.people = [
+        {
+            name: 'Patrick Deuley',
+            occupation: 'Design Chaplain',
+            pet: {
+                name: 'Shelly',
+                animal: 'Turtle',
+                age: 1
+            }
+        },
+        {
+            name: 'Hussam Dawood',
+            occupation: 'Cat Lover',
+            pet: {
+                name: 'Sassy',
+                animal: 'Cat',
+                age: 6
+            }
+        }
+    ];
+});
+
+angular.module('demoApp')
+.controller('tableNestedTableExampleCtrl', function ($scope) {
+    $scope.people = [
+        {
+            name: 'Patrick Deuley',
+            occupation: 'Design Chaplain',
+            pets: [
+                {
+                    name: 'Shelly',
+                    animal: 'Turtle',
+                    age: 1
+                },
+                {
+                    name: 'Spike',
+                    animal: 'Porcupine',
+                    age: 10
+                }
+            ]
+        },
+        {
+            name: 'Hussam Dawood',
+            occupation: 'Cat Lover',
+            pets: [
+                {
+                    name: 'Sassy',
+                    animal: 'Cat',
+                    age: 6
+                }
+            ]
+        }
+    ];
+});
+
+angular.module('demoApp')
+.controller('tableStatusColumnCtrl', function ($scope, rxStatusMappings, rxSortUtil) {
     $scope.servers = [
         { status: 'ACTIVE', title: 'ACTIVE status' },
         { status: 'ERROR', title: 'ERROR status' },
@@ -1574,6 +1543,37 @@ angular.module('demoApp')
         return rxSortUtil.sortCol($scope, predicate);
     };
     $scope.sort = rxSortUtil.getDefault('status');
+});
+
+angular.module('demoApp')
+.controller('tableUiPaginationCtrl', function ($scope, rxPageTracker) {
+    $scope.pager = rxPageTracker.createInstance({ itemsPerPage: 3 });
+
+    var os = ['Ubuntu 12.04', 'Red Hat Enterprise Linux 6.4', 'CentOS 6.4', 'Ubuntu 13.04'];
+    var makeServers = function (serverCount) {
+        var servers = [];
+        for (var i = 1; i < serverCount + 1; i++) {
+            var server = {
+                id: i,
+                name: 'Server ' + i,
+                os: os[i % os.length]
+            };
+            servers.push(server);
+        }
+        return servers;
+    };
+
+    $scope.servers = makeServers(21);
+
+    $scope.removeServers = function () {
+        if ($scope.servers.length > 2) {
+            $scope.servers = $scope.servers.splice(2);
+        }
+    };
+
+    $scope.addServers = function () {
+        $scope.servers = $scope.servers.concat(makeServers(2));
+    };
 });
 
 
@@ -1685,7 +1685,7 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('ApplySimpleCtrl', function ($scope, rxSelectFilter) {
+.controller('rxApplySimpleCtrl', function ($scope, rxSelectFilter) {
     $scope.filter = rxSelectFilter.create({
         properties: ['account', 'status'],
         selected: {

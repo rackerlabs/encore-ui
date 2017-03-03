@@ -1,0 +1,19 @@
+<form rx-form>
+  <rx-form-section controlled-width>
+    <rx-field>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>
+            <input rx-checkbox id="chkShow" ng-model="isShown" />
+            <label for="chkShow">Show?</label>
+          </rx-prefix>
+        </rx-input>
+        <rx-input ng-show="isShown">
+          <select rx-select id="selTargetShow">
+            <option>I'm visible!</option>
+          </select>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

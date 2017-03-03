@@ -1,0 +1,75 @@
+<div ng-controller="tableApiPaginationCtrl">
+  <button ng-click="pagedServers.refresh()" class="button sm">Refresh</button>
+
+  <table
+    rx-floating-header
+    rx-loading-overlay
+    class="table-striped table-demo--api-pagination">
+
+    <thead>
+      <tr>
+        <th colspan="2" class="filter-header">
+          <form rx-form>
+            <rx-form-section controlled-width>
+              <rx-field>
+                <rx-field-name> Filter Data </rx-field-name>
+                <rx-field-content>
+                  <rx-input>
+                    <rx-search-box
+                      rx-placeholder="'Filter by any...'"
+                      ng-model="data.searchText">
+                    </rx-search-box>
+                  </rx-input>
+                </rx-field-content>
+              </rx-field>
+              <rx-select-filter filter="osFilter"></rx-select-filter>
+            </rx-form-section>
+          </form>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <rx-sortable-column
+            sort-method="sortCol(property)"
+            sort-property="name"
+            predicate="sort.predicate"
+            reverse="sort.reverse">
+            Name
+          </rx-sortable-column>
+        </th>
+        <th>
+          <rx-sortable-column
+            sort-method="sortCol(property)"
+            sort-property="os"
+            predicate="sort.predicate"
+            reverse="sort.reverse">
+            OS
+          </rx-sortable-column>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="server in pagedServers.items">
+        <td>{{server.name}}</td>
+        <td>{{server.os}}</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr class="paginate-area">
+        <td colspan="2">
+          <rx-paginate
+            page-tracking="pagedServers"
+            server-interface="serverInterface"
+            error-message="Error loading page!"
+            filter-text="data.searchText"
+            selections="osFilter.selected"
+            sort-column="sort.predicate"
+            sort-direction="sort.reverse">
+          </rx-paginate>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

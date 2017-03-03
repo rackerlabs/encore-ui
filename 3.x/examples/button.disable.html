@@ -1,0 +1,19 @@
+<div ng-controller="buttonDisableCtrl">
+  <!-- Plain Button -->
+  <button
+    class="button"
+    rx-toggle="status.disable">
+
+    Toggle enabled/disabled of 'Login'
+  </button>
+
+  <!-- rxButton -->
+  <rx-button
+    classes="positive"
+    toggle-msg="Authenticating"
+    default-msg="Login"
+    toggle="status.loading"
+    ng-disabled="status.disable"
+    ng-click="login()">
+  </rx-button>
+</div>

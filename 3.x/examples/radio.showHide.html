@@ -1,0 +1,31 @@
+<p>
+  <strong>Do you like bacon?</strong>
+  <small ng-show="likesbacon">({{likesbacon}})</small>
+</p>
+<p>
+  <input 
+    rx-radio
+    id="radHateBacon"
+    value="hate it"
+    ng-model="likesbacon"
+    ng-required="true"/>
+  <label for="radHateBacon">I hate bacon</label>
+</p>
+<p>
+  <input 
+    rx-radio
+    id="radLikeBacon"
+    value="like it"
+    ng-model="likesbacon"
+    ng-required="true"/>
+  <label for="radLikeBacon">I like bacon</label>
+</p>
+<p ng-show="likesbacon && likesbacon !== 'hate it'">
+  <input 
+    rx-radio
+    id="radLoveBacon"
+    value="love it"
+    ng-model="likesbacon"
+    ng-required="true"/>
+  <label for="radLoveBacon">Actually, I LOVE bacon</label>
+</p>

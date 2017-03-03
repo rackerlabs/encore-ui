@@ -1,0 +1,45 @@
+<div ng-controller="modalRegularCtrl">
+  <p>Password: {{password}}</p>
+  <p>
+    <rx-modal-action
+      pre-hook="populate(this)"
+      post-hook="changePass(fields)"
+      dismiss-hook="notifyDismissal()"
+      classes="button"
+      template-url="changePassword.html"
+      id="modChangePassword">
+      Change Password
+    </rx-modal-action>
+  </p>
+  <script type="text/ng-template" id="changePassword.html">
+    <rx-modal-form rx-form
+      title="Change {{user}} Admin Password"
+      submit-text="Submit Password"
+      cancel-text="Cancel Request"
+      subtitle="Please read instructions below">
+      <rx-form-section>
+        <rx-field>
+          <rx-help-text>
+            <h1>Password must:</h1>
+            <ul class="list">
+              <li>have at least one uppercase letter</li>
+              <li>have at least one number</li>
+              <li>be inspirational</li>
+              <li>be in haiku form</li>
+              <li>reference Star Wars</li>
+            </ul>
+          </rx-help-text>
+          <rx-field-name ng-required="true">New Password:</rx-field-name>
+          <rx-field-content>
+            <rx-input>
+              <input type="text" name="password" ng-model="fields.password" required="true"/>
+            </rx-input>
+            <rx-inline-error class="error-message" ng-show="modalActionForm.password.$error.required">
+              This field is required.
+            </rx-inline-error>
+          </rx-field-content>
+        </rx-field>
+      </rx-form-section>
+    </rx-modal-form>
+  </script>
+</div>

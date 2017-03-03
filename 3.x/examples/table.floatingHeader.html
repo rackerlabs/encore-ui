@@ -1,0 +1,26 @@
+<div ng-controller="tableFloatingHeaderCtrl">
+  <table rx-floating-header class="e2e-filter">
+    <thead>
+      <tr>
+        <th colspan="2">
+          <rx-search-box
+            ng-model="searchText"
+            rx-placeholder="'Filter by any...'"></rx-search-box>
+        </th>
+      </tr>
+      <tr>
+        <th>Column One Header</th>
+        <th>Column Two Header</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="datum in data | filter:searchText"
+        class="row_{{datum.value}}"
+        ng-class="{'first-row': $index===0, 'middle-row': $index===11, 'last-row': $index===21}">
+        <td>{{datum.name}}</td>
+        <td>{{datum.value}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

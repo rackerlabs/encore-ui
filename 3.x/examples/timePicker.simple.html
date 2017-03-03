@@ -1,0 +1,29 @@
+<div rx-form ng-controller="timePickerSimpleCtrl">
+  <rx-form-section>
+    <rx-field>
+      <rx-field-name>Empty Value:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-time-picker
+            id="emptyPicker"
+            ng-model="emptyValue">
+          </rx-time-picker>
+        </rx-input>
+        <rx-help-text>Bound Value: {{emptyValue}}</rx-help-text>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Predefined Value:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-time-picker
+            id="predefinedPicker"
+            ng-model="predefinedValue">
+          </rx-time-picker>
+        </rx-input>
+        <rx-help-text>Bound Value: {{predefinedValue}}</rx-help-text>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</div>

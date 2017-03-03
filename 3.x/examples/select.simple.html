@@ -1,0 +1,24 @@
+<form rx-form>
+  <rx-form-section controlled-width>
+    <rx-field>
+      <rx-field-name>
+        How do you like your bacon?
+        <small ng-if="baconPrep">({{baconPrep}})</small>
+      </rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <select rx-select
+            id="selBaconPrep"
+            ng-model="baconPrep"
+            ng-required="true">
+            <option value="">I do not like bacon</option>
+            <option value="thin">Thin (light and crispy)</option>
+            <option value="medium">Medium (perfect balance of flavor)</option>
+            <option value="thick">Thick (borderline jerky)</option>
+            <option value="crumbled">Crumbled (great on salads)</option>
+          </select>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

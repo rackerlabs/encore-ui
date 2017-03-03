@@ -1,5 +1,5 @@
 angular.module('demoApp')
-.controller('BreadcrumbsSimpleCtrl', function ($scope, rxBreadcrumbsSvc) {
+.controller('breadcrumbsSimpleCtrl', function ($scope, rxBreadcrumbsSvc) {
     rxBreadcrumbsSvc.set([{
         path: '#/elements',
         name: 'Elements',
