@@ -72,10 +72,6 @@
             {
                 linkText: 'Utilities',
                 children: linksForModuleCategory('utilities')
-            },
-            { /* Deprecated in favor of Elements */
-                linkText: 'Components',
-                children: linksForModuleCategory('components')
             }
         ];
 

@@ -1,8 +1,3 @@
-.rxApp-demo #embedded-app {
-  display: block;
-  width: 100%;
-  height: 340px;
-}
 .rxCopy-visual-regression {
   display: flex;
   flex-flow: column nowrap;

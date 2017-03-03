@@ -515,10 +515,6 @@ rx-permalink .permalink:hover .icon:hover {
   font-size: 22px;
   font-weight: 100;
 }
-.rx-option-table thead tr th:first-child {
-  /* Fix column width in demos */
-  width: 40px;
-}
 .info-panel .info-title {
   box-sizing: content-box;
 }
@@ -687,4 +683,10 @@ p {
 }
 .example-case.avoid h4 {
   color: #d32f2f;
+}
+.table--option {
+  table-layout: fixed;
+}
+.table--option thead tr th:first-child {
+  width: 40px;
 }
