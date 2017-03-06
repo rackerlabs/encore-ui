@@ -232,7 +232,7 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             type: 'no-title',
             children: [
                 {
-                    linkText: 'Version 1.50.8-0',
+                    linkText: 'Version 1.50.8',
                     directive: 'switch-docs',
                     children: [{}],
                     childVisibility: 'false'
