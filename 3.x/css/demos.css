@@ -15,6 +15,233 @@
 .rxCopy-visual-regression > section > div {
   flex: 1 0 250px;
 }
+.FlexboxGrid-demo .rx-example .flex-row,
+.FlexboxGrid-demo .rx-example .grid-row {
+  border-top: 1px dashed #0d74d1;
+}
+.FlexboxGrid-demo .rx-example .grid-col {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.FlexboxGrid-demo .rx-example .grid-col p {
+  margin: 4px 0;
+}
+.FlexboxGrid-demo .rx-example .grid-col.demo {
+  height: 1.5em;
+  font-weight: bold;
+}
+.FlexboxGrid-demo .rx-example .flex-col {
+  background-color: rgba(0, 0, 0, 0.12);
+  border-left: 1px dotted #616161;
+}
+@media (min-width: 0em) {
+  .FlexboxGrid-demo .rx-example #querySize::before {
+    content: 'Size: XS';
+    display: block;
+    font-weight: bold;
+    font-variant: small-caps;
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-12::before {
+    content: 'xs-12';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-11::before {
+    content: 'xs-11';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-10::before {
+    content: 'xs-10';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-9::before {
+    content: 'xs-9';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-8::before {
+    content: 'xs-8';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-7::before {
+    content: 'xs-7';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-6::before {
+    content: 'xs-6';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-5::before {
+    content: 'xs-5';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-4::before {
+    content: 'xs-4';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-3::before {
+    content: 'xs-3';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-2::before {
+    content: 'xs-2';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xs-1::before {
+    content: 'xs-1';
+  }
+}
+@media (min-width: 40em) {
+  .FlexboxGrid-demo .rx-example #querySize::before {
+    content: 'Size: SM';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-12::before {
+    content: 'sm-12';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-11::before {
+    content: 'sm-11';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-10::before {
+    content: 'sm-10';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-9::before {
+    content: 'sm-9';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-8::before {
+    content: 'sm-8';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-7::before {
+    content: 'sm-7';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-6::before {
+    content: 'sm-6';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-5::before {
+    content: 'sm-5';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-4::before {
+    content: 'sm-4';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-3::before {
+    content: 'sm-3';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-2::before {
+    content: 'sm-2';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-sm-1::before {
+    content: 'sm-1';
+  }
+}
+@media (min-width: 64em) {
+  .FlexboxGrid-demo .rx-example #querySize::before {
+    content: 'Size: MD';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-12::before {
+    content: 'md-12';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-11::before {
+    content: 'md-11';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-10::before {
+    content: 'md-10';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-9::before {
+    content: 'md-9';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-8::before {
+    content: 'md-8';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-7::before {
+    content: 'md-7';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-6::before {
+    content: 'md-6';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-5::before {
+    content: 'md-5';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-4::before {
+    content: 'md-4';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-3::before {
+    content: 'md-3';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-2::before {
+    content: 'md-2';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-md-1::before {
+    content: 'md-1';
+  }
+}
+@media (min-width: 75em) {
+  .FlexboxGrid-demo .rx-example #querySize::before {
+    content: 'Size: LG';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-12::before {
+    content: 'lg-12';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-11::before {
+    content: 'lg-11';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-10::before {
+    content: 'lg-10';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-9::before {
+    content: 'lg-9';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-8::before {
+    content: 'lg-8';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-7::before {
+    content: 'lg-7';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-6::before {
+    content: 'lg-6';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-5::before {
+    content: 'lg-5';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-4::before {
+    content: 'lg-4';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-3::before {
+    content: 'lg-3';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-2::before {
+    content: 'lg-2';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-lg-1::before {
+    content: 'lg-1';
+  }
+}
+@media (min-width: 90em) {
+  .FlexboxGrid-demo .rx-example #querySize::before {
+    content: 'Size: XL';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-12::before {
+    content: 'xl-12';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-11::before {
+    content: 'xl-11';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-10::before {
+    content: 'xl-10';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-9::before {
+    content: 'xl-9';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-8::before {
+    content: 'xl-8';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-7::before {
+    content: 'xl-7';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-6::before {
+    content: 'xl-6';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-5::before {
+    content: 'xl-5';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-4::before {
+    content: 'xl-4';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-3::before {
+    content: 'xl-3';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-2::before {
+    content: 'xl-2';
+  }
+  .FlexboxGrid-demo .rx-example .demo.span-xl-1::before {
+    content: 'xl-1';
+  }
+}
 .layout-demo .base-box,
 .layout-demo .box,
 .layout-demo .flex-box,

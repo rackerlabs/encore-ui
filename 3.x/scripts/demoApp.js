@@ -111,6 +111,9 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             controller: 'listElementsController',
             controllerAs: 'vm'
         })
+        .when('/elements/deprecated/FlexboxGrid', {
+            templateUrl: 'templates/deprecated/FlexboxGrid.html'
+        })
         .when('/elements/:element', {
             templateUrl: 'templates/modules/showModule.html',
             controller: 'showModuleController',
@@ -184,7 +187,7 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             type: 'no-title',
             children: [
                 {
-                    linkText: 'Version 3.4.1',
+                    linkText: 'Version 3.4.2-0',
                     directive: 'switch-docs',
                     children: [{}],
                     childVisibility: 'false'

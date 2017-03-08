@@ -72,6 +72,17 @@
   /*
 /* Tooltips
  */
+  /* 12-COLUMN FLEXBOX GRID (globals) */
+  /*
+  - 1em is calculated on browser-defined font size
+    - No CSS property can affect this calculation.
+  - As font size increases/decreases (zoom %), more/less room is available,
+    so breakpoints behave more like larger/smaller screens
+*/
+  /* ~640px */
+  /* ~1024px */
+  /* ~1200px */
+  /* ~1440px */
 }
 .rx-example .button-group.demo-button-width {
   width: 250px;
