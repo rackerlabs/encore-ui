@@ -7,7 +7,6 @@ thead th.bulk-select-header {
   text-align: center;
   color: @rxBulkSelect-header-text-color;
   font-weight: normal;
-  border: 1px solid @app-table-border-color;
 }
 
 thead th[rx-bulk-select-header-check] {
@@ -84,10 +83,6 @@ thead th[rx-bulk-select-header-check] {
 
 .selected td:not(.status) {
   background: @app-selected-row-background-color;
-  border-color: @green-100;
-  // this 'double' makes it so that the border-color applies to the top border as well
-  // @see http://stackoverflow.com/questions/7942212/css-table-row-border-color-with-border-collapse
-  border-style: double;
 }
 
 .batch-action-modal-table .pagination {

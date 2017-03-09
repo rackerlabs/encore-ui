@@ -6,7 +6,7 @@ angular.module('encore.ui.utilities')
  * Simple $http injector which will intercept http request and inject the
  * Rackspace Identity's token into every http request.
  *
- * @requires rxAuth.service:rxAuth
+ * @requires utilities.service:rxAuth
  *
  * @example
  * <pre>

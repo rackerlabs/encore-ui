@@ -106,6 +106,7 @@ angular.module('encore.ui.utilities')
         }
 
         // run the href through rxEnvironmentUrl in case it's defined as such
+        // remove in EncoreUI 4.0.0
         url = rxEnvironmentUrlFilter(url);
 
         if ($route.current) {

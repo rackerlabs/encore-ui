@@ -1,7 +1,7 @@
 {
     "displayName": "Flexbox Grid",
-    "stability": "stable",
-    "description": "",
+    "stability": "prototype",
+    "description": "CSS class-based grid system using flexbox positioning.",
     "hasApi": false,
     "keywords": [
         "columns",

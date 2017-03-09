@@ -208,7 +208,10 @@ angular.module('encore.ui.elements')
 
             ngModelCtrl.$formatters.push(function (modelVal) {
                 var parsed = moment(modelVal, isoFormat);
-                ngModelCtrl.$setValidity('date', parsed.isValid());
+
+                if (!ngModelCtrl.$isEmpty(modelVal)) {
+                    ngModelCtrl.$setValidity('date', parsed.isValid());
+                }
 
                 if (parsed.isValid()) {
                     return parsed.format('MMMM DD, YYYY');

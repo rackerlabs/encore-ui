@@ -25,13 +25,13 @@
     indicating the process is complete.
   </li>
 </ul>
-<rx-example name="rxBulkSelect.advanced"></rx-example>
+<rx-example name="bulkSelect.advanced"></rx-example>
 
 <h3>Bulk Selection Validation</h3>
 <p>
   To validate bulk selection in a form, use the rxBulkSelectValidate directive.
 </p>
-<rx-example name="rxBulkSelect.validate"></rx-example>
+<rx-example name="bulkSelect.validate"></rx-example>
 
 <h2>
   <rx-permalink>Status Column</rx-permalink>
@@ -79,7 +79,7 @@
     it in a separate <code>&lt;tr&gt;</code> element.
   </li>
 </ul>
-<rx-example name="rxFloatingHeader"></rx-example>
+<rx-example name="table.floatingHeader"></rx-example>
 
 <rx-debug>
   <h2>Non-filtered floating header</h2>
@@ -188,10 +188,10 @@
     UI-based pagination, where all items are retrieved at once, and paginated in the UI
   </li>
 </ul>
-<rx-example name="table.paginate.ui"></rx-example>
+<rx-example name="table.uiPagination"></rx-example>
 
 <rx-debug>
-  <div ng-controller="rxPaginateUiCtrl">
+  <div ng-controller="tableUiPaginationCtrl">
     <h3>Non-displayed pagination</h3>
     <rx-paginate
       id="rx-paginate-hidden"
@@ -222,7 +222,7 @@
       <p>Enter a search string of "error" to see the default error handling.</p>
   </li>
 </ul>
-<rx-example name="table.paginate.api"></rx-example>
+<rx-example name="table.apiPagination"></rx-example>
 
 <h2><rx-permalink>Design Patterns</rx-permalink></h2>
 
@@ -325,7 +325,7 @@
 <p>
   The rxSelectFilter component that provides a multi-select dropdown interface intended for table filtering.
 </p>
-<rx-example name="rxSelectFilter.simple"></rx-example>
+<rx-example name="selectFilter.simple"></rx-example>
 
 <h2><rx-permalink>Nested Content</rx-permalink></h2>
 <ul class="list">
@@ -361,7 +361,7 @@
     </p>
   </li>
 </ul>
-<rx-example name="rxSortableColumn.simple"></rx-example>
+<rx-example name="sortableColumn.simple"></rx-example>
 
 <rx-debug>
   <h3>Testing table for protractor tests.</h3>
@@ -404,66 +404,3 @@
   <li>Loading Styles for Tables</li>
   <li>Submit actions for Server-Side Filtering</li>
 </ul>
-
-<h2>
-  <rx-permalink>Known Bugs and Workarounds</rx-permalink>
-</h2>
-
-<h3>
-  <rx-permalink>Inconsistent Column Widths when Paginated</rx-permalink>
-</h3>
-<p>
-  HTML tables are fickle and will resize columns dynamically based on cell
-  content. When navigating between paginated data, cell content length may
-  fluctuate, causing the column width to resize unexpectedly.
-</p>
-
-<h4>Workaround</h4>
-<p>
-  The simple solution is to apply a unique custom CSS class (e.g.
-  <code>.column-*</code>) to both the column header (<code>th</code>) and the
-  body cell (<code>td</code>). With this custom CSS class, you must set an
-  explicit <code>width</code> value in CSS, so that the header and data remain
-  consistent.
-</p>
-<ol class="list">
-  <li>
-    <b>Important:</b> make sure to leave at least one fluid column so that the
-    browser can adjust the table width dynamically based on the viewport size.
-    <ul class="list bulleted">
-      <li>
-        If you set every column width, you may end up with unexpected column
-        sizes, because there is a conflict between the summed pixel width vs
-        the 100% table width styling applied to all tables.
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<h3>
-  <rx-permalink>Misaligned Columns with Floating Headers</rx-permalink>
-</h3>
-<p>
-  The floating header that you see on the page is a copy of the original
-  table header and ends up being rendered outside the context of the normal
-  table document flow. This causes the browser to ignore the header widths,
-  resulting in the header and body columns receiving different widths.
-</p>
-
-<h4>Workaround</h4>
-<p>
-  The workaround is the same as the "Inconsistent Column Widths when Paginated"
-  solution above, but with one caveat.
-</p>
-<ol class="list">
-  <li>
-    <b>Important:</b> Set <code>th, td { box-sizing: border-box; }</code> for
-    cells in your table.
-    <ul class="list bulleted">
-      <li>
-        Without this, floating header logic will incorrectly calculate
-        header widths.
-      </li>
-    </ul>
-  </li>
-</ol>

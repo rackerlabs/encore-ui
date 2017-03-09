@@ -143,17 +143,17 @@
 </ul>
 
 <h3>With Validation</h3>
-<rx-example name="rxSelect.simple"></rx-example>
+<rx-example name="select.simple"></rx-example>
 
 <h3>Show/Hide Select</h3>
-<rx-example name="rxSelect.showHide"></rx-example>
+<rx-example name="select.showHide"></rx-example>
 
 <h3>Destroy Select</h3>
 <p>Support for <code>$destroy</code> events.</p>
-<rx-example name="rxSelect.destroy"></rx-example>
+<rx-example name="select.destroy"></rx-example>
 
 <h3>Select States</h3>
-<table ng-controller="rxSelectCtrl">
+<table ng-controller="selectDocsCtrl">
   <thead>
     <tr>
       <th></th>
@@ -255,7 +255,7 @@
       <option value="fourth">Fourth Option</option>
     </select>
   </p>
-  <p ng-controller="rxSelectCtrl">
+  <p ng-controller="selectDocsCtrl">
     <select id="plainSelSecondSelected"
       ng-model="htmlSelectAlternativeValue">
       <option value="">Starts on Second Option</option>
@@ -289,13 +289,13 @@
 </h3>
 
 <h4>MultiSelect Input</h4>
-<rx-example name="rxMultiSelect.simple"></rx-example>
+<rx-example name="multiSelect.simple"></rx-example>
 
 <h4>MultiSelect States</h4>
 <p>
   Below you'll find examples of how <code>rxMultiSelect</code> will appear in different states.
 </p>
-<div ng-controller="rxMultiSelectCtrl">
+<div ng-controller="multiSelectDocsCtrl">
   <table>
     <thead>
       <tr>
@@ -386,14 +386,14 @@
 </ul>
 
 <h4>Show/Hide Input</h4>
-<rx-example name="rxCheckbox.showHide"></rx-example>
+<rx-example name="checkbox.showHide"></rx-example>
 
 <h4>Destroy Input</h4>
 <p>Support for <code>$destroy</code> events.</p>
-<rx-example name="rxCheckbox.destroy"></rx-example>
+<rx-example name="checkbox.destroy"></rx-example>
 
 <h4>Checkbox States</h3>
-<table ng-controller="rxCheckboxCtrl">
+<table ng-controller="checkboxDocsCtrl">
   <thead>
     <tr>
       <th></th>
@@ -584,16 +584,16 @@
 </ul>
 
 <h3>Simple Toggle Switch</h3>
-<rx-example name="rxToggleSwitch.simple"></rx-example>
+<rx-example name="toggleSwitch.simple"></rx-example>
 
 <h3>Custom Toggle Values</h3>
-<rx-example name="rxToggleSwitch.custom"></rx-example>
+<rx-example name="toggleSwitch.custom"></rx-example>
 
 <h3>Toggling Asynchronous Functionality</h3>
-<rx-example name="rxToggleSwitch.async"></rx-example>
+<rx-example name="toggleSwitch.async"></rx-example>
 
 <h3>Disabled Toggle Switch</h3>
-<rx-example name="rxToggleSwitch.disabled"></rx-example>
+<rx-example name="toggleSwitch.disabled"></rx-example>
 <!-- END: Toggle Switches -->
 
 <!-- BEGIN: radio -->
@@ -618,14 +618,14 @@
 <rx-example name="forms.radios"></rx-example>
 
 <h4>Show/Hide Input</h4>
-<rx-example name="rxRadio.showHide"></rx-example>
+<rx-example name="radio.showHide"></rx-example>
 
 <h4>Destroy Input</h4>
 <p>Support for <code>$destroy</code> events.</p>
-<rx-example name="rxRadio.destroy"></rx-example>
+<rx-example name="radio.destroy"></rx-example>
 
 <h4>Radio States</h3>
-<table ng-controller="rxRadioCtrl">
+<table ng-controller="radioDocsCtrl">
   <thead>
     <tr>
       <th></th>
@@ -855,10 +855,10 @@
   </li>
 </ul>
 
-<rx-example name="rxCharacterCount.simple"></rx-example>
+<rx-example name="characterCount.simple"></rx-example>
 
 <rx-debug>
-  <div ng-controller="rxCharacterCountCtrl">
+  <div ng-controller="characterCountDocsCtrl">
     <h4>Character Count: Default Values</h4>
     <div>
       <textarea
@@ -979,7 +979,7 @@
   the current date provides additional context to users as they find their
   selection in the date picker.
 </p>
-<rx-example name="rxDatePicker.simple"></rx-example>
+<rx-example name="datePicker.simple"></rx-example>
 
 <h4>Behavior with Empty Model</h4>
 <p>
@@ -987,14 +987,14 @@
   example below shows how it will behave if you have a blank (empty string) or
   undefined value for your model.
 </p>
-<rx-example name="rxDatePicker.empty"></rx-example>
+<rx-example name="datePicker.empty"></rx-example>
 
 <h4>Date Picker States</h4>
 <p>
   Below you'll find examples of how <code>Date Picker</code> will appear in
   different states.
 </p>
-<table ng-controller="rxDatePickerCtrl">
+<table ng-controller="datePickerDocsCtrl">
   <thead>
     <th></th>
     <th>Enabled</th>
@@ -1070,14 +1070,14 @@
 </ul>
 
 <h4>Simple Example</h4>
-<rx-example name="rxTimePicker.simple"></rx-example>
+<rx-example name="timePicker.simple"></rx-example>
 
 <h4>Time Picker States</h4>
 <p>
   Below you'll find examples of how <code>Time Picker</code> will appear in
   different states.
 </p>
-<table ng-controller="rxTimePickerCtrl">
+<table ng-controller="timePickerDocsCtrl">
   <thead>
     <th></th>
     <th>Enabled</th>
@@ -1227,16 +1227,16 @@
 <p>The rxSearchBox directive provides functionality around creating a search input box.</p>
 
 <h3>Simple Search Box</h3>
-<rx-example name="rxSearchBox.simple"></rx-example>
+<rx-example name="searchBox.simple"></rx-example>
 
 <h3>Custom Placeholder</h3>
 <p>
   You can use the <code>rx-placeholder</code> attribute to customize the placeholder text.
 </p>
-<rx-example name="rxSearchBox.custom"></rx-example>
+<rx-example name="searchBox.custom"></rx-example>
 
 <h3>Disabled Search Box</h3>
-<rx-example name="rxSearchBox.disabled"></rx-example>
+<rx-example name="searchBox.disabled"></rx-example>
 
 <h2><rx-permalink>Design Patterns within Encore</rx-permalink></h2>
 <ul class="list">

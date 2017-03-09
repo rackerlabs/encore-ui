@@ -1,5 +1,6 @@
 angular.module('encore.ui.utilities')
 /**
+ * @deprecated rxEnvironmentUrl will be removed in EncoreUI 4.0.0
  * @ngdoc filter
  * @name utilities.filter:rxEnvironmentUrl
  * @description
@@ -17,6 +18,7 @@ angular.module('encore.ui.utilities')
  */
 .filter('rxEnvironmentUrl', function (rxEnvironment, $interpolate) {
     return function (details) {
+        console.warn('DEPRECATED: rxEnvironmentUrl will be removed in EncoreUI 4.0.0');
         var environment = rxEnvironment.get();
 
         // convert url template into full path based on details provided (if details is an object)

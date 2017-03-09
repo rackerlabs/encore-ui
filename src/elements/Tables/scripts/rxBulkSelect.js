@@ -32,12 +32,14 @@ angular.module('encore.ui.elements')
     var elemString = '<tr rx-bulk-select-message></tr>';
     return {
         restrict: 'A',
+        require: [
+            '?^rxFloatingHeader'
+        ],
         scope: {
             bulkSource: '=',
             selectedKey: '@'
         },
         compile: function (elem, attrs) {
-
             // We add the `<tr rx-bulk-select-message>` row to the header here to save the devs
             // from having to do it themselves.
             var thead = elem.find('thead').eq(0);
@@ -45,7 +47,10 @@ angular.module('encore.ui.elements')
             messageElem.attr('resource-name', attrs.resourceName || attrs.bulkSource.replace(/s$/, ''));
             thead.append(messageElem);
 
-            return function (scope, element) {
+            return function (scope, element, attrs, controllers) {
+                scope._rxFloatingHeaderCtrl = controllers[0] || {
+                    reapply: _.noop
+                };
                 scope.tableElement = element;
             };
         },

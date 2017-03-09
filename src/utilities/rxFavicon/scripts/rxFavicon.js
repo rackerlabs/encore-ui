@@ -38,23 +38,18 @@ angular.module('encore.ui.utilities')
             favicons.prod = el.attr('href');
             favicons.staging = favicons.staging || favicons.prod;
             favicons.local = favicons.local || favicons.staging;
+            
+            var currentEnv;
+            if (rxEnvironment.isLocal()) {
+                currentEnv = 'local';
+            } else if (rxEnvironment.isPreProd() || rxEnvironment.isUnifiedProd()) {
+                currentEnv = 'prod';
+            } else {
+                currentEnv = 'staging';
+            }
 
-            // convert environment name to match scope variables
-            var environmentMap = {
-                'local': 'local',
-                'unified-preprod': 'staging',
-                'ghPages': 'prod',
-                'unified-prod': 'prod'
-            };
-
-            scope.$watch(function () {
-                return rxEnvironment.get();
-            }, function (environment) {
-                var currentEnv = environmentMap[environment.name];
-
-                // update href to use new path
-                el.attr('href', favicons[currentEnv]);
-            });
+            // update href to use new path
+            el.attr('href', favicons[currentEnv]);
         }
     };
 });

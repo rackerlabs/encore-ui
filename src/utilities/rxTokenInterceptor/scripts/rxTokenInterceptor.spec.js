@@ -1,5 +1,5 @@
 describe('provider:rxTokenInterceptor', function () {
-    var interceptor, session;
+    var interceptor, rxAuth;
 
     beforeEach(function () {
         // load module
@@ -16,8 +16,8 @@ describe('provider:rxTokenInterceptor', function () {
 
         inject(function ($injector) {
             interceptor = $injector.get('rxTokenInterceptor');
-            session = $injector.get('rxAuth');
-            session.getTokenId = sinon.stub().returns('12345');
+            rxAuth = $injector.get('rxAuth');
+            rxAuth.getTokenId = sinon.stub().returns('12345');
         });
     });
 
