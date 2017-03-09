@@ -1,0 +1,32 @@
+<p>
+  <rx-modal-action
+    classes="button"
+    controller="modalMultiViewCtrl"
+    template-url="multiview.html"
+    disable-esc>
+    Multi-View Example
+  </rx-modal-action>
+</p>
+<script type="text/ng-template" id="multiview.html">
+  <rx-modal-form title="State-Changing Modal"
+    submit-text="Send Request"
+    return-text="Finish &amp; Close">
+    <rx-notifications stack="modal"></rx-notifications>
+    <div ng-switch="state">
+      <div ng-switch-when="editing">
+        <p>Press "Send Request" to start the fake process.</p>
+      </div>
+      <div ng-switch-when="confirm">
+        <h3>Are you sure you want to continue?</h3>
+        <p>This action cannot be undone.</p>
+      </div>
+      <p ng-switch-when="pending">Man, this takes forever!</p>
+      <p ng-switch-when="complete">Nothing left to do here.</p>
+    </div>
+  </rx-modal-form>
+  
+  <rx-modal-footer state="confirm">
+    <button class="button" ng-click="confirm()">Yes</button>
+    <button class="button cancel" ng-click="setState('editing')">No</button>
+  </rx-modal-footer>
+</script>

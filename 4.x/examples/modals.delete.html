@@ -1,0 +1,17 @@
+<div>
+  <rx-modal-action class="msg-warn" template-url="deleteServer.html">
+    <i class="fa fa-fw fa-times fa-lg"></i> Delete Server
+  </rx-modal-action>
+</div>
+<script type="text/ng-template" id="deleteServer.html">
+  <rx-modal-form
+    title="Delete Server"
+    subtitle="ABC123456"
+    submit-text="Delete Server"
+    cancel-text="Cancel">
+  
+    <rx-notification type="error">
+      Are you sure you want to delete this server? This action can not be undone.
+    </rx-notification>
+  </rx-modal-form>
+</script>

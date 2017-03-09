@@ -675,7 +675,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "utilities",
       "shortDescription": "Builds a URL based on current environment.",
-      "keywords": "api based builds cbs cloudatlas current encore environment filter isn note object passed path rackspace renders return rxenvironmenturl simply staging tld url utilities"
+      "keywords": "api based builds cbs cloudatlas current encore encoreui environment filter isn note object passed path rackspace removed renders return rxenvironmenturl simply staging tld url utilities"
     },
     {
       "section": "api",
@@ -998,7 +998,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "utilities",
       "shortDescription": "Simple $http injector which will intercept http request and inject the",
-      "keywords": "$http $httpprovider angular api config encore encoreapp http identity inject injector intercept interceptors module push rackspace request rxauth rxtokeninterceptor service simple token ui utilities"
+      "keywords": "$http $httpprovider angular api config encore encoreapp http identity inject injector intercept interceptors module push rackspace request rxtokeninterceptor service simple token ui utilities"
     },
     {
       "section": "api",

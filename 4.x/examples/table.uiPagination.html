@@ -1,0 +1,34 @@
+<div ng-controller="tableUiPaginationCtrl">
+  <table class="table-striped table-demo--ui-pagination">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>OS</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="server in servers | orderBy: sorter.predicate:sorter.reverse | rxPaginate:pager ">
+        <td>{{server.name}}</td>
+        <td>{{server.os}}</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr class="paginate-area">
+        <td colspan="2">
+          <rx-paginate page-tracking="pager"></rx-paginate>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <p>
+    Use these buttons to adjust the number of pages displayed. The pagination will hide when there is only one page
+    available.
+  </p>
+  <p>
+    <button ng-click="removeServers()" class="button sm negative">Remove first 2 servers</button>
+    <button ng-click="addServers()" class="button sm positive">Add 2 servers</button>
+  </p>
+</div>

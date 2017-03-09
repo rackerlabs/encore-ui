@@ -1,0 +1,15 @@
+<div ng-controller="typeadheadShowOnFocusCtrl" rx-form>
+  <rx-form-section stacked>
+    <rx-field>
+      <rx-field-name>States:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input type="text"
+            id="typeahead"
+            ng-model="selected2"
+            typeahead="state for state in states | filter:$viewValue:allowEmpty" />
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</div>
