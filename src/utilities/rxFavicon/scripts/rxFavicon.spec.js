@@ -1,5 +1,5 @@
 describe('utilities:rxFavicon', function () {
-    var scope, compile, el, envSvc, log;
+    var scope, compile, el, rxEnvironment, log;
 
     var paths = {
         prod: 'prod.png',
@@ -29,75 +29,81 @@ describe('utilities:rxFavicon', function () {
         module('encore.ui.utilities');
 
         // Inject in angular constructs
-        inject(function ($location, $rootScope, $compile, rxEnvironment, $log) {
+        inject(function ($location, $rootScope, $compile, _rxEnvironment_, $log) {
             scope = $rootScope.$new();
             compile = $compile;
-            envSvc = rxEnvironment;
+            rxEnvironment = _rxEnvironment_;
             log = $log;
         });
     });
 
     afterEach(function () {
-        if (envSvc.get.restore) {
-            envSvc.get.restore();
-        }
         el = null;
     });
 
-    it('should use prod path in prod environment', function () {
-        // set to prod environment
-        sinon.stub(envSvc, 'get').returns({
-            name: 'unified-prod'
+    describe('in prod environment', function () {
+        beforeEach(function () {
+            rxEnvironment.isLocal = function () {
+                return false;
+            }; 
+            rxEnvironment.isPreProd = function () {
+                return true;
+            };
+        }); 
+
+        it('should use prod path', function () {
+            el = helpers.createDirective(allTemplate, compile, scope);
+
+            expect(el.attr('href')).to.equal(paths.prod);
         });
-
-        el = helpers.createDirective(allTemplate, compile, scope);
-
-        expect(el.attr('href')).to.equal(paths.prod);
     });
 
-    it('should use staging path in staging environment', function () {
-        // set to staging environment
-        sinon.stub(envSvc, 'get').returns({
-            name: 'unified-preprod'
+    describe('in staging environment', function () {
+        beforeEach(function () {
+            rxEnvironment.isLocal = function () {
+                return false;
+            }; 
+            rxEnvironment.isUnifiedProd = function () {
+                return false;
+            };
+            rxEnvironment.isPreProd = function () {
+                return false;
+            };
         });
 
-        el = helpers.createDirective(allTemplate, compile, scope);
+        it('should use staging path', function () {
+            el = helpers.createDirective(allTemplate, compile, scope);
 
-        expect(el.attr('href')).to.equal(paths.staging);
-    });
-
-    it('should use local path in local environment', function () {
-        // set to local environment
-        sinon.stub(envSvc, 'get').returns({
-            name: 'local'
+            expect(el.attr('href')).to.equal(paths.staging);
         });
 
-        el = helpers.createDirective(allTemplate, compile, scope);
+        it('should get fallback to prod environment if staging not set', function () {
+            el = helpers.createDirective(localTemplate, compile, scope);
 
-        expect(el.attr('href')).to.equal(paths.local);
+            expect(el.attr('href')).to.equal(paths.prod);
+        });
     });
 
-    it('should get fallback to prod environment if staging not set', function () {
-        // set to staging environment
-        sinon.stub(envSvc, 'get').returns({
-            name: 'unified-preprod'
+    describe('in local environment', function () {
+        beforeEach(function () {
+            rxEnvironment.isLocal = function () {
+                return true;
+            }; 
         });
 
-        el = helpers.createDirective(localTemplate, compile, scope);
+        it('should use local path', function () {
+            el = helpers.createDirective(allTemplate, compile, scope);
 
-        expect(el.attr('href')).to.equal(paths.prod);
-    });
-
-    it('should get fallback to staging environment if local not set', function () {
-        // set to local environment
-        sinon.stub(envSvc, 'get').returns({
-            name: 'local'
+            expect(el.attr('href')).to.equal(paths.local);
         });
 
-        el = helpers.createDirective(stagingTemplate, compile, scope);
+        it('should get fallback to staging environment if local not set', function () {
+            el = helpers.createDirective(stagingTemplate, compile, scope);
 
-        expect(el.attr('href')).to.equal(paths.staging);
+            expect(el.attr('href')).to.equal(paths.staging);
+        });
     });
+
 
     it('should log warning if attribute not an object', function () {
         var badTemplate = '<link rx-favicon="somePath.png">';

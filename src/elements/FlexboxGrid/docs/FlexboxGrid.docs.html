@@ -1,0 +1,363 @@
+<rx-notification type="warning">
+  The grid system described below is based on CSS classes.
+  <br />
+  You can view the documentation for the attribute-based grid system
+  <a href="#/elements/deprecated/FlexboxGrid">via this link</a>.
+</rx-notification>
+
+<rx-notification type="info">
+  The visual styling of all examples on this page
+  are for demonstration purposes.
+  <br />
+  Rows and columns will not have any visual styling applied to them in the
+  consumed CSS.
+</rx-notification>
+
+<section>
+  <heading>
+    <h2>Overview</h2>
+  </heading>
+  <p>
+    The grid system described on this page makes use of
+    <a href="http://www.w3.org/TR/css3-flexbox/" target="_blank">flexbox</a>
+    CSS properties and is designed to be mobile first.
+  </p>
+</section>
+
+<section>
+  <heading>
+    <h2>Defining a Row</h2>
+  </heading>
+
+  <p>
+    Use the <code>.grid-row</code> CSS class to define a row nesting context.
+    This will automatically apply a row-based flexbox alignment to the
+    assigned element.
+  </p>
+
+  <ul class="list">
+    <li>
+      Element children will automatically be aligned horizontally along the
+      X-axis, from left to right.
+    </li>
+    <li>
+      Element children will wrap if they cannot fit horizontally in the row.
+    </li>
+  </ul>
+
+  <div class="example-case do">
+    <h4>Do</h4>
+    <ul class="list">
+      <li>Place content in a column of the row.</li>
+    </ul>
+  </div>
+
+  <div class="example-case avoid">
+    <h4>Don't</h4>
+    <ul class="list">
+      <li>Do not place content directly within a row.</li>
+      <li>Do not change horizontal margins on a row.</li>
+      <li>Do not change horizontal padding on a row.</li>
+      <li>Do not add borders to a row.</li>
+    </ul>
+  </div>
+
+  <rx-example name="grid.row"></rx-example>
+</section>
+
+<section>
+  <heading>
+    <h2>Define Columns</h2>
+  </heading>
+
+  <p>
+    Use the <code>.grid-col</code> class to define a column nesting context.
+    This will automatically apply a column-based flexbox alignment to the
+    assigned element.
+  </p>
+
+  <ul class="list">
+    <li>
+      Children of a column will automatically align vertically along the Y-axis,
+      from top to bottom.
+    </li>
+    <li>
+      Children will share the row width equally, by default.
+      <br />
+      Useful for symmetrical layouts.
+    </li>
+  </ul>
+
+  <div class="example-case do">
+    <h4>Do</h4>
+    <ul class="list">
+      <li>
+        Apply a column span (described below) for specfic column widths.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-case avoid">
+    <h4>Don't</h4>
+    <ul class="list">
+      <li>Do not change horizontal padding on a column.</li>
+      <li>Do not change horizontal margin on a column.</li>
+      <li>Do not add borders to a column.</li>
+    </ul>
+  </div>
+
+  <rx-example name="grid.col"></rx-example>
+</section>
+
+<section>
+  <heading>
+    <h2>Define Column Spans</h2>
+  </heading>
+
+  <h3>Static Column Spans</h3>
+  <p>
+    Use the <code>.span-N</code> CSS class (where 1 &le; N &le; 12) to define
+    columns that are a predefined fraction of the row width.
+  </p>
+  <ul class="list">
+    <li>
+      If the total column span exceeds a total of 12, the remaining columns
+      will wrap to the next line, but within the same row.
+    </li>
+    <li>
+      The <code>.span-N</code> class is not responsive and will apply to all
+      available breakpoints.
+    </li>
+  </ul>
+
+  <div class="example-case avoid">
+    <h4>Don't</h4>
+    <ul class="list">
+      <li>
+        Do not override <code>width</code> or <code>min-width</code>
+        properties of a column span.
+      </li>
+    </ul>
+  </div>
+  <rx-example name="grid.span"></rx-example>
+
+  <h3>Responsive Column Spans</h3>
+  <p>
+    Breakpoints are based on <code>em</code> units instead of <code>px</code>
+    to retain proper responsiveness for varying window zoom levels.  If the
+    window zoom is increased, the page contents enlarge and less space is
+    available for content on the page.  As font-size increases, breakpoints
+    trend toward the mobile breakpoints to account for reduced space.
+  </p>
+  <ul class="list">
+    <li>
+      The <code>.span-B-N</code> CSS class variants can be used for responsive
+      layouts.
+      <ul>
+        <li>
+          B is a breakpoint of <code>xs</code>, <code>sm</code>,
+          <code>md</code>, <code>lg</code>, to <code>xl</code> to match
+          the minimum breakpoint needed to achieve the desired column span.
+        </li>
+        <li>
+          N follows the same rules as static column spans defined above.
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>CSS</th>
+        <th>Alias</th>
+        <th>EM Value</th>
+        <th>PX Value (approx.)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>xs</td>
+        <td><em>wrist</em></td>
+        <td>0em</td>
+        <td>0px</td>
+      </tr>
+      <tr>
+        <td>sm</td>
+        <td><em>palm</em></td>
+        <td>40em</td>
+        <td>&asymp;640px</td>
+      </tr>
+      <tr>
+        <td>md</td>
+        <td><em>lap</em></td>
+        <td>64em</td>
+        <td>&asymp;1024px</td>
+      </tr>
+      <tr>
+        <td>lg</td>
+        <td><em>desk</em></td>
+        <td>75em</td>
+        <td>&asymp;1200px</td>
+      </tr>
+      <tr>
+        <td>xl</td>
+        <td><em>wall</em></td>
+        <td>90em</td>
+        <td>&asymp;1440px</td>
+      </tr>
+    </tbody>
+  </table>
+  <rx-example name="grid.responsive"></rx-example>
+</section>
+
+<section>
+  <heading>
+    <h2>Nesting Rows and Columns</h2>
+  </heading>
+  <p>
+    You can nest rows can columns as deep as you wish. Gutters will automatically align properly.
+  </p>
+
+  <div class="example-case do">
+    <h4>Do</h4>
+    <ul class="list">
+      <li>Beginning with a row element, alternate between rows and columns as you nest.</li>
+    </ul>
+  </div>
+
+  <rx-example name="grid.nesting"></rx-example>
+</section>
+
+<section>
+  <heading>
+    <h2>Offsetting Columns</h2>
+  </heading>
+
+  <p>
+    Use the <code>.offset-N</code> CSS class (where 1 &le; N &le; 11) to define
+    where the column span begins.
+  </p>
+
+  <ul class="list">
+    <li>The <code>.offset-N</code> CSS class is not resposive.</li>
+    <li>
+      The <code>.offset-B-N</code> CSS class variants provide responsive
+      functionality.  The same rules apply as documented in responsive columns.
+    </li>
+  </ul>
+
+  <rx-example name="grid.offset"></rx-example>
+</section>
+
+<section>
+  <heading>
+    <h2>Ordering Columns</h2>
+  </heading>
+
+  <p>
+    Use the <code>.order-N</code> CSS class (where 1 &le; N &le; 12) to redefine
+    column layout order.
+  </p>
+  <ul class="list">
+    <li>The <code>.order-N</code> CSS class is not resposive.</li>
+    <li>
+      The <code>.order-B-N</code> CSS class variants provide responsive
+      functionality.  The same rules apply as documented in responsive columns.
+    </li>
+  </ul>
+
+  <h4>Example</h4>
+  <p>
+    The columns below were defined in the markup in the order of 2-4-1-3. By using
+    the proper classes, they've been reordered as 1-2-3-4.
+  </p>
+
+  <rx-example name="grid.order"></rx-example>
+</section>
+
+<section>
+  <heading>
+    <h2>Going Gutterless</h2>
+  </heading>
+
+  <p>
+    There will be times where having gutters is undesirable for the layout of
+    elements on the page. For these cases, we have <code>.flex-*</code>
+    equivalents of <code>.grid-*</code> classes to provide 12-column
+    functionality without gutters.
+  </p>
+
+  <section>
+    <heading>
+      <h3>Defining a Gutterless Row</h3>
+    </heading>
+
+    <p>
+      Use the <code>.flex-row</code> CSS class to define a gutterless, row
+      nesting context. This will automatically apply a row-based flexbox
+      alignment to the assigned element.
+    </p>
+
+    <div class="example-case do">
+      <h4>Do</h4>
+      <ul class="list">
+        <li>You may add content within a <code>.flex-row</code>.
+      </ul>
+    </div>
+
+    <div class="example-case avoid">
+      <h4>Don't</h4>
+      <ul class="list">
+        <li>
+          Do not use <code>.grid-col</code> elements within a gutterless row.
+        </li>
+      </ul>
+    </div>
+
+    <rx-example name="flex.row"></rx-example>
+  </section>
+
+  <section>
+    <h3>Defining a Gutterless Column</h3>
+    <p>
+      Use the <code>.flex-col</code> class to define a gutterless, column
+      nesting context. This will automatically apply a column-based flexbox
+      alignment to the assigned element.
+    </p>
+
+    <div class="example-case do">
+      <h4>Do</h4>
+      <ul class="list">
+        <li>You may apply custom padding to a gutterless column.</li>
+      </ul>
+    </div>
+
+    <div class="example-case avoid">
+      <h4>Don't</h4>
+      <ul class="list">
+        <li>
+          Do not use gutterless columns within <code>.grid-row</code> elements.
+        </li>
+      </ul>
+    </div>
+
+    <rx-example name="flex.col"></rx-example>
+  </section>
+
+  <h3>Gutterless Column Spans</h3>
+
+  <h4>Static Gutterless Column Spans</h4>
+  <rx-example name="flex.span"></rx-example>
+
+  <h4>Responsive Gutterless Column Spans</h4>
+  <rx-example name="flex.responsive"></rx-example>
+
+  <h3>Gutterless Nesting</h3>
+  <rx-example name="flex.nesting"></rx-example>
+
+  <h3>Gutterless Offset</h3>
+  <rx-example name="flex.offset"></rx-example>
+
+  <h3>Gutterless Ordering</h3>
+  <rx-example name="flex.order"></rx-example>
+</section>

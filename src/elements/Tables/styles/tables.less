@@ -1,98 +1,115 @@
+// With Regards to Table Borders:
+//
+// The <table> will handle the top and left border
+// while the <td> and <th> will handle the bottom and right border
 table {
+  border-collapse: separate; // Prevents ~1px table growth when floating
+  border-color: @app-table-border-color;
+  border-style: solid;
+  border-width: @app-table-border-width 0 0 @app-table-border-width;
   clear: both;
-  width: 100%;
-  padding: 0;
   margin: 0;
-  border-collapse: collapse;
-  td,
-  th {
-    border: 1px solid @app-table-border-color;
-    padding: @app-table-cell-padding;
-    color: @app-table-cell-text-color;
-  }
-  thead th {
-    text-align: left;
-    font-weight: 500;
-    background: @app-table-header-background-color;
-    color: @app-table-header-text-color;
-    border: 1px solid @app-table-header-border-color;
-    &.actions {
-      width: 15px;
-    }
-  }
-  tr {
-    background: @app-default-row-background-color;
-  }
+  padding: 0;
+  width: 100%;
+
   &.table-striped {
-    tr:nth-child(even),
+    tbody tr:nth-child(even),
     tbody:nth-child(odd) > tr {
       background: @app-striped-row-background-color;
     }
-  }
-  td.double-chevron-cell {
-    width: 10px;
-    padding: 0 10px;
-    .double-chevron {
-      cursor: pointer;
-      &::after {
-        display: inline-block;
-        color: @gray-700;
-        font-size: 20px;
-        .chevron-mixin;
-      }
-    }
-  }
-  td.expanded {
-    background-color: @app-table-expanded-chevron-background-color;
-    border-bottom-color: @app-table-expanded-chevron-border-color;
-    .double-chevron::after {
-      color: @white;
-      .chevron-mixin(-1);
-    }
-  }
+  }//&.table-striped
+
+  &.subtable {
+    table-layout: fixed;
+  }//&.subtable
+
   .fa-times.delete-x {
     color: @gray-700;
     cursor: pointer;
-  }
-  .fa-times.delete-x:hover {
-    color: saturate(@red-700, 15%);
-    cursor: pointer;
-  }
-}
+
+    &:hover {
+      color: saturate(@red-700, 15%);
+      cursor: pointer;
+    }//&:hover
+  }//.fa-times.delete-x
+}//table
 
 .expanded-container {
   padding: 0 3px 20px 3px;
   background-color: @app-table-header-background-color;
+  border-bottom: 1px solid @app-table-header-border-color;
 
   & > * {
     margin-left: 2%;
     width: 98%;
   }
 
-  table.subtable {
-    table-layout: fixed;
-
-    th:first-child {
-      border-left-width: 0;
-    }
-
-    th:last-child {
-      border-right-width: 0;
-    }
-
-    th {
-      border-color: @app-table-header-border-color;
-      background-color: @app-table-header-background-color;
-      color: @app-table-header-text-color;
-      border-top: 0;
-      border-bottom: 0;
-    }
-  }
   .expanded-content {
     background-color: @white;
     margin-top: 3px;
     .metadata {
       padding: 5px 10px;
     }
+  }//.expanded-content
+}//.expanded-container
+
+td,
+th {
+  border-color: @app-table-border-color;
+  border-style: solid;
+  border-width: 0 @app-table-border-width @app-table-border-width 0;
+  color: @app-table-cell-text-color;
+  padding: @app-table-cell-padding;
+
+  // More specific than `thead th` (corrects last header cell border color)
+  &:last-child {
+    border-right-color: @app-table-border-color;
   }
-}
+
+  &.actions {
+    width: 15px;
+  }
+}//td, th
+
+tr {
+  background: @app-default-row-background-color;
+}//tr
+
+td {
+  color: @app-table-cell-text-color;
+
+  &.double-chevron-cell {
+    width: 10px;
+    padding: 0 10px;
+
+    .double-chevron {
+      cursor: pointer;
+
+      &::after {
+        display: inline-block;
+        color: @gray-700;
+        font-size: 20px;
+        .chevron-mixin;
+      }
+    }//.double-chevron
+  }//&.double-chevron-cell
+
+  &.expanded {
+    background-color: @app-table-expanded-chevron-background-color;
+    border-bottom-color: @app-table-expanded-chevron-border-color;
+
+    .double-chevron::after {
+      .chevron-mixin(-1);
+    }
+  }//&.expanded
+}//td
+
+thead {
+  th {
+    text-align: left;
+    font-weight: 500;
+    background: @app-table-header-background-color;
+    color: @app-table-header-text-color;
+    border-color: @app-table-header-border-color;
+  }
+}//thead

@@ -1,0 +1,26 @@
+<form rx-form name="emptyForm" ng-controller="datePickerEmptyCtrl">
+  <rx-form-section controlled-width>
+    <rx-field>
+      <rx-field-name>Empty String:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-date-picker
+            id="dpEmpty"
+            ng-model="emptyDate"></rx-date-picker>
+        </rx-input>
+        <rx-help-text>Bound Value: {{emptyDate || 'N/A'}}</rx-help-text>
+      </rx-field-content>
+    </rx-field>
+    <rx-field>
+      <rx-field-name>Undefined Value:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-date-picker
+            id="dpUndefined"
+            ng-model="undefinedDate"></rx-date-picker>
+        </rx-input>
+        <rx-help-text>Bound Value: {{undefinedDate || 'N/A'}}</rx-help-text>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

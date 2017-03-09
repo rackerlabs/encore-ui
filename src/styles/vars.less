@@ -143,6 +143,7 @@
 
 // ## Tables
 @app-table-border-color: @gray-200;
+@app-table-border-width: 1px;
 @app-table-expanded-chevron-background-color: @gray-200;
 @app-table-expanded-chevron-border-color: @gray-200;
 @app-table-header-background-color: @gray-200;
@@ -501,3 +502,19 @@
 // with border
 @tooltip-arrow-border-length: (@tooltip-arrow-length + @tooltip-border-width);
 @tooltip-arrow-border-width: (@tooltip-arrow-width + (2 * @tooltip-border-width));
+
+/* 12-COLUMN FLEXBOX GRID (globals) */
+/*
+  - 1em is calculated on browser-defined font size
+    - No CSS property can affect this calculation.
+  - As font size increases/decreases (zoom %), more/less room is available,
+    so breakpoints behave more like larger/smaller screens
+*/
+@grid-break-wrist: 0em;
+@grid-break-palm: 40em; /* ~640px */
+@grid-break-lap: 64em; /* ~1024px */
+@grid-break-desk: 75em; /* ~1200px */
+@grid-break-wall: 90em; /* ~1440px */
+@grid-column-count: 12;
+@grid-gutter-width: 16px;
+@grid-column-unit: (100% / @grid-column-count);

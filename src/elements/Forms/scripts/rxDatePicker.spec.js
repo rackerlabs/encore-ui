@@ -265,7 +265,7 @@ describe('rxDatePicker', function () {
                     '<rx-date-picker name="specModel" ng-model="specModel"></rx-date-picker>' +
                 '</form>';
                 renderDirective(scope);
-                expect(scope.specForm.specModel.$error.date).to.eq(true);
+                expect(scope.specForm.specModel.$error.date).to.be.undefined;
             });
         });
 
@@ -315,7 +315,7 @@ describe('rxDatePicker', function () {
                     '<rx-date-picker name="specModel" ng-model="specModel"></rx-date-picker>' +
                 '</form>';
                 renderDirective(scope);
-                expect(scope.specForm.specModel.$error.date).to.eq(true);
+                expect(scope.specForm.specModel.$error.date).to.be.undefined;
             });
         });
     });
