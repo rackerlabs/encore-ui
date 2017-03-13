@@ -22,11 +22,11 @@ angular.module('encore.ui.rxApp')
  * </pre>
  */
 .directive('rxApp', function (encoreRoutes, rxAppRoutes, hotkeys,
-                              rxEnvironment, routesCdnPath, rxAuth, $window) {
+                              rxEnvironment, routesCdnPath, rxSession, $window) {
     console.warn(
         'DEPRECATED: rxApp will be removed in EncoreUI 4.0.0'
     );
-    
+
     return {
         restrict: 'E',
         transclude: true,
@@ -41,7 +41,7 @@ angular.module('encore.ui.rxApp')
             logoutUrl: '@?'
         },
         link: function (scope) {
-            scope.userId = rxAuth.getUserId();
+            scope.userId = rxSession.getUserId();
 
             scope.isPreProd = rxEnvironment.isPreProd();
 

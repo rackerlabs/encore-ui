@@ -114,12 +114,12 @@ describe('encore.ui.rxApp', function () {
             });
 
             // Inject in angular constructs
-            inject(function ($rootScope, $compile, _rxVisibility_, _rxEnvironmentUrlFilter_, rxAuth) {
+            inject(function ($rootScope, $compile, _rxVisibility_, _rxEnvironmentUrlFilter_, rxSession) {
                 scope = $rootScope.$new();
                 compile = $compile;
                 rxVisibility = _rxVisibility_;
                 rxEnvironmentUrlFilter = _rxEnvironmentUrlFilter_;
-                rxAuth.getToken = function () {
+                rxSession.getToken = function () {
                     return mockToken;
                 };
             });
