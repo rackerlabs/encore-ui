@@ -53,12 +53,14 @@
      * @name utilities.filter:Page
      * @requires utilities.filter:rxPager
      */
-    function PageFilter () {
+    function PageFilter (suppressDeprecationWarnings) {
         return function (pager) {
-            console.warn(
-                'DEPRECATED: Page - Please use rxPager. ' +
-                'Page will be removed in EncoreUI 4.0.0'
-            );
+            if (!suppressDeprecationWarnings) {
+                console.warn(
+                    'DEPRECATED: Page - Please use rxPager. ' +
+                    'Page will be removed in EncoreUI 4.0.0'
+                );
+            }
             return rxPagerFilter()(pager);
         };
     }//PageFilter

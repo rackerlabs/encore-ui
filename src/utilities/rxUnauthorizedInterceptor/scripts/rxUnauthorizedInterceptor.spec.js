@@ -96,6 +96,7 @@ describe('service:UnauthorizedInterceptor (DEPRECATED)', function () {
                 $provide.value('$window', mockWindow);
                 $provide.value('rxAuth', rxAuth);
             });
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($injector) {
             interceptor = $injector.get('UnauthorizedInterceptor');

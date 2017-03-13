@@ -58,7 +58,12 @@ angular.module('encore.ui.rxOptionTable')
  * <rx-option-table disable-fn="disableOption(tableId, fieldId, rowId)"></rx-option-table>
  * </pre>
  */
-.directive('rxOptionTable', function ($interpolate) {
+.directive('rxOptionTable', function ($interpolate, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxOptionTable will be removed in EncoreUI 4.0.0'
+        );
+    }
     return {
         restrict: 'E',
         templateUrl: 'templates/rxOptionTable.html',
@@ -74,10 +79,6 @@ angular.module('encore.ui.rxOptionTable')
             disableFn: '&?'
         },
         link: function (scope, element) {
-            console.warn(
-                'DEPRECATED: rxOptionTable will be removed in EncoreUI 4.0.0'
-            );
-
             var boxesChecked = 0;
             scope.selectAllModel = false;
 

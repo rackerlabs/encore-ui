@@ -60,6 +60,7 @@ describe('filter:Page (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($filter) {
             page = $filter('Page');

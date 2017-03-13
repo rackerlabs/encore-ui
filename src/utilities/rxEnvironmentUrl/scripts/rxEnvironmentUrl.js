@@ -16,9 +16,13 @@ angular.module('encore.ui.utilities')
  * Renders as '/myPath' regardless of environment, because value passed in was not an object
  * </pre>
  */
-.filter('rxEnvironmentUrl', function (rxEnvironment, $interpolate) {
+.filter('rxEnvironmentUrl', function (rxEnvironment, $interpolate, suppressDeprecationWarnings) {
     return function (details) {
-        console.warn('DEPRECATED: rxEnvironmentUrl will be removed in EncoreUI 4.0.0');
+        if (!suppressDeprecationWarnings) {
+            console.warn(
+                'DEPRECATED: rxEnvironmentUrl will be removed in EncoreUI 4.0.0'
+            );
+        }
         var environment = rxEnvironment.get();
 
         // convert url template into full path based on details provided (if details is an object)

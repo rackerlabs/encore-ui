@@ -129,10 +129,12 @@ angular.module('encore.ui.rxApp')
  * <rx-page title="'Page Title'"></rx-page>
  * </pre>
  */
-.directive('rxPage', function () {
-    console.warn(
-        'DEPRECATED: rxPage will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxPage', function (suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxPage will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         restrict: 'E',

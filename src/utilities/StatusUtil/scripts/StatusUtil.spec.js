@@ -10,6 +10,7 @@ describe('utilities: StatusUtil', function () {
         module('encore.ui.utilities', function ($provide) {
             $provide.value('rxStatus', status);
         });
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($rootScope, StatusUtil) {
             util = StatusUtil;

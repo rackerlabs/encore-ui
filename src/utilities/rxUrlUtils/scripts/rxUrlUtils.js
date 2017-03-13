@@ -137,10 +137,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:urlUtils
  * @requires utilities.service:rxUrlUtils
  */
-.service('urlUtils', function (rxUrlUtils) {
-    console.warn(
-        'DEPRECATED: urlUtils - Please use rxUrlUtils. ' +
-        'urlUtils will be removed in EncoreUI 4.0.0'
-    );
+.service('urlUtils', function (rxUrlUtils, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: urlUtils - Please use rxUrlUtils. ' +
+            'urlUtils will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxUrlUtils;
 });

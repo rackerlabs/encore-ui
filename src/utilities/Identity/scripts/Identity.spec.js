@@ -17,6 +17,7 @@ describe('utilities:Identity (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($injector) {
             $httpBackend = $injector.get('$httpBackend');

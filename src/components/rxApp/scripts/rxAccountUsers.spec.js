@@ -41,6 +41,8 @@ describe('encore.ui.rxApp', function () {
                 provide = $provide;
             });
 
+            module({ suppressDeprecationWarnings: true });
+
             inject(function ($rootScope, $compile, $templateCache, _$location_, _$route_, $q, encoreRoutes) {
                 $route = _$route_;
                 $location = _$location_;

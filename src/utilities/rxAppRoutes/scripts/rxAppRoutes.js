@@ -6,10 +6,12 @@ angular.module('encore.ui.utilities')
  * @description
  * Manages page routes, building urls and marking them as active on route change.
  */
-.factory('rxAppRoutes', function ($rootScope, $log, rxUrlUtils, $q) {
-    console.warn(
-        'DEPRECATED: rxAppRoutes will be removed in EncoreUI 4.0.0'
-    );
+.factory('rxAppRoutes', function ($rootScope, $log, rxUrlUtils, $q, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxAppRoutes will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     var AppRoutes = function (routes) {
         routes = routes || [];

@@ -64,6 +64,8 @@ describe('utilities:rxAppRoutes', function () {
             $provide.value('$route', route);
         });
 
+        module({ suppressDeprecationWarnings: true });
+
         // Inject in angular constructs
         inject(function (rxAppRoutes, rxEnvironment, $location, $rootScope, $log) {
             appRoutes = new rxAppRoutes();

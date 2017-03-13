@@ -254,10 +254,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:Auth
  * @requires utilities.service:rxAuth
  */
-.service('Auth', function (rxAuth) {
-    console.warn (
-        'DEPRECATED: Auth - Please use rxAuth. ' +
-        'Auth will be removed in EncoreUI 4.0.0'
-    );
+.service('Auth', function (rxAuth, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: Auth - Please use rxAuth. ' +
+            'Auth will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxAuth;
 });

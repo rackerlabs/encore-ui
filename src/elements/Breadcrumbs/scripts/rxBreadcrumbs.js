@@ -32,10 +32,12 @@ angular.module('encore.ui.elements')
  * <rx-app site-title="Custom Title"></rx-app>
  * </pre>
  */
-.directive('rxBreadcrumbs', function () {
-    console.warn(
-        'DEPRECATED: rxBreadcrumbs will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxBreadcrumbs', function (suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxBreadcrumbs will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         restrict: 'E',

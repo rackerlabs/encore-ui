@@ -6,10 +6,12 @@ angular.module('encore.ui.rxApp')
  * @restrict E
  * @description [TBD]
  */
-.directive('rxAccountSearch', function ($window, $injector) {
-    console.warn(
-        'DEPRECATED: rxAccountSearch will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxAccountSearch', function ($window, $injector, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxAccountSearch will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         templateUrl: 'templates/rxAccountSearch.html',

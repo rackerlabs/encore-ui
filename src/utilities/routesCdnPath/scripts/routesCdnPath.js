@@ -30,13 +30,15 @@ angular.module('encore.ui.utilities')
  *
  */
 .provider('routesCdnPath', function () {
-    console.warn(
-        'DEPRECATED: routesCdnPath will be removed in EncoreUI 4.0.0'
-    );
-
     this.customURL = null;
 
-    this.$get = function () {
+    this.$get = function (suppressDeprecationWarnings) {
+        if (!suppressDeprecationWarnings) {
+            console.warn(
+                'DEPRECATED: routesCdnPath will be removed in EncoreUI 4.0.0'
+            );
+        }
+
         var staging = this.customURL ||
             'https://5593626d69acc4cdb66a-521ce2b7cdb9308893eabb7915d88c0c.ssl.cf1.rackcdn.com/encoreNav.json';
 

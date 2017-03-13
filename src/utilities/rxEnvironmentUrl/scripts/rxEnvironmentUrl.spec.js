@@ -3,6 +3,7 @@ describe('DEPRECATED: rxEnvironmentUrl', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($filter, rxEnvironment) {
             urlFilter = $filter('rxEnvironmentUrl');

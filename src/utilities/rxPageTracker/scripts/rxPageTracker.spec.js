@@ -5,6 +5,7 @@ describe('Pagination', function () {
 
         beforeEach(function () {
             module('encore.ui.utilities');
+            
             inject(function (rxPageTracker, _rxLocalStorage_) {
                 tracking = rxPageTracker;
                 rxLocalStorage = _rxLocalStorage_;
@@ -327,6 +328,8 @@ describe('service:PageTracking (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
+
         inject(function (_PageTracking_, _rxLocalStorage_) {
             tracking = _PageTracking_;
             rxLocalStorage = _rxLocalStorage_;

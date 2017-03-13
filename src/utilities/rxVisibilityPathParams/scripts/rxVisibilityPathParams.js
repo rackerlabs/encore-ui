@@ -19,10 +19,12 @@ angular.module('encore.ui.utilities')
  * visibility: [ 'rxPathParams', { param: 'userName' } ]
  * </pre>
  */
-.factory('rxVisibilityPathParams', function ($routeParams) {
-    console.warn(
-        'DEPRECATED: rxVisibilityPathParams will be removed in EncoreUI 4.0.0'
-    );
+.factory('rxVisibilityPathParams', function ($routeParams, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxVisibilityPathParams will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     var pathParams = {
         name: 'rxPathParams',

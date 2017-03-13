@@ -105,6 +105,7 @@ describe('utilities:Auth (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($injector) {
             permission = $injector.get('Permission');

@@ -3,6 +3,7 @@ describe('service:rxSessionStorage', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        
         inject(function (rxSessionStorage) {
             storage = rxSessionStorage;
         });
@@ -63,6 +64,8 @@ describe('service:SessionStorage (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
+
         inject(function (SessionStorage) {
             storage = SessionStorage;
         });

@@ -11,10 +11,12 @@ angular.module('encore.ui.utilities')
  */
 .factory('encoreRoutes', function (rxAppRoutes, routesCdnPath, rxNotify, $q, $http,
                                    rxVisibilityPathParams, rxVisibility, rxEnvironment,
-                                   rxLocalStorage) {
-    console.warn(
-        'DEPRECATED: encoreRoutes will be removed in EncoreUI 4.0.0'
-    );
+                                   rxLocalStorage, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: encoreRoutes will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     // We use rxVisibility in the nav menu at routesCdnPath, so ensure it's ready
     // before loading from the CDN

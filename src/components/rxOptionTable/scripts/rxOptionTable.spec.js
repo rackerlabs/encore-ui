@@ -5,6 +5,8 @@ describe('rxOptionTable', function () {
         module('encore.ui.rxOptionTable');
         module('templates/rxOptionTable.html');
 
+        module({ suppressDeprecationWarnings: true });
+
         // Inject in angular constructs
         inject(function ($location, $rootScope, $compile) {
             rootScope = $rootScope;

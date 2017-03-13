@@ -6,10 +6,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:Session
  * @requires utilities.service:rxAuth
  */
-.factory('Session', function (rxAuth) {
-    console.warn(
-        'DEPRECATED: Session - Please use rxAuth.' +
-        'Session will be removed in EncoreUI 4.0.0'
-    );
+.factory('Session', function (rxAuth, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: Session - Please use rxAuth.' +
+            'Session will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxAuth;
 });

@@ -79,10 +79,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:SessionStorage
  * @requires utilities.service:rxSessionStorage
  */
-.service('SessionStorage', function (rxSessionStorage) {
-    console.warn (
-        'DEPRECATED: SessionStorage - Please use rxSessionStorage. ' +
-        'SessionStorage will be removed in EncoreUI 4.0.0'
-    );
+.service('SessionStorage', function (rxSessionStorage, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: SessionStorage - Please use rxSessionStorage. ' +
+            'SessionStorage will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxSessionStorage;
 });

@@ -43,12 +43,14 @@
      * @name utilities.filter:titleize
      * @requires utilities.filter:rxTitleize
      */
-    function titleizeFilter () {
+    function titleizeFilter (suppressDeprecationWarnings) {
         return function (inputString) {
-            console.warn(
-                'DEPRECATED: titleize - Please use rxTitleize. ' +
-                'titleize will be removed in EncoreUI 4.0.0'
-            );
+            if (!suppressDeprecationWarnings) {
+                console.warn(
+                    'DEPRECATED: titleize - Please use rxTitleize. ' +
+                    'titleize will be removed in EncoreUI 4.0.0'
+                );
+            }
             return rxTitleizeFilter()(inputString);
         };
     };
