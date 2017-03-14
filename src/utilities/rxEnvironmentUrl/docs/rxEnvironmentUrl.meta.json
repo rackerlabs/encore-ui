@@ -1,8 +1,0 @@
-{
-    "displayName": "rxEnvironmentUrl",
-    "stability": "stable",
-    "description": "Builds a URL based on current environment.",
-    "api": "filter:rxEnvironmentUrl",
-    "keywords": []
-}
-
