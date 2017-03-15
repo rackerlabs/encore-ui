@@ -5,7 +5,7 @@ describe('demo component', function () {
     });
 
     it('default', function () {
-        encore.rxActionMenu.initialize($('rx-action-menu#globalDismissal')).expand();
+        new encore.rxActionMenu($('rx-action-menu#globalDismissal')).expand();
         screenshot.snap(this, $('.table-striped'), { threshold: 1 });
     });
 
