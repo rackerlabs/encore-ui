@@ -1,6 +1,6 @@
 {
     "displayName": "rxEnvironmentUrl",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "Builds a URL based on current environment.",
     "api": "filter:rxEnvironmentUrl",
     "keywords": []

@@ -1,6 +1,6 @@
 {
     "displayName": "rxBreadcrumbsSvc",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "",
     "api": "service:rxBreadcrumbsSvc",
     "keywords": []

@@ -1,6 +1,6 @@
 {
     "displayName": "hotkeys",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "",
     "api": "service:hotkeys",
     "keywords": []

@@ -1,6 +1,6 @@
 {
     "displayName": "Account Info",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "Responsible for drawing an account info box.",
     "api": "directive:rxAccountInfo",
     "keywords": [
