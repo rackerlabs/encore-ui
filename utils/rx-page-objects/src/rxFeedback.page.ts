@@ -112,7 +112,9 @@ export class rxFeedback extends rxModalAction {
      * @see rxFeedback#send
      */
     confirmSuccess(within: number, fn?: Function) {
-        fn = fn || rxNotify.all.isPresent.bind(rxNotify.all, 'feedback', 'success');
+        fn = fn || (() => {
+            return rxNotify.all.hasNotification('feedback', 'success');
+        });
 
         return browser.wait(fn, within, 'Feedback submission did not confirm success within ' + within + ' msecs');
     }

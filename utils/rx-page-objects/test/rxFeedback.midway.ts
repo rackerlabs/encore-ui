@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import * as _ from 'lodash';
 import {$, browser} from 'protractor';
 
-import {rxFeedback} from '../index';
+import {rxFeedback, rxNotify} from '../index';
 
 let demoPage = require('../../demo.page');
 
@@ -85,7 +85,7 @@ describe('rxFeedback', () => {
         });
 
         it('should catch errors on unsuccessful feedback', () => {
-            browser.sleep(3000);
+            rxNotify.all.dismiss();
             expect(unsuccessfulFeedback.send('Software Bug', 'test', 3000)).to.be.rejectedWith(Error);
         });
 
