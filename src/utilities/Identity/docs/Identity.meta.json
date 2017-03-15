@@ -1,6 +1,6 @@
 {
     "displayName": "Identity",
-    "stability": "stable",
+    "stability": "deprecated",
     "description": "This is a component designed to aid interaction with Rackspace's Identity API.",
     "api": "service:Identity",
     "keywords": []
