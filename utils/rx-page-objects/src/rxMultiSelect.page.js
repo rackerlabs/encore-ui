@@ -8,7 +8,7 @@ var selectOptionFromElement = function (optionElement) {
      * @private
      * @namespace rxMultiSelect.option
      */
-    return Object.create(rxCheckbox.initialize(optionElement.$('input')), {
+    return Object.create(new rxCheckbox(optionElement.$('input')), {
 
         /**
          * @function

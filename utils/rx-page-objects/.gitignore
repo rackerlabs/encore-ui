@@ -9,5 +9,21 @@ typings/
 # eventually, all src/*.page.js files
 # can be ignored with a glob.
 src/rxComponent.js
-src/rxDatePicker.page.js
+src/rxCheckbox.exercise.js
+src/rxCheckbox.page.js
+src/rxComponent.js
 src/rxDatePicker.exercise.js
+src/rxDatePicker.page.js
+src/rxRadio.exercise.js
+src/rxRadio.page.js
+src/rxSelect.exercise.js
+src/rxSelect.page.js
+src/rxTimePicker.page.js
+src/rxTimePickerUtil.page.js
+
+test/rxCheckbox.midway.js
+test/rxDatePicker.midway.js
+test/rxRadio.midway.js
+test/rxSelect.midway.js
+test/rxTimePicker.midway.js
+test/rxTimePickerUtil.midway.js

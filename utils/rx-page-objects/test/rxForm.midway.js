@@ -10,22 +10,21 @@ var formPageObject = Page.create({
 
     plainTextbox: encore.rxForm.textField.generateAccessor($('#txtPlain')),
 
-    requireName: encore.rxCheckbox.generateAccessor($('#chkVolumeNameRequired')),
+    requireName: encore.rxCheckboxAccessor($('#chkVolumeNameRequired'))(),
 
     options: {
         get: function () {
             return Page.create({
-                first: encore.rxRadio.generateAccessor($('#favBeatle_0')),
-                second: encore.rxRadio.generateAccessor($('#favBeatle_1'))
+                first: encore.rxRadioAccessor($('#favBeatle_0'))(),
+                second: encore.rxRadioAccessor($('#favBeatle_1'))()
             });
         }
     },
 
     volumeTypeSelect: {
         get: function () {
-            var slowClick = false;
             return Page.create({
-                type: encore.rxSelect.generateAccessor($('#selVolumeType'), slowClick)
+                type: encore.rxSelectAccessor($('#selVolumeType'))()
             });
         }
     }
@@ -53,7 +52,7 @@ describe('rxForm', function () {
             var checkbox, subject;
 
             before(function () {
-                checkbox = encore.rxCheckbox.initialize($('#chkVolumeNameRequired'));
+                checkbox = new encore.rxCheckbox($('#chkVolumeNameRequired'));
                 subject = new encore.rxFieldName($('#fieldNameVolumeName'));
             });
 
