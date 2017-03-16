@@ -62,7 +62,7 @@ angular.module('encore.ui.rxApp')
         scope: {
             item: '='
         },
-        controller: function ($scope, $location, $injector, rxVisibility, rxAuth, rxUrlUtils) {
+        controller: function ($scope, $location, $injector, rxVisibility, rxSession, rxUrlUtils) {
             /**
              * @description Determines whether or not a nav item should have its href prefixed
              * based on whether the `$injector` has a `NAV_ITEM_PREFIX` injectable
@@ -124,22 +124,22 @@ angular.module('encore.ui.rxApp')
                 }
 
                 if (!_.isUndefined(roles.any)) {
-                    return rxAuth.hasRole(roles.any);
+                    return rxSession.hasRole(roles.any);
                 }
 
                 if (!_.isUndefined(roles.all)) {
-                    return rxAuth.hasAllRoles(roles.all);
+                    return rxSession.hasAllRoles(roles.all);
                 }
 
                 return false;
             };
 
-            /** 
+            /**
              * @description Determines whether or not a nav item should be displayed, based on `visibility`
              * criteria and `roles` criteria
-             * @param {Object} visibility 
+             * @param {Object} visibility
              * Can be an expression, a function, an array (using format below) to determine visibility
-             * @param {Object=} roles 
+             * @param {Object=} roles
              * An object with a format { 'any': ['role1', 'role2'] } or { 'all': ['role1', 'role2'] }
              */
             $scope.isVisible = function (visibility, roles) {

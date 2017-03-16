@@ -1,4 +1,4 @@
-describe('service:rxUnauthorizedInterceptor', function () {
+describe('service:UnauthorizedInterceptor (DEPRECATED)', function () {
     var interceptor,
         mockWindow = { location: '/arbitrary/path' },
         rxSession = { logout: sinon.spy() },
@@ -19,7 +19,7 @@ describe('service:rxUnauthorizedInterceptor', function () {
             });
 
         inject(function ($injector) {
-            interceptor = $injector.get('rxUnauthorizedInterceptor');
+            interceptor = $injector.get('UnauthorizedInterceptor');
         });
     });
 
