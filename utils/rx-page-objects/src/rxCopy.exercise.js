@@ -101,7 +101,7 @@ exports.rxCopy = function (options) {
             });
 
             // Skip on Chrome for Mac: CMD-V is not working to paste clipboard contents
-            if (options.testCopyArea && !(isMac && isChrome)) {
+            if (options.testCopyArea && !(browser.params.isMac && browser.params.isChrome)) {
                 it('should copy text to clipboard', function () {
                     component.copy();
                     getPastedValue().then(function (pastedValue) {
