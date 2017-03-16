@@ -6,7 +6,7 @@ angular.module('encore.ui.utilities')
  *
  * Set of utility functions to break apart/compare URLs.
  */
-.service('rxUrlUtils', function ($location, rxEnvironmentUrlFilter, $interpolate, $route, $document) {
+.service('rxUrlUtils', function ($location, $interpolate, $route, $document) {
     var urlParser = $document[0].createElement('a');
     // remove any preceding # and / from the URL for cleaner comparison
     this.stripLeadingChars = function (url) {
@@ -104,10 +104,6 @@ angular.module('encore.ui.utilities')
         if (_.isUndefined(url)) {
             return url;
         }
-
-        // run the href through rxEnvironmentUrl in case it's defined as such
-        // remove in EncoreUI 4.0.0
-        url = rxEnvironmentUrlFilter(url);
 
         if ($route.current) {
             // convert any nested expressions to defined route params
