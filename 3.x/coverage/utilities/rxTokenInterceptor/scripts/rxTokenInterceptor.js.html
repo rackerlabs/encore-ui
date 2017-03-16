@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">utilities/rxTokenInterceptor/scripts/rxTokenInterceptor.js</span></h1>
     <h2>
-        Statements: <span class="metric">100% <small>(24 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">100% <small>(24 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(12 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(12 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxTokenInterceptor/scripts/</a> &#187; rxTokenInterceptor.js</div>
@@ -71,46 +71,7 @@
 44
 45
 46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+47</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -129,48 +90,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1046</span>
+<span class="cline-any cline-yes">1076</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1046</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">7</span>
-<span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1046</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1046</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1076</span>
 <span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,7 +125,7 @@
  * Simple $http injector which will intercept http request and inject the
  * Rackspace Identity's token into every http request.
  *
- * @requires utilities.service:rxAuth
+ * @requires utilities.service:rxSession
  *
  * @example
  * &lt;pre&gt;
@@ -216,7 +138,7 @@
 .provider('rxTokenInterceptor', function () {
     var exclusionList = this.exclusionList = [ 'rackcdn.com' ];
 &nbsp;
-    this.$get = function (rxAuth, $document) {
+    this.$get = function (rxSession, $document) {
         var url = $document[0].createElement('a');
         return {
             request: function (config) {
@@ -233,46 +155,7 @@
                 });
 &nbsp;
                 if (!exclude) {
-                    config.headers['X-Auth-Token'] = rxAuth.getTokenId();
-                }
-&nbsp;
-                return config;
-            }
-        };
-    };
-})
-&nbsp;
-/**
- * @deprecated
- * Please use rxTokenInterceptor instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:TokenInterceptor
- */
-.provider('TokenInterceptor', function () {
-    var exclusionList = this.exclusionList = [ 'rackcdn.com' ];
-&nbsp;
-    this.$get = function (rxAuth, $document) {
-        console.warn (
-            'DEPRECATED: TokenInterceptor - Please use rxTokenInterceptor. ' +
-            'TokenInterceptor will be removed in EncoreUI 4.0.0'
-        );
-        var url = $document[0].createElement('a');
-        return {
-            request: function (config) {
-                // Don't add the X-Auth-Token if the request URL matches
-                // something in exclusionList
-                // We're specifically looking at hostnames, so we have to
-                // do the `createElement('a')` trick to turn the config.url
-                // into something with a `.hostname`
-                url.href = config.url;
-                var exclude = _.some(exclusionList, function (item) {
-                    if (_.includes(url.hostname, item)) {
-                        return true;
-                    }
-                });
-&nbsp;
-                if (!exclude) {
-                    config.headers['X-Auth-Token'] = rxAuth.getTokenId();
+                    config.headers['X-Auth-Token'] = rxSession.getTokenId();
                 }
 &nbsp;
                 return config;
@@ -285,7 +168,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 08 2017 15:16:26 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 16 2017 16:17:11 GMT-0500 (CDT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

@@ -5,8 +5,8 @@
 
 
 angular.module('demoApp')
-.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {
-    rxAuth.getUserId = function () {
+.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxSession) {
+    rxSession.getUserId = function () {
         return 'bert3000';
     };
 
@@ -22,7 +22,7 @@ angular.module('demoApp')
             return !_.isEmpty($rootScope.user);
         }
     );
- 
+
     $scope.changeRoutes = function () {
         var newRoute = {
             linkText: 'Updated Route',
@@ -1607,12 +1607,12 @@ angular.module('demoApp')
 
 
 
-angular.module('demoApp')
-.controller('SessionSimpleCtrl', function ($scope, $window, Session) {
-    $scope.isAuthenticated = function () {
-        $window.alert(Session.isAuthenticated());
-    };
-});
+
+
+
+
+
+
 
 
 
@@ -1688,16 +1688,6 @@ angular.module('demoApp')
 });
 
 
-angular.module('demoApp')
-.controller('rxAuthSimpleCtrl', function ($scope, $window, rxAuth) {
-    $scope.hasRole = function () {
-        $window.alert('Has "superhero" Role? : ' + rxAuth.hasRole('superhero'));
-    };
-
-    $scope.isAuthenticated = function () {
-        $window.alert('Is Authenticated? : ' + rxAuth.isAuthenticated());
-    };
-});
 
 
 angular.module('demoApp')
@@ -1840,6 +1830,8 @@ angular.module('demoApp')
 
 
 
+
+
 angular.module('demoApp')
 .controller('rxLocalStorageSimpleCtrl', function ($scope, $window, rxLocalStorage) {
     $scope.setSideKick = function () {
@@ -1894,14 +1886,14 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {
+.controller('rxPermissionSimpleCtrl', function ($scope, rxSession, rxNotify) {
     rxNotify.add('Respect My Authority!!', {
         stack: 'permission',
         type: 'warning'
     });
 
     $scope.storeToken = function () {
-        rxAuth.storeToken({
+        rxSession.storeToken({
             access: {
                 user: {
                     roles: [{ name: 'test' }]
@@ -1911,7 +1903,7 @@ angular.module('demoApp')
     };
 
     $scope.clearToken = function () {
-        rxAuth.logout();
+        rxSession.logout();
     };
 });
 
@@ -1954,6 +1946,18 @@ angular.module('demoApp')
 
 
 
+
+
+angular.module('demoApp')
+.controller('rxSessionSimpleCtrl', function ($scope, $window, rxSession) {
+    $scope.hasRole = function () {
+        $window.alert('Has "superhero" Role? : ' + rxSession.hasRole('superhero'));
+    };
+
+    $scope.isAuthenticated = function () {
+        $window.alert('Is Authenticated? : ' + rxSession.isAuthenticated());
+    };
+});
 
 
 angular.module('demoApp')

@@ -859,7 +859,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "utilities",
       "shortDescription": "Builds a URL based on current environment.",
-      "keywords": "api based builds cbs cloudatlas current encore environment filter isn note object passed path rackspace renders return rxenvironmenturl simply staging tld url utilities"
+      "keywords": "api based builds cbs cloudatlas current encore encoreui environment filter isn note object passed path rackspace removed renders return rxenvironmenturl simply staging tld url utilities"
     },
     {
       "section": "api",
@@ -964,7 +964,8 @@ NG_DOCS={
       "shortName": "Auth",
       "type": "service",
       "moduleName": "utilities",
-      "keywords": "api item release removed rxauth service utilities"
+      "shortDescription": "Alias for rxAuth",
+      "keywords": "alias api item release removed rxauth rxidentity rxsession service utilities"
     },
     {
       "section": "api",
@@ -1006,7 +1007,7 @@ NG_DOCS={
       "shortName": "Identity",
       "type": "service",
       "moduleName": "utilities",
-      "keywords": "api item release removed rxauth service utilities"
+      "keywords": "api item release removed rxidentity service utilities"
     },
     {
       "section": "api",
@@ -1030,7 +1031,7 @@ NG_DOCS={
       "shortName": "Permission",
       "type": "service",
       "moduleName": "utilities",
-      "keywords": "api item release removed rxauth service utilities"
+      "keywords": "api item release removed rxsession service utilities"
     },
     {
       "section": "api",
@@ -1056,8 +1057,8 @@ NG_DOCS={
       "shortName": "rxAuth",
       "type": "service",
       "moduleName": "utilities",
-      "shortDescription": "Service which provides an entire solution for authenticating user session management",
-      "keywords": "_every_ _one_ api associated authenticated authenticates authenticating body cached callback check checks credential credentials current defined dot entire error exact exists expiration false fetch format function getbykey getroles gettoken gettokenid getuserid getusername hasallroles hasrole identity isauthenticated iscurrent json key list login loginwithjson logout logs management object older payload permissions promise return returns role roles rxauth service session solution stores storetoken success throwing tied token true ui undefined user utilities valid walks"
+      "shortDescription": "Proxy service for rxIdentity",
+      "keywords": "api item logic proxy release removed rxidentity rxsession service utilities"
     },
     {
       "section": "api",
@@ -1139,6 +1140,15 @@ NG_DOCS={
       "moduleName": "utilities",
       "shortDescription": "Set of utility functions used by rxForm to access form data in ",
       "keywords": "access api data directive fieldid form function functions getselectedoptionfortable getselectedoptionfortabset option returns rowid rxform rxformutils rxoptiontable selected service set table tableid tabset tabsetid utilities utility"
+    },
+    {
+      "section": "api",
+      "id": "utilities.service:rxIdentity",
+      "shortName": "rxIdentity",
+      "type": "service",
+      "moduleName": "utilities",
+      "shortDescription": "Service which provides authentication logic.",
+      "keywords": "api authentication body callback credential credentials error function identity json logic login loginwithjson object payload promise rxidentity service success utilities"
     },
     {
       "section": "api",
@@ -1238,6 +1248,15 @@ NG_DOCS={
       "moduleName": "utilities",
       "shortDescription": "A prototype for creating objects that can be used for filtering arrays.",
       "keywords": "api applies apply applyto array arrays assuming auto-populated automatically call called case changed configurable control counterparts create creating data defaults defined delayed directly equivalent eventid example exposes filter filteredarray filtering form implied indicate initialization initialize initialized input instance instances internal item key list listed matches method note object objects option options pagination populated properties property prototype provided public relying requirement rxselectfilter selected server-side service single source stated strict subsets three time tracks utilities var watched year"
+    },
+    {
+      "section": "api",
+      "id": "utilities.service:rxSession",
+      "shortName": "rxSession",
+      "type": "service",
+      "moduleName": "utilities",
+      "shortDescription": "Session management and utility functions.",
+      "keywords": "_every_ _one_ api associated authenticated authenticates cached callback check checks current defined dot error exact exists expiration false fetch format function functions getbykey getroles gettoken gettokenid getuserid getusername hasallroles hasrole isauthenticated iscurrent key list logout logs management older return returns role roles rxsession service session stores storetoken throwing tied token true undefined user utilities utility valid walks"
     },
     {
       "section": "api",
@@ -1352,7 +1371,7 @@ NG_DOCS={
       "shortName": "Session",
       "type": "service",
       "moduleName": "utilities",
-      "keywords": "api item release removed rxauth service utilities"
+      "keywords": "api item release removed rxsession service utilities"
     },
     {
       "section": "api",
@@ -1385,6 +1404,7 @@ NG_DOCS={
       "shortName": "TokenInterceptor",
       "type": "service",
       "moduleName": "utilities",
+      "shortDescription": "Please use rxTokenInterceptor instead.",
       "keywords": "api item release removed rxtokeninterceptor service utilities"
     },
     {

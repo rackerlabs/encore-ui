@@ -48,7 +48,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxApp",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "",
         "isLegacy": true,
         "keywords": [],
@@ -84,7 +84,7 @@ angular.module('demoApp')
         ],
         "docs": {
             "md": "<p>This component is responsible for creating the HTML necessary for a common Encore layout. It builds out the main navigation, plus breadcrumbs and page titles.</p>\n",
-            "js": "angular.module('demoApp')\n.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {\n    rxAuth.getUserId = function () {\n        return 'bert3000';\n    };\n\n    $scope.subtitle = 'With a subtitle';\n\n    $scope.changeSubtitle = function () {\n        $scope.subtitle = 'With a new subtitle at ' + Date.now();\n    };\n\n    rxVisibility.addMethod(\n        'isUserDefined',\n        function () {\n            return !_.isEmpty($rootScope.user);\n        }\n    );\n \n    $scope.changeRoutes = function () {\n        var newRoute = {\n            linkText: 'Updated Route',\n            childVisibility: 'true',\n            children: [\n                {\n                    linkText: 'New child route'\n                }\n            ]\n        };\n\n        encoreRoutes.setRouteByKey('accountLvlTools', newRoute);\n    };\n\n    // Fake navigation\n    var customApp = document.getElementById('custom-rxApp');\n    customApp.addEventListener('click', function (ev) {\n        var target = ev.target;\n\n        if (target.className.indexOf('item-link') > -1) {\n            // prevent the default jump to top\n            ev.preventDefault();\n\n            var href = target.getAttribute('href');\n\n            // update angular location (if href has a value)\n            if (!_.isEmpty(href)) {\n                // we need to prevent the window from scrolling (the demo does this)\n                // so we get the current scrollTop position\n                // and set it after the demo page has run '$routeChangeSuccess'\n                var currentScollTop = document.body.scrollTop;\n\n                $location.hash(href);\n\n                $rootScope.$apply();\n\n                $window.scrollTo(0, currentScollTop);\n            }\n        }\n    });\n\n    var searchDirective = [\n        'rx-app-search placeholder=\"Enter User\"',\n        'model=\"$root.user\"',\n        'pattern=\"/^([0-9a-zA-Z._ -]{2,})$/\"'\n    ].join(' ');\n\n    $scope.customMenu = [{\n        title: 'Example Menu',\n        children: [\n            {\n                href: 'Lvl1-1',\n                linkText: '1st Order Item'\n            },\n            {\n                linkText: '1st Order Item (w/o href) w/ Children',\n                childVisibility: [ 'isUserDefined' ],\n                childHeader: '<strong class=\"current-search\">Current User:</strong>' +\n                             '<span class=\"current-result\">{{$root.user}}</span>',\n                directive: searchDirective,\n                children: [\n                    {\n                        href: 'Lvl1-2-Lvl2-1',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [{\n                            href: 'Lvl1-2-Lvl2-1-Lvl3-1',\n                            linkText: '3rd Order Item'\n                        }]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-2',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-1',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-2',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-3',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-4',\n                                linkText: '3rd Order Item'\n                            }\n                        ]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-3',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            },\n            {\n                href: 'Lvl1-3',\n                linkText: '1st Order Item w/ Children',\n                children: [\n                    {\n                        href: 'Lvl1-3-Lvl2-1',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            }\n        ]\n    }];\n\n    // Load docs homepage ('Overview')\n    // NOTE: Trailing forward slash is not an accident.\n    // This is required to get Firefox to load the iframe.\n    //\n    // The resulting url should have double forward slashes `//`.\n    $scope.embedUrl = $location.absUrl().split('#')[0] + '/';\n});\n",
+            "js": "angular.module('demoApp')\n.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxSession) {\n    rxSession.getUserId = function () {\n        return 'bert3000';\n    };\n\n    $scope.subtitle = 'With a subtitle';\n\n    $scope.changeSubtitle = function () {\n        $scope.subtitle = 'With a new subtitle at ' + Date.now();\n    };\n\n    rxVisibility.addMethod(\n        'isUserDefined',\n        function () {\n            return !_.isEmpty($rootScope.user);\n        }\n    );\n\n    $scope.changeRoutes = function () {\n        var newRoute = {\n            linkText: 'Updated Route',\n            childVisibility: 'true',\n            children: [\n                {\n                    linkText: 'New child route'\n                }\n            ]\n        };\n\n        encoreRoutes.setRouteByKey('accountLvlTools', newRoute);\n    };\n\n    // Fake navigation\n    var customApp = document.getElementById('custom-rxApp');\n    customApp.addEventListener('click', function (ev) {\n        var target = ev.target;\n\n        if (target.className.indexOf('item-link') > -1) {\n            // prevent the default jump to top\n            ev.preventDefault();\n\n            var href = target.getAttribute('href');\n\n            // update angular location (if href has a value)\n            if (!_.isEmpty(href)) {\n                // we need to prevent the window from scrolling (the demo does this)\n                // so we get the current scrollTop position\n                // and set it after the demo page has run '$routeChangeSuccess'\n                var currentScollTop = document.body.scrollTop;\n\n                $location.hash(href);\n\n                $rootScope.$apply();\n\n                $window.scrollTo(0, currentScollTop);\n            }\n        }\n    });\n\n    var searchDirective = [\n        'rx-app-search placeholder=\"Enter User\"',\n        'model=\"$root.user\"',\n        'pattern=\"/^([0-9a-zA-Z._ -]{2,})$/\"'\n    ].join(' ');\n\n    $scope.customMenu = [{\n        title: 'Example Menu',\n        children: [\n            {\n                href: 'Lvl1-1',\n                linkText: '1st Order Item'\n            },\n            {\n                linkText: '1st Order Item (w/o href) w/ Children',\n                childVisibility: [ 'isUserDefined' ],\n                childHeader: '<strong class=\"current-search\">Current User:</strong>' +\n                             '<span class=\"current-result\">{{$root.user}}</span>',\n                directive: searchDirective,\n                children: [\n                    {\n                        href: 'Lvl1-2-Lvl2-1',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [{\n                            href: 'Lvl1-2-Lvl2-1-Lvl3-1',\n                            linkText: '3rd Order Item'\n                        }]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-2',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-1',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-2',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-3',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-4',\n                                linkText: '3rd Order Item'\n                            }\n                        ]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-3',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            },\n            {\n                href: 'Lvl1-3',\n                linkText: '1st Order Item w/ Children',\n                children: [\n                    {\n                        href: 'Lvl1-3-Lvl2-1',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            }\n        ]\n    }];\n\n    // Load docs homepage ('Overview')\n    // NOTE: Trailing forward slash is not an accident.\n    // This is required to get Firefox to load the iframe.\n    //\n    // The resulting url should have double forward slashes `//`.\n    $scope.embedUrl = $location.absUrl().split('#')[0] + '/';\n});\n",
             "html": "<div ng-controller=\"rxAppCtrl\">\n  <h3>Standard rxApp</h3>\n  <rx-app id=\"standard-rxApp\">\n    <rx-page title=\"'Standard Page Title'\">\n      <p class=\"clear\">This is my page content</p>\n      <button ng-click=\"changeRoutes()\" class=\"button\">Change Routes</button>\n    </rx-page>\n  </rx-app>\n\n  <h3>Customized rxApp (collapsible)</h3>\n  <rx-app collapsible-nav=\"true\" site-title=\"My App\" id=\"custom-rxApp\" menu=\"customMenu\" new-instance=\"true\" hide-feedback=\"true\">\n    <rx-page\n      unsafe-html-title=\"'Customized Page <a href=&quot;http://rackspace.com&quot;>Title</a>'\"\n      subtitle=\"subtitle\"\n      status=\"alpha\"\n      account-number=\"12345\">\n\n      <p class=\"clear\">Click a link in the menu to see the active state change</p>\n      <p>Click the toggle to hide the menu</p>\n      <button ng-click=\"changeSubtitle()\" class=\"changeSubtitle button\">Change Subtitle</button>\n    </rx-page>\n  </rx-app>\n\n  <h3>Embedded rxApp</h3>\n  <p>\n    rxApp is smart enough to detect if it is loaded in an iframe and will hide\n    the left nav.\n  </p>\n  <iframe id=\"embedded-app\" ng-src=\"{{embedUrl}}\"></iframe>\n</div>\n\n<!--\nYou'll likely want to implement your HTML in your index.html file as:\n<div ng-app=\"sampleApp\">\n    <rx-app ng-view></rx-app>\n</div>\n\nAnd the template for each view/page will be something like:\n<rx-page title=\"'Example Page'\">\n    Example content\n</rx-page>\n-->\n",
             "less": ""
         }
@@ -117,7 +117,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "Account Info",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Responsible for drawing an account info box.",
         "api": "directive:rxAccountInfo",
         "keywords": [
@@ -181,7 +181,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "Breadcrumbs",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Displays navigation breadcrumbs on a page",
         "api": "directive:rxBreadcrumbs",
         "keywords": [
@@ -933,8 +933,34 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "Auth",
+        "stability": "deprecated",
+        "description": "TBD",
+        "api": "service:rxAuth",
+        "keywords": [
+            "Auth"
+        ],
+        "name": "Auth",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/Auth/scripts/Auth.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use:\n  <ul class=\"list\">\n    <li><a href=\"#/utilities/rxIdentity\">rxIdentity</a> for authentication</li>\n    <li><a href=\"#/utilities/rxSession\">rxSession</a> for permission and session management</li>\n  </ul>\n</p>\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "Identity",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "This is a component designed to aid interaction with Rackspace's Identity API.",
         "api": "service:Identity",
         "keywords": [],
@@ -952,7 +978,7 @@ angular.module('demoApp')
         "docs": {
             "md": "",
             "js": "",
-            "html": "<p>\n  This is a component designed to aid interaction with Rackspace's Identity API.\n</p>\n",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use <a href=\"#/utilities/rxIdentity\">rxIdentity</a> instead.\n</p>\n",
             "less": ""
         }
     },
@@ -982,7 +1008,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "Permission",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Simple service for accessing roles and permissions for a user.",
         "api": "service:Permission",
         "keywords": [],
@@ -1000,13 +1026,13 @@ angular.module('demoApp')
         "docs": {
             "md": "",
             "js": "",
-            "html": "<p>\n  Simple service for accessing roles and permissions for a user.\n</p>\n",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use <a href=\"#/utilities/rxSession\">rxSession</a> instead.\n</p>\n",
             "less": ""
         }
     },
     {
         "displayName": "Session",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Manages user session",
         "api": "service:Session",
         "keywords": [],
@@ -1023,14 +1049,14 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('SessionSimpleCtrl', function ($scope, $window, Session) {\n    $scope.isAuthenticated = function () {\n        $window.alert(Session.isAuthenticated());\n    };\n});\n",
-            "html": "<p>\n  Manages a user session.\n</p>\n\n<rx-example name=\"Session.simple\"></rx-example>",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use <a href=\"#/utilities/rxSession\">rxSession</a> instead.\n</p>\n",
             "less": ""
         }
     },
     {
         "displayName": "StatusUtil",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Manipulates required references to $scope input for proper notification functionality.",
         "api": "service:StatusUtil",
         "keywords": [],
@@ -1049,6 +1075,54 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Manipulates required references to <code>$scope</code> input for proper notification functionality.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "TokenInterceptor",
+        "stability": "deprecated",
+        "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
+        "api": "service:TokenInterceptor",
+        "keywords": [],
+        "name": "TokenInterceptor",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/TokenInterceptor/scripts/TokenInterceptor.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use\n  <a href=\"#/utilities/rxTokenInterceptor\">rxTokenInterceptor</a> instead.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "UnauthorizedInterceptor",
+        "stability": "deprecated",
+        "description": "Redirects users to the login page, when user authentication fails during a system service request.",
+        "api": "service:UnauthorizedInterceptor",
+        "keywords": [],
+        "name": "UnauthorizedInterceptor",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/UnauthorizedInterceptor/scripts/UnauthorizedInterceptor.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use\n  <a href=\"#/utilities/rxUnauthorizedInterceptor\">rxUnauthorizedInterceptor</a> instead.\n</p>\n",
             "less": ""
         }
     },
@@ -1104,7 +1178,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "hotkeys",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "",
         "api": "service:hotkeys",
         "keywords": [],
@@ -1128,7 +1202,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "routesCdnPath",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "",
         "api": "service:routesCdnPath",
         "keywords": [],
@@ -1254,11 +1328,13 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxAuth",
-        "stability": "stable",
-        "description": "Provides logic for authenticating, validating permissions, and managing sessions.",
+        "stability": "deprecated",
+        "description": "Proxy service for rxIdentity and rxSession",
         "api": "service:rxAuth",
         "keywords": [
-            "Auth"
+            "Auth",
+            "rxIdentity",
+            "rxSession"
         ],
         "name": "rxAuth",
         "moduleName": "'encore.ui.utilities'",
@@ -1273,8 +1349,8 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxAuthSimpleCtrl', function ($scope, $window, rxAuth) {\n    $scope.hasRole = function () {\n        $window.alert('Has \"superhero\" Role? : ' + rxAuth.hasRole('superhero'));\n    };\n\n    $scope.isAuthenticated = function () {\n        $window.alert('Is Authenticated? : ' + rxAuth.isAuthenticated());\n    };\n});\n",
-            "html": "<p>\n  Provides logic for authenticating, validating permissions, and managing sessions.\n</p>\n\n<rx-example name=\"rxAuth.simple\"></rx-example>",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use:\n  <ul class=\"list\">\n    <li><a href=\"#/utilities/rxIdentity\">rxIdentity</a> for authentication</li>\n    <li><a href=\"#/utilities/rxSession\">rxSession</a> for permission and session management</li>\n  </ul>\n</p>\n",
             "less": ""
         }
     },
@@ -1304,7 +1380,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxBreadcrumbsSvc",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "",
         "api": "service:rxBreadcrumbsSvc",
         "keywords": [],
@@ -1660,7 +1736,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxEnvironmentUrl",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Builds a URL based on current environment.",
         "api": "filter:rxEnvironmentUrl",
         "keywords": [],
@@ -1839,7 +1915,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxFormUtils",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Set of utility functions used by rxForm to access form data",
         "api": "service:rxFormUtils",
         "keywords": [],
@@ -1858,6 +1934,34 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Set of utility functions used by rxForm to access form data.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxIdentity",
+        "stability": "stable",
+        "description": "Provides authentication logic",
+        "api": "service:rxIdentity",
+        "keywords": [
+            "Identity",
+            "rxAuth",
+            "Auth"
+        ],
+        "name": "rxIdentity",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxIdentity/scripts/rxIdentity.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  This is a component designed to aid interaction with Rackspace's Identity API.\n</p>\n",
             "less": ""
         }
     },
@@ -2245,8 +2349,8 @@ angular.module('demoApp')
         ],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        rxAuth.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        rxAuth.logout();\n    };\n});\n",
-            "html": "<p>\n  The rxPermission utility provides functionality to perform checks against existing user permissions in EncoreUI.\n</p>\n\n<h3><rx-permalink>rxPermission</rx-permalink></h3>\n<rx-example name=\"rxPermission.simple\"></rx-example>\n",
+            "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, rxSession, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        rxSession.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        rxSession.logout();\n    };\n});\n",
+            "html": "<p>\n  The rxPermission utility directive provides functionality to perform checks\n  against existing user permissions.\n</p>\n\n<rx-example name=\"rxPermission.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -2345,6 +2449,33 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  A prototype for creating objects that can be used for filtering arrays.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxSession",
+        "stability": "stable",
+        "description": "Manages user session",
+        "api": "service:rxSession",
+        "keywords": [
+            "Session",
+            "rxAuth"
+        ],
+        "name": "rxSession",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxSession/scripts/rxSession.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxSessionSimpleCtrl', function ($scope, $window, rxSession) {\n    $scope.hasRole = function () {\n        $window.alert('Has \"superhero\" Role? : ' + rxSession.hasRole('superhero'));\n    };\n\n    $scope.isAuthenticated = function () {\n        $window.alert('Is Authenticated? : ' + rxSession.isAuthenticated());\n    };\n});\n",
+            "html": "<p>\n  Provides logic for validating permissions and managing sessions.\n</p>\n\n<rx-example name=\"rxSession.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -2497,7 +2628,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxStatusTags",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "Primarily used for applications to specify custom status tags.",
         "api": "service:rxStatusTags",
         "keywords": [],
