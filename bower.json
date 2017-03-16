@@ -1,6 +1,6 @@
 {
   "name": "encore-ui",
-  "version": "1.50.9-0",
+  "version": "1.50.9",
   "main": [
     "./encore-ui-tpls.js",
     "./encore-ui.css"

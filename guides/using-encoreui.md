@@ -24,13 +24,13 @@ To use the CDN in your app, do the following:
 2. Include the EncoreUI CSS file in the `<head>` of your index.html (before the CSS for your app):
 
     ```
-    <link rel="stylesheet" href="https://95c7050854423f809e66-6999ba0e7a4f47d417515fb3f08fa9b8.ssl.cf1.rackcdn.com/encore-ui-1.50.9-0.min.css">
+    <link rel="stylesheet" href="https://95c7050854423f809e66-6999ba0e7a4f47d417515fb3f08fa9b8.ssl.cf1.rackcdn.com/encore-ui-1.50.9.min.css">
     ```
 
 3. Include the EncoreUI JS file (**Dependencies must be included before this line**):
 
     ```
-    <script src="https://95c7050854423f809e66-6999ba0e7a4f47d417515fb3f08fa9b8.ssl.cf1.rackcdn.com/encore-ui-tpls-1.50.9-0.min.js"></script>
+    <script src="https://95c7050854423f809e66-6999ba0e7a4f47d417515fb3f08fa9b8.ssl.cf1.rackcdn.com/encore-ui-tpls-1.50.9.min.js"></script>
     ```
 
 4. Add 'encore.ui' as a dependency in your app.js module declaration. For example:
