@@ -1,25 +1,20 @@
 angular.module('encore.ui.utilities')
 /**
+ * @deprecated
+ * Please use rxTokenInterceptor instead. This item will be removed on the 4.0.0 release.
  * @ngdoc service
- * @name utilities.service:rxTokenInterceptor
+ * @name utilities.service:TokenInterceptor
  * @description
- * Simple $http injector which will intercept http request and inject the
- * Rackspace Identity's token into every http request.
- *
- * @requires utilities.service:rxSession
- *
- * @example
- * <pre>
- * angular.module('encoreApp', ['encore.ui'])
- *     .config(function ($httpProvider) {
- *         $httpProvider.interceptors.push('rxTokenInterceptor');
- *     });
- * </pre>
+ * Please use {@link utilities.service:rxTokenInterceptor rxTokenInterceptor} instead.
  */
-.provider('rxTokenInterceptor', function () {
+.provider('TokenInterceptor', function () {
     var exclusionList = this.exclusionList = [ 'rackcdn.com' ];
 
     this.$get = function (rxSession, $document) {
+        console.warn (
+            'DEPRECATED: TokenInterceptor - Please use rxTokenInterceptor. ' +
+            'TokenInterceptor will be removed in EncoreUI 4.0.0'
+        );
         var url = $document[0].createElement('a');
         return {
             request: function (config) {

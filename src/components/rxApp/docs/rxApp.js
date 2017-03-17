@@ -1,6 +1,6 @@
 angular.module('demoApp')
-.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxAuth) {
-    rxAuth.getUserId = function () {
+.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxSession) {
+    rxSession.getUserId = function () {
         return 'bert3000';
     };
 
@@ -16,7 +16,7 @@ angular.module('demoApp')
             return !_.isEmpty($rootScope.user);
         }
     );
- 
+
     $scope.changeRoutes = function () {
         var newRoute = {
             linkText: 'Updated Route',

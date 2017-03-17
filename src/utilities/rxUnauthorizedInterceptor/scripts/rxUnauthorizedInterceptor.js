@@ -8,7 +8,7 @@ angular.module('encore.ui.utilities')
  *
  * @requires $q
  * @requires @window
- * @requires utilities.service:rxAuth
+ * @requires utilities.service:rxSession
  *
  * @example
  * <pre>
@@ -18,7 +18,7 @@ angular.module('encore.ui.utilities')
  *     });
  * </pre>
  */
-.factory('rxUnauthorizedInterceptor', function ($q, $window, rxAuth) {
+.factory('rxUnauthorizedInterceptor', function ($q, $window, rxSession) {
     var svc = {
         redirectPath: function () {
             // This brings in the entire relative URI (including the path
@@ -34,7 +34,7 @@ angular.module('encore.ui.utilities')
         },
         responseError: function (response) {
             if (response.status === 401) {
-                rxAuth.logout(); // Logs out user by removing token
+                rxSession.logout(); // Logs out user by removing token
                 svc.redirect();
             }
 
@@ -43,21 +43,4 @@ angular.module('encore.ui.utilities')
     };
 
     return svc;
-})
-
-/**
- * @deprecated
- * Please use rxUnauthorizedInterceptor instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:UnauthorizedInterceptor
- * @requires utilities.service:rxUnauthorizedInterceptor
- */
-.service('UnauthorizedInterceptor', function (rxUnauthorizedInterceptor, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn (
-            'DEPRECATED: UnauthorizedInterceptor - Please use rxUnauthorizedInterceptor. ' +
-            'UnauthorizedInterceptor will be removed in EncoreUI 4.0.0'
-        );
-    }
-    return rxUnauthorizedInterceptor;
 });
