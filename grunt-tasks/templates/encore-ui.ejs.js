@@ -1,5 +1,4 @@
 angular.module('encore.ui', [
-    'cfp.hotkeys',
     'ui.bootstrap',
     'encore.ui.tpls',
     'ngMessages',
