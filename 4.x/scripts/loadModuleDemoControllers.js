@@ -1139,6 +1139,12 @@ angular.module('demoApp')
 
 
 
+
+
+
+
+
+
 angular.module('demoApp')
 .controller('hotkeysVolumeCtrl', function ($scope, hotkeys) {
     $scope.volume = 5;
@@ -1202,16 +1208,6 @@ angular.module('demoApp')
 });
 
 
-angular.module('demoApp')
-.controller('rxAuthSimpleCtrl', function ($scope, $window, rxAuth) {
-    $scope.hasRole = function () {
-        $window.alert('Has "superhero" Role? : ' + rxAuth.hasRole('superhero'));
-    };
-
-    $scope.isAuthenticated = function () {
-        $window.alert('Is Authenticated? : ' + rxAuth.isAuthenticated());
-    };
-});
 
 
 angular.module('demoApp')
@@ -1327,8 +1323,6 @@ angular.module('demoApp')
 
 
 
-
-
 angular.module('demoApp')
 .controller('rxErrorFormatterSimpleCtrl', function ($scope, rxErrorFormatter) {
     $scope.setErrorMsg = function (msg) {
@@ -1336,6 +1330,8 @@ angular.module('demoApp')
         $scope.errorMsg = rxErrorFormatter.buildErrorMsg('Error: ${message}', error);
     };
 });
+
+
 
 
 
@@ -1404,14 +1400,14 @@ angular.module('demoApp')
 
 
 angular.module('demoApp')
-.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {
+.controller('rxPermissionSimpleCtrl', function ($scope, rxSession, rxNotify) {
     rxNotify.add('Respect My Authority!!', {
         stack: 'permission',
         type: 'warning'
     });
 
     $scope.storeToken = function () {
-        rxAuth.storeToken({
+        rxSession.storeToken({
             access: {
                 user: {
                     roles: [{ name: 'test' }]
@@ -1421,7 +1417,7 @@ angular.module('demoApp')
     };
 
     $scope.clearToken = function () {
-        rxAuth.logout();
+        rxSession.logout();
     };
 });
 
@@ -1464,6 +1460,18 @@ angular.module('demoApp')
 
 
 
+
+
+angular.module('demoApp')
+.controller('rxSessionSimpleCtrl', function ($scope, $window, rxSession) {
+    $scope.hasRole = function () {
+        $window.alert('Has "superhero" Role? : ' + rxSession.hasRole('superhero'));
+    };
+
+    $scope.isAuthenticated = function () {
+        $window.alert('Is Authenticated? : ' + rxSession.isAuthenticated());
+    };
+});
 
 
 angular.module('demoApp')

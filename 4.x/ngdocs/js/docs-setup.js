@@ -670,15 +670,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "utilities.filter:rxEnvironmentUrl",
-      "shortName": "rxEnvironmentUrl",
-      "type": "filter",
-      "moduleName": "utilities",
-      "shortDescription": "Builds a URL based on current environment.",
-      "keywords": "api based builds cbs cloudatlas current encore encoreui environment filter isn note object passed path rackspace removed renders return rxenvironmenturl simply staging tld url utilities"
-    },
-    {
-      "section": "api",
       "id": "utilities.filter:rxMonth",
       "shortName": "rxMonth",
       "type": "filter",
@@ -760,6 +751,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "utilities.service:Auth",
+      "shortName": "Auth",
+      "type": "service",
+      "moduleName": "utilities",
+      "shortDescription": "Alias for rxAuth",
+      "keywords": "alias api item release removed rxauth rxidentity rxsession service utilities"
+    },
+    {
+      "section": "api",
       "id": "utilities.service:Environment",
       "shortName": "Environment",
       "type": "service",
@@ -781,8 +781,8 @@ NG_DOCS={
       "shortName": "rxAuth",
       "type": "service",
       "moduleName": "utilities",
-      "shortDescription": "Service which provides an entire solution for authenticating user session management",
-      "keywords": "_every_ _one_ api associated authenticated authenticates authenticating body cached callback check checks credential credentials current defined dot entire error exact exists expiration false fetch format function getbykey getroles gettoken gettokenid getuserid getusername hasallroles hasrole identity isauthenticated iscurrent json key list login loginwithjson logout logs management object older payload permissions promise return returns role roles rxauth service session solution stores storetoken success throwing tied token true ui undefined user utilities valid walks"
+      "shortDescription": "Proxy service for rxIdentity",
+      "keywords": "api item logic proxy release removed rxidentity rxsession service utilities"
     },
     {
       "section": "api",
@@ -846,6 +846,15 @@ NG_DOCS={
       "moduleName": "utilities",
       "shortDescription": "rxFeedbackSvc service supports rxFeedback directive functionality.  A custom endpoint may be set to override",
       "keywords": "api custom default directive endpoint functionality override rxfeedback rxfeedbacksvc service set supports utilities"
+    },
+    {
+      "section": "api",
+      "id": "utilities.service:rxIdentity",
+      "shortName": "rxIdentity",
+      "type": "service",
+      "moduleName": "utilities",
+      "shortDescription": "Service which provides authentication logic.",
+      "keywords": "api authentication body callback credential credentials error function identity json logic login loginwithjson object payload promise rxidentity service success utilities"
     },
     {
       "section": "api",
@@ -948,6 +957,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "utilities.service:rxSession",
+      "shortName": "rxSession",
+      "type": "service",
+      "moduleName": "utilities",
+      "shortDescription": "Session management and utility functions.",
+      "keywords": "_every_ _one_ api associated authenticated authenticates cached callback check checks current defined dot error exact exists expiration false fetch format function functions getbykey getroles gettoken gettokenid getuserid getusername hasallroles hasrole isauthenticated iscurrent key list logout logs management older return returns role roles rxsession service session stores storetoken throwing tied token true undefined user utilities utility valid walks"
+    },
+    {
+      "section": "api",
       "id": "utilities.service:rxSessionStorage",
       "shortName": "rxSessionStorage",
       "type": "service",
@@ -1017,6 +1035,23 @@ NG_DOCS={
       "moduleName": "utilities",
       "shortDescription": "Set of utility functions to break apart/compare URLs.",
       "keywords": "apart api break functions service set urls utilities utility"
+    },
+    {
+      "section": "api",
+      "id": "utilities.service:TokenInterceptor",
+      "shortName": "TokenInterceptor",
+      "type": "service",
+      "moduleName": "utilities",
+      "shortDescription": "Please use rxTokenInterceptor instead.",
+      "keywords": "api item release removed rxtokeninterceptor service utilities"
+    },
+    {
+      "section": "api",
+      "id": "utilities.service:UnauthorizedInterceptor",
+      "shortName": "UnauthorizedInterceptor",
+      "type": "service",
+      "moduleName": "utilities",
+      "keywords": "api item release removed rxunauthorizedinterceptor service utilities"
     },
     {
       "section": "api",

@@ -1,33 +1,16 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/Auth/scripts/Auth.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/9544378/src/utilities/Auth/scripts/Auth.js#L28" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Auth</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/Auth/scripts/Auth.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/22a9184/src/utilities/Auth/scripts/Auth.js#L12" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Auth</code>
 <div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
 </span>
 </div>
 </h1>
-<div><h2 id="description">Description</h2>
-<div class="description"><div class="utilities-service-page utilities-service-auth-page"><p>Service which provides an entire solution for authenticating, user session management
-and permissions in the UI.  The Auth service is a wrapper for the Identity, Session and
-Permission services.  These services were broken into smaller components to facilitate
-customization and re-use.</p>
+<div><fieldset class="deprecated"><legend>Deprecated API</legend>
+Please use rxIdentity or rxSession instead.
+This item will be removed on the 4.0.0 release.</fieldset>
+<h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-auth-page"><p>Alias for <a href="#/api/utilities.service:rxAuth">rxAuth</a></p>
 </div></div>
 <h2 id="dependencies">Dependencies</h2>
-<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:Identity">Identity</a></code>
-</li>
-<li><code ng:non-bindable=""><a href="#/api/utilities.service:Session">Session</a></code>
-</li>
-<li><code ng:non-bindable=""><a href="#/api/utilities.service:Permission">Permission</a></code>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:rxAuth">rxAuth</a></code>
 </li>
 </ul>
-<h2 id="example">Example</h2>
-<div class="example"><div class="utilities-service-page utilities-service-auth-page"><pre class="prettyprint linenums">
-Auth.loginWithJSON(json); // Returns a promise
-Auth.login({username: '', password: '', successCallback, errorCallback}); // Returns a promise
-Auth.getToken(); // Returns the stored token
-Auth.storeToken(token); // Stores token
-Auth.logout(); // Logs user off
-Auth.isCurrent(); // Returns true/false if the token has expired.
-Auth.isAuthenticated(); // Returns true/false if the user token is valid.
-Auth.getRoles() // Returns an array of roles for a user
-Auth.hasRole(role) // Returns true/false if user has specified role
-</pre>
-</div></div>
 </div>

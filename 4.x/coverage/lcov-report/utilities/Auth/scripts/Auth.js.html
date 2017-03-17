@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">utilities/Auth/scripts/Auth.js</span></h1>
     <h2>
-        Statements: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">85.71% <small>(6 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">50% <small>(1 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">100% <small>(1 / 1)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">85.71% <small>(6 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/Auth/scripts/</a> &#187; Auth.js</div>
@@ -50,34 +50,7 @@
 23
 24
 25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+26</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -90,8 +63,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9</span>
 <span class="cline-any cline-yes">9</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -99,37 +77,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
 /**
+ * @deprecated
+ * Please use rxIdentity or rxSession instead.
+ * This item will be removed on the 4.0.0 release.
+ *
  * @ngdoc service
  * @name utilities.service:Auth
- * @description
- * Service which provides an entire solution for authenticating, user session management
- * and permissions in the UI.  The Auth service is a wrapper for the Identity, Session and
- * Permission services.  These services were broken into smaller components to facilitate
- * customization and re-use.
- *
- * @requires utilities.service:Identity
- * @requires utilities.service:Session
- * @requires utilities.service:Permission
- *
- * @example
- * &lt;pre&gt;
- * Auth.loginWithJSON(json); // Returns a promise
- * Auth.login({username: '', password: '', successCallback, errorCallback}); // Returns a promise
- * Auth.getToken(); // Returns the stored token
- * Auth.storeToken(token); // Stores token
- * Auth.logout(); // Logs user off
- * Auth.isCurrent(); // Returns true/false if the token has expired.
- * Auth.isAuthenticated(); // Returns true/false if the user token is valid.
- * Auth.getRoles() // Returns an array of roles for a user
- * Auth.hasRole(role) // Returns true/false if user has specified role
- * &lt;/pre&gt;
+ * @requires utilities.service:rxAuth
+ * @description Alias for {@link utilities.service:rxAuth rxAuth}
  */
-.factory('Auth', function (Identity, Session, Permission) {
+.service('Auth', function (rxIdentity, rxSession, suppressDeprecationWarnings) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!suppressDeprecationWarnings) {
+<span class="cstat-no" title="statement not covered" >        console.warn (</span>
+            'DEPRECATED: Auth - Please use rxIdentity or rxSession. ' +
+            'Auth will be removed in EncoreUI 4.0.0'
+        );
+    }
     var svc = {};
 &nbsp;
-    _.assign(svc, Identity);
-    _.assign(svc, Session);
-    _.assign(svc, Permission);
+    _.assign(svc, rxIdentity);
+    _.assign(svc, rxSession);
 &nbsp;
     return svc;
 });
@@ -138,7 +105,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 15 2016 14:19:38 GMT-0600 (CST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Mar 17 2017 16:27:57 GMT-0500 (CDT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

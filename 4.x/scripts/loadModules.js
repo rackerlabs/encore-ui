@@ -800,6 +800,32 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "Auth",
+        "stability": "deprecated",
+        "description": "TBD",
+        "api": "service:rxAuth",
+        "keywords": [
+            "Auth"
+        ],
+        "name": "Auth",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/Auth/scripts/Auth.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use:\n  <ul class=\"list\">\n    <li><a href=\"#/utilities/rxIdentity\">rxIdentity</a> for authentication</li>\n    <li><a href=\"#/utilities/rxSession\">rxSession</a> for permission and session management</li>\n  </ul>\n</p>\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "PaginatedItemsSummary",
         "stability": "stable",
         "description": "Provides a formatted string with the current range of items in total items.",
@@ -820,6 +846,54 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Provides a formatted string with the current range of items in total items, for example \"26-50 of 500 items\".\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "TokenInterceptor",
+        "stability": "deprecated",
+        "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
+        "api": "service:TokenInterceptor",
+        "keywords": [],
+        "name": "TokenInterceptor",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/TokenInterceptor/scripts/TokenInterceptor.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use\n  <a href=\"#/utilities/rxTokenInterceptor\">rxTokenInterceptor</a> instead.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "UnauthorizedInterceptor",
+        "stability": "deprecated",
+        "description": "Redirects users to the login page, when user authentication fails during a system service request.",
+        "api": "service:UnauthorizedInterceptor",
+        "keywords": [],
+        "name": "UnauthorizedInterceptor",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/UnauthorizedInterceptor/scripts/UnauthorizedInterceptor.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use\n  <a href=\"#/utilities/rxUnauthorizedInterceptor\">rxUnauthorizedInterceptor</a> instead.\n</p>\n",
             "less": ""
         }
     },
@@ -851,7 +925,7 @@ angular.module('demoApp')
     },
     {
         "displayName": "hotkeys",
-        "stability": "stable",
+        "stability": "deprecated",
         "description": "",
         "api": "service:hotkeys",
         "keywords": [],
@@ -953,11 +1027,13 @@ angular.module('demoApp')
     },
     {
         "displayName": "rxAuth",
-        "stability": "stable",
-        "description": "Provides logic for authenticating, validating permissions, and managing sessions.",
+        "stability": "deprecated",
+        "description": "Proxy service for rxIdentity and rxSession",
         "api": "service:rxAuth",
         "keywords": [
-            "Auth"
+            "Auth",
+            "rxIdentity",
+            "rxSession"
         ],
         "name": "rxAuth",
         "moduleName": "'encore.ui.utilities'",
@@ -972,8 +1048,8 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxAuthSimpleCtrl', function ($scope, $window, rxAuth) {\n    $scope.hasRole = function () {\n        $window.alert('Has \"superhero\" Role? : ' + rxAuth.hasRole('superhero'));\n    };\n\n    $scope.isAuthenticated = function () {\n        $window.alert('Is Authenticated? : ' + rxAuth.isAuthenticated());\n    };\n});\n",
-            "html": "<p>\n  Provides logic for authenticating, validating permissions, and managing sessions.\n</p>\n\n<rx-example name=\"rxAuth.simple\"></rx-example>",
+            "js": "",
+            "html": "<p>\n  <strong>Deprecated:</strong> Please use:\n  <ul class=\"list\">\n    <li><a href=\"#/utilities/rxIdentity\">rxIdentity</a> for authentication</li>\n    <li><a href=\"#/utilities/rxSession\">rxSession</a> for permission and session management</li>\n  </ul>\n</p>\n",
             "less": ""
         }
     },
@@ -1334,30 +1410,6 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "rxEnvironmentUrl",
-        "stability": "stable",
-        "description": "Builds a URL based on current environment.",
-        "api": "filter:rxEnvironmentUrl",
-        "keywords": [],
-        "name": "rxEnvironmentUrl",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/rxEnvironmentUrl/scripts/rxEnvironmentUrl.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  Builds a URL based on current environment.\n</p>\n\n<rx-example name=\"rxEnvironmentUrl.simple\"></rx-example>\n",
-            "less": ""
-        }
-    },
-    {
         "displayName": "rxErrorFormatter",
         "stability": "stable",
         "description": "Provides a helper method to parse and format error objects.",
@@ -1509,6 +1561,34 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Provides default feedback types.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxIdentity",
+        "stability": "stable",
+        "description": "Provides authentication logic",
+        "api": "service:rxIdentity",
+        "keywords": [
+            "Identity",
+            "rxAuth",
+            "Auth"
+        ],
+        "name": "rxIdentity",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxIdentity/scripts/rxIdentity.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  This is a component designed to aid interaction with Rackspace's Identity API.\n</p>\n",
             "less": ""
         }
     },
@@ -1896,8 +1976,8 @@ angular.module('demoApp')
         ],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        rxAuth.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        rxAuth.logout();\n    };\n});\n",
-            "html": "<p>\n  The rxPermission utility provides functionality to perform checks against existing user permissions in EncoreUI.\n</p>\n\n<h3><rx-permalink>rxPermission</rx-permalink></h3>\n<rx-example name=\"rxPermission.simple\"></rx-example>\n",
+            "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, rxSession, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        rxSession.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        rxSession.logout();\n    };\n});\n",
+            "html": "<p>\n  The rxPermission utility directive provides functionality to perform checks\n  against existing user permissions.\n</p>\n\n<rx-example name=\"rxPermission.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -1996,6 +2076,33 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  A prototype for creating objects that can be used for filtering arrays.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxSession",
+        "stability": "stable",
+        "description": "Manages user session",
+        "api": "service:rxSession",
+        "keywords": [
+            "Session",
+            "rxAuth"
+        ],
+        "name": "rxSession",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxSession/scripts/rxSession.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('rxSessionSimpleCtrl', function ($scope, $window, rxSession) {\n    $scope.hasRole = function () {\n        $window.alert('Has \"superhero\" Role? : ' + rxSession.hasRole('superhero'));\n    };\n\n    $scope.isAuthenticated = function () {\n        $window.alert('Is Authenticated? : ' + rxSession.isAuthenticated());\n    };\n});\n",
+            "html": "<p>\n  Provides logic for validating permissions and managing sessions.\n</p>\n\n<rx-example name=\"rxSession.simple\"></rx-example>\n",
             "less": ""
         }
     },

@@ -1,92 +1,19 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxAuth/scripts/rxAuth.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L9" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAuth</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxAuth/scripts/rxAuth.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/22a9184/src/utilities/rxAuth/scripts/rxAuth.js#L14" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAuth</code>
 <div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
 </span>
 </div>
 </h1>
-<div><h2 id="description">Description</h2>
-<div class="description"><div class="utilities-service-page utilities-service-rxauth-page"><p>Service which provides an entire solution for authenticating user session management
-and permissions in the UI.</p>
+<div><fieldset class="deprecated"><legend>Deprecated API</legend>
+Please use rxIdentity or rxSession instead.
+This item will be removed on the 4.0.0 release.</fieldset>
+<h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxauth-page"><p>Proxy service for <a href="#/api/utilities.service:rxIdentity">rxIdentity</a>
+and <a href="#/api/utilities.service:rxSession">rxSession</a> logic.</p>
 </div></div>
-<div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L70" class="view-source icon-eye-open"> </a><h3 id="methods_getbykey">getByKey(key)</h3>
-<div class="getbykey"><div class="rxauth-getbykey-page"><p>Dot walks the token without throwing an error.
-If key exists, returns value otherwise returns undefined.</p>
-</div><h5 id="methods_getbykey_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>key</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="rxauth-getbykey-page"><p>callback</p>
-</div></td></tr></tbody></table><h5 id="methods_getbykey_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxauth-getbykey-page"><p>Key value</p>
-</div></td></tr></table></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:rxIdentity">rxIdentity</a></code>
 </li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L217" class="view-source icon-eye-open"> </a><h3 id="methods_getroles">getRoles()</h3>
-<div class="getroles"><div class="rxauth-getroles-page"><p>Fetch all the roles tied to the user (in the exact format available in their rxAuth token).</p>
-</div><h5 id="methods_getroles_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="rxauth-getroles-page"><p>List of all roles associated to the user.</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L93" class="view-source icon-eye-open"> </a><h3 id="methods_gettoken">getToken()</h3>
-<div class="gettoken"><div class="rxauth-gettoken-page"><p>If cached token exists, return value. Otherwise return undefined.</p>
-</div><h5 id="methods_gettoken_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String|Undefined</a></td><td><div class="rxauth-gettoken-page"><p>Token value</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L104" class="view-source icon-eye-open"> </a><h3 id="methods_gettokenid">getTokenId()</h3>
-<div class="gettokenid"><div class="rxauth-gettokenid-page"><p>If token ID exists, returns value otherwise returns undefined.</p>
-</div><h5 id="methods_gettokenid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxauth-gettokenid-page"><p>Token ID</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L115" class="view-source icon-eye-open"> </a><h3 id="methods_getuserid">getUserId()</h3>
-<div class="getuserid"><div class="rxauth-getuserid-page"><p>Gets user id</p>
-</div><h5 id="methods_getuserid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxauth-getuserid-page"><p>User ID</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L126" class="view-source icon-eye-open"> </a><h3 id="methods_getusername">getUserName()</h3>
-<div class="getusername"><div class="rxauth-getusername-page"><p>Gets user name</p>
-</div><h5 id="methods_getusername_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxauth-getusername-page"><p>User Name</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L243" class="view-source icon-eye-open"> </a><h3 id="methods_hasallroles">hasAllRoles(roles)</h3>
-<div class="hasallroles"><div class="rxauth-hasallroles-page"><p>Checks if user has <em>every</em> role in given list.</p>
-</div><h5 id="methods_hasallroles_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roles</td><td><a href="" class="label type-hint type-hint-string">String[]</a></td><td><div class="rxauth-hasallroles-page"><p>List of roles to check against</p>
-</div></td></tr></tbody></table><h5 id="methods_hasallroles_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="rxauth-hasallroles-page"><p>True if user has <em>every</em> role in given list; otherwise, false.</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L231" class="view-source icon-eye-open"> </a><h3 id="methods_hasrole">hasRole(roles)</h3>
-<div class="hasrole"><div class="rxauth-hasrole-page"><p>Check if user has at least <em>one</em> of the given roles.</p>
-</div><h5 id="methods_hasrole_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roles</td><td><a href="" class="label type-hint type-hint-string">String[]</a></td><td><div class="rxauth-hasrole-page"><p>List of roles to check against</p>
-</div></td></tr></tbody></table><h5 id="methods_hasrole_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="rxauth-hasrole-page"><p>True if user has at least <em>one</em> of the given roles; otherwise, false.</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L175" class="view-source icon-eye-open"> </a><h3 id="methods_isauthenticated">isAuthenticated()</h3>
-<div class="isauthenticated"><div class="rxauth-isauthenticated-page"><p>Authenticates whether token is defined or undefined</p>
-</div><h5 id="methods_isauthenticated_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="rxauth-isauthenticated-page"><p>True if authenticated. Otherwise False.</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L158" class="view-source icon-eye-open"> </a><h3 id="methods_iscurrent">isCurrent()</h3>
-<div class="iscurrent"><div class="rxauth-iscurrent-page"><p>Checks if token is current/expired</p>
-</div><h5 id="methods_iscurrent_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="rxauth-iscurrent-page"><p>True if expiration date is valid and older than current date</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L46" class="view-source icon-eye-open"> </a><h3 id="methods_login">login(credentials, success, error)</h3>
-<div class="login"><div class="rxauth-login-page"><p>Login using a credential object</p>
-</div><h5 id="methods_login_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>credentials</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="rxauth-login-page"><p>credential object</p>
-</div></td></tr><tr><td>success</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="rxauth-login-page"><p>success callback</p>
-</div></td></tr><tr><td>error</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="rxauth-login-page"><p>error callback</p>
-</div></td></tr></tbody></table><h5 id="methods_login_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="rxauth-login-page"><p>login promise</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L20" class="view-source icon-eye-open"> </a><h3 id="methods_loginwithjson">loginWithJSON(body, success, error)</h3>
-<div class="loginwithjson"><div class="rxauth-loginwithjson-page"><p>Login via identity api</p>
-</div><h5 id="methods_loginwithjson_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>body</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="rxauth-loginwithjson-page"><p>JSON payload</p>
-</div></td></tr><tr><td>success</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="rxauth-loginwithjson-page"><p>success callback</p>
-</div></td></tr><tr><td>error</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="rxauth-loginwithjson-page"><p>error callback</p>
-</div></td></tr></tbody></table><h5 id="methods_loginwithjson_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="rxauth-loginwithjson-page"><p>login promise</p>
-</div></td></tr></table></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L147" class="view-source icon-eye-open"> </a><h3 id="methods_logout">logout()</h3>
-<div class="logout"><div class="rxauth-logout-page"><p>Logs user off</p>
-</div></div>
-</li>
-<li><a href="https://github.com/rackerlabs/encore-ui/blob/5cfcfaa/src/utilities/rxAuth/scripts/rxAuth.js#L137" class="view-source icon-eye-open"> </a><h3 id="methods_storetoken">storeToken(token)</h3>
-<div class="storetoken"><div class="rxauth-storetoken-page"><p>Stores token</p>
-</div><h5 id="methods_storetoken_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>token</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="rxauth-storetoken-page"><p>callback</p>
-</div></td></tr></tbody></table></div>
+<li><code ng:non-bindable=""><a href="#/api/utilities.service:rxSession">rxSession</a></code>
 </li>
 </ul>
-</div>
 </div>
