@@ -113,6 +113,8 @@ describe('encore.ui.rxApp', function () {
                 provide = $provide;
             });
 
+            module({ suppressDeprecationWarnings: true });
+
             // Inject in angular constructs
             inject(function ($rootScope, $compile, _rxVisibility_, _rxEnvironmentUrlFilter_, rxSession) {
                 scope = $rootScope.$new();

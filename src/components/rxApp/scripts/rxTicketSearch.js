@@ -7,10 +7,12 @@ angular.module('encore.ui.rxApp')
  * @description
  * Used to search tickets for Ticket Queues
  */
-.directive('rxTicketSearch', function () {
-    console.warn(
-        'DEPRECATED: rxTicketSearch will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxTicketSearch', function (suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxTicketSearch will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         template: '<rx-app-search placeholder="Search for a Ticket..." submit="searchTickets"></rx-app-search>',

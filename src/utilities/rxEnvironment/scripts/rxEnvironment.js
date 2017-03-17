@@ -100,7 +100,7 @@ angular.module('encore.ui.utilities')
  * </pre>
  *
  */
-.service('rxEnvironment', function ($location, $rootScope, $log) {
+.service('rxEnvironment', function ($location, $rootScope, $log, suppressDeprecationWarnings) {
     /*
      * This array defines different environments to check against.
      * It is prefilled with 'Encore' based environments
@@ -193,9 +193,11 @@ angular.module('encore.ui.utilities')
      * @returns {Object} The current environment (if found), else 'localhost' environment.
      */
     this.get = function (href) {
-        console.warn (
-            'DEPRECATED: rxEnvironment.get() will be removed in EncoreUI 4.0.0'
-        );
+        if (!suppressDeprecationWarnings) {
+            console.warn (
+                'DEPRECATED: rxEnvironment.get() will be removed in EncoreUI 4.0.0'
+            );
+        }
 
         // default to current location if href not provided
         href = href || $location.absUrl();
@@ -292,10 +294,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:Environment
  * @requires utilities.service:rxEnvironment
  */
-.service('Environment', function (rxEnvironment) {
-    console.warn(
-        'DEPRECATED: Environment - Please use rxEnvironment. ' +
-        'Environment will be removed in EncoreUI 4.0.0'
-    );
+.service('Environment', function (rxEnvironment, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: Environment - Please use rxEnvironment. ' +
+            'Environment will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxEnvironment;
 });

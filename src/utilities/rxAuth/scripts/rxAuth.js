@@ -11,11 +11,13 @@ angular.module('encore.ui.utilities')
  * @description Proxy service for {@link utilities.service:rxIdentity rxIdentity}
  * and {@link utilities.service:rxSession rxSession} logic.
  */
-.factory('rxAuth', function (rxIdentity, rxSession) {
-    console.warn (
-        'DEPRECATED: rxAuth - Please use rxIdentity or rxSession. ' +
-        'rxAuth will be removed in EncoreUI 4.0.0'
-    );
+.factory('rxAuth', function (rxIdentity, rxSession, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: rxAuth - Please use rxIdentity or rxSession. ' +
+            'rxAuth will be removed in EncoreUI 4.0.0'
+        );
+    }
     var svc = {};
 
     _.assign(svc, rxIdentity);

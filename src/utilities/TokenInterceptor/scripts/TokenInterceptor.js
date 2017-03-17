@@ -10,11 +10,13 @@ angular.module('encore.ui.utilities')
 .provider('TokenInterceptor', function () {
     var exclusionList = this.exclusionList = [ 'rackcdn.com' ];
 
-    this.$get = function (rxSession, $document) {
-        console.warn (
-            'DEPRECATED: TokenInterceptor - Please use rxTokenInterceptor. ' +
-            'TokenInterceptor will be removed in EncoreUI 4.0.0'
-        );
+    this.$get = function (rxSession, $document, suppressDeprecationWarnings) {
+        if (!suppressDeprecationWarnings) {
+            console.warn (
+                'DEPRECATED: TokenInterceptor - Please use rxTokenInterceptor. ' +
+                'TokenInterceptor will be removed in EncoreUI 4.0.0'
+            );
+        }
         var url = $document[0].createElement('a');
         return {
             request: function (config) {

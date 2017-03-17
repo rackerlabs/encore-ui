@@ -9,10 +9,12 @@ angular.module('encore.ui.rxApp')
  * This is used to draw the Alpha/Beta/etc tags in page titles and in breadcrumbs. It's not
  * intended as a public directive.
  */
-.directive('rxStatusTag', function (rxStatusTags) {
-    console.warn(
-        'DEPRECATED: rxStatusTag will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxStatusTag', function (rxStatusTags, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxStatusTag will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         template: '<span ng-if="status && validKey" class="status-tag {{ class }}">{{ text }}</span>',

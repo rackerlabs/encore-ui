@@ -32,12 +32,14 @@
      * @name utilities.filter:Apply
      * @requires utilities.filter:rxApply
      */
-    function ApplyFilter () {
+    function ApplyFilter (suppressDeprecationWarnings) {
         return function (list, filter) {
-            console.warn(
-                'DEPRECATED: Apply - Please use rxApply. ' +
-                'Apply will be removed in EncoreUI 4.0.0'
-            );
+            if (!suppressDeprecationWarnings) {
+                console.warn(
+                    'DEPRECATED: Apply - Please use rxApply. ' +
+                    'Apply will be removed in EncoreUI 4.0.0'
+                );
+            }
             return rxApplyFilter()(list, filter);
         };
     }//ApplyFilter

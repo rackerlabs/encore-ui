@@ -6,10 +6,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:Permission
  * @requires utilities.service:rxSession
  */
-.factory('Permission', function (rxSession) {
-    console.warn(
-        'DEPRECATED: Permission - Please use rxSession. ' +
-        'Permission will be removed in EncoreUI 4.0.0'
-    );
+.factory('Permission', function (rxSession, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: Permission - Please use rxSession.' +
+            'Permission will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxSession;
 });

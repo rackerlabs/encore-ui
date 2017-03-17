@@ -277,11 +277,13 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:PageTracking
  * @requires utilities.service:rxPageTracker
  */
-.service('PageTracking', function (rxPageTracker) {
-    console.warn(
-        'DEPRECATED: PageTracking - Please use rxPageTracker ' +
-        'PageTracking will be removed in EncoreUI 4.0.0'
-    );
+.service('PageTracking', function (rxPageTracker, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: PageTracking - Please use rxPageTracker ' +
+            'PageTracking will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxPageTracker;
 });
 

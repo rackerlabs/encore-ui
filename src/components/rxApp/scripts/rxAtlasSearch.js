@@ -7,10 +7,12 @@ angular.module('encore.ui.rxApp')
  * @description
  * Used to search accounts for Cloud Atlas
  */
-.directive('rxAtlasSearch', function ($window, $injector) {
-    console.warn(
-        'DEPRECATED: rxAtlasSearch will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxAtlasSearch', function ($window, $injector, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxAtlasSearch will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         template: '<rx-app-search placeholder="Search by username..." submit="searchAccounts"></rx-app-search>',

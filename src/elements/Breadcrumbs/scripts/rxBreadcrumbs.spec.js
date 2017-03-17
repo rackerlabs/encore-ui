@@ -26,6 +26,8 @@ describe('elements:Breadcrumbs', function () {
         // load the template
         module('templates/rxBreadcrumbs.html');
 
+        module({ suppressDeprecationWarnings: true });
+
         // Inject in angular constructs otherwise,
         // you would need to inject these into each test
         inject(function (rxBreadcrumbsSvc, $rootScope, $compile) {

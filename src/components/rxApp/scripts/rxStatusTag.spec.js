@@ -9,6 +9,8 @@ describe('encore.ui.rxApp', function () {
             // load module
             module('encore.ui.rxApp');
 
+            module({ suppressDeprecationWarnings: true });
+
             // Inject in angular constructs
             inject(function ($rootScope, $compile) {
                 rootScope = $rootScope;

@@ -27,12 +27,14 @@
      * @name utilities.filter:xor
      * @requires utilities.filter:rxXor
      */
-    function xorFilter () {
+    function xorFilter (suppressDeprecationWarnings) {
         return function (a, b) {
-            console.warn(
-                'DEPRECATED: xor - Please use rxXor. ' +
-                'xor will be removed in EncoreUI 4.0.0'
-            );
+            if (!suppressDeprecationWarnings) {
+                console.warn(
+                    'DEPRECATED: xor - Please use rxXor. ' +
+                    'xor will be removed in EncoreUI 4.0.0'
+                );
+            }
             return rxXorFilter()(a, b);
         };
     }//xorFilter

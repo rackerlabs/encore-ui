@@ -6,10 +6,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:Identity
  * @requires utilities.service:rxIdentity
  */
-.factory('Identity', function (rxIdentity) {
-    console.warn (
-        'DEPRECATED: Identity - Please use rxIdentity. ' +
-        'Identity will be removed in EncoreUI 4.0.0'
-    );
+.factory('Identity', function (rxIdentity, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: Identity - Please use rxIdentity.' +
+            'Identity will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxIdentity;
 });

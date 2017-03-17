@@ -7,10 +7,13 @@ angular.module('encore.ui.rxApp')
  * @description
  * Provides the ability to switch between account users. This directive is specific to Rackspace
  */
-.directive('rxAccountUsers', function ($location, $route, Encore, $rootScope, $injector, encoreRoutes) {
-    console.warn(
-        'DEPRECATED: rxAccountUsers will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxAccountUsers', function ($location, $route, Encore, $rootScope, $injector, encoreRoutes, 
+                                       suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxAccountUsers will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         restrict: 'E',

@@ -11,6 +11,8 @@ describe('encore.ui.rxApp', function () {
             // load templates
             module('templates/rxPage.html');
 
+            module({ suppressDeprecationWarnings: true });
+
             // Inject in angular constructs
             inject(function ($rootScope, $compile) {
                 scope = $rootScope.$new();

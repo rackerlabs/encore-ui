@@ -14,10 +14,12 @@ angular.module('encore.ui.utilities')
  * });
  * </pre>
  */
-.service('StatusUtil', function ($route, $rootScope, rxStatus) {
-    console.warn(
-        'DEPRECATED: StatusUtil will be removed in EncoreUI 4.0.0'
-    );
+.service('StatusUtil', function ($route, $rootScope, rxStatus, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: StatusUtil will be removed in EncoreUI 4.0.0'
+        );
+    }
     return {
         setupScope: function (scope) {
             rxStatus.setScope(scope || $rootScope);

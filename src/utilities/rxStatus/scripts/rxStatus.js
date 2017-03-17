@@ -353,10 +353,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:Status
  * @requires utilities.service:rxStatus
  */
-.service('Status', function (rxStatus) {
-    console.warn (
-        'DEPRECATED: Status - Please use rxStatus. ' +
-        'Status will be removed in EncoreUI 4.0.0'
-    );
+.service('Status', function (rxStatus, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: Status - Please use rxStatus. ' +
+            'Status will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxStatus;
 });

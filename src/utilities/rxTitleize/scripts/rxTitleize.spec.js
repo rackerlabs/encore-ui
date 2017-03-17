@@ -23,6 +23,7 @@ describe('filter:titleize (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         inject(function ($filter) {
             subject = $filter('titleize');

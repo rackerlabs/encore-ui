@@ -29,10 +29,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.value:devicePaths
  * @requires utilities.value:rxDevicePaths
  */
-.service('devicePaths', function (rxDevicePaths) {
-    console.warn(
-        'DEPRECATED: devicePaths - Please use rxDevicePaths. ' +
-        'devicePaths will be removed in EncoreUI 4.0.0'
-    );
+.service('devicePaths', function (rxDevicePaths, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: devicePaths - Please use rxDevicePaths. ' +
+            'devicePaths will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxDevicePaths;
 });

@@ -157,6 +157,7 @@ describe('service:Environment (DEPRECATED)', function () {
     beforeEach(function () {
         // load module
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         // Inject in angular constructs
         inject(function ($location, $rootScope, Environment, $log) {

@@ -16,7 +16,7 @@ describe('service:rxUrlUtils', function () {
         module(function ($provide) {
             $provide.value('$route', route);
         });
-
+        
         inject(function (rxUrlUtils) {
             subject = rxUrlUtils;
         });
@@ -234,13 +234,13 @@ describe('service:urlUtils (DEPRECATED)', function () {
     };
 
     beforeEach(function () {
-        module('encore.ui.utilities');
         module('encore.ui.elements');
         module('encore.ui.utilities');
         // Provide any mocks needed
         module(function ($provide) {
             $provide.value('$route', route);
         });
+        module({ suppressDeprecationWarnings: true });
 
         inject(function (urlUtils) {
             subject = urlUtils;

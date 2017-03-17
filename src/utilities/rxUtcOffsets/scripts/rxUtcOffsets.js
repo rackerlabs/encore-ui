@@ -59,10 +59,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.constant:UtcOffsets
  * @requires utilities.constant:rxUtcOffsets
  */
-.service('UtcOffsets', function (rxUtcOffsets) {
-    console.warn (
-        'DEPRECATED: UtcOffsets - Please use rxUtcOffsets. ' +
-        'UtcOffsets will be removed in EncoreUI 4.0.0'
-    );
+.service('UtcOffsets', function (rxUtcOffsets, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: UtcOffsets - Please use rxUtcOffsets. ' +
+            'UtcOffsets will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxUtcOffsets;
 });

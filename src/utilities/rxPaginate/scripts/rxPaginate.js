@@ -53,12 +53,14 @@
      * @name utilities.filter:Paginate
      * @requires utilities.filter:rxPaginate
      */
-    function PaginateFilter (rxPageTracker, rxPaginateUtils) {
+    function PaginateFilter (rxPageTracker, rxPaginateUtils, suppressDeprecationWarnings) {
         return function (items, pager) {
-            console.warn(
-                'DEPRECATED: Paginate - Please use rxPaginate. ' +
-                'Paginate will be removed in EncoreUI 4.0.0'
-            );           
+            if (!suppressDeprecationWarnings) {
+                console.warn(
+                    'DEPRECATED: Paginate - Please use rxPaginate. ' +
+                    'Paginate will be removed in EncoreUI 4.0.0'
+                );
+            }  
             return rxPaginateFilter(rxPageTracker, rxPaginateUtils)(items, pager);
         };
     }//PaginateFilter

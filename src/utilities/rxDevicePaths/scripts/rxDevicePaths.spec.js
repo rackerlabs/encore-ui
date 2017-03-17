@@ -22,6 +22,7 @@ describe('devicePaths (DEPRECATED)', function () {
     beforeEach(function () {
         // Load the directive's module
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         // Inject in angular constructs
         inject(function (devicePaths) {

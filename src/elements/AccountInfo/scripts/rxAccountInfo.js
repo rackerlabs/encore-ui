@@ -35,10 +35,12 @@ angular.module('encore.ui.elements')
  * @param {String=} accountInfoBanner Set to "true" to use the new under-the-breadcrumbs style
  */
 .directive('rxAccountInfo', function (Teams, SupportAccount, Encore, rxNotify, encoreRoutes,
-    AccountStatusGroup, $interpolate) {
-    console.warn(
-        'DEPRECATED: rxAccountInfo will be removed in EncoreUI 4.0.0'
-    );
+    AccountStatusGroup, $interpolate, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxAccountInfo will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         templateUrl: function (elem, attr) {

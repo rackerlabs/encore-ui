@@ -3,6 +3,8 @@ describe('utilities:Session (DEPRECATED)', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
+        
         tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
         mockToken = {
             access: {

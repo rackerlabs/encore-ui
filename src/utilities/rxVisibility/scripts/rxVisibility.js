@@ -19,10 +19,12 @@ angular.module('encore.ui.utilities')
  * function (scope, args) {}
  * </pre>
  */
-.factory('rxVisibility', function () {
-    console.warn(
-        'DEPRECATED: rxVisibility will be removed in EncoreUI 4.0.0'
-    );
+.factory('rxVisibility', function (suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxVisibility will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     var methods = {};
 

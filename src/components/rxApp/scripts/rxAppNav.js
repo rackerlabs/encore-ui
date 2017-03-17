@@ -478,10 +478,12 @@ angular.module('encore.ui.rxApp')
  * <rx-app-nav level="1" items="menuItems"></rx-app-nav>
  * </pre>
  */
-.directive('rxAppNav', function () {
-    console.warn(
-        'DEPRECATED: rxAppNav will be removed in EncoreUI 4.0.0'
-    );
+.directive('rxAppNav', function (suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxAppNav will be removed in EncoreUI 4.0.0'
+        );
+    }
 
     return {
         restrict: 'E',

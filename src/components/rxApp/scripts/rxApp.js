@@ -22,11 +22,12 @@ angular.module('encore.ui.rxApp')
  * </pre>
  */
 .directive('rxApp', function (encoreRoutes, rxAppRoutes, hotkeys,
-                              rxEnvironment, routesCdnPath, rxSession, $window) {
-    console.warn(
-        'DEPRECATED: rxApp will be removed in EncoreUI 4.0.0'
-    );
-
+                              rxEnvironment, routesCdnPath, rxSession, $window, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: rxApp will be removed in EncoreUI 4.0.0'
+        );
+    }
     return {
         restrict: 'E',
         transclude: true,

@@ -3,11 +3,10 @@ describe('utilities:rxstatusTags', function () {
         var rxstatusTags;
 
         beforeEach(function () {
-
             // Initialize a fake module to get at its config block
             // This is the main purpose of this whole `describe` block,
             // to test that this can be set in a `.config`
-            angular.module('testApp', function () {})
+            angular.module('testApp', [])
                 .config(function (rxStatusTagsProvider) {
                     rxStatusTagsProvider.addStatus({
                         key: 'testKey',
@@ -15,13 +14,14 @@ describe('utilities:rxstatusTags', function () {
                         text: 'test text'
                     });
                 });
+
             module('encore.ui.utilities', 'testApp');
+            module({ suppressDeprecationWarnings: true });
 
             // Inject in angular constructs
             inject(function (rxStatusTags) {
                 rxstatusTags = rxStatusTags;
             });
-
         });
 
         it('should know about testKey', function () {

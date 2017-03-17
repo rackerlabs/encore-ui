@@ -9,11 +9,13 @@ angular.module('encore.ui.utilities')
  * @requires utilities.service:rxAuth
  * @description Alias for {@link utilities.service:rxAuth rxAuth}
  */
-.service('Auth', function (rxIdentity, rxSession) {
-    console.warn (
-        'DEPRECATED: Auth - Please use rxIdentity or rxSession. ' +
-        'Auth will be removed in EncoreUI 4.0.0'
-    );
+.service('Auth', function (rxIdentity, rxSession, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: Auth - Please use rxIdentity or rxSession. ' +
+            'Auth will be removed in EncoreUI 4.0.0'
+        );
+    }
     var svc = {};
 
     _.assign(svc, rxIdentity);

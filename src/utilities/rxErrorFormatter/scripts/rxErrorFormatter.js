@@ -60,10 +60,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:ErrorFormatter
  * @requires utilities.service:rxErrorFormatter
  */
-.service('ErrorFormatter', function (rxErrorFormatter) {
-    console.warn(
-        'DEPRECATED: ErrorFormatter - Please use rxErrorFormatter. ' +
-        'ErrorFormatter will be removed in EncoreUI 4.0.0'
-    );
+.service('ErrorFormatter', function (rxErrorFormatter, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn(
+            'DEPRECATED: ErrorFormatter - Please use rxErrorFormatter. ' +
+            'ErrorFormatter will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxErrorFormatter;
 });
