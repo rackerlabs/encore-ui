@@ -4,6 +4,7 @@ describe('provider:TokenInterceptor (DEPRECATED)', function () {
     beforeEach(function () {
         // load module
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         // Initialize a fake module to get at its config block
         angular.module('testApp', function () {})

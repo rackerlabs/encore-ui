@@ -6,10 +6,12 @@ angular.module('encore.ui.utilities')
  * @name utilities.service:UnauthorizedInterceptor
  * @requires utilities.service:rxUnauthorizedInterceptor
  */
-.service('UnauthorizedInterceptor', function (rxUnauthorizedInterceptor) {
-    console.warn (
-        'DEPRECATED: UnauthorizedInterceptor - Please use rxUnauthorizedInterceptor. ' +
-        'UnauthorizedInterceptor will be removed in EncoreUI 4.0.0'
-    );
+.service('UnauthorizedInterceptor', function (rxUnauthorizedInterceptor, suppressDeprecationWarnings) {
+    if (!suppressDeprecationWarnings) {
+        console.warn (
+            'DEPRECATED: UnauthorizedInterceptor - Please use rxUnauthorizedInterceptor. ' +
+            'UnauthorizedInterceptor will be removed in EncoreUI 4.0.0'
+        );
+    }
     return rxUnauthorizedInterceptor;
 });
