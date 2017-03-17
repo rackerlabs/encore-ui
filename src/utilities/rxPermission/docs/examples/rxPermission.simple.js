@@ -1,12 +1,12 @@
 angular.module('demoApp')
-.controller('rxPermissionSimpleCtrl', function ($scope, rxAuth, rxNotify) {
+.controller('rxPermissionSimpleCtrl', function ($scope, rxSession, rxNotify) {
     rxNotify.add('Respect My Authority!!', {
         stack: 'permission',
         type: 'warning'
     });
 
     $scope.storeToken = function () {
-        rxAuth.storeToken({
+        rxSession.storeToken({
             access: {
                 user: {
                     roles: [{ name: 'test' }]
@@ -16,6 +16,6 @@ angular.module('demoApp')
     };
 
     $scope.clearToken = function () {
-        rxAuth.logout();
+        rxSession.logout();
     };
 });

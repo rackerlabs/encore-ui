@@ -17,4 +17,5 @@ angular.module('encore.ui.utilities', [
     'ngResource',
     'debounce',
     'ngSanitize'
-]);
+])
+.value('suppressDeprecationWarnings', false);

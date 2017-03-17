@@ -1,21 +1,22 @@
-describe('provider:rxTokenInterceptor', function () {
+describe('provider:TokenInterceptor (DEPRECATED)', function () {
     var interceptor, rxSession;
 
     beforeEach(function () {
         // load module
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         // Initialize a fake module to get at its config block
         angular.module('testApp', function () {})
-            .config(function (rxTokenInterceptorProvider) {
-                rxTokenInterceptorProvider.exclusionList.push('abcd.com');
+            .config(function (TokenInterceptorProvider) {
+                TokenInterceptorProvider.exclusionList.push('abcd.com');
             });
 
-        // Initialize injector for rxTokenInterceptor
+        // Initialize injector for TokenInterceptor
         module('encore.ui.utilities', 'testApp');
 
         inject(function ($injector) {
-            interceptor = $injector.get('rxTokenInterceptor');
+            interceptor = $injector.get('TokenInterceptor');
             rxSession = $injector.get('rxSession');
             rxSession.getTokenId = sinon.stub().returns('12345');
         });

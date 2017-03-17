@@ -8,7 +8,7 @@ angular.module('encore.ui.utilities')
  *
  * @requires $q
  * @requires @window
- * @requires utilities.service:rxAuth
+ * @requires utilities.service:rxSession
  *
  * @example
  * <pre>
@@ -18,7 +18,7 @@ angular.module('encore.ui.utilities')
  *     });
  * </pre>
  */
-.factory('rxUnauthorizedInterceptor', function ($q, $window, rxAuth) {
+.factory('rxUnauthorizedInterceptor', function ($q, $window, rxSession) {
     var svc = {
         redirectPath: function () {
             // This brings in the entire relative URI (including the path
@@ -34,7 +34,7 @@ angular.module('encore.ui.utilities')
         },
         responseError: function (response) {
             if (response.status === 401) {
-                rxAuth.logout(); // Logs out user by removing token
+                rxSession.logout(); // Logs out user by removing token
                 svc.redirect();
             }
 

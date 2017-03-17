@@ -1,0 +1,11 @@
+{
+    "displayName": "rxIdentity",
+    "stability": "stable",
+    "description": "Provides authentication logic",
+    "api": "service:rxIdentity",
+    "keywords": [
+        "Identity",
+        "rxAuth",
+        "Auth"
+    ]
+}
