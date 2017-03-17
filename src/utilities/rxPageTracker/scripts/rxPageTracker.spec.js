@@ -5,6 +5,7 @@ describe('Pagination', function () {
 
         beforeEach(function () {
             module('encore.ui.utilities');
+
             inject(function (rxPageTracker, _rxLocalStorage_) {
                 tracking = rxPageTracker;
                 rxLocalStorage = _rxLocalStorage_;

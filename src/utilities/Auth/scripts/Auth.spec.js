@@ -1,6 +1,6 @@
-// functionally identical to Auth
-describe('utilities:rxAuth (DEPRECATED)', function () {
-    var rxAuth, rxIdentity, rxSession;
+// functionally identical to rxAuth
+describe('utilities:Auth (DEPRECATED)', function () {
+    var Auth, rxIdentity, rxSession;
     var token = {
         'access': {
             'token': {
@@ -19,7 +19,6 @@ describe('utilities:rxAuth (DEPRECATED)', function () {
         module('encore.ui.utilities');
         module({ suppressDeprecationWarnings: true });
 
-
         inject(function ($injector) {
             rxIdentity = $injector.get('rxIdentity');
             rxIdentity.loginWithJSON = sinon.stub().returns(token);
@@ -32,58 +31,58 @@ describe('utilities:rxAuth (DEPRECATED)', function () {
             rxSession.isAuthenticated = sinon.stub().returns(true);
             rxSession.getRoles = sinon.stub().returns([{ 'name': 'admin' }]);
 
-            rxAuth = $injector.get('rxAuth');
+            Auth = $injector.get('Auth');
         });
     });
 
-    describe('service:rxAuth', function () {
+    describe('service:Auth', function () {
         it('login() should get a token', function () {
-            var result = rxAuth.login({ username: 'Batman', password: 'dark-knight' });
+            var result = Auth.login({ username: 'Batman', password: 'dark-knight' });
             expect(result.access).not.be.empty;
-            expect(rxAuth.loginWithJSON).to.be.called;
+            expect(Auth.loginWithJSON).to.be.called;
         });
 
         it('loginWithJSON() should get a token', function () {
-            var result = rxAuth.loginWithJSON({ username: 'Batman', token: 'bat-token' });
+            var result = Auth.loginWithJSON({ username: 'Batman', token: 'bat-token' });
             expect(result.access).not.be.empty;
         });
 
         it('getToken() should return a token', function () {
-            var result = rxAuth.getToken();
+            var result = Auth.getToken();
             expect(result).not.be.empty;
             expect(result.access).not.be.empty;
-            expect(rxAuth.getToken).to.be.called;
+            expect(Auth.getToken).to.be.called;
         });
 
         it('storeToken() should store a token', function () {
-            rxAuth.storeToken(token);
-            expect(rxAuth.storeToken).to.be.called;
+            Auth.storeToken(token);
+            expect(Auth.storeToken).to.be.called;
         });
 
-        it('logout() should log off user via rxAuth.logout', function () {
-            rxAuth.logout();
-            expect(rxAuth.logout).to.be.called;
+        it('logout() should log off user via Auth.logout', function () {
+            Auth.logout();
+            expect(Auth.logout).to.be.called;
         });
 
-        it('isCurrent() should check token via rxAuth.isCurrent', function () {
-            expect(rxAuth.isCurrent()).to.be.true;
-            expect(rxAuth.isCurrent).to.be.called;
+        it('isCurrent() should check token via Auth.isCurrent', function () {
+            expect(Auth.isCurrent()).to.be.true;
+            expect(Auth.isCurrent).to.be.called;
         });
 
-        it('isAuthenticated() should check token via rxAuth.isAuthenticated', function () {
-            expect(rxAuth.isAuthenticated()).to.be.true;
-            expect(rxAuth.isAuthenticated).to.be.called;
+        it('isAuthenticated() should check token via Auth.isAuthenticated', function () {
+            expect(Auth.isAuthenticated()).to.be.true;
+            expect(Auth.isAuthenticated).to.be.called;
         });
 
-        it('getRoles() should retrieve user roles via rxAuth.getRoles', function () {
-            expect(rxAuth.getRoles().length).to.eq(1);
-            expect(rxAuth.getRoles).to.be.called;
+        it('getRoles() should retrieve user roles via Auth.getRoles', function () {
+            expect(Auth.getRoles().length).to.eq(1);
+            expect(Auth.getRoles).to.be.called;
         });
 
-        it('hasRole() should validate user has role via rxAuth.hasRole', function () {
-            expect(rxAuth.hasRole('admin')).to.be.true;
-            expect(rxAuth.hasRole('fakeRole')).to.be.false;
-            expect(rxAuth.getRoles).to.be.called;
+        it('hasRole() should validate user has role via Auth.hasRole', function () {
+            expect(Auth.hasRole('admin')).to.be.true;
+            expect(Auth.hasRole('fakeRole')).to.be.false;
+            expect(Auth.getRoles).to.be.called;
         });
     });
 });

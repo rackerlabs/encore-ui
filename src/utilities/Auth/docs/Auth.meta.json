@@ -1,0 +1,9 @@
+{
+    "displayName": "Auth",
+    "stability": "deprecated",
+    "description": "TBD",
+    "api": "service:rxAuth",
+    "keywords": [
+        "Auth"
+    ]
+}

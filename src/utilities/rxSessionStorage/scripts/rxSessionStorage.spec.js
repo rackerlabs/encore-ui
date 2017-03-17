@@ -3,6 +3,7 @@ describe('service:rxSessionStorage', function () {
 
     beforeEach(function () {
         module('encore.ui.utilities');
+
         inject(function (rxSessionStorage) {
             storage = rxSessionStorage;
         });

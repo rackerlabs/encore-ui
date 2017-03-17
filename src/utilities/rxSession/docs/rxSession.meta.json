@@ -1,0 +1,10 @@
+{
+    "displayName": "rxSession",
+    "stability": "stable",
+    "description": "Manages user session",
+    "api": "service:rxSession",
+    "keywords": [
+        "Session",
+        "rxAuth"
+    ]
+}

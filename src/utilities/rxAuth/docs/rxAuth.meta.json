@@ -1,9 +1,11 @@
 {
     "displayName": "rxAuth",
-    "stability": "stable",
-    "description": "Provides logic for authenticating, validating permissions, and managing sessions.",
+    "stability": "deprecated",
+    "description": "Proxy service for rxIdentity and rxSession",
     "api": "service:rxAuth",
     "keywords": [
-        "Auth"
+        "Auth",
+        "rxIdentity",
+        "rxSession"
     ]
 }
