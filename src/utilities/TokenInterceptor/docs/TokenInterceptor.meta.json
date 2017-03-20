@@ -1,7 +1,0 @@
-{
-    "displayName": "TokenInterceptor",
-    "stability": "deprecated",
-    "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
-    "api": "service:TokenInterceptor",
-    "keywords": []
-}

@@ -13,7 +13,6 @@ angular.module('encore.ui.utilities')
  *
  * * name: The "friendly" name of your environment, like "local", "preprod", etc.
  * * pattern: A string or RegEx that the current path is matched against
- * * url: The URL pattern used to build URLs when using rxEnvironmentUrl
  *
  * As an example, if we didn't already have a `'preprod'` environment, we could
  * add it as follows:
@@ -78,29 +77,8 @@ angular.module('encore.ui.utilities')
  * When you want to check if you're in one of the custom environments, you can
  * use `envCheck()`, i.e.: `rxEnvironment.envCheck('ghPages')`
  *
- * ## A Warning About rxEnvironmentUrl ##
- * `rxEnvironmentUrl` can be used for building full URLs, based on the current
- * environment. For now, you should consider it as deprecated. It has problems
- * with overlapping environments, and could potentially generate the wrong URL.
- *
- * ## A Warning About `rxEnvironment.get().name` ##
- * ## DEPRECATED: `rxEnvironment.get()` will be removed in EncoreUI 4.0.0 ##
- * You might find older Encore code that uses `rxEnvironment.get().name` to get
- * the name of the current environment. This pattern should be avoided,
- * specifically because of the overlapping environment issue discussed above.
- * If you call `rxEnvironment.get().name`, it will just return the first matching
- * environment in the list of environments, even if we're overlapping and have
- * multiple environments. Instead, check explicitly with
- * `rxEnvironment.isLocal()`, `rxEnvironment.isPreProd()`, etc., or
- * use `rxEnvironment.envCheck('local')`
- *
- * @example
- * <pre>
- * rxEnvironment.get() // return environment object that matches current location
- * </pre>
- *
  */
-.service('rxEnvironment', function ($location, $rootScope, $log, suppressDeprecationWarnings) {
+.service('rxEnvironment', function ($location, $rootScope, $log) {
     /*
      * This array defines different environments to check against.
      * It is prefilled with 'Encore' based environments
@@ -187,35 +165,6 @@ angular.module('encore.ui.utilities')
     };
 
     /*
-     * Retrieves current environment
-     * @public
-     * @param {String=} [href=$location.absUrl()] The path to check the environment on.
-     * @returns {Object} The current environment (if found), else 'localhost' environment.
-     */
-    this.get = function (href) {
-        if (!suppressDeprecationWarnings) {
-            console.warn (
-                'DEPRECATED: rxEnvironment.get() will be removed in EncoreUI 4.0.0'
-            );
-        }
-
-        // default to current location if href not provided
-        href = href || $location.absUrl();
-
-        var currentEnvironment = _.find(environments, function (environment) {
-            return environmentPatternMatch(href, environment.pattern);
-        });
-
-        if (_.isUndefined(currentEnvironment)) {
-            $log.warn('No environments match URL: ' + $location.absUrl());
-            // set to default/first environment to avoid errors
-            currentEnvironment = environments[0];
-        }
-
-        return currentEnvironment;
-    };
-
-    /*
      * Adds an environment to the front of the stack, ensuring it will be matched first
      * @public
      * @param {Object} environment The environment to add. See 'environments' array for required properties
@@ -286,20 +235,4 @@ angular.module('encore.ui.utilities')
      * @public
      */
     this.isUnifiedProd = makeEnvCheck('unified-prod');
-})
-/**
- * @deprecated
- * Please use rxEnvironment instead. This item will be removed on the 4.0.0 release.
- * @ngdoc service
- * @name utilities.service:Environment
- * @requires utilities.service:rxEnvironment
- */
-.service('Environment', function (rxEnvironment, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: Environment - Please use rxEnvironment. ' +
-            'Environment will be removed in EncoreUI 4.0.0'
-        );
-    }
-    return rxEnvironment;
 });
