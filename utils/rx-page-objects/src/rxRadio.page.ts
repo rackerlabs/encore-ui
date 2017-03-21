@@ -1,7 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {by, ElementFinder} from 'protractor';
+import {ElementFinder} from 'protractor';
 import {OverrideWebdriver, rxComponentElement} from './rxComponent';
 
 /**
@@ -9,12 +9,9 @@ import {OverrideWebdriver, rxComponentElement} from './rxComponent';
  */
 
 export class rxRadio extends rxComponentElement {
-    get eleWrapper() {
-        return this.element(by.xpath('..'));
-    }
 
     get eleFakeRadio() {
-        return this.eleWrapper.$('.fake-radio');
+        return this.parent.$('.fake-radio');
     }
 
     /**
@@ -42,7 +39,7 @@ export class rxRadio extends rxComponentElement {
     @OverrideWebdriver
     isDisplayed() {
         return this.eleFakeRadio.isPresent().then(isFakeRadio => {
-            return isFakeRadio ? this.eleFakeRadio.isDisplayed() : this.originalElement.isDisplayed();
+            return isFakeRadio ? this.eleFakeRadio.isDisplayed() : this._originalElement.isDisplayed();
         });
     }
 
@@ -53,11 +50,11 @@ export class rxRadio extends rxComponentElement {
     isEnabled() {
         return this.eleFakeRadio.isPresent().then(isFakeRadio => {
             if (isFakeRadio) {
-                return this.eleWrapper.getAttribute('class').then(classes => {
+                return this.parent.getAttribute('class').then(classes => {
                     return !_.includes(classes.split(' '), 'rx-disabled');
                 });
             }
-            return this.originalElement.isEnabled();
+            return this._originalElement.isEnabled();
         });
     }
 

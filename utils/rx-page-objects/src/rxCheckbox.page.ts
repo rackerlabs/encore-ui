@@ -1,7 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {by, ElementFinder} from 'protractor';
+import {ElementFinder} from 'protractor';
 import {OverrideWebdriver, rxComponentElement} from './rxComponent';
 
 /**
@@ -9,12 +9,9 @@ import {OverrideWebdriver, rxComponentElement} from './rxComponent';
  * @class
  */
 export class rxCheckbox extends rxComponentElement {
-    get eleWrapper() {
-        return this.element(by.xpath('..'));
-    }
 
     get eleFakeCheckbox() {
-        return this.eleWrapper.$('.fake-checkbox');
+        return this.parent.$('.fake-checkbox');
     }
 
     /**
@@ -32,7 +29,7 @@ export class rxCheckbox extends rxComponentElement {
     @OverrideWebdriver
     isDisplayed() {
         return this.eleFakeCheckbox.isPresent().then(isFakeCheckbox => {
-            return isFakeCheckbox ? this.eleFakeCheckbox.isDisplayed() : this.originalElement.isDisplayed();
+            return isFakeCheckbox ? this.eleFakeCheckbox.isDisplayed() : this._originalElement.isDisplayed();
         });
     }
 
@@ -43,11 +40,11 @@ export class rxCheckbox extends rxComponentElement {
     isEnabled() {
         return this.eleFakeCheckbox.isPresent().then(isFakeCheckbox => {
             if (isFakeCheckbox) {
-                return this.eleWrapper.getAttribute('class').then(classes => {
+                return this.parent.getAttribute('class').then(classes => {
                     return !_.includes(classes.split(' '), 'rx-disabled');
                 });
             }
-            return this.originalElement.isEnabled();
+            return this._originalElement.isEnabled();
         });
     }
 
@@ -57,7 +54,7 @@ export class rxCheckbox extends rxComponentElement {
     @OverrideWebdriver
     isPresent() {
         return this.eleFakeCheckbox.isPresent().then(isFakeCheckbox => {
-            return isFakeCheckbox || this.originalElement.isPresent();
+            return isFakeCheckbox || this._originalElement.isPresent();
         });
     }
 

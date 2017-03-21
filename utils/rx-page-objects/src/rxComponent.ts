@@ -1,14 +1,19 @@
 'use strict';
 
-import {browser, ElementFinder} from 'protractor';
+import {browser, by, ElementFinder} from 'protractor';
 import * as webdriver from 'selenium-webdriver';
 
 export class rxComponentElement extends ElementFinder {
-    originalElement: ElementFinder;
+    // tslint:disable-next-line:variable-name
+    _originalElement: ElementFinder;
 
     constructor(originalElement: ElementFinder) {
         super(browser, originalElement.elementArrayFinder_);
-        this.originalElement = originalElement;
+        this._originalElement = originalElement;
+    }
+
+    get parent() {
+        return this.element(by.xpath('..'));
     }
 };
 
