@@ -1,8 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {ElementFinder} from 'protractor';
-import {by} from 'protractor';
+import {by, ElementFinder} from 'protractor';
 import {OverrideWebdriver, rxComponentElement} from './rxComponent';
 
 /**
