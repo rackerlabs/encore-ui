@@ -18,11 +18,9 @@
 *rxSelect.exercise.ts
 *rxSelect.page.ts
 *rxTimePicker.page.ts
-*rxTimePickerUtil.page.ts
 
 *rxCheckbox.midway.ts
 *rxDatePicker.midway.ts
 *rxRadio.midway.ts
 *rxSelect.midway.ts
 *rxTimePicker.midway.ts
-*rxTimePickerUtil.midway.ts
