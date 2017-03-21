@@ -1,7 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {by, ElementFinder} from 'protractor';
+import {ElementFinder} from 'protractor';
 import {OverrideWebdriver, rxComponentElement} from './rxComponent';
 
 /**
@@ -9,12 +9,8 @@ import {OverrideWebdriver, rxComponentElement} from './rxComponent';
  */
 export class rxSelect extends rxComponentElement {
 
-    get eleWrapper() {
-        return this.element(by.xpath('..'));
-    }
-
     get eleFakeSelect() {
-        return this.eleWrapper.$('.fake-select');
+        return this.parent.$('.fake-select');
     }
 
     /**
@@ -24,11 +20,11 @@ export class rxSelect extends rxComponentElement {
     isEnabled() {
         return this.eleFakeSelect.isPresent().then(isFakeSelect => {
             if (isFakeSelect) {
-                return this.eleWrapper.getAttribute('class').then(classes => {
+                return this.parent.getAttribute('class').then(classes => {
                     return !_.includes(classes.split(' '), 'rx-disabled');
                 });
             }
-            return this.originalElement.isEnabled();
+            return this._originalElement.isEnabled();
         });
     }
 
@@ -40,7 +36,7 @@ export class rxSelect extends rxComponentElement {
         return this.eleFakeSelect.isDisplayed().then(displayed => {
             return displayed ? this.eleFakeSelect.isDisplayed() : false;
         }, () => {
-            return this.originalElement.isDisplayed();
+            return this._originalElement.isDisplayed();
         });
     }
 
@@ -50,7 +46,7 @@ export class rxSelect extends rxComponentElement {
     @OverrideWebdriver
     isPresent() {
         return this.eleFakeSelect.isPresent().then(isFakeSelect => {
-            return isFakeSelect || this.originalElement.isPresent();
+            return isFakeSelect || this._originalElement.isPresent();
         });
     }
 
