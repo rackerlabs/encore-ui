@@ -22,6 +22,7 @@ describe('demo components', function () {
 
         before(function () {
             datepicker = new encore.rxDatePicker(element(by.model('dateModel')));
+            datepicker.open();
             datepicker.date = '2012-05-24';
         });
 

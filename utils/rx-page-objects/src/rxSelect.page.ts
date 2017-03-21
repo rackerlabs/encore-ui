@@ -1,7 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {ElementFinder} from 'protractor';
+import {by, ElementFinder} from 'protractor';
 import {OverrideWebdriver, rxComponentElement} from './rxComponent';
 
 /**
@@ -107,8 +107,6 @@ export class rxSelect extends rxComponentElement {
  * @example
  * class MyForm {
  *     @rxSelectAccessor(element(by.model('states'))) state;
- *     // you can specify a single dropdown's slow clicking globally this way
- *     @rxSelectAccessor(element(by.model('county'))) country;
  * };
  *
  * let form = new MyForm();
