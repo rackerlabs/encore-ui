@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as component from './rxSelect.page';
 
 interface IRxSelectExerciseOptions {
-    instance?: component.rxSelect;
+    instance: component.rxSelect;
     disabled?: boolean;
     visible?: boolean;
     valid?: boolean;
@@ -23,7 +23,7 @@ export function rxSelect (options: IRxSelectExerciseOptions) {
     });
 
     return () => {
-        let component;
+        let component: component.rxSelect;
 
         before(() => {
             component = options.instance;

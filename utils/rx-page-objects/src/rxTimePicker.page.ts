@@ -1,6 +1,5 @@
 'use strict';
 
-import {by} from 'protractor';
 import {AccessorPromiseString, OverrideWebdriver, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
 
@@ -127,8 +126,8 @@ export class rxTimePicker extends rxComponentElement {
 
         this.hours = date.format('hh'); // 12-hour format (no padding)
         this.minutes = date.format('mm'); // padded minutes
-        this.selPeriod.element(by.cssContainingText('option', date.format('A'))).click();
-        this.selUtcOffset.element(by.cssContainingText('option', date.format('Z'))).click();
+        this.pagePeriod.select(date.format('A'));
+        this.pageUtcOffset.select(date.format('Z'));
         this.submit();
     }
 

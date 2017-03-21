@@ -2,29 +2,25 @@
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {by, ElementFinder} from 'protractor';
-import {AccessorPromiseString, OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
+import {by} from 'protractor';
+import {AccessorPromiseString, OverrideWebdriver, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
 
 /**
  * @class
  */
 export class rxDatePicker extends rxComponentElement {
+
     private get currentMonth() {
         return this.element(by.model('currentMonth'));
     }
+
     private get currentYear() {
         return this.element(by.model('currentYear'));
     }
 
-    get tblCurrentMonthDays() {
+    get currentMonthDays() {
         return this.$$('.day.inMonth');
-    }
-
-    @OverrideWebdriver
-    isEnabled() {
-        return this.getAttribute('disabled')
-            .then(disabled => !disabled);
     }
 
     /**
@@ -32,24 +28,11 @@ export class rxDatePicker extends rxComponentElement {
      * **Format:** `MM` (e.g. "04", "05", "06").
      */
     get month(): AccessorPromiseString {
-        // Check if it's open, we'll try to open it anyway but this is so we can put it back.
-        return this.isOpen().then(isOpen => {
-            this.open(); // you have to in order to get to the dropdown
-
-            let month = new rxSelect(this.currentMonth).selectedOption.getText().then(text => {
-                return moment(text, 'MMM').format('MM');
-            });
-
-            // if datepicker was closed before starting, put it back
-            if (!isOpen) {
-                this.close();
-            }
-
-            return month;
+        return new rxSelect(this.currentMonth).selectedOption.getText().then(text => {
+            return moment(text, 'MMM').format('MM');
         });
     }
     set month(value: AccessorPromiseString) {
-        this.open();
         let dropdownExpectedValue = moment(<string> value, 'MM').format('MMM');
         if (dropdownExpectedValue === 'Invalid date') {
             throw new Error(`Unexpected month value for month number "${value}". Months are not zero-indexed!`);
@@ -67,20 +50,9 @@ export class rxDatePicker extends rxComponentElement {
      * **Format:** `YYYY` (e.g. "2016")
      */
     get year(): AccessorPromiseString {
-        return this.isOpen().then(isOpen => {
-            this.open(); // you have to in order to get to the dropdown
-            let year = new rxSelect(this.currentYear).selectedOption.getText();
-
-            // if datepicker was closed before starting, put it back
-            if (!isOpen) {
-                this.close();
-            }
-
-            return year;
-        });
+        return new rxSelect(this.currentYear).selectedOption.getText();
     }
     set year(value: AccessorPromiseString) {
-        this.open();
         new rxSelect(this.currentYear).select(value);
     }
 
@@ -99,35 +71,13 @@ export class rxDatePicker extends rxComponentElement {
         let date = moment(dateString as string, 'YYYY-MM-DD');
         this.month = date.format('MM');
         this.year = date.format('YYYY');
-        this._selectVisibleDate(dateString as string);
+        this.$(`[data-date="${dateString}"]`).$('span').click();
     }
 
-    /**
-     * @description
-     * Sets the calendar's date by clicking the date corresponding to the value of
-     * `date`.
-     * @example
-     * let picker = new rxDatePicker($('rx-date-picker'));
-     * picker._selectVisibleDate('2014-05-13');
-     * expect(picker.date).to.eventually.eq('2014-05-13');
-     */
-    private _selectVisibleDate(date: string): Promise<void> {
-        this.open();
-        return this._dateElementByDate(date).$('span').click();
-    };
-
-    /**
-     * @description
-     * Return a day seen on the picker calendar that corresponds to the value of
-     * `date`.
-     * @example
-     * let picker = new encore.rxDatePicker();
-     * picker.open();
-     * picker._dateElementByDate('2012-06-23').getAttribute('class');
-     */
-    private _dateElementByDate(date: string): ElementFinder {
-        return this.$(`[data-date="${date}"]`);
-    };
+    @OverrideWebdriver
+    isEnabled() {
+        return this.getAttribute('disabled').then(disabled => !disabled);
+    }
 
     /**
      * @see rxDatePicker#close
@@ -166,7 +116,6 @@ export class rxDatePicker extends rxComponentElement {
      * @description Click over to the next month in the calendar.
      */
     nextMonth() {
-        this.open();
         return this.$('.arrow.next').click();
     };
 
@@ -174,42 +123,36 @@ export class rxDatePicker extends rxComponentElement {
      * @description Click back to the previous month in the calendar.
      */
     previousMonth() {
-        this.open();
         return this.$('.arrow.prev').click();
     };
 
     /**
-     * @description Whether or not the date requested is currently selected.
+     * @description The currently selected date as a string.
      */
-    isDateSelected(date: string) {
-        this.open();
-        return this._dateElementByDate(date).getAttribute('class')
-            .then(classes => _.includes(classes, 'selected'));
+    getDateSelected() {
+        return this.$('.day.selected').getAttribute('data-date');
     };
 
     /**
-     * @description
-     * Whether or not the date passed in matches the "today" date in the calendar.
+     * @description Today's date as a string.
      */
-    isDateToday(date: string) {
-        this.open();
-        return this._dateElementByDate(date).getAttribute('class')
-            .then(classes => _.includes(classes, 'today'));
+    getDateToday() {
+        return this.$('.day.today').getAttribute('data-date');
     };
 
     /**
      * @description Whether or not the calendar is in an invalid state.
      */
     isValid() {
-        return this.getAttribute('class')
-            .then(classes => !_.includes(classes, 'ng-invalid'));
+        return this.getAttribute('class').then(classes => {
+            return !_.includes(classes, 'ng-invalid');
+        });
     };
 
     /**
      * @description Whether or not the calendar is open.
      */
     isOpen() {
-        return this.$('.popup').getAttribute('class')
-            .then(classes => !_.includes(classes, 'ng-hide'));
+        return this.$('.popup:not(.ng-hide)').isPresent();
     };
 };
