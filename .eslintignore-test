@@ -7,20 +7,36 @@
 # these are typescript now
 # eventually, all **.page.js files
 # can be ignored with a glob.
-*rxComponent.page.js
-*rxCheckbox.exercise.ts
-*rxCheckbox.page.ts
-*rxComponent.ts
-*rxDatePicker.exercise.ts
-*rxDatePicker.page.ts
-*rxRadio.exercise.ts
-*rxRadio.page.ts
-*rxSelect.exercise.ts
-*rxSelect.page.ts
-*rxTimePicker.page.ts
+*rxActionMenu.page.js
+*rxBulkSelect.exercise.js
+*rxBulkSelect.page.js
+*rxComponent.js
+*rxCheckbox.exercise.js
+*rxCheckbox.page.js
+*rxComponent.js
+*rxDatePicker.exercise.js
+*rxDatePicker.page.js
+*rxFeedback.page.js
+*rxFieldName.exercise.js
+*rxFieldName.page.js
+*rxForm.page.js
+*rxModalAction.page.js
+*rxNotify.page.js
+*rxRadio.exercise.js
+*rxRadio.page.js
+*rxSelect.exercise.js
+*rxSelect.page.js
+*rxTimePicker.page.js
 
-*rxCheckbox.midway.ts
-*rxDatePicker.midway.ts
-*rxRadio.midway.ts
-*rxSelect.midway.ts
-*rxTimePicker.midway.ts
+*rxActionMenu.midway.js
+*rxAutoSave.midway.js
+*rxBulkSelect.midway.js
+*rxCheckbox.midway.js
+*rxDatePicker.midway.js
+*rxFeedback.midway.js
+*rxForm.midway.js
+*rxModalAction.midway.js
+*rxNotify.midway.js
+*rxRadio.midway.js
+*rxSelect.midway.js
+*rxTimePicker.midway.js
