@@ -19,11 +19,9 @@ src/rxRadio.page.js
 src/rxSelect.exercise.js
 src/rxSelect.page.js
 src/rxTimePicker.page.js
-src/rxTimePickerUtil.page.js
 
 test/rxCheckbox.midway.js
 test/rxDatePicker.midway.js
 test/rxRadio.midway.js
 test/rxSelect.midway.js
 test/rxTimePicker.midway.js
-test/rxTimePickerUtil.midway.js

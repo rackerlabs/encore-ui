@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import * as _ from 'lodash';
 import {$} from 'protractor';
 
-import {rxTimePicker} from '../index';
+import {parseUtcOffset, rxTimePicker} from '../index';
 
 let demoPage = require('../../demo.page');
 
@@ -322,10 +322,28 @@ describe('rxTimePicker', () => {
                 expect(picker.time).to.eventually.be.empty;
             });
 
-            it('should change using ISO 8601 time string', () => {
+            // Testing the complex setter logic in picker.time
+            it('should set using ISO 8601 time string', () => {
                 picker.time = '20:00-04:00';
                 expect(picker.time).to.eventually.eq('20:00-04:00');
             });
         });
     }); // empty picker
+
+    describe('parseUtcOffset()', () => {
+        [
+            ['8:00 (-06:00)', '-06:00'],
+            ['13:00 (UTC-0800)', '-0800'],
+            ['20:00-04:00', '-04:00'],
+            ['non-time string', ''],
+            ['20:00-0400', '-0400'],
+            ['20:00-400', ''],
+            ['20:00-4', ''],
+        ].forEach(([strInput, strOutput]) => {
+            it('should return "' + strOutput + '" as parsed from "' + strInput + '"', () => {
+                let result = parseUtcOffset(strInput);
+                expect(result).to.eq(strOutput);
+            });
+        });
+    }); // parseUtcOffset()
 });

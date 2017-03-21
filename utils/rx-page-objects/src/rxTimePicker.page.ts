@@ -3,7 +3,6 @@
 import {by} from 'protractor';
 import {AccessorPromiseString, OverrideWebdriver, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
-import {rxTimePickerUtil} from './rxTimePickerUtil.page';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -119,7 +118,7 @@ export class rxTimePicker extends rxComponentElement {
 
         // `date` is currently in local TZ (not expected TZ)
         // extract the expected TZ to update `date`
-        let offset = rxTimePickerUtil.parseUtcOffset(<string> timeString);
+        let offset = parseUtcOffset(<string> timeString);
         // force to time zone from input
         date.utcOffset(offset);
 
@@ -182,4 +181,16 @@ export class rxTimePicker extends rxComponentElement {
     cancel() {
         return this.btnCancel.click();
     }
+}
+
+/**
+ * @description return offset value, if present in string
+ *
+ * **NOTE:** Logic in this function must match the logic in
+ * the rxTimePickerUtil service.
+ */
+export function parseUtcOffset(stringValue: string) {
+    let regex = /([-+]\d{2}:?\d{2})/;
+    let matched = stringValue.match(regex);
+    return (matched ? matched[0] : '');
 }
