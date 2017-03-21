@@ -2,14 +2,19 @@
 
 import {expect} from 'chai';
 import * as _ from 'lodash';
+import * as component from './rxRadio.page';
 
+interface IRxRadioExerciseOptions {
+    instance: component.rxRadio;
+    disabled?: boolean;
+    selected?: boolean;
+    valid?: boolean;
+    visible?: boolean;
+}
 /**
  * @description rxRadio exercises
  */
-export function rxRadio(options) {
-    if (options === undefined) {
-        options = {};
-    }
+export function rxRadio(options: IRxRadioExerciseOptions) {
 
     options = _.defaults(options, {
         disabled: false,
@@ -19,7 +24,7 @@ export function rxRadio(options) {
     });
 
     return () => {
-        let component;
+        let component: component.rxRadio;
 
         before(() => {
             component = options.instance;

@@ -2,8 +2,7 @@
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {ElementFinder} from 'protractor';
-import {by} from 'protractor';
+import {by, ElementFinder} from 'protractor';
 import {AccessorPromiseString, OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
 
@@ -53,9 +52,7 @@ export class rxDatePicker extends rxComponentElement {
         this.open();
         let dropdownExpectedValue = moment(<string> value, 'MM').format('MMM');
         if (dropdownExpectedValue === 'Invalid date') {
-            throw new Error(
-                `Unexpected month value for month number "${value}". Months are not zero-indexed!`,
-            );
+            throw new Error(`Unexpected month value for month number "${value}". Months are not zero-indexed!`);
         }
 
         new rxSelect(this.currentMonth).select(dropdownExpectedValue);
@@ -140,7 +137,7 @@ export class rxDatePicker extends rxComponentElement {
      * picker.open();
      * picker.open(); // does nothing
      */
-    open(): Promise<void> {
+    open() {
         return this.isOpen().then(open => {
             if (!open) {
                 return this.$('.control').click();
@@ -157,7 +154,7 @@ export class rxDatePicker extends rxComponentElement {
      * picker.close();
      * picker.close(); // does nothing
      */
-    close(): Promise<void> {
+    close() {
         return this.isOpen().then(isOpen => {
             if (isOpen) {
                 return this.$('.control').click();
@@ -168,7 +165,7 @@ export class rxDatePicker extends rxComponentElement {
     /**
      * @description Click over to the next month in the calendar.
      */
-    nextMonth(): Promise<void> {
+    nextMonth() {
         this.open();
         return this.$('.arrow.next').click();
     };
@@ -176,7 +173,7 @@ export class rxDatePicker extends rxComponentElement {
     /**
      * @description Click back to the previous month in the calendar.
      */
-    previousMonth(): Promise<void> {
+    previousMonth() {
         this.open();
         return this.$('.arrow.prev').click();
     };

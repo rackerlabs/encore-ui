@@ -16,10 +16,6 @@ interface IRxSelectExerciseOptions {
  * @description rxSelect exercises.
  */
 export function rxSelect (options: IRxSelectExerciseOptions) {
-    if (options === undefined) {
-        options = {};
-    }
-
     options = _.defaults(options, {
         disabled: false,
         visible: true,
