@@ -1,5 +1,5 @@
 describe('rxIfEnvironment', function () {
-    var scope, compile, envSvc, _location, setUrl,
+    var scope, compile, _location, setUrl,
         stagingMsg = 'Show if staging',
         prodMsg = 'Show if not prod',
         stagingTemplate = '<div rx-if-environment="unified-preprod">' + stagingMsg + '</div>',
@@ -9,19 +9,15 @@ describe('rxIfEnvironment', function () {
         // load module
         module('encore.ui.utilities');
 
-        inject(function ($rootScope, $compile, $location, rxEnvironment) {
+        inject(function ($rootScope, $compile, $location) {
             scope = $rootScope.$new();
             compile = $compile;
-            envSvc = rxEnvironment;
             _location = $location;
 
             setUrl = function (url) {
                 sinon.stub(_location, 'absUrl').returns(url);
             };
         });
-
-        // override get functionality so we can customize environment
-        sinon.stub(envSvc, 'get');
     });
 
     it('should show if environment matches', function () {
