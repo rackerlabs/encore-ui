@@ -14,6 +14,13 @@ module.exports = function (grunt) {
             }
         },
 
+        'tslint-test': {
+            command: 'npm run tslint-test',
+            options: {
+                stdout: true
+            }
+        },
+
         tscRxPageObjects: {
             command: 'node_modules/.bin/tsc',
             options: {

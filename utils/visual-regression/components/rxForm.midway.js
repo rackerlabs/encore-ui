@@ -22,17 +22,18 @@ describe('demo components', function () {
 
         before(function () {
             datepicker = new encore.rxDatePicker(element(by.model('dateModel')));
+            datepicker.open();
             datepicker.date = '2012-05-24';
         });
 
         it('closed', function () {
             datepicker.close();
-            screenshot.snap(this, datepicker.rootElement, { threshold: 1 });
+            screenshot.snap(this, datepicker, { threshold: 1 });
         });
 
         it('open', function () {
             datepicker.open();
-            screenshot.snap(this, datepicker.rootElement.$('.popup'), { threshold: 1 });
+            screenshot.snap(this, datepicker.$('.popup'), { threshold: 1 });
         });
 
         after(function () {
@@ -50,12 +51,12 @@ describe('demo components', function () {
 
         it('closed', function () {
             timepicker.close();
-            screenshot.snap(this, timepicker.rootElement, { threshold: 1 });
+            screenshot.snap(this, timepicker, { threshold: 1 });
         });
 
         it('open', function () {
             timepicker.open();
-            screenshot.snap(this, timepicker.rootElement.$('.popup'), { threshold: 1 });
+            screenshot.snap(this, timepicker.$('.popup'), { threshold: 1 });
         });
 
         after(function () {

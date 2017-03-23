@@ -14,7 +14,7 @@ var autoSaving = Page.create({
         }
     },
 
-    checkbox: encore.rxCheckbox.generateAccessor(element(by.model('formData.checkbox'))),
+    checkbox: encore.rxCheckboxAccessor(element(by.model('formData.checkbox')))(),
 
     name: encore.rxForm.textField.generateAccessor(element(by.model('formData.name'))),
 

@@ -1,0 +1,35 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "class-name": false,
+    "curly": false,
+    "max-classes-per-file": false,
+    "member-access": false,
+    "member-ordering": false,
+    "no-namespace": false,
+    "no-unused-variable": true,
+    "no-var-requires": false,
+    "object-literal-sort-keys": false,
+    "promise-function-async": false,
+    "quotemark": "avoid-escape",
+    "typedef-whitespace":
+    [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      },
+      {
+        "call-signature": "onespace",
+        "index-signature": "onespace",
+        "parameter": "onespace",
+        "property-declaration": "onespace",
+        "variable-declaration": "onespace"
+      }
+    ]
+  }
+}

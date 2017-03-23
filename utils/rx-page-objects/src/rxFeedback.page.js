@@ -9,7 +9,7 @@ var rxModalAction = require('./rxModalAction.page').rxModalAction;
 var rxFeedback = {
     selReportType: {
         get: function () {
-            return rxSelect.initialize($('#selFeedbackType'));
+            return new rxSelect($('#selFeedbackType'));
         }
     },
 
@@ -50,7 +50,7 @@ var rxFeedback = {
             return this.selReportType.selectedOption.getText();
         },
         set: function (optionText) {
-            var option = this.selReportType.rootElement.element(by.cssContainingText('option', optionText));
+            var option = this.selReportType.element(by.cssContainingText('option', optionText));
             /*
              * For some reason, it seems that the slow click method in combination
              * with an rx-select in the modal will dismiss the modal instead of
@@ -69,7 +69,7 @@ var rxFeedback = {
      */
     types: {
         get: function () {
-            return this.selReportType.options;
+            return this.selReportType.options.getText();
         }
     },
 
