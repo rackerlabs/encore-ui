@@ -92,17 +92,20 @@
                 } else if (!_.isEmpty(route.href)) {
                     // Prepend a "#" for easier matching
                     var normalizedUrl = '#' + currentUrl;
+                    var regexHref = new RegExp(route.href + '\\b', 'g');
 
                     /*
                      * Does the normalizedUrl contain the route.href?
+                     * https://regex101.com/r/xFBHll/1
                      *
                      * $location.url() | normalizedUrl | route.href | result
                      * --------------- | ------------- | ---------- | ------
                      * /foo/bar        | #/foo/bar     | #/foo      | TRUE
                      * /foo/bar?a=b    | #/foo/bar?a=b | #/foo      | TRUE
                      * /foo/bar?a=b    | #/foo/bar?a=b | #/bar      | FALSE
+                     * /foobar         | #/foobar      | #/foo      | FALSE
                      */
-                    route.active = (normalizedUrl.indexOf(route.href) > -1);
+                    route.active = regexHref.test(normalizedUrl);
                 } else {
                     /*
                      * Route should not be active
