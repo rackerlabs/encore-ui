@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="person in people | filter:searchText | Paginate:pager">
+      <tr ng-repeat="person in people | filter:searchText | rxPaginate:pager">
         <td rx-status-column status="{{ person.status }}"></td>
         <td><a href="#">Lorem ipsum</a></td>
         <td>{{ person.name }}</td>
