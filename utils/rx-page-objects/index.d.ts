@@ -10,7 +10,6 @@ export {rxDatePicker} from './src/rxDatePicker.page';
 // export {rxDiskSize} from './src/rxDiskSize.page';
 export {rxFeedback} from './src/rxFeedback.page';
 export {rxFieldName} from './src/rxFieldName.page';
-export {rxForm, textFieldAccessor} from './src/rxForm.page';
 // export {rxLocalStorage} from './src/rxLocalStorage.page';
 // export {rxMetadata} from './src/rxMetadata.page';
 // export {rxMisc} from './src/rxMisc.page';
@@ -45,6 +44,7 @@ import {rxRadio as rxRadioExercise} from './src/rxRadio.exercise';
 // import {rxSearchBox as rxSearchBoxExercise} from './src/rxSearchBox.exercise';
 import {rxSelect as rxSelectExercise} from './src/rxSelect.exercise';
 // import {rxTags as rxTagsExercise} from './src/rxTags.exercise';
+export {textFieldAccessor} from './src/textField.page';
 // import {rxToggleSwitch as rxToggleSwitchExercise} from './src/rxToggleSwitch.exercise';
 
 export const exercise: {
