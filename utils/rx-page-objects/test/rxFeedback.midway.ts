@@ -2,7 +2,7 @@
 
 import {expect} from 'chai';
 import * as _ from 'lodash';
-import {$, browser} from 'protractor';
+import {$} from 'protractor';
 
 import {rxFeedback, rxNotify} from '../index';
 
