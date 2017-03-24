@@ -23,7 +23,7 @@ describe('layouts', function () {
         });
 
         it('full table', function () {
-            screenshot.snap(this, $('.page-body'));
+            screenshot.snap(this, $('main'));
         });
     });
 
