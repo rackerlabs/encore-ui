@@ -5,7 +5,7 @@ describe('demo components', function () {
     });
 
     it('checkboxes', function () {
-        screenshot.snap(this, $('table[ng-controller="rxCheckboxCtrl"]'), { threshold: 1 });
+        screenshot.snap(this, $('table[ng-controller="checkboxDocsCtrl"]'), { threshold: 1 });
     });
 
     it('radios', function () {
