@@ -19,7 +19,6 @@
 *rxFeedback.page.js
 *rxFieldName.exercise.js
 *rxFieldName.page.js
-*rxForm.page.js
 *rxModalAction.page.js
 *rxNotify.page.js
 *rxRadio.exercise.js
@@ -27,6 +26,7 @@
 *rxSelect.exercise.js
 *rxSelect.page.js
 *rxTimePicker.page.js
+*textField.page.js
 
 *rxActionMenu.midway.js
 *rxAutoSave.midway.js
@@ -34,9 +34,10 @@
 *rxCheckbox.midway.js
 *rxDatePicker.midway.js
 *rxFeedback.midway.js
-*rxForm.midway.js
+*rxFieldName.midway.js
 *rxModalAction.midway.js
 *rxNotify.midway.js
 *rxRadio.midway.js
 *rxSelect.midway.js
 *rxTimePicker.midway.js
+*textField.midway.js

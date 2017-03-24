@@ -20,7 +20,6 @@ src/rxDatePicker.page.js
 src/rxFeedback.page.js
 src/rxFieldName.exercise.js
 src/rxFieldName.page.js
-src/rxForm.page.js
 src/rxModalAction.page.js
 src/rxNotify.page.js
 src/rxRadio.exercise.js
@@ -28,6 +27,7 @@ src/rxRadio.page.js
 src/rxSelect.exercise.js
 src/rxSelect.page.js
 src/rxTimePicker.page.js
+src/textField.page.js
 
 test/rxActionMenu.midway.js
 test/rxAutoSave.midway.js
@@ -35,9 +35,10 @@ test/rxBulkSelect.midway.js
 test/rxCheckbox.midway.js
 test/rxDatePicker.midway.js
 test/rxFeedback.midway.js
-test/rxForm.midway.js
+test/rxFieldName.midway.js
 test/rxModalAction.midway.js
 test/rxNotify.midway.js
 test/rxRadio.midway.js
 test/rxSelect.midway.js
 test/rxTimePicker.midway.js
+test/textField.midway.js
