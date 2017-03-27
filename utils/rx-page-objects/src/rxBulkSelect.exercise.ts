@@ -116,11 +116,11 @@ export function rxBulkSelect(options?: IRxBulkSelectExerciseOptions) {
             });
 
             _.each(options.batchActions, action => {
-                it('should have the batch action "' + action + '"', () => {
+                it(`should have the batch action "${action}"`, () => {
                     expect(component.batchActions.hasAction(action)).to.eventually.be.true;
                 });
 
-                it('should be able to open the modal for batch action "' + action + '"', () => {
+                it(`should be able to open the modal for batch action "${action}"`, () => {
                     let modal = new rxModalAction($('.modal'));
                     component.batchActions.action(action).click();
                     expect(modal.isDisplayed()).to.eventually.be.true;

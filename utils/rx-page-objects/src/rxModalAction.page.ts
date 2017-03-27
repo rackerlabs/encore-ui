@@ -12,7 +12,7 @@ import {OverrideWebdriver, rxComponentElement} from './rxComponent';
  * @example
  * class ChangePasswordModal extends rxModal {
  *     get txtNewPassword() {
- *         return this.rootElement.element(by.model('fields.password'));
+ *         return this.element(by.model('fields.password'));
  *     }
  *
  *     get txtErrorMessage: {

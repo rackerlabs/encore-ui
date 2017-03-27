@@ -19,16 +19,16 @@ describe('rxFeedback', () => {
         unsuccessfulFeedback = new rxFeedback($('#rxFeedbackFails'));
     });
 
-    it('should select the "' + defaultFeedback + '" feedback type by default', () => {
+    it(`should select the "${defaultFeedback}" feedback type by default`, () => {
         successfulFeedback.open();
         expect(successfulFeedback.type).to.eventually.equal(defaultFeedback);
     });
 
-    it('should have the default feedback description label for "' + defaultFeedback + '"', () => {
+    it(`should have the default feedback description label for "${defaultFeedback}"`, () => {
         expect(successfulFeedback.getDescriptionLabel()).to.eventually.equal('Bug Description:');
     });
 
-    it('should have the default feedback placeholder text for "' + defaultFeedback + '"', () => {
+    it(`should have the default feedback placeholder text for "${defaultFeedback}"`, () => {
         let placeholder = 'Please be as descriptive as possible so we can track it down for you.';
         expect(successfulFeedback.getDescriptionPlaceholder()).to.eventually.equal(placeholder);
     });
@@ -81,12 +81,14 @@ describe('rxFeedback', () => {
     describe('submitting feedback', () => {
 
         it('should successfully submit feedback', () => {
-            expect(successfulFeedback.send('Software Bug', 'test', 3000)).to.not.be.rejectedWith(Error);
+            successfulFeedback.send('Software Bug', 'test');
+            expect(rxNotify.all.hasNotification('feedback', 'success')).to.eventually.be.true;
         });
 
         it('should catch errors on unsuccessful feedback', () => {
             rxNotify.all.dismiss();
-            expect(unsuccessfulFeedback.send('Software Bug', 'test', 3000)).to.be.rejectedWith(Error);
+            unsuccessfulFeedback.send('Software Bug', 'test');
+            expect(rxNotify.all.hasNotification('Feedback not received!', 'error')).to.eventually.be.true;
         });
 
     });

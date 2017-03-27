@@ -1,10 +1,9 @@
 'use strict';
 
-import {$, browser, by, ElementFinder} from 'protractor';
+import {$, by, ElementFinder} from 'protractor';
 import {AccessorPromiseString} from './rxComponent';
 
 import {rxModalAction} from './rxModalAction.page';
-import {rxNotify} from './rxNotify.page';
 import {rxSelect} from './rxSelect.page';
 
 /**
@@ -95,26 +94,10 @@ export class rxFeedback extends rxModalAction {
      * message. Otherwise, `confirmSuccessFn` will be attempted until it yields a truthy value,
      * using Protractor's `wait` function.  You must also specify a value for `confirmSuccessWithin`.
      */
-    send(feedbackType: string, feedbackText: string, confirmSuccessWithin?: number, confirmSuccessFn?: Function) {
+    send(feedbackType: string, feedbackText: string) {
         this.open();
         this.type = feedbackType;
         this.description = feedbackText;
-        if (confirmSuccessWithin !== undefined) {
-            this.submit();
-            return this.confirmSuccess(confirmSuccessWithin, confirmSuccessFn);
-        }
         return this.submit();
-    }
-
-    /**
-     * @description Helper function used to confirm that {@link rxFeedback#send} was confirmed as successful.
-     * @see rxFeedback#send
-     */
-    confirmSuccess(within: number, fn?: Function) {
-        fn = fn || (() => {
-            return rxNotify.all.hasNotification('feedback', 'success');
-        });
-
-        return browser.wait(fn, within, 'Feedback submission did not confirm success within ' + within + ' msecs');
     }
 }// rxFeedback

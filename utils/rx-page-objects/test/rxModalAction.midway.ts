@@ -1,28 +1,18 @@
 'use strict';
 
 import {expect} from 'chai';
-import {$, by} from 'protractor';
+import {$, by, element} from 'protractor';
 
-import {AccessorPromiseString, rxModalAction, rxNotify} from '../index';
+import {rxModalAction, rxNotify, textFieldAccessor} from '../index';
 
 let demoPage = require('../../demo.page');
 
 class ChangePasswordModal extends rxModalAction {
-    get txtNewPassword() {
-        return this.element(by.model('fields.password'));
-    }
-
     get txtErrorMessage() {
         return this.$('.error-message');
     }
 
-    get newPassword(): AccessorPromiseString {
-        return this.txtNewPassword.getAttribute('value');
-    }
-    set newPassword(password: AccessorPromiseString) {
-        this.txtNewPassword.clear();
-        this.txtNewPassword.sendKeys(password);
-    }
+    @textFieldAccessor(element(by.model('fields.password'))) newPassword;
 }
 
 describe('rxModalAction', () => {

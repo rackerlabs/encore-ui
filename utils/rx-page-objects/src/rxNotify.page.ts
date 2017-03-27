@@ -56,7 +56,7 @@ export class rxNotification extends rxComponentElement {
      */
     @OverrideWebdriver
     getText() {
-        return this.element(by.xpath('.')).getText().then(text => {
+        return this._originalElement.getText().then(text => {
             // Remove any lingering '× ' characters.
             return text.split('\n')[0].trim();
         });
@@ -118,7 +118,7 @@ export class rxNotify extends rxComponentElement {
      * });
      */
     static byStack(stackName: string) {
-        let rootElement = $('.rx-notifications[stack="' + stackName + '"]');
+        let rootElement = $(`.rx-notifications[stack="${stackName}"]`);
         return new rxNotify(rootElement);
     }
 
