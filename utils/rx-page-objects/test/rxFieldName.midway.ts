@@ -14,12 +14,14 @@ describe('rxFieldName', () => {
 
     describe('"Plain Textbox"', exercise.rxFieldName({
         instance: new rxFieldName($('#fieldNamePlainTextbox')),
+        name: 'Plain Textbox:',
         visible: true,
         required: false,
     }));
 
     describe('"Required Textarea"', exercise.rxFieldName({
         instance: new rxFieldName($('#fieldNameRequiredTextarea')),
+        name: 'Required Textarea:',
         visible: true,
         required: true,
     }));
@@ -39,7 +41,7 @@ describe('rxFieldName', () => {
             });
 
             it('symbol should be visible', () => {
-                expect(subject.isSymbolDisplayed()).to.eventually.be.true;
+                expect(subject.symbol.isDisplayed()).to.eventually.be.true;
             });
         });
 
@@ -49,7 +51,7 @@ describe('rxFieldName', () => {
             });
 
             it('symbol should not be visible', () => {
-                expect(subject.isSymbolDisplayed()).to.eventually.be.false;
+                expect(subject.symbol.isDisplayed()).to.eventually.be.false;
             });
         });
     });

@@ -1,7 +1,6 @@
 'use strict';
 
-import {ElementFinder} from 'protractor';
-import {$, browser, by} from 'protractor';
+import {$, browser, by, ElementFinder} from 'protractor';
 import {AccessorPromiseString} from './rxComponent';
 
 import {rxModalAction} from './rxModalAction.page';
