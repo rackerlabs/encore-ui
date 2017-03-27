@@ -103,7 +103,7 @@ export namespace rxMisc {
 
                 let yLocation = elementTargetPoint - positionOnScreen;
 
-                let command = ['window.scrollTo(0, ', yLocation.toString(), ');'].join('');
+                let command = `window.scrollTo(0, ${yLocation});`;
                 browser.executeScript(command);
             });
         });
