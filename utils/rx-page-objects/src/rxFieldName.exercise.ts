@@ -30,7 +30,7 @@ export function rxFieldName (options: IRxFieldNameExerciseOptions) {
             component = options.instance;
         });
 
-        it('should ' + (options.visible ? 'be' : 'not be') + ' visible', () => {
+        it(`should ${(options.visible ? 'be' : 'not be')} visible`, () => {
             expect(component.isDisplayed()).to.eventually.eq(options.visible);
         });
 
