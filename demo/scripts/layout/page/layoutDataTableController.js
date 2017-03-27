@@ -1,6 +1,6 @@
 angular.module('demoApp')
-.controller('layoutDataTableCtrl', function ($scope, PageTracking) {
-    $scope.pager = PageTracking.createInstance();
+.controller('layoutDataTableCtrl', function ($scope, rxPageTracker) {
+    $scope.pager = rxPageTracker.createInstance();
     $scope.people = [
         { name: 'Patrick Deuley', occupation: 'Design Chaplain', number: 1, status: 'ACTIVE' },
         { name: 'Hussam Dawood', occupation: 'Cat Lover', number: 2, status: 'DISABLED' },
