@@ -4,8 +4,8 @@ import {Promise, rxComponentElement} from './rxComponent';
 
 export enum SORT_TYPE {
     DESCENDING = -1,
-    UNSORTED,
-    ASCENDING,
+    UNSORTED = 0,
+    ASCENDING = 1,
 }
 
 /**
