@@ -6,6 +6,7 @@ import * as component from './rxFieldName.page';
 
 interface IRxFieldNameExerciseOptions {
     instance: component.rxFieldName;
+    name?: string;
     present?: boolean;
     required?: boolean;
     visible?: boolean;
@@ -39,7 +40,7 @@ export function rxFieldName (options: IRxFieldNameExerciseOptions) {
             });
 
             it('should have a symbol present', () => {
-                expect(component.isSymbolPresent()).to.eventually.be.true;
+                expect(component.symbol.isPresent()).to.eventually.be.true;
             });
         } else {
             it('should not be present', () => {
@@ -47,17 +48,23 @@ export function rxFieldName (options: IRxFieldNameExerciseOptions) {
             });
 
             it('should not have a symbol present', () => {
-                expect(component.isSymbolPresent()).to.eventually.be.false;
+                expect(component.symbol.isPresent()).to.eventually.be.false;
             });
         }
 
         if (options.required === true) {
             it('should have a symbol visible', () => {
-                expect(component.isSymbolDisplayed()).to.eventually.be.true;
+                expect(component.symbol.isDisplayed()).to.eventually.be.true;
             });
         } else {
             it('should not have a symbol visible', () => {
-                expect(component.isSymbolDisplayed()).to.eventually.be.false;
+                expect(component.symbol.isDisplayed()).to.eventually.be.false;
+            });
+        }
+
+        if (options.name !== undefined) {
+            it('should have the specified field name', () => {
+                expect(component.getText()).to.eventually.eql(options.name);
             });
         }
     };

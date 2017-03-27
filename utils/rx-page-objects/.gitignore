@@ -11,7 +11,6 @@ typings/
 src/rxActionMenu.page.js
 src/rxBulkSelect.exercise.js
 src/rxBulkSelect.page.js
-src/rxComponent.js
 src/rxCheckbox.exercise.js
 src/rxCheckbox.page.js
 src/rxComponent.js
