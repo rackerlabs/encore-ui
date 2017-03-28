@@ -33,7 +33,7 @@
 *rxSelect.page.js
 *rxSelectFilter.page.js
 *rxSortableColumn.page.js
-*rxStatusColumn.page.js
+*rxStatusCell.page.js
 *rxTimePicker.page.js
 *rxToggleSwitch.exercise.js
 *rxToggleSwitch.page.js
@@ -57,7 +57,7 @@
 *rxSelect.midway.js
 *rxSelectFilter.midway.js
 *rxSortableColumn.midway.js
-*rxStatusColumn.midway.js
+*rxStatusCell.midway.js
 *rxTimePicker.midway.js
 *rxToggleSwitch.midway.js
 *textField.midway.js

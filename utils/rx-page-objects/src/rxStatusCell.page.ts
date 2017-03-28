@@ -42,8 +42,8 @@ const ICON_CLASS_STATUS = {
  * with a single cell in that sortable column as a "status column". Status columns have use a mix
  * of colors and icons to represent a status. Many of these statuses are free-form. It'll be up to
  * you to map what each color and symbol combination means in your app, but some basic ones are
- * included in this namespace via {@link rxStatusColumn.statuses}, {@link rxStatusColumn.icons}, and
- * {@link rxStatusColumn.colors}.
+ * included in this namespace via {@link rxStatusCell.statuses}, {@link rxStatusCell.icons}, and
+ * {@link rxStatusCell.colors}.
  *
  * All examples in this documentation will assume that you're using code similar to what's shown
  * in the example below.
@@ -70,7 +70,7 @@ const ICON_CLASS_STATUS = {
  *
  *     // The tests below focus heavily on this table row property
  *     get status() {
- *         return new rxStatusColumn(this.rootElement.$('[rx-status-column]'));
+ *         return new rxStatusCell(this.rootElement.$('[rx-status-column]'));
  *     },
  *
  *     // just for the sake of having another example present
@@ -99,7 +99,7 @@ const ICON_CLASS_STATUS = {
  *     }
  * });
  */
-export class rxStatusColumn extends rxComponentElement {
+export class rxStatusCell extends rxComponentElement {
     /**
      * @description Represents the custom defined status type.
      * This has no relation to the tooltip text, the icon chosen, or the color used to represent it.
@@ -149,18 +149,7 @@ export class rxStatusColumn extends rxComponentElement {
     }
 
     /**
-     * @description The custom HTML attribute `api`, added to the status column by `rxStatusMappings.mapToAPI`.
-     * For more information about this functionality, consult the developer's documentation for `rxStatusMappings`,
-     * or look at the rxStatusColumn component demo. This attribute is not typical used by most projects.
-     */
-    getApi(): Promise<string> | Promise<null> {
-        return this.getAttribute('api').then(api => {
-            return (api ? api : null);
-        });
-    }
-
-    /**
-     * @description Will appear on hover. Exposes the functions contained within {@link rxStatusColumn.tooltip}.
+     * @description Will appear on hover. Exposes the functions contained within {@link rxStatusCell.tooltip}.
      * Note that this function must hover over the tooltip in order to retrieve the underlying element.  This means that
      * other mouse actions after retrieving the tooltip may cause the tooltip to hide.
      */

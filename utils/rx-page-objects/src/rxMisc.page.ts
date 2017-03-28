@@ -20,25 +20,6 @@ type rxMiscLocationSubject = ElementFinder | ElementArrayFinder | ILocation;
  */
 export namespace rxMisc {
     /**
-     * @description Equivalent to `browser.actions().mouseDown(elem).mouseUp().perform();`.
-     * This function should be used when dealing with odd or unusual behavior while interacting with click events
-     * that don't seem to work right. Either the element does not appear to respond to a normal `.click()` call, or
-     * the element is responding to more than one click event. This typically happens more often in Firefox than
-     * in other browsers.
-     * @example
-     * it('should click the crazy custom HTML thing that looks like a button but isn\'t', function () {
-     *     var crazyButton = $('.button-wrapper[id="userId_"' + browser.params.userId + '"]');
-     *     crazyButton.click(); // didn't work!
-     *     expect(encore.rxNotify.all.isPresent('You will be redirected', 'success')).to.eventually.be.false;
-     *     encore.rxMisc.slowClick(crazyButton);
-     *     expect(encore.rxNotify.all.isPresent('You will be redirected', 'success')).to.eventually.be.true;
-     * });
-     */
-    export function slowClick(elem: ElementFinder): void {
-        browser.actions().mouseDown(elem).mouseUp().perform();
-    }
-
-    /**
      * @description Accepts an ElementFinder, or an ElementArrayFinder, which can have several locations.
      * Should the list of elements be stacked vertically (say, in a list of table rows),
      * the element with the smallest Y coordinate will be scrolled to.

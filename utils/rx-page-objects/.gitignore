@@ -34,7 +34,7 @@ src/rxSelect.exercise.js
 src/rxSelect.page.js
 src/rxSelectFilter.page.js
 src/rxSortableColumn.page.js
-src/rxStatusColumn.page.js
+src/rxStatusCell.page.js
 src/rxTimePicker.page.js
 src/rxToggleSwitch.exercise.js
 src/rxToggleSwitch.page.js
@@ -58,7 +58,7 @@ test/rxSearchBox.midway.js
 test/rxSelect.midway.js
 test/rxSelectFilter.midway.js
 test/rxSortableColumn.midway.js
-test/rxStatusColumn.midway.js
+test/rxStatusCell.midway.js
 test/rxTimePicker.midway.js
 test/rxToggleSwitch.midway.js
 test/textField.midway.js

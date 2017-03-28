@@ -88,7 +88,7 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * @description The text of each option element in the dropdown.
+     * @description The ElementArrayFinder for each element in the dropdown.
      */
     get options() {
         return this.$$('rx-select-option');
@@ -101,7 +101,7 @@ export class rxMultiSelect extends rxComponentElement {
      * @example
      * it('should select a few options', function () {
      *     var selected = ['Canada', 'Latvia', 'United States of America'];
-     *     var multiSelect = encore.rxMultiSelect.initialize(element(by.model('countriesVisited')));
+     *     var multiSelect = new encore.rxMultiSelect(element(by.model('countriesVisited')));
      *     multiSelect.select(selected);
      *     // multi select lists all countries alphabetically
      *     expect(multiSelect.selectedOptions.getText()).to.eventually.eql(selected);
@@ -117,7 +117,7 @@ export class rxMultiSelect extends rxComponentElement {
     /**
      * @description The option matching on the partial text in the option's name.
      * @example
-     * var multiSelect = encore.rxMultiSelect.initialize(element(by.model('cars')));
+     * var multiSelect = new encore.rxMultiSelect(element(by.model('cars')));
      * var option = multiSelect.option('Ford Bronco');
      * option.select();
      * option.deselect();
@@ -131,7 +131,7 @@ export class rxMultiSelect extends rxComponentElement {
      * @description Given a list of options, select each of them. Will add selections to any pre-existing ones..
      * @example
      * it('should select a few options', function () {
-     *     var multiSelect = encore.rxMultiSelect.initialize(element(by.model('approvedBy')));
+     *     var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
      *     multiSelect.select(['Jack', 'Jill']);
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
      *     // will not over ride any pre-existing selections
@@ -150,7 +150,7 @@ export class rxMultiSelect extends rxComponentElement {
      * @description Given a list of options, deselect each of them. Will not
      * @example
      * it('should deselect a few options', function () {
-     *     var multiSelect = encore.rxMultiSelect.initialize(element(by.model('approvedBy')));
+     *     var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
      *     multiSelect.select(['Jack', 'Jill']);
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
      *     multiSelect.deselect(['Jack']);
