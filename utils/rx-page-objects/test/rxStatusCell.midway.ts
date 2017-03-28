@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import * as _ from 'lodash';
 import {$, by} from 'protractor';
 
-import {rxSortableColumn, rxStatusColumn, STATUS_COLORS, STATUS_ICONS} from '../index';
+import {rxSortableColumn, rxStatusCell, STATUS_COLORS, STATUS_ICONS} from '../index';
 
 let demoPage = require('../../demo.page');
 
@@ -15,7 +15,7 @@ class Row {
 
     // The tests below focus heavily on this table row property
     get status() {
-        return new rxStatusColumn(this.rootElement.$('[rx-status-column]'));
+        return new rxStatusCell(this.rootElement.$('[rx-status-column]'));
     }
 
     // goo.gl/OJdysF
@@ -69,13 +69,13 @@ let STATUS_TYPES = {
     UNKNOWN: 'UNKNOWN',
 };
 
-describe('rxStatusColumn', () => {
+describe('rxStatusCell', () => {
     before(() => {
         demoPage.go('#/elements/Tables');
     });
 
     describe('rows', () => {
-        let status: rxStatusColumn;
+        let status: rxStatusCell;
 
         describe('active cell', () => {
 
@@ -93,10 +93,6 @@ describe('rxStatusColumn', () => {
 
             it('should have a status by color', () => {
                 expect(status.getColor()).to.eventually.equal(STATUS_COLORS.ACTIVE);
-            });
-
-            it('should not have an api ', () => {
-                expect(status.getApi()).to.eventually.be.null;
             });
 
             it('should have a tooltip', () => {
@@ -125,10 +121,6 @@ describe('rxStatusColumn', () => {
 
             it('should have a status by color', () => {
                 expect(status.getColor()).to.eventually.equal(STATUS_COLORS.DISABLED);
-            });
-
-            it('should not have an api ', () => {
-                expect(status.getApi()).to.eventually.be.null;
             });
 
             it('should have a tooltip', () => {
@@ -223,7 +215,7 @@ describe('rxStatusColumn', () => {
             });
 
             it('should be using an api', () => {
-                expect(status.getApi()).to.eventually.equal('fooApi');
+                expect(status.getAttribute('api')).to.eventually.equal('fooApi');
             });
 
             it('should have a tooltip', () => {

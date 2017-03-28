@@ -35,10 +35,10 @@ export class Tooltip extends rxComponentElement {
         // Tooltips, when left open, can obscure other hover/click
         // events on the page. Avoid this by getting the text, stop
         // hovering, then return the text value back to the user.
-        return this.$('.tooltip-inner').getText().then(txt => {
-            browser.actions().mouseMove($('body')).perform();
-            return txt;
-        }, () => null);
+        let inner = this.$('.tooltip-inner');
+        let text = inner.getText();
+        browser.actions().mouseMove($('body')).perform();
+        return text;
     }// get text()
 
 }// Tooltip

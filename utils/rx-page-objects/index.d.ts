@@ -22,7 +22,7 @@ export {rxSearchBox} from './src/rxSearchBox.page';
 export {rxSelect, rxSelectAccessor} from './src/rxSelect.page';
 export {rxSelectFilter} from './src/rxSelectFilter.page';
 export {rxSortableColumn, SORT_TYPE} from './src/rxSortableColumn.page';
-export {rxStatusColumn, STATUS_COLORS, STATUS_ICONS} from './src/rxStatusColumn.page';
+export {rxStatusCell, STATUS_COLORS, STATUS_ICONS} from './src/rxStatusCell.page';
 // export {rxTags, Tag} from './src/rxTags.page';
 export {parseUtcOffset, rxTimePicker} from './src/rxTimePicker.page';
 export {rxToggleSwitch} from './src/rxToggleSwitch.page';
