@@ -13,7 +13,7 @@ export class rxComponentElement extends ElementFinder {
     }
 
     get parent() {
-        return this.element(by.xpath('..'));
+        return new rxComponentElement(this.element(by.xpath('..')));
     }
 };
 
