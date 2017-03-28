@@ -121,8 +121,7 @@ var rxTabFromElement = function (tabElement) {
         /**
          * @instance
          * @function
-         * @param {Boolean} slowClick - Whether or not to click the tab using {@link rxMisc.slowClick}.
-         * @memberof rxTabset.rxTab
+         * @memberof tabs.tab
          * @example
          * it('should visit the tab', function () {
          *     var tabs = encore.tabs.initialize();
@@ -131,8 +130,8 @@ var rxTabFromElement = function (tabElement) {
          * });
          */
         click: {
-            value: function (slowClick) {
-                slowClick ? rxMisc.slowClick(tabElement) : tabElement.click();
+            value: function () {
+                tabElement.click();
             }
         }
 
