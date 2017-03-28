@@ -1,13 +1,13 @@
 'use strict';
 import {by} from 'protractor';
-import {AccessorPromiseString, rxComponentElement} from './rxComponent';
+import {rxComponentElement} from './rxComponent';
 
 /**
  * @class
  */
 export class rxCharacterCount extends rxComponentElement {
     get eleParent() {
-        return this.element(by.xpath('../..'));
+        return this.parent.parent;
     }
 
     get lblRemaining() {
@@ -22,25 +22,9 @@ export class rxCharacterCount extends rxComponentElement {
     }
 
     /**
-     * @description Get and set the comment's textual content. Will erase the current text when setting new text.
-     * @example
-     * it('should erase all text and replace it with new text on update', () => {
-     *     myPage.comment = 'Bar';
-     *     expect(myPage.comment).to.eventually.equal('Bar');
-     * });
-     */
-    get comment(): AccessorPromiseString {
-        return this.getAttribute('value');
-    }
-    set comment(text) {
-        this.clear();
-        this.sendKeys(text);
-    }
-
-    /**
      * @description The remaining number of characters that can be entered.
      */
-    get remaining() {
+    getRemaining() {
         return this.lblRemaining.getText().then(parseInt);
     }
 

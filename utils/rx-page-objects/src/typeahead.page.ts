@@ -1,10 +1,9 @@
 'use strict';
-import {by} from 'protractor';
 import {rxComponentElement} from './rxComponent';
 
 export class Typeahead extends rxComponentElement {
     get eleMenu() {
-        return this.element(by.xpath('../..')).$('.dropdown-menu');
+        return this.parent.parent.$('.dropdown-menu');
     }
 
     /**

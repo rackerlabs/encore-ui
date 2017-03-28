@@ -56,7 +56,7 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         describe('with empty value', () => {
 
             beforeEach(() => {
-                characterCount.comment = '';
+                characterCount.clear();
             });
 
             it('should not set the near-limit class', () => {
@@ -64,7 +64,7 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
             });
 
             it('should have ' + options.maxCharacters + ' remaining characters', () => {
-                expect(characterCount.remaining).to.eventually.equal(options.maxCharacters);
+                expect(characterCount.getRemaining()).to.eventually.equal(options.maxCharacters);
             });
 
             it('should not set the over-limit class', () => {
@@ -75,21 +75,23 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         describe('with "Foo" value', () => {
 
             beforeEach(() => {
-                characterCount.comment = 'Foo';
+                characterCount.clear();
+                characterCount.sendKeys('Foo');
             });
 
             it('should update the remaining number of characters', () => {
-                expect(characterCount.remaining).to.eventually.equal(options.maxCharacters - 3);
+                expect(characterCount.getRemaining()).to.eventually.equal(options.maxCharacters - 3);
             });
 
             describe('and changed to "Bar"', () => {
 
                 beforeEach(() => {
-                    characterCount.comment = 'Bar';
+                    characterCount.clear();
+                    characterCount.sendKeys('Bar');
                 });
 
                 it('should replace value with new text', () => {
-                    expect(characterCount.comment).to.eventually.equal('Bar');
+                    expect(characterCount.getAttribute('value')).to.eventually.equal('Bar');
                 });
             });
         });
@@ -97,7 +99,8 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         describe('when ' + belowNearLimitLength + ' characters are entered', () => {
 
             beforeEach(() => {
-                characterCount.comment = repeat('a', belowNearLimitLength);
+                characterCount.clear();
+                characterCount.sendKeys(repeat('a', belowNearLimitLength));
             });
 
             it('should not set the near-limit class ', () => {
@@ -108,7 +111,8 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         describe('when ' + atNearLimitLength + ' near limit characters are entered', () => {
 
             beforeEach(() => {
-                characterCount.comment = repeat('b', atNearLimitLength);
+                characterCount.clear();
+                characterCount.sendKeys(repeat('b', atNearLimitLength));
             });
 
             it('should set the near-limit class', () => {
@@ -119,7 +123,8 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         describe('when ' + aboveNearLimitLength + ' above limit characters are entered', () => {
 
             beforeEach(() => {
-                characterCount.comment = repeat('c', aboveNearLimitLength);
+                characterCount.clear();
+                characterCount.sendKeys(repeat('c', aboveNearLimitLength));
             });
 
             it('should set the near-limit class', () => {
@@ -130,7 +135,8 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         describe('when ' + options.maxCharacters + ' characters are entered', () => {
 
             beforeEach(() => {
-                characterCount.comment = repeat('d', options.maxCharacters);
+                characterCount.clear();
+                characterCount.sendKeys(repeat('d', options.maxCharacters));
             });
 
             it('should not set the over-limit class', () => {
@@ -138,14 +144,15 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
             });
 
             it('should have zero remaining characters', () => {
-                expect(characterCount.remaining).to.eventually.equal(0);
+                expect(characterCount.getRemaining()).to.eventually.equal(0);
             });
         });
 
         describe('when ' + overLimit + ' characters are entered', () => {
 
             beforeEach(() => {
-                characterCount.comment = repeat('e', overLimit);
+                characterCount.clear();
+                characterCount.sendKeys(repeat('e', overLimit));
             });
 
             it('should set the over-limit class', () => {
@@ -153,23 +160,24 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
             });
 
             it('should display a negative number when the over-limit class is reached', () => {
-                expect(characterCount.remaining).to.eventually.equal(-1);
+                expect(characterCount.getRemaining()).to.eventually.equal(-1);
             });
         });
 
         describe('with leading and trailing whitespace', () => {
 
             beforeEach(() => {
-                characterCount.comment = whitespace;
+                characterCount.clear();
+                characterCount.sendKeys(whitespace);
             });
 
             if (options.ignoreInsignificantWhitespace) {
                 it('should count the trimmed length', () => {
-                    expect(characterCount.remaining).to.eventually.equal(options.maxCharacters - trimmedLength);
+                    expect(characterCount.getRemaining()).to.eventually.equal(options.maxCharacters - trimmedLength);
                 });
             } else {
                 it('should count the full length', () => {
-                    expect(characterCount.remaining).to.eventually.equal(options.maxCharacters - whitespaceLength);
+                    expect(characterCount.getRemaining()).to.eventually.equal(options.maxCharacters - whitespaceLength);
                 });
             }
         });
@@ -177,33 +185,37 @@ export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
         if (options.highlight) {
             describe('highlighting', () => {
 
+                beforeEach(() => {
+                    characterCount.clear();
+                });
+
                 it('should not show any highlights on an empty text box', () => {
                     // A space is used because the `input` event is not fired by clear() or sendKeys('')
-                    characterCount.comment = ' ';
+                    characterCount.sendKeys(' ');
                     expect(characterCount.getOverLimitText()).to.eventually.equal('');
                 });
 
                 it('should not highlight any characters when ' + options.maxCharacters + ' characters are entered',
                     () => {
-                        characterCount.comment = repeat('f', options.maxCharacters);
+                        characterCount.sendKeys(repeat('f', options.maxCharacters));
                         expect(characterCount.getOverLimitText()).to.eventually.equal('');
                     },
                 );
 
                 it('should highlight a single characters when ' + overLimit + ' characters are entered', () => {
-                    characterCount.comment = repeat('g', overLimit);
+                    characterCount.sendKeys(repeat('g', overLimit));
                     expect(characterCount.getOverLimitText()).to.eventually.equal('g');
                 });
 
                 it('should clear the over-limit text highlighting when the text is reduced', () => {
-                    characterCount.comment = 'h';
+                    characterCount.sendKeys('h');
                     expect(characterCount.getOverLimitText()).to.eventually.equal('');
                 });
             });
         }
 
         after(() => {
-            characterCount.comment = '';
+            characterCount.clear();
         });
 
     };

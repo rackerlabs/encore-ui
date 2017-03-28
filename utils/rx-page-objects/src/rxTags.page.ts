@@ -13,7 +13,7 @@ export class Tag extends rxComponentElement {
      * @description Whether or not the tag is currently focused.
      * @example
      * it('should focus on the last tag when clicking it', function () {
-     *     rxTags.new($('rx-tags')).addTag('Banana').then(function (tag) {
+     *     new rxTags($('rx-tags')).addTag('Banana').then(function (tag) {
      *         expect(tag.isFocused()).to.eventually.be.false;
      *         tag.click();
      *         expect(tag.isFocused()).to.eventually.be.true;
@@ -29,7 +29,7 @@ export class Tag extends rxComponentElement {
      * @description Removes the tag by clicking on it, then sending the backspace key.
      * @example
      * it('should show a warning when deleting an existing tag with backspace', function () {
-     *     rxTags.new($('rx-tags')).byText('Enterprise').backspaceRemove();
+     *     new rxTags($('rx-tags')).byText('Enterprise').backspaceRemove();
      *     var warning = 'Warning: Deleting tag "Enterprise" will notify some very angry sysadmins';
      *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
      * });
@@ -43,7 +43,7 @@ export class Tag extends rxComponentElement {
      * @description The text within the tag. Does not include the text in {@link rxTags.tag#category}.
      * @example
      * it('should have "Enterprise" as the exact tag name', function () {
-     *     expect(rxTags.new($('rx-tags')).byText('Banana').getText()).to.eventually.equal('Banana');
+     *     expect(new rxTags($('rx-tags')).byText('Banana').getText()).to.eventually.equal('Banana');
      * });
      * @returns {Promise<String>}
      */
@@ -56,7 +56,7 @@ export class Tag extends rxComponentElement {
      * @description The category text of a tag. This appears in parentheses, after the normal text.
      * @example
      * it('should have the right category', function () {
-     *     expect(rxTags.new($('rx-tags')).byText('Banana').getCategory()).to.eventually.equal('fruit');
+     *     expect(new rxTags($('rx-tags')).byText('Banana').getCategory()).to.eventually.equal('fruit');
      * });
      */
     getCategory() {
@@ -70,7 +70,7 @@ export class Tag extends rxComponentElement {
      * @description Close the tag by clicking the little "x" button on the right side of the tag.
      * @example
      * it('should show a warning when deleting an existing tag with the close button', function () {
-     *     rxTags.new($('rx-tags')).byText('Enterprise').remove();
+     *     new rxTags($('rx-tags')).byText('Enterprise').remove();
      *     var warning = 'Warning: Deleting tag "Enterprise" will notify some very angry sysadmins';
      *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
      * });
@@ -91,7 +91,7 @@ export class rxTags extends rxComponentElement {
      * @description The number of tags that exist in the group of tags.
      * @example
      * it('should have three tags', function () {
-     *     expect(rxTags.new($('rx-tags')).count()).to.eventually.equal(3);
+     *     expect(new rxTags($('rx-tags')).count()).to.eventually.equal(3);
      * });
      */
     @OverrideWebdriver
@@ -108,7 +108,7 @@ export class rxTags extends rxComponentElement {
      * Returns the newly created tag, should you need to interact with it.
      * @example
      * it('should show an warning notification when adding the "Enterprise" tag', function () {
-     *     rxTags.new($('rx-tags')).addTag('Enterprise');
+     *     new rxTags($('rx-tags')).addTag('Enterprise');
      *     expect(encore.rxNotify.all.isPresent('Warning: "Enterprise"', 'warning')).to.eventually.be.true;
      * });
      */
@@ -143,7 +143,7 @@ export class rxTags extends rxComponentElement {
      * are no duplicates. If there are, the first matching tag will be returned.
      * @example
      * it('should have the correct category for the "Strawberry" tag', function () {
-     *     expect(rxTags.new($('rx-tags')).byText('Strawberry').getCategory()).to.eventually.equal('fruit');
+     *     expect(new rxTags($('rx-tags')).byText('Strawberry').getCategory()).to.eventually.equal('fruit');
      * });
      */
     byText(tagText) {

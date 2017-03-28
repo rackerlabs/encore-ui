@@ -21,7 +21,7 @@ export class rxMetadata extends rxComponentElement {
     term(term: string) {
         let rxMetaSelector = 'rx-meta[label="' + term  + '"] .definition';
         let rxMetaShowHideSelector = 'rx-meta-show-hide[label="' + term  + '"] .definition';
-        return $(rxMetaSelector + ', ' + rxMetaShowHideSelector);
+        return $(`${rxMetaSelector}, ${rxMetaShowHideSelector}`);
     }
 
     getLabels() {
