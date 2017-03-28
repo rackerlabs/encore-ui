@@ -29,6 +29,7 @@ export class Tab extends rxComponentElement {
         return this._originalElement.getText().then(text => text.trim());
     }
 
+    // TODO: Refactor out getName() and getSubtitle() and rely on simply getText().  Component DOM refactor?
     /**
      * @example
      * it('should have the correct name without subtitle', function () {

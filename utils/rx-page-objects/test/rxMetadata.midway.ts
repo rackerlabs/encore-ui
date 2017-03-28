@@ -64,12 +64,21 @@ describe('rxMetadata', () => {
             'Status': 'Active',
             'RCN': 'RCN-555-555-555',
             'Type': 'Cloud',
-            'Service Level': { current: 'Managed', proposed: 'Managed' },
-            'Service Type': { current: 'DevOps', proposed: 'SysOps' },
+            'Service Level': {
+                current: 'Managed',
+                proposed: 'Managed',
+            },
+            'Service Type': {
+                current: 'DevOps',
+                proposed: 'SysOps',
+            },
             'Amount': 19268,
             'Phone Number Field': '888 - 888 - 8888',
             'Date Field': new Date('January 6, 1989'),
-            'Link Field': { text: 'Link', href: browser.baseUrl + '/#' },
+            'Link Field': {
+                text: 'Link',
+                href: browser.baseUrl + '/#',
+            },
             'Data and Link Field': {
                 text: 'Some data',
                 href: browser.baseUrl + '/#',
