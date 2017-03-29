@@ -21,6 +21,16 @@ module.exports = function (grunt) {
             }
         },
 
+        docRxPageObjects: {
+            command: 'node_modules/.bin/typedoc',
+            options: {
+                stdout: true,
+                execOptions: {
+                    cwd: 'utils/rx-page-objects'
+                }
+            }
+        },
+
         tscRxPageObjects: {
             command: 'node_modules/.bin/tsc',
             options: {
