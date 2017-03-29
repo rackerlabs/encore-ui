@@ -9,7 +9,7 @@ var _banner = `/*
 module.exports = {
     github: {
         base: 'https://github.com/rackerlabs/encore-ui',
-        branch: 'master',
+        branch: '3.x',
         src: '<%= config.github.base %>/tree/<%= config.github.branch %>/src'
     },
     dir: {
