@@ -29,24 +29,24 @@
         .module('demoApp')
         .constant('DOC_VERSIONS', [
             {
+                "label": "5.0.0-x (Unreleased)",
+                "path": "5.x",
+            },
+            {
+                "label": "4.x (Current)",
                 "path": "4.x",
-                "isReleased": false,
-                "isLegacy": false
             },
             {
+                "label": "3.x (LTS)",
                 "path": "3.x",
-                "isReleased": true,
-                "isLegacy": false
             },
             {
+                "label": "2.x",
                 "path": "2.x",
-                "isReleased": true,
-                "isLegacy": true
             },
             {
+                "label": "1.x",
                 "path": "1.x",
-                "isReleased": true,
-                "isLegacy": true
             }
         ]);//DOC_VERSIONS
 })();
