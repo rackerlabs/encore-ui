@@ -1,7 +1,0 @@
-{
-    "displayName": "routesCdnPath",
-    "stability": "deprecated",
-    "description": "",
-    "api": "service:routesCdnPath",
-    "keywords": []
-}

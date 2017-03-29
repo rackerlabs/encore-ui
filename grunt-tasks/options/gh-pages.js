@@ -5,7 +5,7 @@ module.exports = {
             base: '<%= config.dir.build %>',
             // always commit to source repo
             repo: 'https://github.com/rackerlabs/encore-ui.git',
-            message: 'docs(ghpages): release v<%= pkg.version %>',
+            message: 'docs(ghpages): release v<%= pkg.version %> [skip ci]',
             /*
              * This is the key to versioned docs. When we output all
              * documentation to the build/3.x directory, it will only add new

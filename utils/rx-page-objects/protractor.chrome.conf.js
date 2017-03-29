@@ -21,7 +21,9 @@ var config = {
         environments: {
             'http://localhost:9001': 'localhost',
             'http://rackerlabs.github.io/encore-ui': 'staging'
-        }
+        },
+        isChrome: true,
+        isMac: false
     },
 
     plugins: [{
@@ -36,8 +38,7 @@ var config = {
         moment = require('moment');
         demoPage = require('../demo.page.js');
         encore = require('./index');
-        isChrome = true;
-        isMac = (process.platform === 'darwin');
+        config.params.isMac = (process.platform === 'darwin');
     },
 
     // Options to be passed to mocha

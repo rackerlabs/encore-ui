@@ -1,7 +1,0 @@
-{
-    "displayName": "rxStatusTags",
-    "stability": "deprecated",
-    "description": "Primarily used for applications to specify custom status tags.",
-    "api": "service:rxStatusTags",
-    "keywords": []
-}

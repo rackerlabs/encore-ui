@@ -27,21 +27,4 @@ angular.module('encore.ui.utilities')
         placeholder: 'We love to hear that you\'re enjoying Encore! Tell us what you like, and what we can do ' +
             'to make it even better'
     }
-])
-
-/**
- * @deprecated
- * Please use rxFeedbackTypes instead. This item will be removed on the 4.0.0 release.
- * @ngdoc parameters
- * @name utilities.value:feedbackTypes
- * @requires utilities.value:rxFeedbackTypes
- */
-.service('feedbackTypes', function (rxFeedbackTypes, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn (
-            'DEPRECATED: feedbackTypes - Please use rxFeedbackTypes. ' +
-            'feedbackTypes will be removed in EncoreUI 4.0.0'
-        );
-    }
-    return rxFeedbackTypes;
-});
+]);

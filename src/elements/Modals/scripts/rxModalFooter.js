@@ -17,7 +17,7 @@ angular.module('encore.ui.elements')
  *
  * The modal's controller also inherits the `setState()` method on the scope,
  * which should be used to toggle different views or footers. See the
- * *Multi-View Example* in the element [demo](../#/elements/Modals)
+ * Multi-View Modals [demo](../#/elements/Modals#multi-view-modals)
  * for an example of this design pattern's usage.
  *
  * The default `editing` state shows the standard submit and cancel buttons,

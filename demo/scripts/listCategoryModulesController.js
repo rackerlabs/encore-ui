@@ -1,10 +1,10 @@
 function genericListCategoryModulesController (ilk) {
-    return function ($filter, Modules, rxBreadcrumbsSvc) {
+    return function ($filter, Modules, rxPageTitle) {
         var vm = this;
 
         vm.category = ilk;
         vm.capitalizedCategory = $filter('rxCapitalize')(vm.category);
-        vm.pageTitle = 'All ' + vm.capitalizedCategory;
+        rxPageTitle.setTitle('All ' + vm.capitalizedCategory);
         vm.sortKey = 'displayName';
         vm.sortReverse = false;
         vm.modules = _.filter(Modules, { 'isCategory': false, 'category': vm.category });
@@ -13,21 +13,6 @@ function genericListCategoryModulesController (ilk) {
         vm.getCaretType = getCaretType;
         vm.showCaret = showCaret;
         vm.sortColumn = sortColumn;
-
-        activate();
-
-        function activate () {
-            rxBreadcrumbsSvc.set([
-                {
-                    path: '#/modules',
-                    name: 'Modules'
-                },
-                {
-                    path: '#/' + vm.category,
-                    name: vm.capitalizedCategory
-                }
-            ]);
-        }
 
         function getCaretType () {
             return vm.sortReverse ? 'fa fa-caret-down' : 'fa fa-caret-up';

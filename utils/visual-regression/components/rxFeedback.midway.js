@@ -5,8 +5,8 @@ describe('demo component', function () {
     });
 
     it('default', function () {
-        encore.rxFeedback.initialize($('#rxFeedbackSucceeds')).open();
-        screenshot.snap(this, encore.rxModalAction.initialize().rootElement, { threshold: 1 });
+        new encore.rxFeedback($('#rxFeedbackSucceeds')).open();
+        screenshot.snap(this, new encore.rxModalAction($('.modal')), { threshold: 1 });
     });
 
 });

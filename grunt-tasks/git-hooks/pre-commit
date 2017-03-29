@@ -4,7 +4,7 @@
 
 # Lint stuff before committing
 
-FILES_PATTERN='\.js(\..+)?$'
+FILES_PATTERN='\.[jt]s(\..+)?$'
 FORBIDDEN='console.log(\|describe.only\|it.only'
 
 # Quit if no relevant files are being checked in.

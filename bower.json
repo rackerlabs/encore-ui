@@ -1,6 +1,6 @@
 {
   "name": "encore-ui",
-  "version": "3.6.0",
+  "version": "4.0.0-3",
   "main": [
     "./encore-ui.js",
     "./encore-ui.css"
@@ -16,7 +16,6 @@
     "lodash": "4.x",
     "moment": "~2.9.0",
     "html2canvas": "~0.4.1",
-    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.0",
     "font-awesome": "~4.4.0",
     "ng-debounce": "0.1.5"
   },

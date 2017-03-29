@@ -2,7 +2,7 @@
   "name": "rx-page-objects",
   "author": "Rackspace Hosting, Inc. <encoreui@lists.rackspace.com> (http://rackerlabs.github.io/encore-ui/)",
   "description": "Midway test page objects for all of the Encore UI components",
-  "version": "3.6.0",
+  "version": "4.0.0-3",
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
@@ -12,15 +12,23 @@
     "lodash": "4.13.1",
     "mocha": "2.5.3",
     "moment": "2.13.0",
-    "protractor": "4.0.3"
+    "protractor": "4.0.14"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:rackerlabs/encore-ui.git"
   },
   "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/chai-as-promised": "0.0.29",
+    "@types/jasmine": "^2.5.41",
+    "@types/lodash": "^4.14.50",
+    "@types/mocha": "^2.2.38",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^7.0.3",
+    "@types/selenium-webdriver": "^2.53.40",
     "protractor-console-plugin": "^0.1.1",
-    "typescript": "2.0.2",
-    "typings": "^1.3.1"
+    "tslint": "^4.5.1",
+    "typescript": "^2.1.5"
   }
 }

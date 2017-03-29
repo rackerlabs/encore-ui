@@ -1,82 +1,86 @@
 <!doctype html>
 <html ng-app="demoApp">
 <head>
-    <title>Encore UI</title>
-    <link rel="icon" type="image/png" href="images/favicon.png" rx-favicon="{ local: 'images/local-favicon.png' }" />
+  <title>EncoreUI Demo App</title>
+  <link rel="icon" type="image/png" href="images/favicon.png" rx-favicon="{ local: 'images/local-favicon.png' }" />
 
-    <!-- Content inside bower:css is auto-generated via `grunt wiredep` -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.min.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <!-- endbower -->
+  <!-- Content inside bower:css is auto-generated via `grunt wiredep` -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+  <!-- endbower -->
 
-    <link href="dist/<%= config.dist.fileNameResp %>.css" rel="stylesheet" />
-    <link href="css/prism-coy.min.css" rel="stylesheet" />
-    <link href="<%= config.css.demoApp %>" rel="stylesheet" />
-    <link href="<%= config.css.demos %>" rel="stylesheet" />
-    <link href="<%= config.css.examples %>" rel="stylesheet" />
+  <link href="dist/<%= config.dist.fileNameResp %>.css" rel="stylesheet" />
+  <link href="css/prism-coy.min.css" rel="stylesheet" />
+  <link href="<%= config.css.demoApp %>" rel="stylesheet" />
+  <link href="<%= config.css.demos %>" rel="stylesheet" />
+  <link href="<%= config.css.examples %>" rel="stylesheet" />
 
-    <!-- Content inside bower:js is auto-generated via `grunt wiredep` -->
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/html2canvas/build/html2canvas.js"></script>
-    <script src="bower_components/angular-hotkeys/build/hotkeys.min.js"></script>
-    <script src="bower_components/ng-debounce/angular-debounce.js"></script>
-    <!-- endbower -->
+  <!-- Content inside bower:js is auto-generated via `grunt wiredep` -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/html2canvas/build/html2canvas.js"></script>
+  <script src="bower_components/ng-debounce/angular-debounce.js"></script>
+  <!-- endbower -->
 
-    <!-- generated release -->
-    <script src="dist/<%= config.dist.fileName %>.js"></script>
-    <!-- demo application and supporting utilities -->
-    <script src="scripts/demoApp.js"></script>
-    <script src="scripts/browser-helpers.js"></script>
-    <script src="scripts/prism.js"></script>
-    <!-- examples -->
-    <script src="examples/button.animated.js"></script>
-    <script src="examples/button.group.js"></script>
-    <script src="examples/forms.autoSave.js"></script>
-    <script src="examples/forms.disabled.js"></script>
-    <script src="examples/forms.manualSave.js"></script>
-    <script src="examples/forms.validation.js"></script>
-    <script src="examples/table.filtering.js"></script>
-    <script src="examples/table.filteringCollapsible.js"></script>
-    <script src="examples/table.nestedMetadata.js"></script>
-    <script src="examples/table.nestedTable.js"></script>
-    <!-- modules -->
-    <script src="scripts/loadModules.js"></script>
-    <script src="scripts/loadExamples.js"></script>
-    <script src="scripts/loadModuleDemoControllers.js"></script>
-    <script src="scripts/listModulesController.js"></script>
-    <script src="scripts/listCategoryModulesController.js"></script>
-    <script src="scripts/showModuleController.js"></script>
-    <script src="scripts/modulesFilter.js"></script>
-    <script src="scripts/categoryModulesFilter.js"></script>
-    <script src="scripts/deprecated/flexbox.layout.js"></script>
-    <!-- directives -->
-    <script src="scripts/alwaysInvalid.js"></script>
-    <script src="scripts/rxDebug.js"></script>
-    <script src="scripts/rxPrism.js"></script>
-    <script src="scripts/rxStyleguide.js"></script>
-    <script src="scripts/rxExample.js"></script>
-    <script src="scripts/rxPermalink.js"></script>
-    <script src="scripts/rxStability.js"></script>
-    <!-- controllers -->
-    <script src="scripts/layout/page/layoutDataTableController.js"></script>
-    <script src="scripts/layout/page/layoutRadioOptionTableController.js"></script>
+  <!-- generated release -->
+  <script src="dist/<%= config.dist.fileName %>.js"></script>
+  <!-- demo application and supporting utilities -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/browser-helpers.js"></script>
+  <script src="scripts/prism.js"></script>
+  <!-- examples -->
+  <script src="examples/button.animated.js"></script>
+  <script src="examples/button.group.js"></script>
+  <script src="examples/forms.autoSave.js"></script>
+  <script src="examples/forms.disabled.js"></script>
+  <script src="examples/forms.manualSave.js"></script>
+  <script src="examples/forms.validation.js"></script>
+  <script src="examples/table.filtering.js"></script>
+  <script src="examples/table.filteringCollapsible.js"></script>
+  <script src="examples/table.nestedMetadata.js"></script>
+  <script src="examples/table.nestedTable.js"></script>
+  <!-- modules -->
+  <script src="scripts/loadModules.js"></script>
+  <script src="scripts/loadExamples.js"></script>
+  <script src="scripts/loadModuleDemoControllers.js"></script>
+  <script src="scripts/listModulesController.js"></script>
+  <script src="scripts/listCategoryModulesController.js"></script>
+  <script src="scripts/showModuleController.js"></script>
+  <script src="scripts/modulesFilter.js"></script>
+  <script src="scripts/categoryModulesFilter.js"></script>
+  <script src="scripts/deprecated/flexbox.layout.js"></script>
+  <!-- directives -->
+  <script src="scripts/alwaysInvalid.js"></script>
+  <script src="scripts/demoApp.directive.js"></script>
+  <script src="scripts/demoNav.directive.js"></script>
+  <script src="scripts/demoNavItem.directive.js"></script>
+  <script src="scripts/rxDebug.js"></script>
+  <script src="scripts/rxPrism.js"></script>
+  <script src="scripts/rxStyleguide.js"></script>
+  <script src="scripts/rxExample.js"></script>
+  <script src="scripts/rxPermalink.js"></script>
+  <script src="scripts/rxStability.js"></script>
+  <!-- controllers -->
+  <script src="scripts/layout/page/layoutDataTableController.js"></script>
+  <script src="scripts/layout/page/radioTableController.js"></script>
 
-    <!-- NOTE: switchDocs only exists in `gh-pages` branch -->
-    <script src="../components/switchDocs/switchDocs.js"></script>
+  <!-- NOTE: switchDocs only exists in `gh-pages` branch -->
+  <script src="../components/switchDocs/switchDocs.js"></script>
 </head>
 <body>
-    <rx-app site-title="Encore Demo App" menu="demoNav" new-instance="true" collapsible-nav="true">
-        <ng-view class="container"></ng-view>
-    </rx-app>
+  <demo-app>
+    <ng-view class="container">
+      <!-- fallback -->
+      <h1>Cannot Load Application (T_T)</h1>
+    </ng-view>
+  </demo-app>
 </body>
 </html>

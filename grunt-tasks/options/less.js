@@ -31,7 +31,7 @@ module.exports = {
             paths: ['src/styles/']
         },
         files: {
-            '<%= config.dir.docs %>/<%= config.css.demoApp %>': 'demo/less/demoApp.less',
+            '<%= config.dir.docs %>/<%= config.css.demoApp %>': 'demo/less/app.less',
             '<%= config.dir.docs %>/<%= config.css.demos %>': '<%= config.tmp.less.demos %>',
             '<%= config.dir.docs %>/<%= config.css.examples %>': '<%= config.tmp.less.examples %>'
         }

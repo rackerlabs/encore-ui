@@ -1,92 +1,92 @@
-<rx-page title="'Layout 1: Detail Page'">
-  <div class="page-actions">
-    <ul class="actions-area">
-      <li class="msg-action">
-        <a href="#/layaout/page/detail"><i class="fa fa-fw fa-plus fa-lg"></i> Add Object</a>
-      </li>
-      <li class="msg-info">
-        <a href="#/layout/page/detail"><i class="fa fa-fw fa-plus fa-lg"></i> Pop-up a Modal</a>
-      </li>
-      <li class="msg-warn">
-        <a href="#/layout/page/detail"><i class="fa fa-fw fa-times fa-lg"></i> Delete Object</a>
-      </li>
-    </ul>
-  </div>
+<h1>Layout 1: Detail Page</h1>
+<div class="page-actions">
+  <ul class="actions-area">
+    <li class="msg-action">
+      <a href="#/layaout/page/detail"><i class="fa fa-fw fa-plus fa-lg"></i> Add Object</a>
+    </li>
+    <li class="msg-info">
+      <a href="#/layout/page/detail"><i class="fa fa-fw fa-plus fa-lg"></i> Pop-up a Modal</a>
+    </li>
+    <li class="msg-warn">
+      <a href="#/layout/page/detail"><i class="fa fa-fw fa-times fa-lg"></i> Delete Object</a>
+    </li>
+  </ul>
+</div>
 
-  <br>
-  <rx-metadata>
-    <section>
-      <rx-meta label="Name">Lorem ipsum dolor sit amet</rx-meta>
-      <rx-meta label="Region">ORD</rx-meta>
-      <rx-meta label="Created">December 2, 2014 @ 14:28 (UTC-0600)</rx-meta>
-    </section>
-    <section>
-      <rx-meta label="Name">Lorem ipsum dolor sit amet</rx-meta>
-      <rx-meta label="Region">ORD</rx-meta>
-      <rx-meta label="Created">December 2, 2014 @ 14:28 (UTC-0600)</rx-meta>
-    </section>
-    <section>
-      <rx-meta label="Name">Lorem ipsum dolor sit amet</rx-meta>
-      <rx-meta label="Region">ORD</rx-meta>
-      <rx-meta label="Created">December 2, 2014 @ 14:28 (UTC-0600)</rx-meta>
-    </section>
-  </rx-metadata>
+<br/>
 
-  <div class="data-section">
-    <h3>Header</h3>
-    <h4>Sub-header</h4>
+<rx-metadata>
+  <section>
+    <rx-meta label="Name">Lorem ipsum dolor sit amet</rx-meta>
+    <rx-meta label="Region">ORD</rx-meta>
+    <rx-meta label="Created">December 2, 2014 @ 14:28 (UTC-0600)</rx-meta>
+  </section>
+  <section>
+    <rx-meta label="Name">Lorem ipsum dolor sit amet</rx-meta>
+    <rx-meta label="Region">ORD</rx-meta>
+    <rx-meta label="Created">December 2, 2014 @ 14:28 (UTC-0600)</rx-meta>
+  </section>
+  <section>
+    <rx-meta label="Name">Lorem ipsum dolor sit amet</rx-meta>
+    <rx-meta label="Region">ORD</rx-meta>
+    <rx-meta label="Created">December 2, 2014 @ 14:28 (UTC-0600)</rx-meta>
+  </section>
+</rx-metadata>
 
-    <table class="table-striped">
-      <thead>
-        <tr>
+<div class="data-section">
+  <h3>Header</h3>
+  <h4>Sub-header</h4>
+
+  <table class="table-striped">
+    <thead>
+      <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lorem ipsum</td>
+        <td>Lorem ipsum dolor sit amet</td>
+        <td>1234567890</td>
+      </tr>
+      <tr>
+        <td>Lorem ipsum</td>
+        <td>Lorem ipsum dolor sit amet</td>
+        <td>1234567890</td>
+      </tr>
+      <tr>
+        <td>Lorem ipsum</td>
+        <td>Lorem ipsum dolor sit amet</td>
+        <td>1234567890</td>
+      </tr>
+      <tr>
+        <td>Lorem ipsum</td>
+        <td>Lorem ipsum dolor sit amet</td>
+        <td>1234567890</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div layout="row" layout-align="left stretch" layout-margin>
+    <div flex="50">
+      <h4>Sub-header 2</h4>
+      <table class="table">
+        <thead>
           <th>Column 1</th>
-          <th>Column 2</th>
-          <th>Column 3</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Lorem ipsum</td>
-          <td>Lorem ipsum dolor sit amet</td>
-          <td>1234567890</td>
-        </tr>
-        <tr>
-          <td>Lorem ipsum</td>
-          <td>Lorem ipsum dolor sit amet</td>
-          <td>1234567890</td>
-        </tr>
-        <tr>
-          <td>Lorem ipsum</td>
-          <td>Lorem ipsum dolor sit amet</td>
-          <td>1234567890</td>
-        </tr>
-        <tr>
-          <td>Lorem ipsum</td>
-          <td>Lorem ipsum dolor sit amet</td>
-          <td>1234567890</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div layout="row" layout-align="left stretch" layout-margin>
-      <div flex="50">
-        <h4>Sub-header 2</h4>
-        <table class="table">
-          <thead>
-            <th>Column 1</th>
-          </thead>
-          <tbody><tr><td>Cell 1</tr></tbody>
-        </table>
-      </div>
-      <div flex="50">
-        <h4>Sub-header 3</h4>
-        <table class="table">
-          <thead>
-            <th>Header 1</th>
-          </thead>
-          <tbody><tr><td>Cell 1</tr></tbody>
-        </table>
-      </div>
+        </thead>
+        <tbody><tr><td>Cell 1</tr></tbody>
+      </table>
+    </div>
+    <div flex="50">
+      <h4>Sub-header 3</h4>
+      <table class="table">
+        <thead>
+          <th>Header 1</th>
+        </thead>
+        <tbody><tr><td>Cell 1</tr></tbody>
+      </table>
     </div>
   </div>
-</rx-page>
+</div>

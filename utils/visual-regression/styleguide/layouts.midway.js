@@ -23,7 +23,7 @@ describe('layouts', function () {
         });
 
         it('full table', function () {
-            screenshot.snap(this, $('.page-body'));
+            screenshot.snap(this, $('main'));
         });
     });
 
@@ -41,7 +41,7 @@ describe('layouts', function () {
         });
 
         it('second tab', function () {
-            encore.tabs.initialize($('.nav-tabs')).byName('Tab 2').click(true);
+            new encore.Tabs($('.nav-tabs')).byText('Tab 2').click(true);
             screenshot.snap(this, $('.tab-area'));
         });
     });

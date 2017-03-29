@@ -18,7 +18,7 @@
  * receives focus.  This list is still filtered according to the input's value,
  * except when the input is empty.  In that case, all the options are shown.
  * To use this feature, add the `allowEmpty` parameter to the `filter` filter
- * in the `typeahead` attribute.  See the [demo](../#/elements/Typeahead)
+ * in the `typeahead` attribute.  See the Typeahead [demo](../#/elements/Typeahead)
  * for an example.
  *
  */

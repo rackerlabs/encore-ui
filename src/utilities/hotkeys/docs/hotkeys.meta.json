@@ -1,7 +1,0 @@
-{
-    "displayName": "hotkeys",
-    "stability": "deprecated",
-    "description": "",
-    "api": "service:hotkeys",
-    "keywords": []
-}

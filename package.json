@@ -1,7 +1,7 @@
 {
   "author": "",
   "name": "EncoreUI",
-  "version": "3.6.0",
+  "version": "4.0.0-3",
   "homepage": "https://github.com/rackerlabs/encore-ui",
   "license": "Apache-2.0",
   "repository": {
@@ -13,9 +13,10 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "cd utils/rx-page-objects; npm i; ./node_modules/.bin/typings install; cd -; grunt hooks",
+    "postinstall": "cd utils/rx-page-objects; npm i; cd -; grunt hooks",
     "eslint-dev": "eslint -c .eslintrc.json --ignore-path .eslintignore-dev {src,demo}",
-    "eslint-test": "eslint -c .eslintrc.test.json --ignore-path .eslintignore-test {src,demo} utils/rx-page-objects/{test,src}"
+    "eslint-test": "eslint -c .eslintrc.test.json --ignore-path .eslintignore-test {src,demo}",
+    "tslint-test": "cd utils/rx-page-objects; $(npm bin)/tslint -c tslint.json {test,src}/*.ts"
   },
   "dependencies": {
     "normalize.css": "^3.0.2"
