@@ -27,243 +27,170 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>var Page = require('astrolabe').Page;
-
-var rxCheckbox = require('./rxCheckbox.page').rxCheckbox;
-var _ = require('lodash');
-
-var selectOptionFromElement = function (optionElement) {
-    /**
-     * @private
-     * @namespace rxMultiSelect.option
-     */
-    return Object.create(rxCheckbox.initialize(optionElement.$('input')), {
-
-        /**
-         * @function
-         * @memberof rxMultiSelect.option
-         * @instance
-         * @description The text inside of the current option.
-         * @returns {Promise&lt;String>}
-         */
-        getText: {
-            value: function () {
-                return optionElement.getText();
-            }
-        },
-
-        /**
-         * @memberof rxMultiSelect.option
-         * @instance
-         * @description The value bound to the option.
-         * @type {String}
-         */
-        value: {
-            get: function () {
-                return optionElement.getAttribute('value');
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxMultiSelect.option
-         * @description Make sure checkbox is selected/checked.
-         */
-        select: {
-            value: function () {
-                /**
-                 * Since protractor 3.0, you must over-ride anything that interacts with the inherited
-                 * checkboxes (since they have a `&lt;label>` tag on top of them). Attempting to click the
-                 * underlying `&lt;input>` tag will throw a ElementNotClickableError.
-                 */
-                var label = optionElement;
-                return this.isSelected().then(function (selected) {
-                    if (!selected) {
-                        label.click();
-                    }
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxMultiSelect.option
-         * @description Make sure checkbox is deselected.
-         */
-        deselect: {
-            value: function () {
-                /**
-                 * Since protractor 3.0, you must over-ride anything that interacts with the inherited
-                 * checkboxes (since they have a `&lt;label>` tag on top of them). Attempting to click the
-                 * underlying `&lt;input>` tag will throw a ElementNotClickableError.
-                 */
-                var label = optionElement;
-                return this.isSelected().then(function (selected) {
-                    if (selected) {
-                        label.click();
-                    }
-                });
-            }
-        }
-
-    });
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
 };
-
-/**
- * @namespace
- */
-var rxMultiSelect = {
-    lblPreview: {
-        get: function () {
-            return this.rootElement.$('.preview');
-        }
-    },
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
+var protractor_1 = require("protractor");
+var rxComponent_1 = require("./rxComponent");
+var rxMultiSelectOption = (function (_super) {
+    __extends(rxMultiSelectOption, _super);
+    function rxMultiSelectOption() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
     /**
-     * @private
-     * @instance
-     * @function
+     * @description The value bound to the option.
+     */
+    rxMultiSelectOption.prototype.getValue = function () {
+        return this.getAttribute('value');
+    };
+    /**
+     * @description use underlying checkbox to determine if selected.
+     */
+    rxMultiSelectOption.prototype.isSelected = function () {
+        return this.$('input').isSelected();
+    };
+    /**
+     * @description Make sure option is selected.
+     */
+    rxMultiSelectOption.prototype.select = function () {
+        var _this = this;
+        return this.isSelected().then(function (selected) {
+            if (!selected) {
+                _this.click();
+            }
+        });
+    };
+    /**
+     * @description Make sure option is deselected.
+     */
+    rxMultiSelectOption.prototype.deselect = function () {
+        var _this = this;
+        return this.isSelected().then(function (selected) {
+            if (selected) {
+                _this.click();
+            }
+        });
+    };
+    return rxMultiSelectOption;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxMultiSelectOption.prototype, "isSelected", null);
+exports.rxMultiSelectOption = rxMultiSelectOption;
+/**
+ * @class
+ */
+var rxMultiSelect = (function (_super) {
+    __extends(rxMultiSelect, _super);
+    function rxMultiSelect() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(rxMultiSelect.prototype, "lblPreview", {
+        get: function () {
+            return this.$('.preview');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
      * @description Closes the menu.
      */
-    closeMenu: {
-        value: function () {
-            this.isOpen().then(function (isOpen) {
-                if (isOpen) {
-                    $('body').click();
-                }
-            });
-        }
-    },
-
+    rxMultiSelect.prototype.close = function () {
+        this.isOpen().then(function (isOpen) {
+            if (isOpen) {
+                protractor_1.$('body').click();
+            }
+        });
+    };
     /**
-     * @private
-     * @function
-     * @instance
      * @description Opens the menu.
      */
-    openMenu: {
-        value: function () {
-            var self = this;
-            this.isOpen().then(function (isOpen) {
-                if (!isOpen) {
-                    self.lblPreview.click();
-                }
-            });
-        }
-    },
-
+    rxMultiSelect.prototype.open = function () {
+        var _this = this;
+        this.isOpen().then(function (isOpen) {
+            if (!isOpen) {
+                _this.lblPreview.click();
+            }
+        });
+    };
     /**
-     * @function
-     * @instance
      * @description Whether or not the menu is visible.
-     * @returns {Boolean}
      */
-    isOpen: {
-        value: function () {
-            return this.rootElement.$('.menu').isDisplayed();
-        }
-    },
-
+    rxMultiSelect.prototype.isOpen = function () {
+        return this.$('.menu').isDisplayed();
+    };
     /**
-     * @instance
      * @description The preview text for the dropdown.
-     * @type {String}
      */
-    preview: {
+    rxMultiSelect.prototype.getPreviewText = function () {
+        return this.lblPreview.getText();
+    };
+    Object.defineProperty(rxMultiSelect.prototype, "options", {
+        /**
+         * @description The ElementArrayFinder for each element in the dropdown.
+         */
         get: function () {
-            return this.lblPreview.getText();
-        }
-    },
-
-    /**
-     * @instance
-     * @description The text of each option element in the dropdown.
-     * @type {String[]}
-     */
-    options: {
+            return this.$$('rx-select-option');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxMultiSelect.prototype, "selectedOptions", {
+        /**
+         * @instance
+         * @description Array of the currently selected options. Will return the options
+         * in order that they are defined in the multi select.
+         * @example
+         * it('should select a few options', function () {
+         *     var selected = ['Canada', 'Latvia', 'United States of America'];
+         *     var multiSelect = new encore.rxMultiSelect(element(by.model('countriesVisited')));
+         *     multiSelect.select(selected);
+         *     // multi select lists all countries alphabetically
+         *     expect(multiSelect.selectedOptions.getText()).to.eventually.eql(selected);
+         * });
+         */
         get: function () {
-            return this.rootElement.$$('rx-select-option').map(function (optionElement) {
-                return selectOptionFromElement(optionElement).getText();
+            this.open();
+            return this.$$('rx-select-option').filter(function (elem) {
+                return new rxMultiSelectOption(elem).isSelected();
             });
-        }
-    },
-
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
-     * @instance
-     * @description The value of each option element in the dropdown.
-     * @type {String[]}
-     */
-    values: {
-        get: function () {
-            return this.rootElement.$$('rx-select-option').map(function (optionElement) {
-                return selectOptionFromElement(optionElement).value;
-            });
-        }
-    },
-
-    /**
-     * @instance
-     * @description Array of strings representing the currently selected options. Will return the strings
-     * in order that they are defined in the multi select.
-     * @type {String[]}
+     * @description The option matching on the partial text in the option's name.
      * @example
-     * it('should select a few options', function () {
-     *     var multiSelect = encore.rxMultiSelect.initialize(element(by.model('countriesVisited')));
-     *     multiSelect.select(['United States of America', 'Canada', 'Latvia']);
-     *     // multi select lists all countries alphabetically
-     *     expect(multiSelect.selectedOptions).to.eventually.eql(['Canada', 'Latvia', 'United States of America']);
-     * });
-     */
-    selectedOptions: {
-        get: function () {
-            this.openMenu();
-            return this.rootElement.$$('rx-select-option').reduce(function (accumulator, optionElement) {
-                var option = selectOptionFromElement(optionElement);
-                return option.isSelected().then(function (isSelected) {
-                    if (isSelected) {
-                        return option.getText().then(function (text) {
-                            accumulator.push(text);
-                            return accumulator;
-                        });
-                    } else {
-                        return accumulator;
-                    }
-                });
-            }, []);
-        }
-    },
-
-    /**
-     * @private
-     * @instance
-     * @function
-     * @description {@link rxCheckbox} representing an option, matching on the partial text in the option's name.
-     * @param {String} optionText - Partial or total string matching the desired option.
-     * @returns {rxMultiSelect.option}
-     * @example
-     * var multiSelect = encore.rxMultiSelect.initialize(element(by.model('cars')));
+     * var multiSelect = new encore.rxMultiSelect(element(by.model('cars')));
      * var option = multiSelect.option('Ford Bronco');
      * option.select();
      * option.deselect();
      * @see rxCheckbox
      */
-    option: {
-        value: function (optionText) {
-            var optionElement = this.rootElement.element(by.cssContainingText('rx-select-option label', optionText));
-            return selectOptionFromElement(optionElement);
-        }
-    },
-
+    rxMultiSelect.prototype.option = function (optionText) {
+        return this.element(protractor_1.by.cssContainingText('rx-select-option label', optionText));
+    };
     /**
-     * @instance
-     * @function
-     * @description Given a list of options, select each of them. Will add selections to any pre-existing ones.
-     * @param {String[]} optionTexts - Array of partial or total strings matching the desired options to select.
+     * @description Given a list of options, select each of them. Will add selections to any pre-existing ones..
      * @example
      * it('should select a few options', function () {
-     *     var multiSelect = encore.rxMultiSelect.initialize(element(by.model('approvedBy')));
+     *     var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
      *     multiSelect.select(['Jack', 'Jill']);
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
      *     // will not over ride any pre-existing selections
@@ -271,71 +198,42 @@ var rxMultiSelect = {
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill', 'Joe', 'Jane']);
      * });
      */
-    select: {
-        value: function (optionTexts) {
-            var self = this;
-            this.openMenu();
-            optionTexts.forEach(function (optionText) {
-                self.option(optionText).select();
-            });
-        }
-    },
-
+    rxMultiSelect.prototype.select = function (optionTexts) {
+        var _this = this;
+        this.open();
+        optionTexts.forEach(function (optionText) {
+            new rxMultiSelectOption(_this.option(optionText)).select();
+        });
+    };
     /**
-     * @instance
-     * @function
      * @description Given a list of options, deselect each of them. Will not
-     * @param {String[]} optionTexts - Array of partial or total strings matching the desired options to deselect.
      * @example
      * it('should deselect a few options', function () {
-     *     var multiSelect = encore.rxMultiSelect.initialize(element(by.model('approvedBy')));
+     *     var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
      *     multiSelect.select(['Jack', 'Jill']);
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
      *     multiSelect.deselect(['Jack']);
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jill']);
      * });
      */
-    deselect: {
-        value: function (optionTexts) {
-            var self = this;
-            this.openMenu();
-            optionTexts.forEach(function (optionText) {
-                self.option(optionText).deselect();
-            });
-        }
-    },
-
+    rxMultiSelect.prototype.deselect = function (optionTexts) {
+        var _this = this;
+        this.open();
+        optionTexts.forEach(function (optionText) {
+            new rxMultiSelectOption(_this.option(optionText)).deselect();
+        });
+    };
     /**
-     * @instance
-     * @function
      * @description Whether the '&lt;rx-multi-select>' element is valid.
-     * @returns {Boolean}
      */
-    isValid: {
-        value: function () {
-            return this.rootElement.getAttribute('class').then(function (classes) {
-                return _.includes(classes.split(' '), 'ng-valid');
-            });
-        }
-    }
-};
-
-exports.rxMultiSelect = {
-    /**
-     * @function
-     * @memberof rxMultiSelect
-     * @description Creates a page object from an `rx-multi-select` DOM element.
-     * @param {ElementFinder} rxMultiSelectElement -
-     * ElementFinder to be transformed into an {@link rxMultiSelect} page object.
-     * @returns {rxMultiSelect}
-     */
-    initialize: function (rxMultiSelectElement) {
-        rxMultiSelect.rootElement = {
-            get: function () { return rxMultiSelectElement; }
-        };
-        return Page.create(rxMultiSelect);
-    }
-};
+    rxMultiSelect.prototype.isValid = function () {
+        return this.getAttribute('class').then(function (classes) {
+            return _.includes(classes.split(' '), 'ng-valid');
+        });
+    };
+    return rxMultiSelect;
+}(rxComponent_1.rxComponentElement));
+exports.rxMultiSelect = rxMultiSelect;
 </code></pre>
         </article>
     </section>
@@ -346,13 +244,13 @@ exports.rxMultiSelect = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 16:27:44 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:18:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

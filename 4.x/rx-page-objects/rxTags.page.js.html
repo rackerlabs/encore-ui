@@ -27,287 +27,180 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>var Page = require('astrolabe').Page;
-
-var tag = function (tagElement) {
-    /**
-     * @namespace rxTags.tag
-     * @description Functionality around a single tag object.
-     * @see rxTags
-     */
-    return Page.create({
-
-        /**
-         * @function
-         * @instance
-         * @memberof rxTags.tag
-         * @description Clicks the tag instance.
-         * @example
-         * it('should focus on the tag on click', function () {
-         *     encore.rxTags.initialize().addTag('Banana').then(function (tag) {
-         *         expect(tag.isFocused()).to.eventually.be.false;
-         *         tag.click();
-         *         expect(tag.isFocused()).to.eventually.be.true;
-         *     });
-         * });
-         */
-        click: {
-            value: function () {
-                tagElement.click();
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxTags.tag
-         * @description Whether or not the tag exists.
-         * @example
-         * it('should have a tag present after creating it', function () {
-         *     expect(encore.rxTags.initialize().addTag('Foo').isPresent()).to.eventually.be.true;
-         * });
-         * @returns {Promise&lt;Boolean>}
-         */
-        isPresent: {
-            value: function () {
-                return tagElement.isPresent();
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxTags.tag
-         * @description Whether or not the tag is currently focused.
-         * @returns {Boolean}
-         * @example
-         * it('should focus on the last tag when clicking it', function () {
-         *     encore.rxTags.initialize().addTag('Banana').then(function (tag) {
-         *         expect(tag.isFocused()).to.eventually.be.false;
-         *         tag.click();
-         *         expect(tag.isFocused()).to.eventually.be.true;
-         *     });
-         * });
-         */
-        isFocused: {
-            value: function () {
-                return browser.driver.switchTo().activeElement().getId().then(function (activeId) {
-                    return tagElement.getId().then(function (tagId) {
-                        return _.isEqual(activeId, tagId);
-                    });
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxTags.tag
-         * @description Removes the tag by clicking on it, then sending the backspace key.
-         * @example
-         * it('should show a warning when deleting an existing tag with backspace', function () {
-         *     encore.rxTags.initialize().byText('Enterprise').sendBackspace();
-         *     var warning = 'Warning: Deleting tag "Enterprise" will notify some very angry sysadmins';
-         *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
-         * });
-         */
-        sendBackspace: {
-            value: function () {
-                this.click();
-                tagElement.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxTags.tag
-         * @description The text within the tag. Does not include the text in {@link rxTags.tag#category}.
-         * @example
-         * it('should have "Enterprise" as the exact tag name', function () {
-         *     expect(encore.rxTags.initialize().byText('Banana').getText()).to.eventually.equal('Banana');
-         * });
-         * @returns {Promise&lt;String>}
-         */
-        getText: {
-            value: function () {
-                return tagElement.$('.text').getText();
-            }
-        },
-
-        /**
-         * @instance
-         * @type {String}
-         * @memberof rxTags.tag
-         * @description The category text of a tag. This appears in parentheses, after the normal text.
-         * @example
-         * it('should have the right category', function () {
-         *     expect(encore.rxTags.initialize().byText('Banana').category).to.eventually.equal('fruit');
-         * });
-         */
-        category: {
-            get: function () {
-                return tagElement.$('.category').getText().then(function (text) {
-                    // Strip the bounding parens
-                    return text.slice(1, -1);
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @memberof rxTags.tag
-         * @description Close the tag by clicking the little "x" button on the right side of the tag.
-         * @example
-         * it('should show a warning when deleting an existing tag with the close button', function () {
-         *     encore.rxTags.initialize().byText('Enterprise').remove();
-         *     var warning = 'Warning: Deleting tag "Enterprise" will notify some very angry sysadmins';
-         *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
-         * });
-         */
-        remove: {
-            value: function () {
-                tagElement.$('.fa-times').click();
-            }
-        }
-
-    });
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var protractor_1 = require("protractor");
+var selenium_webdriver_1 = require("selenium-webdriver");
+var rxComponent_1 = require("./rxComponent");
 /**
- * @namespace
+ * @class
+ * @description Functionality around a single tag object.
+ */
+var Tag = (function (_super) {
+    __extends(Tag, _super);
+    function Tag() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    /**
+     * @description Whether or not the tag is currently focused.
+     * @example
+     * it('should focus on the last tag when clicking it', function () {
+     *     new rxTags($('rx-tags')).addTag('Banana').then(function (tag) {
+     *         expect(tag.isFocused()).to.eventually.be.false;
+     *         tag.click();
+     *         expect(tag.isFocused()).to.eventually.be.true;
+     *     });
+     * });
+     */
+    Tag.prototype.isFocused = function () {
+        var active = protractor_1.browser.switchTo().activeElement().getId();
+        return protractor_1.promise.all([active, this.getId()]).then(function (ids) { return ids[0] === ids[1]; });
+    };
+    /**
+     * @description Removes the tag by clicking on it, then sending the backspace key.
+     * @example
+     * it('should show a warning when deleting an existing tag with backspace', function () {
+     *     new rxTags($('rx-tags')).byText('Enterprise').backspaceRemove();
+     *     var warning = 'Warning: Deleting tag "Enterprise" will notify some very angry sysadmins';
+     *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
+     * });
+     */
+    Tag.prototype.backspaceRemove = function () {
+        this.click();
+        this.sendKeys(selenium_webdriver_1.Key.BACK_SPACE);
+    };
+    /**
+     * @description The text within the tag. Does not include the text in {@link rxTags.tag#category}.
+     * @example
+     * it('should have "Enterprise" as the exact tag name', function () {
+     *     expect(new rxTags($('rx-tags')).byText('Banana').getText()).to.eventually.equal('Banana');
+     * });
+     * @returns {Promise&lt;String>}
+     */
+    Tag.prototype.getText = function () {
+        return this.$('.text').getText();
+    };
+    /**
+     * @description The category text of a tag. This appears in parentheses, after the normal text.
+     * @example
+     * it('should have the right category', function () {
+     *     expect(new rxTags($('rx-tags')).byText('Banana').getCategory()).to.eventually.equal('fruit');
+     * });
+     */
+    Tag.prototype.getCategory = function () {
+        return this.$('.category').getText().then(function (text) {
+            // Strip the bounding parens
+            return text.slice(1, -1);
+        });
+    };
+    /**
+     * @description Close the tag by clicking the little "x" button on the right side of the tag.
+     * @example
+     * it('should show a warning when deleting an existing tag with the close button', function () {
+     *     new rxTags($('rx-tags')).byText('Enterprise').remove();
+     *     var warning = 'Warning: Deleting tag "Enterprise" will notify some very angry sysadmins';
+     *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
+     * });
+     */
+    Tag.prototype.remove = function () {
+        return this.$('.fa-times').click();
+    };
+    return Tag;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], Tag.prototype, "getText", null);
+exports.Tag = Tag;
+/**
+ * @class
  * @description Functions for interacting with a group of existing tags, creating new ones,
  * or deleting existing ones.
  */
-var rxTags = {
-
+var rxTags = (function (_super) {
+    __extends(rxTags, _super);
+    function rxTags() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
     /**
-     * @instance
-     * @function
-     * @description Whether the root element is currently displayed.
-     * @returns {Boolean}
-     */
-    isDisplayed: {
-        value: function () {
-            return this.rootElement.isDisplayed();
-        }
-    },
-
-    /**
-     * @instance
-     * @function
      * @description The number of tags that exist in the group of tags.
      * @example
      * it('should have three tags', function () {
-     *     expect(encore.rxTags.initialize().count()).to.eventually.equal(3);
+     *     expect(new rxTags($('rx-tags')).count()).to.eventually.equal(3);
      * });
      */
-    count: {
-        value: function () {
-            return this.rootElement.$$('.tag').count();
-        }
-    },
-
-    txtNewTag: {
+    rxTags.prototype.count = function () {
+        return this.$$('.tag').count();
+    };
+    Object.defineProperty(rxTags.prototype, "newTagInput", {
         get: function () {
-            return this.rootElement.element(by.model('newTag'));
-        }
-    },
-
+            return this.element(protractor_1.by.model('newTag'));
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
-     * @private
-     */
-    newTag: {
-        set: function (text) {
-            this.txtNewTag.clear();
-            this.txtNewTag.sendKeys(text, protractor.Key.ENTER);
-        }
-    },
-
-    /**
-     * @instance
-     * @function
      * @description Adds a new tag with text `text` to the group of tags.
      * Returns the newly created tag, should you need to interact with it.
-     * @param {String} text - The desired text of the tag to be created.
-     * @returns {rxTags.tag}
      * @example
      * it('should show an warning notification when adding the "Enterprise" tag', function () {
-     *     encore.rxTags.initialize().addTag('Enterprise');
+     *     new rxTags($('rx-tags')).addTag('Enterprise');
      *     expect(encore.rxNotify.all.isPresent('Warning: "Enterprise"', 'warning')).to.eventually.be.true;
      * });
      */
-    addTag: {
-        value: function (text) {
-            this.newTag = text;
-            this.txtNewTag.clear();
-            return this.byText(text);
-        }
-    },
-
+    rxTags.prototype.addTag = function (tagText) {
+        this.newTagInput.clear();
+        this.newTagInput.sendKeys(tagText, selenium_webdriver_1.Key.ENTER);
+        return this.newTagInput.clear();
+    };
     /**
      * @private
      */
-    sendBackspace: {
-        value: function () {
-            /*
-             * Protractor isn't properly trapping the `BACK_SPACE = navigate back`
-             * functionality so we have to use SHIFT + BACK_SPACE as a workaround.
-             *
-             * Initially, changing ng-keydown to ng-keypress in the template seemed
-             * to work, but this only corrected the issue with Firefox. Chrome doesn't
-             * seem to recognize ng-keypress functionality.
-             */
-            var chordBackspace = protractor.Key.chord(
-                protractor.Key.SHIFT,
-                protractor.Key.BACK_SPACE
-            );
-            this.txtNewTag.sendKeys(chordBackspace);
-        }
-    },
-
+    rxTags.prototype.sendBackspace = function () {
+        /*
+            * Protractor isn't properly trapping the `BACK_SPACE = navigate back`
+            * functionality so we have to use SHIFT + BACK_SPACE as a workaround.
+            *
+            * Initially, changing ng-keydown to ng-keypress in the template seemed
+            * to work, but this only corrected the issue with Firefox. Chrome doesn't
+            * seem to recognize ng-keypress functionality.
+            */
+        var chordBackspace = selenium_webdriver_1.Key.chord(selenium_webdriver_1.Key.SHIFT, selenium_webdriver_1.Key.BACK_SPACE);
+        return this.newTagInput.sendKeys(chordBackspace);
+    };
     /**
-     * @function
-     * @instance
-     * @returns {rxTags.tag}
      * @description Return an {@link rxTags.tag} object that matches the `text` passed in.
      * This function uses a partial text match function to find the tag, so make sure there
      * are no duplicates. If there are, the first matching tag will be returned.
-     * @param {String} text - The text of the tag to look for and return as a {@link rxTags.tag} object.
      * @example
      * it('should have the correct category for the "Strawberry" tag', function () {
-     *     expect(encore.rxTags.initialize().byText('Strawberry').category).to.eventually.equal('fruit');
+     *     expect(new rxTags($('rx-tags')).byText('Strawberry').getCategory()).to.eventually.equal('fruit');
      * });
      */
-    byText: {
-        value: function (text) {
-            return tag(this.rootElement.element(by.cssContainingText('.tag', text)));
-        }
-    }
-
-};
-
-exports.rxTags = {
-
-    /**
-     * @function
-     * @memberof rxTags
-     * @param {ElementFinder} [rxTagsElement=$('rx-tags')] -
-     * ElementFinder to be transformed into an rxTagsElement object.
-     * @returns {rxTags} Page object representing the rxTags object.
-     */
-    initialize: function (rxTagsElement) {
-        if (rxTagsElement === undefined) {
-            rxTagsElement = $('rx-tags');
-        }
-
-        rxTags.rootElement = {
-            get: function () { return rxTagsElement; }
-        };
-        return Page.create(rxTags);
-    }
-};
+    rxTags.prototype.byText = function (tagText) {
+        return new Tag(this.element(protractor_1.by.cssContainingText('.tag', tagText)));
+    };
+    return rxTags;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxTags.prototype, "count", null);
+exports.rxTags = rxTags;
 </code></pre>
         </article>
     </section>
@@ -318,13 +211,13 @@ exports.rxTags = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 16:27:44 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:18:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

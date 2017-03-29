@@ -27,315 +27,191 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>var rxMisc = require('./rxMisc.page').rxMisc;
-var Page = require('astrolabe').Page;
-
-var tabFromElement = function (tabElement) {
-
-    /**
-     * @namespace tabs.tab
-     * @description Functionality around interacting with a single tab.
-     * @see tabs
-     */
-    return Page.create({
-
-        /**
-         * @instance
-         * @function
-         * @returns {Boolean}
-         * @memberof tabs.tab
-         * @description Whether or not the tab object is set as active.
-         * @example
-         * it('should mark the current tab as active when visiting it', function () {
-         *     var tab = encore.tabs.initialize().byName('Home');
-         *     expect(tab.isActive()).to.eventually.be.false;
-         *     tab.click();
-         *     expect(tab.isActive()).to.eventually.be.true;
-         * });
-         */
-        isActive: {
-            value: function () {
-                return tabElement.getAttribute('class').then(function (className) {
-                    return className.indexOf('active') > -1;
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @type {String}
-         * @memberof tabs.tab
-         * @description The full name of the tab, meaning it includes both the main name
-         * and the subtitle.
-         * @see tabs.tab#name
-         * @see tabs.tab#subtitle
-         * @example
-         * it('should list the full name of the tab', function () {
-         *     var tab = encore.tabs.initialize().byName('Activity');
-         *     expect(tab.fullName).to.eventually.equal('Activity (recent first)');
-         * });
-         */
-        fullName: {
-            get: function () {
-                return tabElement.getText().then(function (text) {
-                    return text.trim();
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @type {String}
-         * @memberof tabs.tab
-         * @description The name of the tab. Will parse out the subtitle, if it exists.
-         * @example
-         * it('should have just the name correct', function () {
-         *     expect(encore.tabs.initialize().byName('Activity').name).to.eventually.equal('Activity');
-         * });
-         */
-        name: {
-            get: function () {
-                var tab = this;
-                return this.subtitle.then(function (subtitle) {
-                    if (subtitle !== null) {
-                        return tab.fullName.then(function (name) {
-                            return name.split(subtitle)[0].trim();
-                        });
-                    } else {
-                        return tabElement.getText().then(function (name) {
-                            return name.trim();
-                        });
-                    }
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @type {String}
-         * @memberof tabs.tab
-         * @description The subtitle of the tab. Will parse out the name, if it exists.
-         * @example
-         * it('should have just the subtitle correct', function () {
-         *     expect(encore.tabs.initialize().byName('Activity').subtitle).to.eventually.equal('recent first');
-         * });
-         */
-        subtitle: {
-            get: function () {
-                var subtitleElement = tabElement.$('.subdued');
-                return subtitleElement.isPresent().then(function (present) {
-                    if (present) {
-                        return subtitleElement.getText().then(function (text) {
-                            return text.trim();
-                        });
-                    } else {
-                        return null;
-                    }
-                });
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @returns {Boolean}
-         * @memberof tabs.tab
-         */
-        isDisplayed: {
-            value: function () {
-                return tabElement.isDisplayed();
-            }
-        },
-
-        /**
-         * @instance
-         * @function
-         * @param {Boolean} slowClick - Whether or not to click the tab using {@link rxMisc.slowClick}.
-         * @memberof tabs.tab
-         * @example
-         * it('should visit the tab', function () {
-         *     var tabs = encore.tabs.initialize();
-         *     tabs.byName('Activity').click();
-         *     expect(browser.currentUrl()).to.eventually.contain('activity/newest');
-         * });
-         */
-        click: {
-            value: function (slowClick) {
-                slowClick ? rxMisc.slowClick(tabElement) : tabElement.click();
-            }
-        }
-
-    });
-
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var protractor_1 = require("protractor");
+var rxComponent_1 = require("./rxComponent");
 /**
- * @namespace
- * @description Functions for interacting with a collection of tabs.
+ * @class
+ * @description Functionality around interacting with a single tab.
  */
-var tabs = {
-
-    cssTabs: {
-        get: function () {
-            return '.nav-tabs li';
-        }
-    },
-
-    tblTabs: {
-        get: function () {
-            return this.rootElement.$$(this.cssTabs);
-        }
-    },
-
+var Tab = (function (_super) {
+    __extends(Tab, _super);
+    function Tab() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
     /**
-     * @instance
-     * @function
-     * @description Whether or not the tabs collection is displayed
-     * @returns {Boolean}
-     */
-    isDisplayed: {
-        value: function () {
-            return this.rootElement.isDisplayed();
-        }
-    },
-
-    /**
-     * @instance
-     * @function
-     * @param {String} tabName - The tab to search for in the group of tabs.
-     * @returns {Boolean}
-     * @description Whether or not the tab by text `tabName` exists in the group of tabs.
+     * @description Whether or not the tab object is set as active.
      * @example
-     * it('should have the tab present', function () {
-     *     expect(encore.tabs.initialize().hasTab('Home')).to.eventually.be.true;
+     * it('should mark the current tab as active when visiting it', function () {
+     *     var tab = new Tabs().byText('Home');
+     *     expect(tab.isActive()).to.eventually.be.false;
+     *     tab.click();
+     *     expect(tab.isActive()).to.eventually.be.true;
      * });
      */
-    hasTab: {
-        value: function (tabName) {
-            var tabElement = this.rootElement.element(by.cssContainingText(this.cssTabs, tabName));
-            return tabElement.isPresent().then(function (present) {
-                return present ? tabElement.isDisplayed() : present;
-            });
-        }
-    },
-
+    Tab.prototype.isActive = function () {
+        return this.getAttribute('class').then(function (className) { return className.indexOf('active') > -1; });
+    };
     /**
-     * @instance
-     * @function
-     * @param {String} tabName - The tab to search for by `tabName`, and return as a {@link tabs.tab} object.
-     * @returns {tabs.tab}
+     * @description Override getText to trim the result.
+     */
+    Tab.prototype.getText = function () {
+        return this._originalElement.getText().then(function (text) { return text.trim(); });
+    };
+    // TODO: Refactor out getName() and getSubtitle() and rely on simply getText().  Component DOM refactor?
+    /**
+     * @example
+     * it('should have the correct name without subtitle', function () {
+     *     expect(new tab().byText('Activity').getName()).to.eventually.equal('Activity');
+     * });
+     */
+    Tab.prototype.getName = function () {
+        var _this = this;
+        return this.getSubtitle().then(function (subtitle) {
+            if (subtitle !== null) {
+                return _this.getText().then(function (name) {
+                    return name.split(subtitle)[0].trim();
+                });
+            }
+            return _this.getText();
+        });
+    };
+    /**
+     * @description The subtitle of the tab. Will parse out the name, if it exists.
+     * @example
+     * it('should have just the subtitle correct', function () {
+     *     expect(new Tabs().byText('Activity').getSubtitle()).to.eventually.equal('recent first');
+     * });
+     */
+    Tab.prototype.getSubtitle = function () {
+        var subtitle = this.$('.subdued');
+        return subtitle.isPresent().then(function (present) {
+            if (present) {
+                return subtitle.getText().then(function (text) { return text.trim(); });
+            }
+            return null;
+        });
+    };
+    return Tab;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], Tab.prototype, "getText", null);
+exports.Tab = Tab;
+/**
+ * @class
+ * @description Functions for interacting with a collection of tabs.
+ */
+var Tabs = (function (_super) {
+    __extends(Tabs, _super);
+    function Tabs() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(Tabs.prototype, "cssTabs", {
+        get: function () {
+            return '.nav-tabs li';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Tabs.prototype, "tblTabs", {
+        get: function () {
+            return this.$$(this.cssTabs);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
      * @description Returns a {@link tabs.tab} object for the tab matching `tabName`. This will not be able to
      * differentiate between similarly named tabs with different subtitled names. Include any subtitled text
      * to differentiate between them. Matches on partial text matches.
      * @example
      * it('should find the home tab by name', function () {
-     *     var tab = encore.tabs.initialize().byName('Home');
-     *     expect(tab.name).to.eventually.equal('Home');
+     *     var tab = new Tabs().byText('Home');
+     *     expect(tab.getName()).to.eventually.equal('Home');
      * });
      */
-    byName: {
-        value: function (tabName) {
-            var tabElement = this.rootElement.element(by.cssContainingText(this.cssTabs, tabName));
-            return tabFromElement(tabElement);
-        }
-    },
-
+    Tabs.prototype.byText = function (tabName) {
+        var tabElement = this.element(protractor_1.by.cssContainingText(this.cssTabs, tabName));
+        return new Tab(tabElement);
+    };
     /**
-     * @instance
-     * @function
-     * @param {Number} index - The position of the tab you want transformed into a {@link tabs.tab} object.
-     * @returns {tabs.tab}
      * @description Will return the tab at position `index` as a {@link tabs.tab} object.
      * @example
      * it('should have the home tab in the first position', function () {
-     *     expect(encore.tabs.initialize().byIndex(0).name).to.eventually.equal('Home');
+     *     expect(new Tabs().byIndex(0).name).to.eventually.equal('Home');
      * });
      */
-    byIndex: {
-        value: function (index) {
-            return tabFromElement(this.tblTabs.get(index));
-        }
-    },
-
+    Tabs.prototype.byIndex = function (tabIndex) {
+        return new Tab(this.tblTabs.get(tabIndex));
+    };
     /**
-     * @instance
-     * @type {String[]}
      * @description A list of all tab names in the collection of tabs, in the order they appear.
      * @example
      * it('should have every tab present', function () {
      *     var tabNames = ['Home', 'Profile', 'Activity'];
-     *     expect(encore.tabs.initialize().names).to.eventually.eql(tabNames);
+     *     expect(new Tabs().getNames()).to.eventually.eql(tabNames);
      * });
      */
-    names: {
+    Tabs.prototype.getTabs = function () {
+        return this.tblTabs.map(function (tabElement) {
+            return new Tab(tabElement).getText();
+        });
+    };
+    Object.defineProperty(Tabs.prototype, "activeTab", {
+        /**
+         * @description Return a {@link tabs.tab} object for the current active tab.
+         * If you attempt to call this method when there is no active tab, you will
+         * trigger a NoSuchElementException.
+         * @example
+         * it('should mark a visited tab as active', function () {
+         *     var tab = new Tabs().byText('Home');
+         *     expect(tab.isActive()).to.eventually.be.false;
+         *     tab.click();
+         *     expect(tab.isActive()).to.eventually.be.true;
+         *     expect(new Tabs().activeTab.getName()).to.eventually.equal('Home');
+         * });
+         */
         get: function () {
-            return this.tblTabs.map(function (tabElement) {
-                return tabElement.getText().then(function (text) {
-                    return text.trim();
-                });
-            });
-        }
-    },
-
+            return new Tab(this.$('.nav-tabs .active'));
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
-     * @instance
-     * @type {tabs.tab}
-     * @description Return a {@link tabs.tab} object for the current active tab.
-     * If you attempt to call this property when there is no active tab, you will
-     * trigger a NoSuchElementException.
-     * @example
-     * it('should mark a visited tab as active', function () {
-     *     var tab = encore.tabs.initialize().byName('Home');
-     *     expect(tab.isActive()).to.eventually.be.false;
-     *     tab.click();
-     *     expect(tab.isActive()).to.eventually.be.true;
-     *     expect(encore.tabs.initialize().activeTab.name).to.eventually.equal('Home');
-     * });
-     */
-    activeTab: {
-        get: function () {
-            return tabFromElement(this.rootElement.$('.nav-tabs .active'));
-        }
-    },
-
-    /**
-     * @instance
-     * @function
-     * @returns {Number}
      * @description The number of tabs in the collection of tabs.
      * @example
      * it('should have three tabs', function () {
-     *     expect(encore.tabs.initialize().count()).to.eventually.equal(3);
+     *     expect(new Tabs().count()).to.eventually.equal(3);
      * });
      */
-    count: {
-        value: function () {
-            return this.tblTabs.count();
-        }
-    }
-
-};
-
-exports.tabs = {
-    /**
-     * @function
-     * @memberof tabs
-     * @param {ElementFinder} tabsElement - The ElementFinder to be transformed into a {@link tabs} object.
-     * @description Creates a {@link tabs} page object from a `tabsElement`, representing the container for
-     * a particular list of tabs. If you'd like to track all tabs present on a page at the same time, pass
-     * in a selector that highlights all elements on a page, such as `$('html')` or `$('body')`.
-     */
-    initialize: function (tabsElement) {
-        if (tabsElement === undefined) {
-            tabsElement = $('html');
-        }
-
-        tabs.rootElement = {
-            get: function () { return tabsElement; }
-        };
-        return Page.create(tabs);
-    }
-};
+    Tabs.prototype.count = function () {
+        return this.tblTabs.count();
+    };
+    return Tabs;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], Tabs.prototype, "count", null);
+exports.Tabs = Tabs;
+;
 </code></pre>
         </article>
     </section>
@@ -346,13 +222,13 @@ exports.tabs = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 16:27:44 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:18:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

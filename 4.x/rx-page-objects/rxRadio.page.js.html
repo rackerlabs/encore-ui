@@ -27,169 +27,120 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
-var Page = require('astrolabe').Page;
-
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
+var rxComponent_1 = require("./rxComponent");
 /**
- * @namespace
+ * @class
  */
-var rxRadio = {
-    eleWrapper: {
+var rxRadio = (function (_super) {
+    __extends(rxRadio, _super);
+    function rxRadio() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(rxRadio.prototype, "eleFakeRadio", {
         get: function () {
-            return this.rootElement.element(by.xpath('..'));
-        }
-    },
-
-    eleFakeRadio: {
-        get: function () {
-            return this.eleWrapper.$('.fake-radio');
-        }
-    },
-
+            return this.parent.$('.fake-radio');
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
-     * @function
-     * @instance
      * @description Whether or not the element in question is a radio button.
      * Useful for situations where input types might change in the future, ensuring that the expected one is being used.
-     * @returns {Boolean}
      */
-    isRadio: {
-        value: function () {
-            return this.rootElement.getAttribute('type').then(function (type) {
-                return type === 'radio';
-            });
-        }
-    },
-
+    rxRadio.prototype.isRadio = function () {
+        return this.getAttribute('type').then(function (type) {
+            return type === 'radio';
+        });
+    };
     /**
-     * @function
-     * @instance
      * @description Whether the radio button is valid.
-     * @returns {Boolean}
      */
-    isValid: {
-        value: function () {
-            return this.rootElement.getAttribute('class').then(function (classes) {
-                return _.includes(classes.split(' '), 'ng-valid');
-            });
-        }
-    },
-
+    rxRadio.prototype.isValid = function () {
+        return this.getAttribute('class').then(function (classes) {
+            return _.includes(classes.split(' '), 'ng-valid');
+        });
+    };
     /**
-     * @function
-     * @instance
      * @description Whether the radio element is currently displayed.
-     * @returns {Boolean}
      */
-    isDisplayed: {
-        value: function () {
-            var page = this;
-            return this.eleFakeRadio.isPresent().then(function (isFakeRadio) {
-                return isFakeRadio ? page.eleFakeRadio.isDisplayed() : page.rootElement.isDisplayed();
-            });
-        }
-    },
-
+    rxRadio.prototype.isDisplayed = function () {
+        var _this = this;
+        return this.eleFakeRadio.isPresent().then(function (isFakeRadio) {
+            return isFakeRadio ? _this.eleFakeRadio.isDisplayed() : _this._originalElement.isDisplayed();
+        });
+    };
     /**
-     * @function
-     * @instance
-     * @description Whether or not the radio button is present.
-     * @returns {Boolean}
-     */
-    isPresent: {
-        value: function () {
-            return this.rootElement.isPresent();
-        }
-    },
-
-    /**
-     * @function
-     * @instance
      * @description Whether or not the radio element is enabled.
-     * @return {Promise&lt;Boolean>}
      */
-    isEnabled: {
-        value: function () {
-            var page = this;
-            return this.eleFakeRadio.isPresent().then(function (isFakeRadio) {
-                if (isFakeRadio) {
-                    return page.eleWrapper.getAttribute('class').then(function (classes) {
-                        return !_.includes(classes.split(' '), 'rx-disabled');
-                    });
-                }
-                return page.rootElement.isEnabled();
-            });
-        }
-    },
-
+    rxRadio.prototype.isEnabled = function () {
+        var _this = this;
+        return this.eleFakeRadio.isPresent().then(function (isFakeRadio) {
+            if (isFakeRadio) {
+                return _this.parent.getAttribute('class').then(function (classes) {
+                    return !_.includes(classes.split(' '), 'rx-disabled');
+                });
+            }
+            return _this._originalElement.isEnabled();
+        });
+    };
     /**
-     * @function
-     * @instance
-     * @description Whether or not the radio button is currently selected.
-     * @returns {Boolean}
-     */
-    isSelected: {
-        value: function () {
-            return this.rootElement.isSelected();
-        }
-    },
-
-    /**
-     * @function
-     * @instance
      * @description Makes sure that the radio button is selected. If the radio button is already
      * selected, this function will do nothing.
      */
-    select: {
-        value: function () {
-            var radio = this.rootElement;
-            return this.isSelected().then(function (selected) {
-                if (!selected) {
-                    radio.click();
-                }
-            });
-        }
-    }
-};
-
-exports.rxRadio = {
-    /**
-     * @function
-     * @memberof rxRadio
-     * @description Creates a page object representing the rxRadio element.
-     * @param {ElementFinder} rxRadioElement - ElementFinder to be transformed into an rxRadio page object.
-     * @returns {rxRadio}
-     */
-    initialize: function (rxRadioElement) {
-        rxRadio.rootElement = {
-            get: function () { return rxRadioElement; }
-        };
-        return Page.create(rxRadio);
-    },
-
-    /**
-     * @function
-     * @memberof rxRadio
-     * @description Generates a getter and a setter for an rxRadio element on your page.
-     * The getter maps to the value returned from the instance's {@link rxRadio#isSelected},
-     * whereas the setter will apply the given value against {@link rxRadio#select}.
-     * @param {ElementFinder} elem - The ElementFinder for the rxRadio.
-     * @returns {Object}
-     */
-    generateAccessor: function (elem) {
+    rxRadio.prototype.select = function () {
+        var _this = this;
+        return this.isSelected().then(function (selected) {
+            if (!selected) {
+                _this.click();
+            }
+        });
+    };
+    return rxRadio;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxRadio.prototype, "isDisplayed", null);
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxRadio.prototype, "isEnabled", null);
+exports.rxRadio = rxRadio;
+function rxRadioAccessor(elem) {
+    return function (target, propertyKey) {
+        var radio = new rxRadio(elem);
         return {
             get: function () {
-                return exports.rxRadio.initialize(elem).isSelected();
+                return radio.isSelected();
             },
             // passing `false` to this will do nothing.
             set: function (enable) {
                 if (enable) {
-                    exports.rxRadio.initialize(elem).select();
+                    radio.select();
                 }
-            }
+            },
         };
-    }
-};
+    };
+}
+exports.rxRadioAccessor = rxRadioAccessor;
+;
 </code></pre>
         </article>
     </section>
@@ -200,13 +151,13 @@ exports.rxRadio = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 16:27:44 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:18:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

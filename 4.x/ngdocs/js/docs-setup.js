@@ -751,41 +751,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "utilities.service:Auth",
-      "shortName": "Auth",
-      "type": "service",
-      "moduleName": "utilities",
-      "shortDescription": "Alias for rxAuth",
-      "keywords": "alias api item release removed rxauth rxidentity rxsession service utilities"
-    },
-    {
-      "section": "api",
-      "id": "utilities.service:Environment",
-      "shortName": "Environment",
-      "type": "service",
-      "moduleName": "utilities",
-      "keywords": "api item release removed rxenvironment service utilities"
-    },
-    {
-      "section": "api",
-      "id": "utilities.service:hotkeys",
-      "shortName": "hotkeys",
-      "type": "service",
-      "moduleName": "utilities",
-      "shortDescription": "hotkeys",
-      "keywords": "account actions allows angular angular-hotkeys api app apps avoid best browsers choosing chosen collapse combination config conflicts consider controller creates ctrl currently define defined defining deletes description design difficult directive encore encoreui end-users example find github global good guidance guide help helper hotkeys identified identify identifying integration io isn key keybinding keystroke keystrokes leaving letter letters library list ll long main menu modifier mousetrap multiple official operating pattern plugin practice presses provide provided reference route rxapp selected service set shortcut shortcuts simple simply single solution specific standard systems user utilities utility views ways window"
-    },
-    {
-      "section": "api",
-      "id": "utilities.service:rxAuth",
-      "shortName": "rxAuth",
-      "type": "service",
-      "moduleName": "utilities",
-      "shortDescription": "Proxy service for rxIdentity",
-      "keywords": "api item logic proxy release removed rxidentity rxsession service utilities"
-    },
-    {
-      "section": "api",
       "id": "utilities.service:rxAutoSave",
       "shortName": "rxAutoSave",
       "type": "service",
@@ -827,7 +792,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "utilities",
       "shortDescription": "Allows defining environments and retrieving the current environment based on location",
-      "keywords": "actions add adding additional allows api application assume assumption avoid avoided based basegithuburl build building built call check checking code component consider current currently custom define defines defining demo deprecated detect dev didn discussed encore encoreui envcheck environment environments example exclusive explicitly find friendly full generate ghpages github http https including instance io islocal ispreprod issue isunified isunifiedpreprod isunifiedprod list listed local location matched matches matching methods mind multiple mutually mynewproduct normal note object older overlapping path pattern preprod problems procedure prod products properties provide rackspace regex removed retrieving return running rxenvironment rxenvironmenturl service set special specific staging string system takes three true unified-preprod unified-prod url urls utilities ve warning wrong"
+      "keywords": "actions add adding additional allows api application assume assumption avoid based basegithuburl built check checking code component current currently custom define defines defining demo detect dev didn encore envcheck environment environments example exclusive friendly ghpages github http https including instance io islocal ispreprod isunified isunifiedpreprod isunifiedprod listed local location matched matches methods mind mutually mynewproduct normal note object overlapping path pattern preprod procedure prod products properties provide rackspace regex retrieving running rxenvironment service set special specific staging string system takes three true unified-preprod unified-prod url utilities ve"
     },
     {
       "section": "api",
@@ -1035,23 +1000,6 @@ NG_DOCS={
       "moduleName": "utilities",
       "shortDescription": "Set of utility functions to break apart/compare URLs.",
       "keywords": "apart api break functions service set urls utilities utility"
-    },
-    {
-      "section": "api",
-      "id": "utilities.service:TokenInterceptor",
-      "shortName": "TokenInterceptor",
-      "type": "service",
-      "moduleName": "utilities",
-      "shortDescription": "Please use rxTokenInterceptor instead.",
-      "keywords": "api item release removed rxtokeninterceptor service utilities"
-    },
-    {
-      "section": "api",
-      "id": "utilities.service:UnauthorizedInterceptor",
-      "shortName": "UnauthorizedInterceptor",
-      "type": "service",
-      "moduleName": "utilities",
-      "keywords": "api item release removed rxunauthorizedinterceptor service utilities"
     },
     {
       "section": "api",

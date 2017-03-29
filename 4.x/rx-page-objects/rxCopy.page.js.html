@@ -28,9 +28,26 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
-
-var Tooltip = require('./tooltip.page').Tooltip;
-
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var protractor_1 = require("protractor");
+var rxComponent_1 = require("./rxComponent");
+var tooltip_page_1 = require("./tooltip.page");
 /* CSS HIERARCHY
  * ----------------------------------------
  * rx-copy &lt;-- rxCopyElement for constructor
@@ -46,120 +63,112 @@ var Tooltip = require('./tooltip.page').Tooltip;
  * - waiting
  * - success/fail
  */
-
-
 /**
  * @class
  */
-class rxCopy {
-    /**
-     * @param {ElementFinder} rxCopyElement
-     * ElementFinder to be transformed into an rxCopy page object
-     */
-    constructor (rxCopyElement) {
-        this.rootElement = rxCopyElement;
-
+var rxCopy = (function (_super) {
+    __extends(rxCopy, _super);
+    function rxCopy() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(rxCopy.prototype, "eleText", {
         // "Private" (undocumented) selectors
-        this.eleAction = this.rootElement.$('.rxCopy__action');
-        this.eleText = this.rootElement.$('.rxCopy__text');
-        this.icoCheck = this.rootElement.$('.fa-check');
-        this.icoClipboard = this.rootElement.$('.fa-clipboard');
-        this.icoTimes = this.rootElement.$('.fa-times');
-    }//constructor
-
-    /**
-     * @description (READ-ONLY)
-     * Tooltip associated with rxCopy element
-     * @type {Tooltip}
-     */
-    get tooltip () {
-        this._hoverOverAction();
-        // instantiate a new Tooltip from the newly added DOM element
-        return new Tooltip(this.rootElement.$('.rxCopy__tooltip'));
-    }//get tooltip()
-
+        get: function () { return this.$('.rxCopy__text'); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxCopy.prototype, "eleTooltip", {
+        get: function () { return this.$('.rxCopy__tooltip'); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxCopy.prototype, "icoCheck", {
+        get: function () { return this.$('.fa-check'); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxCopy.prototype, "icoClipboard", {
+        get: function () { return this.$('.fa-clipboard'); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxCopy.prototype, "icoTimes", {
+        get: function () { return this.$('.fa-times'); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxCopy.prototype, "tooltip", {
+        /**
+         * @description (READ-ONLY) Tooltip associated with rxCopy element.
+         */
+        get: function () {
+            this._hoverOverAction();
+            // instantiate a new Tooltip from the newly added DOM element
+            return new tooltip_page_1.Tooltip(this.eleTooltip);
+        } // tooltip()
+        ,
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxCopy.prototype, "icon", {
+        /**
+         * @description (READ-ONLY) The copy icon ElementFinder.
+         */
+        get: function () {
+            return this.$('.rxCopy__action');
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * @description (READ-ONLY) Plain text to copy.
-     * @returns {Promise&lt;String>}
      */
-    getText () {
+    rxCopy.prototype.getText = function () {
         return this.eleText.getText();
-    }
-
-    /**
-     * @description Whether or not the rxCopy instance is present.
-     * @returns {Promise&lt;Boolean>}
-     */
-    isPresent () {
-        return this.rootElement.isPresent();
-    }
-
-    /**
-     * @description Whether or not the rxCopy instance is visible.
-     * @returns {Promise&lt;Boolean>}
-     */
-    isDisplayed () {
-        return this.rootElement.isDisplayed();
-    }
-
-    /**
-     * @description Whether or not the rxCopy instance is enabled.
-     * @returns {Promise&lt;Boolean>}
-     */
-    isEnabled () {
-        return this.rootElement.isEnabled();
-    }
-
+    }; // getTeixt()
     /**
      * @description Will click the "copy" icon. Attempts to copy the contents of the rxCopy instance
      * to the clipboard. You may experience issues attempting to do this in unsupported browsers.
      * @example
      * var element = new encore.rxCopy($('.myCopyText'));
      * element.copy();
-     *
-     * @returns {Promise}
      */
-    copy () {
+    rxCopy.prototype.copy = function () {
         this._hoverOverAction();
-        return this.eleAction.click();
-    }//copy()
-
+        return this.icon.click();
+    }; // copy()
     /**
-     * @description Whether or not the element is waiting for interaction
-     * @returns {Promise&lt;Boolean>}
+     * @description Whether or not the element is waiting for interaction.
      */
-    isWaiting () {
+    rxCopy.prototype.isWaiting = function () {
         return this.icoClipboard.isPresent();
-    }
-
+    }; // isWaiting()
     /**
      * @description Whether or not the copy succeeded.
-     * @returns {Promise&lt;Boolean>}
      */
-    isSuccessful () {
+    rxCopy.prototype.isSuccessful = function () {
         return this.icoCheck.isPresent();
-    }
-
+    }; // isSuccessful()
     /**
      * @description Whether or not the copy failed.
-     * @returns {Promise&lt;Boolean>}
      */
-    isFailure () {
+    rxCopy.prototype.isFailure = function () {
         return this.icoTimes.isPresent();
-    }
-
+    }; // isFailure()
     /**
-     * @private
      * @description Perform a mouse hover over the clickable action element.
      */
-    _hoverOverAction () {
-        browser.actions().mouseMove(this.eleAction).perform();
+    rxCopy.prototype._hoverOverAction = function () {
+        protractor_1.browser.actions().mouseMove(this.icon).perform();
         // I know what you're thinking -- don't. Just leave it.
         // Otherwise, tooltips in tables in Chrome will not actually appear.
-        browser.actions().mouseMove(this.eleAction).perform();
-    }
-}//rxCopy
-
+        protractor_1.browser.actions().mouseMove(this.icon).perform();
+    }; // _hoverOverAction()
+    return rxCopy;
+}(rxComponent_1.rxComponentElement)); // rxCopy
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxCopy.prototype, "getText", null);
 exports.rxCopy = rxCopy;
 </code></pre>
         </article>
@@ -171,13 +180,13 @@ exports.rxCopy = rxCopy;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 16:27:44 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:18:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

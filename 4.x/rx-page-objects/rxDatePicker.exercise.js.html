@@ -27,66 +27,51 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>"use strict";
+            <pre class="prettyprint source linenums"><code>'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-const chai_1 = require("chai");
-const _ = require("lodash");
-const moment = require("moment");
-const component = require("./rxDatePicker.page");
+var chai_1 = require("chai");
+var _ = require("lodash");
+var moment = require("moment");
 ;
 /**
  * rxDatePicker exercises.
- * @exports exercise/rxDatePicker
- * @param {Object} options - Test options. Used to build valid tests.
- * @param {rxDatePicker} [options.instance=new rxDatePicker()] - Component to exercise.
- * @param {Boolean} [options.isPresent=true] - Whether or not the datepicker is present.
- * @param {Boolean} [options.isDisplayed=true] - Whether or not the datepicker is displayed.
- * @param {Boolean} [options.isValid=true] - Whether or not the datepicker is valid.
- * @param {Boolean} [options.isOpen=false] -
- * Whether or not the datepicker has its calendar open.
- * @param {String} [options.selectedDate=null] - The current date that
- * is selected in the datepicker. Pass in `null` for an empty date picker.
  * @example
  * describe('default exercises', encore.exercise.rxDatePicker({
  *     instance: myPage.datepicker, // select one of many pagination instances from your page objects
- *     isValid: false,
+ *     valid: false,
  *     selectedDate: moment().format('YYYY-MM-DD')
  * }));
  */
 function rxDatePicker(options) {
-    if (options === undefined) {
-        options = {};
-    }
     options = _.defaults(options, {
-        instance: new component.rxDatePicker(),
-        isPresent: true,
-        isDisplayed: true,
-        isEnabled: true,
-        isValid: true,
-        isOpen: false,
-        selectedDate: null
+        displayed: true,
+        enabled: true,
+        open: false,
+        present: true,
+        selectedDate: null,
+        valid: true,
     });
     // avoid mangling mocha's `this` context by not using fat-arrow syntax
     return function () {
-        let selectedYear;
-        let selectedMonth;
-        let selectedDay;
-        let datepicker;
-        let isoFormat = 'YYYY-MM-DD';
-        let formatYear = 'YYYY';
-        let formatMonth = 'MM';
-        let formatDay = 'DD';
-        let currentMonthYear;
-        let previousMonth;
-        let nextMonth;
+        var selectedYear;
+        var selectedMonth;
+        var selectedDay;
+        var datepicker;
+        var isoFormat = 'YYYY-MM-DD';
+        var formatYear = 'YYYY';
+        var formatMonth = 'MM';
+        var formatDay = 'DD';
+        var currentMonthYear;
+        var previousMonth;
+        var nextMonth;
         if (options.selectedDate) {
-            let m = moment(options.selectedDate);
+            var m = moment(options.selectedDate);
             selectedYear = m.format(formatYear);
             selectedMonth = m.format(formatMonth);
             selectedDay = m.format(formatDay);
         }
         else {
-            let m = moment();
+            var m = moment();
             selectedYear = m.format(formatYear);
             selectedMonth = m.format(formatMonth);
             // there is no selected day in a blank datepicker
@@ -94,71 +79,71 @@ function rxDatePicker(options) {
         before(function () {
             datepicker = options.instance;
         });
-        it(`should ${options.isPresent ? '' : 'not '}be present`, function () {
-            chai_1.expect(datepicker.isPresent()).to.eventually.equal(options.isPresent);
+        it("should " + (options.present ? '' : 'not ') + "be present", function () {
+            chai_1.expect(datepicker.isPresent()).to.eventually.eql(options.present);
         });
-        if (!options.isPresent) {
+        if (!options.present) {
             return;
         }
-        it(`should ${options.isDisplayed ? '' : 'not '}be displayed`, function () {
-            chai_1.expect(datepicker.isDisplayed()).to.eventually.equal(options.isDisplayed);
+        it("should " + (options.displayed ? '' : 'not ') + "be displayed", function () {
+            chai_1.expect(datepicker.isDisplayed()).to.eventually.eql(options.displayed);
         });
-        if (!options.isDisplayed) {
+        if (!options.displayed) {
             return;
         }
         if (options.selectedDate !== null) {
-            it(`should have '${options.selectedDate}' as the current selected date`, function () {
-                chai_1.expect(datepicker.date).to.eventually.equal(options.selectedDate);
+            it("should have '" + options.selectedDate + "' as the current selected date", function () {
+                chai_1.expect(datepicker.date).to.eventually.eql(options.selectedDate);
             });
         }
-        it(`should ${options.isValid ? '' : 'not '}be valid`, function () {
-            chai_1.expect(datepicker.isValid()).to.eventually.equal(options.isValid);
+        it("should " + (options.valid ? '' : 'not ') + "be valid", function () {
+            chai_1.expect(datepicker.isValid()).to.eventually.eql(options.valid);
         });
-        it(`should ${options.isEnabled ? '' : 'not '}be enabled`, function () {
-            chai_1.expect(datepicker.isEnabled()).to.eventually.equal(options.isEnabled);
+        it("should " + (options.enabled ? '' : 'not ') + "be enabled", function () {
+            chai_1.expect(datepicker.isEnabled()).to.eventually.eql(options.enabled);
         });
-        it(`should ${options.isOpen ? '' : 'not '}already have the calendar open`, function () {
-            chai_1.expect(datepicker.isOpen()).to.eventually.equal(options.isOpen);
+        it("should " + (options.open ? '' : 'not ') + "already have the calendar open", function () {
+            chai_1.expect(datepicker.isOpen()).to.eventually.eql(options.open);
         });
-        if (!options.isEnabled) {
+        if (!options.enabled) {
             return;
         }
-        it(`should have '${selectedMonth}' as the current selected month in the dropdown`, function () {
-            chai_1.expect(datepicker.month).to.eventually.equal(selectedMonth);
-        });
-        it(`should have '${selectedYear}' as the current selected year in the dropdown`, function () {
-            chai_1.expect(datepicker.year).to.eventually.equal(selectedYear);
-        });
-        it(`should ${options.isOpen ? 'close ' : 'open '}the calendar`, function () {
-            options.isOpen ? datepicker.close() : datepicker.open();
-            chai_1.expect(datepicker.isOpen()).to.eventually.equal(!options.isOpen);
+        it("should " + (options.open ? 'close ' : 'open ') + "the calendar", function () {
+            options.open ? datepicker.close() : datepicker.open();
+            chai_1.expect(datepicker.isOpen()).to.eventually.eql(!options.open);
         });
         it('should return the calendar back to its original state', function () {
-            options.isOpen ? datepicker.open() : datepicker.close();
-            chai_1.expect(datepicker.isOpen()).to.eventually.equal(options.isOpen);
+            options.open ? datepicker.open() : datepicker.close();
+            chai_1.expect(datepicker.isOpen()).to.eventually.eql(options.open);
+        });
+        it("should have '" + selectedMonth + "' as the current selected month in the dropdown", function () {
+            datepicker.open();
+            chai_1.expect(datepicker.month).to.eventually.eql(selectedMonth);
+        });
+        it("should have '" + selectedYear + "' as the current selected year in the dropdown", function () {
+            chai_1.expect(datepicker.year).to.eventually.eql(selectedYear);
         });
         it('should have some days that are in the current month', function () {
-            datepicker.open();
-            chai_1.expect(datepicker.tblCurrentMonthDays.count()).to.eventually.be.above(0);
+            chai_1.expect(datepicker.currentMonthDays.count()).to.eventually.be.above(0);
         });
         it('should have some days that are out of the current month', function () {
             chai_1.expect(datepicker.$$('.day.outOfMonth').count()).to.eventually.be.above(0);
         });
         it('should not select a date that is out of month', function () {
-            datepicker.date.then(currentDate => {
-                datepicker.$$('.day.outOfMonth span').each(invalidDay => {
+            datepicker.date.then(function (currentDate) {
+                datepicker.$$('.day.outOfMonth span').each(function (invalidDay) {
                     invalidDay.click();
-                    chai_1.expect(datepicker.date).to.eventually.equal(currentDate);
+                    chai_1.expect(datepicker.date).to.eventually.eql(currentDate);
                 });
             });
         });
         it('should navigate back one month', function () {
-            datepicker.year.then(year => {
-                datepicker.month.then(month => {
+            datepicker.year.then(function (year) {
+                datepicker.month.then(function (month) {
                     datepicker.previousMonth();
-                    currentMonthYear = `${year}-${month}`;
+                    currentMonthYear = year + "-" + month;
                     previousMonth = moment(currentMonthYear, 'YYYY-MM').subtract(1, 'month');
-                    chai_1.expect(datepicker.month).to.eventually.equal(previousMonth.format(formatMonth));
+                    chai_1.expect(datepicker.month).to.eventually.eql(previousMonth.format(formatMonth));
                 });
             });
         });
@@ -166,62 +151,66 @@ function rxDatePicker(options) {
             datepicker.nextMonth();
             datepicker.nextMonth();
             nextMonth = moment(currentMonthYear).add(1, 'month');
-            chai_1.expect(datepicker.month).to.eventually.equal(nextMonth.format(formatMonth));
+            chai_1.expect(datepicker.month).to.eventually.eql(nextMonth.format(formatMonth));
         });
         it('should reopen the calendar and have the month unchanged', function () {
             datepicker.close();
             datepicker.open();
-            chai_1.expect(datepicker.month).to.eventually.equal(nextMonth.format(formatMonth));
-            chai_1.expect(datepicker.year).to.eventually.equal(nextMonth.format(formatYear));
+            chai_1.expect(datepicker.month).to.eventually.eql(nextMonth.format(formatMonth));
+            chai_1.expect(datepicker.year).to.eventually.eql(nextMonth.format(formatYear));
             datepicker.previousMonth();
         });
         if (options.selectedDate !== null) {
             it('should update the date to one month from now', function () {
+                datepicker.open();
                 datepicker.date = nextMonth.format(isoFormat);
-                chai_1.expect(datepicker.date).to.eventually.equal(nextMonth.format(isoFormat));
+                chai_1.expect(datepicker.date).to.eventually.eql(nextMonth.format(isoFormat));
             });
             it('should update the date to one month ago', function () {
-                let previousMonth = moment().subtract(1, 'months').format(isoFormat);
-                datepicker.date = previousMonth;
-                chai_1.expect(datepicker.date).to.eventually.equal(previousMonth);
+                datepicker.open();
+                var oneMonthAgo = moment().subtract(1, 'months').format(isoFormat);
+                datepicker.date = oneMonthAgo;
+                chai_1.expect(datepicker.date).to.eventually.eql(oneMonthAgo);
             });
             it('should return the date back to its original date', function () {
+                datepicker.open();
                 datepicker.date = options.selectedDate;
-                chai_1.expect(datepicker.date).to.eventually.equal(options.selectedDate);
+                chai_1.expect(datepicker.date).to.eventually.eql(options.selectedDate);
             });
         }
         describe('today\'s date', function () {
-            let today;
-            let currentDate;
+            var today;
+            var currentDate;
             before(function () {
                 today = moment().format(isoFormat);
-                datepicker.date.then(date => {
+                datepicker.open();
+                datepicker.date.then(function (date) {
                     currentDate = date;
                     datepicker.date = today;
                 });
             });
             it('should be highlighted with a special class', function () {
-                chai_1.expect(datepicker.isDateToday(today)).to.eventually.be.true;
+                datepicker.open();
+                chai_1.expect(datepicker.getDateToday()).to.eventually.eql(today);
             });
             it('should highlight the currently selected date with a special class', function () {
-                chai_1.expect(datepicker.isDateSelected(today)).to.eventually.be.true;
+                datepicker.open();
+                chai_1.expect(datepicker.getDateSelected()).to.eventually.eql(today);
             });
             it('should update the date to the first of the month', function () {
                 var firstOfMonth = moment().startOf('month').format(isoFormat);
                 datepicker.date = firstOfMonth;
-                chai_1.expect(datepicker.date).to.eventually.equal(firstOfMonth);
-            });
-            it('should update the date to the last of the month', function () {
-                var lastOfMonth = moment().endOf('month').format(isoFormat);
-                datepicker.date = lastOfMonth;
-                chai_1.expect(datepicker.date).to.eventually.equal(lastOfMonth);
+                datepicker.open();
+                chai_1.expect(datepicker.date).to.eventually.eql(firstOfMonth);
+                chai_1.expect(datepicker.getDateSelected()).to.eventually.eql(firstOfMonth);
             });
             after(function () {
+                datepicker.open();
                 datepicker.date = currentDate;
             });
         });
         after(function () {
-            options.isOpen ? datepicker.open() : datepicker.close();
+            options.open ? datepicker.open() : datepicker.close();
         });
     };
 }
@@ -237,13 +226,13 @@ exports.rxDatePicker = rxDatePicker;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 16:27:44 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:18:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1139,39 +1139,6 @@ angular.module('demoApp')
 
 
 
-
-
-
-
-
-
-angular.module('demoApp')
-.controller('hotkeysVolumeCtrl', function ($scope, hotkeys) {
-    $scope.volume = 5;
-
-    // Remove combos so we don't add them multiple times
-    hotkeys.del('ctrl+up');
-    hotkeys.del('ctrl+down');
-
-    // Add desired combos
-    hotkeys.add({
-        combo: 'ctrl+up',
-        description: 'Turn up the volume!',
-        callback: function () {
-            $scope.volume += 1;
-        }
-    });
-
-    hotkeys.add({
-        combo: 'ctrl+down',
-        description: 'Turn it down!',
-        callback: function () {
-            $scope.volume -= 1;
-        }
-    });
-});
-
-
 angular.module('demoApp')
 .controller('rxAgeCtrl', function ($scope) {
     var day = 1000 * 60 * 60 * 24;
@@ -1206,8 +1173,6 @@ angular.module('demoApp')
     $scope.customStyles = 'color: red; font-weight: bold;';
     $scope.customContent = '"Custom Content"';
 });
-
-
 
 
 angular.module('demoApp')
@@ -1313,12 +1278,6 @@ angular.module('demoApp')
 });
 
 
-angular.module('demoApp')
-.controller('rxEnvironmentSimpleCtrl', function ($scope, rxEnvironment) {
-    var environment = rxEnvironment.get();
-    $scope.url = environment.url;
-    $scope.name = environment.name;
-});
 
 
 

@@ -800,32 +800,6 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "Auth",
-        "stability": "deprecated",
-        "description": "TBD",
-        "api": "service:rxAuth",
-        "keywords": [
-            "Auth"
-        ],
-        "name": "Auth",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/Auth/scripts/Auth.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  <strong>Deprecated:</strong> Please use:\n  <ul class=\"list\">\n    <li><a href=\"#/utilities/rxIdentity\">rxIdentity</a> for authentication</li>\n    <li><a href=\"#/utilities/rxSession\">rxSession</a> for permission and session management</li>\n  </ul>\n</p>\n",
-            "less": ""
-        }
-    },
-    {
         "displayName": "PaginatedItemsSummary",
         "stability": "stable",
         "description": "Provides a formatted string with the current range of items in total items.",
@@ -846,54 +820,6 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Provides a formatted string with the current range of items in total items, for example \"26-50 of 500 items\".\n</p>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "TokenInterceptor",
-        "stability": "deprecated",
-        "description": "Adds an authorization token to all HTTP requests, which allows access to system services.",
-        "api": "service:TokenInterceptor",
-        "keywords": [],
-        "name": "TokenInterceptor",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/TokenInterceptor/scripts/TokenInterceptor.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  <strong>Deprecated:</strong> Please use\n  <a href=\"#/utilities/rxTokenInterceptor\">rxTokenInterceptor</a> instead.\n</p>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "UnauthorizedInterceptor",
-        "stability": "deprecated",
-        "description": "Redirects users to the login page, when user authentication fails during a system service request.",
-        "api": "service:UnauthorizedInterceptor",
-        "keywords": [],
-        "name": "UnauthorizedInterceptor",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/UnauthorizedInterceptor/scripts/UnauthorizedInterceptor.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  <strong>Deprecated:</strong> Please use\n  <a href=\"#/utilities/rxUnauthorizedInterceptor\">rxUnauthorizedInterceptor</a> instead.\n</p>\n",
             "less": ""
         }
     },
@@ -920,30 +846,6 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<ul class=\"list\">\n  <li>\n    To make text less prominent, change its color using the <code>.subdued</code> class.\n    This change will still persist if the class is within a link.\n  </li>\n  <li>\n    You can mark content as full width. For example, styling a full width\n    button by using the <code>.full-width</code> class. This class requires 'display'\n    to be styled as inline-block or block.\n  </li>\n  <li>\n    Hidden content\n    <ul class=\"list\">\n      <li>\n        To hide an element but not remove it from the page spacing, use the <code>.hidden\n        </code> class.\n      </li>\n      <li>\n        You can hide content visually and from the page spacing\n        <a href=\"http://developer.yahoo.com/blogs/ydn/clip-hidden-content-better-accessibility-53456.html\" \n        target=\"_blank\">\n          (but can still be read by screen readers)\n        </a> using the <code>.visually-hidden</code> class.\n      </li>\n    </ul>\n  </li>\n  <li>\n    Clearing floats\n    <ul class=\"list\">\n      <li>\n        To clear child elements using clearfix, you can use the <code>.clear</code> class.\n        <a href=\"http://nicolasgallagher.com/micro-clearfix-hack/\" target=\"_blank\">Learn more about the hack.</a>\n      </li>\n      <li>\n        To clear previous sibling floats, you can use the <code>.clear-left</code>\n        and <code>.clear-right</code> classes\n      </li>\n    </ul>\n  </li>\n</ul>\n<rx-example name=\"helperClasses.simple\"></rx-example>",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "hotkeys",
-        "stability": "deprecated",
-        "description": "",
-        "api": "service:hotkeys",
-        "keywords": [],
-        "name": "hotkeys",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/hotkeys/scripts/hotkeys.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "angular.module('demoApp')\n.controller('hotkeysVolumeCtrl', function ($scope, hotkeys) {\n    $scope.volume = 5;\n\n    // Remove combos so we don't add them multiple times\n    hotkeys.del('ctrl+up');\n    hotkeys.del('ctrl+down');\n\n    // Add desired combos\n    hotkeys.add({\n        combo: 'ctrl+up',\n        description: 'Turn up the volume!',\n        callback: function () {\n            $scope.volume += 1;\n        }\n    });\n\n    hotkeys.add({\n        combo: 'ctrl+down',\n        description: 'Turn it down!',\n        callback: function () {\n            $scope.volume -= 1;\n        }\n    });\n});\n",
-            "html": "<p>\n  This is simply a reference guide to using\n  <a href=\"http://chieffancypants.github.io/angular-hotkeys/\">the angular-hotkeys plugin</a>\n  from within EncoreUI.\n</p>\n\n<rx-example name=\"hotkeys.volume\"></rx-example>\n",
             "less": ""
         }
     },
@@ -1022,34 +924,6 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxAttributesCtrl', function ($scope) {\n    $scope.customStyles = 'color: red; font-weight: bold;';\n    $scope.customContent = '\"Custom Content\"';\n});\n",
             "html": "<p>\n  <code>rxAttributes</code> allows to add attributes based on a value in scope being defined or not.\n</p>\n\n<rx-example name=\"rxAttributes.demo\"></rx-example>\n",
-            "less": ""
-        }
-    },
-    {
-        "displayName": "rxAuth",
-        "stability": "deprecated",
-        "description": "Proxy service for rxIdentity and rxSession",
-        "api": "service:rxAuth",
-        "keywords": [
-            "Auth",
-            "rxIdentity",
-            "rxSession"
-        ],
-        "name": "rxAuth",
-        "moduleName": "'encore.ui.utilities'",
-        "category": "utilities",
-        "isLegacy": false,
-        "hasApi": true,
-        "isCategory": false,
-        "srcFiles": [
-            "src/utilities/rxAuth/scripts/rxAuth.js"
-        ],
-        "tplFiles": [],
-        "tplJsFiles": [],
-        "docs": {
-            "md": "",
-            "js": "",
-            "html": "<p>\n  <strong>Deprecated:</strong> Please use:\n  <ul class=\"list\">\n    <li><a href=\"#/utilities/rxIdentity\">rxIdentity</a> for authentication</li>\n    <li><a href=\"#/utilities/rxSession\">rxSession</a> for permission and session management</li>\n  </ul>\n</p>\n",
             "less": ""
         }
     },
@@ -1380,8 +1254,8 @@ angular.module('demoApp')
         "tplJsFiles": [],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('rxEnvironmentSimpleCtrl', function ($scope, rxEnvironment) {\n    var environment = rxEnvironment.get();\n    $scope.url = environment.url;\n    $scope.name = environment.name;\n});\n",
-            "html": "<p>\n  Allows environments to be defined, and retrieving the current environment based on location.\n</p>\n\n<rx-example name=\"rxEnvironment.simple\"></rx-example>",
+            "js": "",
+            "html": "<p>\n  Allows environments to be defined, and retrieving the current environment based on location.\n</p>\n",
             "less": ""
         }
     },
