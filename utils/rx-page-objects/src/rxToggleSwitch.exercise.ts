@@ -1,53 +1,53 @@
-var _ = require('lodash');
+'use strict';
+
+import {expect} from 'chai';
+import * as _ from 'lodash';
+
+import {rxMisc} from './rxMisc.page';
+import * as component from './rxToggleSwitch.page';
+
+interface IRxToggleSwitchExerciseOptions {
+    instance: component.rxToggleSwitch;
+    enabled?: boolean;
+    toggledAtStart?: boolean;
+    toggledAtEnd?: boolean;
+}
 
 /**
  * @description rxToggleSwitch exercises.
- * @see rxToggleSwitch
- * @exports exercise/rxToggleSwitch
- * @param {Object} options - Test options. Used to build valid tests.
- * @param {rxToggleSwitch} options.instance - Component to exercise.
- * @param {Boolean} [options.disabled=false] - Determines if the switch can be toggled.
- * @param {Boolean} [options.toggledAtStart=null] -
- * Beginning state of toggle switch. The value will be detected automatically if not given.
- * @param {Boolean} [options.toggledAtEnd=null]
- * End state of toggle switch. The value will be detected automatically if not given.
  * @example
  * describe('default exercises', encore.exercise.rxToggleSwitch({
  *     instance: myPage.emailPreference // select one of many widgets from your page objects
  * }));
  */
-exports.rxToggleSwitch = function (options) {
-    if (options === undefined) {
-        options = {};
-    }
+export function rxToggleSwitch(options: IRxToggleSwitchExerciseOptions) {
 
     options = _.defaults(options, {
         enabled: true,
-        toggledAtStart: null, // begins 'OFF'
-        toggledAtEnd: null // ends 'ON'
+        toggledAtStart: false,
+        toggledAtEnd: true,
     });
 
-    return function () {
-        var component;
-        var toggledAtStart;
-        var toggledAtEnd;
-
-        var positionAsText = function (isEnabled) {
+    return () => {
+        let toggledAtEnd = options.toggledAtEnd;
+        let toggledAtStart = options.toggledAtStart;
+        let component: component.rxToggleSwitch;
+        let positionAsText = isEnabled => {
             return isEnabled ? 'ON' : 'OFF';
         };
 
-        var toggle = function () {
-            encore.rxMisc.scrollToElement(component.rootElement, {
-                positionOnScreen: 'middle'
+        let toggle = () => {
+            rxMisc.scrollToElement(component, {
+                positionOnScreen: 'middle',
             });
-            return component.isToggled().then(function (toggled) {
+            return component.isToggled().then(toggled => {
                 toggled ? component.toggleOff() : component.toggleOn();
             });
         };
 
-        before(function () {
+        before(() => {
             component = options.instance;
-            component.isToggled().then(function (isToggled) {
+            component.isToggled().then(isToggled => {
                 // use option if available, otherwise use detected state
                 toggledAtStart = _.isNull(options.toggledAtStart) ? isToggled : options.toggledAtStart;
 
@@ -56,32 +56,32 @@ exports.rxToggleSwitch = function (options) {
             });
         });
 
-        it('should show the element', function () {
+        it('should show the element', () => {
             expect(component.isDisplayed()).to.eventually.be.true;
         });
 
-        it('should' + (options.enabled ? '' : ' not') + ' be enabled', function () {
+        it('should' + (options.enabled ? '' : ' not') + ' be enabled', () => {
             expect(component.isEnabled()).to.eventually.equal(options.enabled);
         });
 
         if (!options.enabled) {
-            it('should not change state when clicked', function () {
+            it('should not change state when clicked', () => {
                 toggle();
                 expect(component.isToggled()).to.eventually.equal(toggledAtStart);
                 expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
             });
         } else {
-            it('should begin in the ' + positionAsText(toggledAtStart) + ' state', function () {
+            it('should begin in the ' + positionAsText(toggledAtStart) + ' state', () => {
                 expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
             });
 
-            it('should change to ' + positionAsText(toggledAtEnd) + ' when clicked', function () {
+            it('should change to ' + positionAsText(toggledAtEnd) + ' when clicked', () => {
                 toggle();
                 expect(component.isToggled()).to.eventually.equal(toggledAtEnd);
                 expect(component.getText()).to.eventually.equal(positionAsText(toggledAtEnd));
             });
 
-            it('should return to the ' + positionAsText(toggledAtStart) + ' when clicked again', function () {
+            it('should return to the ' + positionAsText(toggledAtStart) + ' when clicked again', () => {
                 toggle();
                 expect(component.isToggled()).to.eventually.equal(toggledAtStart);
                 expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
