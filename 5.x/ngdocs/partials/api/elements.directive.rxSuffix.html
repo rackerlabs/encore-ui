@@ -1,0 +1,55 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxSuffix.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxSuffix.js#L52" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxSuffix</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxsuffix-page"><p>Structural element directive used to wrap content to be placed
+inline with a form control element.</p>
+<ul>
+<li>Best placed after a form control element.</li>
+</ul>
+<dl>
+  <dt>Display:</dt>
+  <dd><strong>inline block</strong> <em>(only as wide as necessary for content)</em></dd>
+
+  <dt>Parent:</dt>
+  <dd><a href="#/api/elements.directive:rxInput">rxInput</a></dd>
+
+  <dt>Siblings:</dt>
+  <dd>
+    <ul>
+      <li><a href="#/api/elements.directive:rxPrefix">rxPrefix</a></li>
+      <li><a href="#/api/elements.directive:rxInfix">rxInfix</a></li>
+      <li>Any HTML Element</li>
+    </ul>
+  </dd>
+
+  <dt>Children:</dt>
+  <dd>Any HTML Element</dd>
+</dl></div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-suffix&gt;
+&lt;/rx-suffix&gt;</pre>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxsuffix-page"><pre class="prettyprint linenums">
+...
+&lt;form rx-form&gt;
+  &lt;rx-form-section&gt;
+    &lt;rx-field&gt;
+      &lt;rx-field-name&gt;Salary:&lt;/rx-field-name&gt;
+      &lt;rx-field-content&gt;
+        &lt;rx-input&gt;
+          &lt;rx-prefix&gt;$&lt;/rx-prefix&gt;
+          &lt;input type="number" /&gt;
+          &lt;rx-suffix&gt;Million&lt;/rx-suffix&gt;
+        &lt;/rx-input&gt;
+      &lt;/rx-field-content&gt;
+    &lt;/rx-field&gt;
+  &lt;/rx-form-section&gt;
+&lt;/form&gt;
+...
+</pre>
+</div></div>
+</div>

@@ -1,0 +1,75 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxCharacterCount.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxCharacterCount.js#L75" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxCharacterCount</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxcharactercount-page"><p>Provides an attribute directive intended for adding to <code>&lt;textarea&gt;</code>
+elements. Place the <code>rx-character-count</code> attribute into your <code>&lt;textarea&gt;</code>, and
+a new <code>&lt;div&gt;</code> will be added directly underneath it. This directive requires
+that you&#39;re using <code>ng-model</code> with your <code>&lt;textarea&gt;</code>.</p>
+<p>This <code>&lt;div&gt;</code> will watch the content of the <code>&lt;textarea&gt;</code>, and display how many
+characters are remaining. By default, 254 characters are &quot;allowed&quot;. If there
+are less than 10 characters remaining, the counter will go orange. If the user
+enters more than 254 characters, the counter will go red.</p>
+<h5 id="description_leading-and-trailing-characters">Leading and Trailing characters</h5>
+<p>By default, any text field using <code>ng-model</code> has <code>ng-trim=&quot;true&quot;</code> applied to it.
+This means that any leading and trailing spaces/blanks in your text field will
+be ignored. They will not count towards the remaining character count. If you
+want it to count leading/trailing spaces, then just add <code>ng-trim=&quot;false&quot;</code> to
+your <code>&lt;textarea&gt;</code>.</p>
+<h5 id="description_styling">Styling</h5>
+<p>When specifying a width other than the default, you should style some built-in
+classes in addition to the text field itself. As in the demo, the
+<code>.input-highlighting</code> class should have the same width as the text field
+(if highlighting is used), and the <code>.counted-input-wrapper</code> should be used to
+correctly position the counter.</p>
+<h5 id="description_ngshow/nghide/ngif/ngswitch/etc">ngShow/ngHide/ngIf/ngSwitch/etc.</h5>
+<p>If you wish to show/hide your <code>textarea</code> element, we recommend placing the
+element inside of a <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code>, and doing the</p>
+<p><code>ng-show</code> / <code>ng-hide</code> / etc. on that <code>div</code> / <code>span</code>. For example,</p>
+<pre class="prettyprint linenums">
+&lt;span ng-show="isShown"&gt;
+    &lt;textarea rx-character-count&gt;{{someValue}}&lt;/textarea&gt;
+&lt;/span&gt;
+</pre>
+<p>We <em>do</em> have preliminary support for putting these directives directly inside
+the <code>textarea</code>, i.e.</p>
+<pre class="prettyprint linenums">
+&lt;textarea rx-character-count ng-show="isShown"&gt;{{someValue}}&lt;/textarea&gt;
+</pre>
+<p>But this support should be considered experimental. If you choose to take
+advantage of it, please ensure you&#39;ve extensively tested that it performs
+correctly for your uses.</p>
+<h5 id="description_highlighting">Highlighting</h5>
+<p>Characters that are over the limit will be highlighted in red if the
+<code>highlight=&quot;true&quot;</code> attribute is on the directive&#39;s element. Because this
+functionality is currently unstable, it has been left off by default. Please
+test your use case heavily before shipping with this feature enabled.</p>
+<p>Known failure cases:</p>
+<ul>
+<li>Content that causes a scrollbar in the textarea</li>
+<li>Initial text (coming from the model) that is over the limit</li>
+</ul>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY rx-character-count
+     [low-boundary="{Number}"]
+     [max-characters="{Number}"]
+     [highlight="{Boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>low-boundary <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="elements-directive-page elements-directive-rxcharactercount-page"><p>How far from the maximum to enter a warning state</p>
+</div> <p><em>(default: 10)</em></p></td></tr><tr><td>max-characters <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="elements-directive-page elements-directive-rxcharactercount-page"><p>The maximum number of characters allowed</p>
+</div> <p><em>(default: 254)</em></p></td></tr><tr><td>highlight <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="elements-directive-page elements-directive-rxcharactercount-page"><p>Whether or not characters over the limit are highlighted</p>
+</div> <p><em>(default: false)</em></p></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxcharactercount-page"><pre class="prettyprint linenums">
+&lt;textarea ng-model="model" rx-character-count&gt;&lt;/textarea&gt;
+</pre>
+</div></div>
+</div>

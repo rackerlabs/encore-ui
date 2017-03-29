@@ -1,0 +1,44 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Modals/scripts/rxModalFooter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Modals/scripts/rxModalFooter.js#L42" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxModalFooter</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxmodalfooter-page"><p>Define a footer for the next modal.</p>
+<p>When a modal has multiple views or kicks off a process that should be
+tracked within the modal, the <code>&lt;rx-modal-footer&gt;</code> directive should be used.</p>
+<p>Modal Footers should be defined in the same template as the Modal Form unless
+the footer is global, in which case it should be loaded in <code>module.run()</code>.
+Global footers can be used in any subsequent modal by changing to the state
+they were defined with.</p>
+<p>The modal&#39;s controller also inherits the <code>setState()</code> method on the scope,
+which should be used to toggle different views or footers. See the
+Multi-View Modals <a href="../#/elements/Modals#multi-view-modals">demo</a>
+for an example of this design pattern&#39;s usage.</p>
+<p>The default <code>editing</code> state shows the standard submit and cancel buttons,
+and the only other state provided by the framework is <code>complete</code> (showing the
+return button).</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-modal-footer
+       state="{String}"
+       [global="{String}"]&gt;
+&lt;/rx-modal-footer&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>state</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalfooter-page"><p>The content will be shown in the footer when this state is activated.</p>
+</div></td></tr><tr><td>global <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalfooter-page"><p>If the global attribute is present, then this footer can be used in other
+modals. This attribute takes no values.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxmodalfooter-page"><pre class="prettyprint linenums">
+&lt;rx-modal-footer state="confirm"&gt;
+    &lt;button class="button" ng-click="setState('pending')"&gt;
+        I understand the risks.
+    &lt;/button&gt;
+&lt;/rx-modal-footer&gt;
+</pre>
+</div></div>
+</div>

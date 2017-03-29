@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: tabs.page.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: tabs.page.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var protractor_1 = require("protractor");
+var rxComponent_1 = require("./rxComponent");
+/**
+ * @class
+ * @description Functionality around interacting with a single tab.
+ */
+var Tab = (function (_super) {
+    __extends(Tab, _super);
+    function Tab() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    /**
+     * @description Whether or not the tab object is set as active.
+     * @example
+     * it('should mark the current tab as active when visiting it', function () {
+     *     var tab = new Tabs().byText('Home');
+     *     expect(tab.isActive()).to.eventually.be.false;
+     *     tab.click();
+     *     expect(tab.isActive()).to.eventually.be.true;
+     * });
+     */
+    Tab.prototype.isActive = function () {
+        return this.getAttribute('class').then(function (className) { return className.indexOf('active') > -1; });
+    };
+    /**
+     * @description Override getText to trim the result.
+     */
+    Tab.prototype.getText = function () {
+        return this._originalElement.getText().then(function (text) { return text.trim(); });
+    };
+    // TODO: Refactor out getName() and getSubtitle() and rely on simply getText().  Component DOM refactor?
+    /**
+     * @example
+     * it('should have the correct name without subtitle', function () {
+     *     expect(new tab().byText('Activity').getName()).to.eventually.equal('Activity');
+     * });
+     */
+    Tab.prototype.getName = function () {
+        var _this = this;
+        return this.getSubtitle().then(function (subtitle) {
+            if (subtitle !== null) {
+                return _this.getText().then(function (name) {
+                    return name.split(subtitle)[0].trim();
+                });
+            }
+            return _this.getText();
+        });
+    };
+    /**
+     * @description The subtitle of the tab. Will parse out the name, if it exists.
+     * @example
+     * it('should have just the subtitle correct', function () {
+     *     expect(new Tabs().byText('Activity').getSubtitle()).to.eventually.equal('recent first');
+     * });
+     */
+    Tab.prototype.getSubtitle = function () {
+        var subtitle = this.$('.subdued');
+        return subtitle.isPresent().then(function (present) {
+            if (present) {
+                return subtitle.getText().then(function (text) { return text.trim(); });
+            }
+            return null;
+        });
+    };
+    return Tab;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], Tab.prototype, "getText", null);
+exports.Tab = Tab;
+/**
+ * @class
+ * @description Functions for interacting with a collection of tabs.
+ */
+var Tabs = (function (_super) {
+    __extends(Tabs, _super);
+    function Tabs() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(Tabs.prototype, "cssTabs", {
+        get: function () {
+            return '.nav-tabs li';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Tabs.prototype, "tblTabs", {
+        get: function () {
+            return this.$$(this.cssTabs);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @description Returns a {@link tabs.tab} object for the tab matching `tabName`. This will not be able to
+     * differentiate between similarly named tabs with different subtitled names. Include any subtitled text
+     * to differentiate between them. Matches on partial text matches.
+     * @example
+     * it('should find the home tab by name', function () {
+     *     var tab = new Tabs().byText('Home');
+     *     expect(tab.getName()).to.eventually.equal('Home');
+     * });
+     */
+    Tabs.prototype.byText = function (tabName) {
+        var tabElement = this.element(protractor_1.by.cssContainingText(this.cssTabs, tabName));
+        return new Tab(tabElement);
+    };
+    /**
+     * @description Will return the tab at position `index` as a {@link tabs.tab} object.
+     * @example
+     * it('should have the home tab in the first position', function () {
+     *     expect(new Tabs().byIndex(0).name).to.eventually.equal('Home');
+     * });
+     */
+    Tabs.prototype.byIndex = function (tabIndex) {
+        return new Tab(this.tblTabs.get(tabIndex));
+    };
+    /**
+     * @description A list of all tab names in the collection of tabs, in the order they appear.
+     * @example
+     * it('should have every tab present', function () {
+     *     var tabNames = ['Home', 'Profile', 'Activity'];
+     *     expect(new Tabs().getNames()).to.eventually.eql(tabNames);
+     * });
+     */
+    Tabs.prototype.getTabs = function () {
+        return this.tblTabs.map(function (tabElement) {
+            return new Tab(tabElement).getText();
+        });
+    };
+    Object.defineProperty(Tabs.prototype, "activeTab", {
+        /**
+         * @description Return a {@link tabs.tab} object for the current active tab.
+         * If you attempt to call this method when there is no active tab, you will
+         * trigger a NoSuchElementException.
+         * @example
+         * it('should mark a visited tab as active', function () {
+         *     var tab = new Tabs().byText('Home');
+         *     expect(tab.isActive()).to.eventually.be.false;
+         *     tab.click();
+         *     expect(tab.isActive()).to.eventually.be.true;
+         *     expect(new Tabs().activeTab.getName()).to.eventually.equal('Home');
+         * });
+         */
+        get: function () {
+            return new Tab(this.$('.nav-tabs .active'));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @description The number of tabs in the collection of tabs.
+     * @example
+     * it('should have three tabs', function () {
+     *     expect(new Tabs().count()).to.eventually.equal(3);
+     * });
+     */
+    Tabs.prototype.count = function () {
+        return this.tblTabs.count();
+    };
+    return Tabs;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], Tabs.prototype, "count", null);
+exports.Tabs = Tabs;
+;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<table
+  rx-floating-header
+  id="sortable-column-testing-table"
+  ng-controller="sortableColumnSimpleCtrl"
+  class="table-striped sortable-column-table">
+
+  <thead>
+    <tr>
+      <th scope="col">
+        <rx-sortable-column
+          sort-method="sortCol(property)"
+          sort-property="name"
+          predicate="sort.predicate"
+          reverse="sort.reverse">
+          Name
+        </rx-sortable-column>
+      </th>
+      <th scope="col">
+        <rx-sortable-column
+          sort-method="sortCol(property)"
+          sort-property="jobTitle"
+          predicate="sort.predicate"
+          reverse="sort.reverse">
+          Occupation
+        </rx-sortable-column>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="resource in talentPool | rxSortEmptyTop:sort.predicate:sort.reverse">
+      <th scope="row">{{resource.name}}</th>
+      <td>{{resource.jobTitle}}</td>
+    </tr>
+  </tbody>
+</table>

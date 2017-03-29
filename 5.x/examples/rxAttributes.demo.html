@@ -1,0 +1,28 @@
+<div ng-controller="rxAttributesCtrl">
+  <p>
+    <strong>
+      The following content gets replaced by the value of ng-bind. 
+      It also gets some styles applied to it:
+    </strong>
+  </p>
+  <p rx-attributes="{'ng-bind': customContent, 'style': customStyles}">
+    Content that's replaced
+  </p>
+
+  <p>
+    <strong>
+      The following content doesn't get replaced, 
+      since 'nothing' isn't a property on the scope:
+    </strong>
+  </p>
+  <p rx-attributes="{'ng-bind': nothing}">Non-replaced content</p>
+
+  <p>
+    <strong>
+      The following content (you can't see it) does get replaced, 
+      but by nothing, since 'nothing' isn't a property on the scope.
+      This is what rx-attributes avoids
+    </strong>
+  </p>
+  <p ng-bind="nothing">Content that's unintentionally replaced</p>
+</div>

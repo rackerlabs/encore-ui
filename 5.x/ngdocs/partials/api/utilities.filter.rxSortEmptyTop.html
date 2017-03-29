@@ -1,0 +1,38 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxSortEmptyTop/scripts/rxSortEmptyTop.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxSortEmptyTop/scripts/rxSortEmptyTop.js#L31" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxSortEmptyTop</code>
+<div><span class="hint">filter in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-filter-page utilities-filter-rxsortemptytop-page"><p>Filter that moves rows with an empty predicate to the top of the column in
+ascending order, and to the bottom in descending order.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><h3 id="usage_in-html-template-binding">In HTML Template Binding</h3>
+<div class="in-html-template-binding"><code ng:non-bindable=""><span>{{</span> rxSortEmptyTop_expression | rxSortEmptyTop <span>}}</span></code>
+</div>
+<h3 id="usage_in-javascript">In JavaScript</h3>
+<div class="in-javascript"><code ng:non-bindable="">$filter('rxSortEmptyTop')()</code>
+</div>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="utilities-filter-page utilities-filter-rxsortemptytop-page"><h5 id="example_empty-sort">Empty Sort</h5>
+<pre class="prettyprint linenums">
+var emptySort = [
+    { name: { firstName: 'Adam' } },
+    { }
+];
+emptySort | rxSortEmptyTop 'name.firstName':false
+</pre>
+Will sort as [{}, { name: { firstName: &#39;Adam&#39; } }].</p>
+<h5 id="example_null-sort">Null Sort</h5>
+<pre class="prettyprint linenums">
+var nullSort = [
+    { name: { firstName: 'Adam' } },
+    { name: { firstName: null }
+];
+nullSort | rxSortEmptyTop 'name.firstName':true
+</pre>
+Will sort as [{ name: { firstName: &#39;Adam&#39; } }, {}]</p>
+</div></div>
+</div>

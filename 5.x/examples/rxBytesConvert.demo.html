@@ -1,0 +1,12 @@
+<div ng-controller="rxBytesConvertCtrl" id="rx-bytes-convert-demo">
+    <ul>
+        <li>{{sizeGB}} &rarr; {{sizeGB | rxBytesConvert}}</li>
+        <li>{{sizeTB}} &rarr; {{sizeTB | rxBytesConvert}}</li>
+        <li>{{sizePB}} &rarr; {{sizePB | rxBytesConvert}}</li>
+    </ul>
+    <ul>
+        <li>{{sizeGB}} B &rarr; {{sizeGB | rxBytesConvert:'GB'}}</li>
+        <li>{{sizeTB}} B &rarr; {{sizeTB | rxBytesConvert:'TB'}}</li>
+        <li>{{sizePB}} B &rarr; {{sizePB | rxBytesConvert:'PB'}}</li>
+    </ul>
+</div>

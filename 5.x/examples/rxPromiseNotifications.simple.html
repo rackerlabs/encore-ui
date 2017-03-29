@@ -1,0 +1,10 @@
+<div ng-controller="rxPromiseNotificationsSimpleCtrl">
+  <p>
+    <button class="button" ng-click="addPromise()">Create Promise</button>
+    <button class="button positive" ng-click="deferred.resolve()">Resolve Promise</button>
+    <button class="button negative" ng-click="deferred.reject()">Reject Promise</button>
+  </p>
+
+  <h3>Demo Stack</h3>
+  <rx-notifications stack="demo"></rx-notifications>
+</div>

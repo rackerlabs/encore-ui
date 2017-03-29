@@ -1,0 +1,38 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxSelectFilter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Tables/scripts/rxSelectFilter.js#L35" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxSelectFilter</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxselectfilter-page"><p>Automatically creates the appropriate dropdowns to manage a filter object.</p>
+<p><strong>NOTE:</strong> <code>rxSelectFilter</code> directive must be instaniated as a child of
+<a href="#/api/elements.directive:rxFormSection">rxFormSection</a> directive.  The <a href="#/api/elements">elements</a> component
+hierarchy validation enforces this relationship.</p>
+<h4 id="description_rxselectfilter">rxSelectFilter</h4>
+<p>Uses an instance of <code>rxSelectFilter</code> to create a set of <code>&lt;rx-multi-select&gt;</code>&#39;s
+that modify the instance object.
+<pre class="prettyprint linenums">
+// In the controller
+$scope.filter = rxSelectFilter.create({
+  // options...
+});
+</pre>
+<h4 id="description_rxselectfilter-usage-in-rxform">rxSelectFilter usage in rxForm</h4>
+<pre class="prettyprint linenums">
+// rxSelectFilter must be instantiated as a child of rxFormSection
+&lt;rx-form-section&gt;
+    &lt;rx-select-filter filter="filter"&gt;&lt;/rx-select-filter&gt;
+&lt;/rx-form-section&gt;
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-select-filter
+       filter="{Object}"&gt;
+&lt;/rx-select-filter&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>filter</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxselectfilter-page"><p>An instance of rxSelectFilter</p>
+</div></td></tr></tbody></table></div>
+</div>

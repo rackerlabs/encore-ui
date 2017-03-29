@@ -1,0 +1,38 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxTimePicker.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxTimePicker.js#L29" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxTimePicker</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxtimepicker-page"><p>Time Picker</p>
+<h4 id="description_notice">Notice</h4>
+<p>This element is designed to be used in conjunction with other picker
+elements to compose a valid ISO 8601 DateTime string in the format of
+<code>YYYY-MM-DDTHH:mmZ</code>.</p>
+<ul>
+<li>This element will generate a <strong>String</strong> in the format of <code>HH:mmZ</code>
+to be used as the time portion of the ISO 8601 standard DateTime string
+mentioned above.</li>
+<li>This element will never generate anything other than a String.</li>
+</ul>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/utilities.service:rxTimePickerUtil">rxTimePickerUtil</a></code>
+</li>
+<li><code ng:non-bindable=""><a href="#/api/utilities.constant:rxUtcOffsets">rxUtcOffsets</a></code>
+</li>
+<li><code ng:non-bindable=""><a href="#/api/elements.directive:rxButton">rxButton</a></code>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-time-picker
+       ng-model="{Expression}"&gt;
+&lt;/rx-time-picker&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ngModel</td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxtimepicker-page"><p>Expression that evaluates to a time string in <code>HH:mmZ</code> format, where <code>Z</code>
+should match <code>/[-+]\d{2}:\d{2}/</code>.</p>
+</div></td></tr></tbody></table></div>
+</div>

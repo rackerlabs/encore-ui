@@ -1,0 +1,8 @@
+<div ng-controller="rxMonthDemoCtrl">
+  <ul>
+    <li>{{dateString}} &rarr; {{dateString | rxMonth}}</li>
+    <li>{{dateString}} &rarr; {{dateString | rxMonth: 'long'}}</li>
+    <li>{{dateString}} &rarr; {{dateString | rxMonth: 'short'}}</li>
+    <li>{{dateString}} &rarr; {{dateString | rxMonth: 'micro'}}</li>
+  </ul>
+</div>

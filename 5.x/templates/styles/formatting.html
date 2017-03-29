@@ -1,0 +1,173 @@
+<h1>Date/Time Formatting</h1>
+
+<section>
+  <header>
+    <h2>Date Formats</h2>
+  </header>
+
+  <h3>Short-form</h3>
+  <ul class="list">
+    <li>
+      <code>YYYY-MM-DD</code>
+    </li>
+    <li>
+      This matches the date format international standard, ISO 8601.
+    </li>
+    <li>
+      Example: <code>2016-03-25</code>
+    </li>
+  </ul>
+
+  <h3>Long-form</h3>
+  <ul class="list">
+    <li>
+      <code>MMMM D, YYYY</code>
+    </li>
+    <li>
+      Example: <code>March 25, 2016</code>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <header>
+    <h2>Date Formats (Month Only)</h2>
+  </header>
+
+  <h3>Micro Month Format</h3>
+  <ul class="list">
+    <li>
+      <code>MM / YY</code>
+    </li>
+    <li>
+      This is the <a
+        href="http://baymard.com/blog/how-to-format-expiration-date-fields"
+        target="_blank">accepted standard format</a> for credit card
+      expiration date, which is honored in Encore, matching the format of
+      physical credit cards as closely as possible.
+    </li>
+    <li>
+      Note those spaces between the slash!
+    </li>
+    <li>
+      Example: <code>03 / 12</code>
+    </li>
+  </ul>
+
+  <h3>Short-form</h3>
+  <ul class="list">
+    <li><code>MM / YYYY</code></li>
+    <li>Example: <code>03 / 2016</code></li>
+  </ul>
+
+  <h3>Long-form</h3>
+  <ul class="list">
+    <li>
+      <code>MMMM YYYY</code>
+    </li>
+    <li>
+      Example: <code>March 2016</code>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <header>
+    <h2>Time Formats</h2>
+  </header>
+
+  <h3>Short-form</h3>
+  <ul class="list">
+    <li>
+      <code>HH:mmZ</code>
+    </li>
+    <li>
+      The Z above is a colon-separated timezone offset (<code>-10:00</code>,
+      not <code>-1000</code>) for explicit hour/minute offsets.
+    </li>
+    <li>
+      Example: <code>22:56-06:00</code>
+    </li>
+  </ul>
+
+  <h3>Long-form</h3>
+  <ul class="list">
+    <li>
+      <code>h:mmA (UTCZ)</code>
+    </li>
+    <li>
+      Example: <code>10:56PM (UTC-06:00)</code>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <header>
+    <h2>DateTime Formats</h2>
+  </header>
+
+  <h3>Long-form</h3>
+  <ul class="list">
+    <li>
+      <code>MMM D, YYYY @ h:mmA (UTCZ)</code>
+    </li>
+    <li>
+      This matches the Long-form Date Formats and Long-form Time Formats
+      with the " @ " between.
+    </li>
+    <li>
+      This format is seen the most in Encore Cloud to show create/update
+      timestamps.
+    </li>
+    <li>
+      <code>Mar 25, 2016 @ 10:56PM (UTC-06:00)</code>
+    </li>
+  </ul>
+
+  <h3>Short-form</h3>
+  <ul class="list">
+    <li>
+      <code>YYYY-MM-DD @ HH:mmZ</code>
+    </li>
+    <li>
+      This matches the date format international standard, ISO 8601.
+    </li>
+    <li>
+      <code>2016-03-25 @ 22:56-06:00</code>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <header>
+    <h3>Relative Dates</h3>
+  </header>
+
+  <ul class="list">
+    <li>
+      Relative dates, such as such as "4 hours ago" or "1 week ago", are
+      reserved for more informal settings like user notes or comments.
+    </li>
+    <li>
+      Relative dates should not extend too far into the past. For instance,
+      "1 week ago" may be helpful to the user, but "8 months ago" or "3 years
+      ago" is better represented by the non-relative format detailed above, as
+      it reveals more specific information about dates that provide better
+      context and information to the user when comparing dates and times.
+    </li>
+  </ul>
+
+  <div class="example-case do">
+    <img src="images/date_time_formatting.png">
+  </div>
+
+  <div class="example-case exception">
+    <h4>Exception</h4>
+    <img src="images/date_time_formatting_exception.png">
+  </div>
+
+  <div class="example-case avoid">
+    <h4>Avoid</h4>
+    <img src="images/date_time_formatting_avoid.png">
+  </div>
+</section>

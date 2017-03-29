@@ -1,0 +1,108 @@
+<form rx-form ng-controller="formInputGroupsDemoCtrl">
+  <rx-form-section>
+    <!-- rxRadio -->
+    <rx-field>
+      <h4>Radio Group</h4>
+      <rx-field-name>Favorite Beatles Member:</rx-field-name>
+      <rx-field-content>
+        <rx-input ng-repeat="beatle in beatles">
+          <input rx-radio
+            name="favBeatle"
+            id="favBeatle_{{$index}}"
+            value="{{beatle}}"
+            ng-model="favoriteBeatle" />
+          <label for="favBeatle_{{$index}}">{{beatle}}</label>
+        </rx-input>
+        <rx-input>
+          <input rx-radio
+            name="favBeatle"
+            id="favBeatle_all"
+            value="all"
+            ng-model="favoriteBeatle" />
+          <label for="favBeatle_all">All of the above</label>
+        </rx-input>
+        <rx-input>
+          <input rx-radio
+            name="favBeatle"
+            id="favBeatle_none"
+            value="none"
+            disabled
+            ng-model="favoriteBeatle" />
+          <label for="favBeatle_none">None of the above</label>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <!-- rxCheckbox -->
+    <rx-field>
+      <h4>Checkbox Group</h4>
+      <rx-field-name>Rick Astley Will Never:</rx-field-name>
+      <rx-field-content>
+        <rx-input ng-repeat="never in nevers">
+          <input rx-checkbox
+            id="chkNever_{{$index}}"
+            checked
+            value="{{never}}" />
+          <label for="chkNever_{{$index}}">{{never}}</label>
+        </rx-input>
+        <rx-input>
+          <input rx-checkbox
+            id="chkNever_all"
+            value="all"
+            checked
+            disabled />
+          <label for="chkNever_all">All of the above</label>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <!-- rxToggleSwitch -->
+    <rx-field>
+      <h4>Toggle Switches</h4>
+      <rx-field-name>Settings:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>
+            <rx-toggle-switch
+              id="setting1"
+              ng-model="settings.first">
+            </rx-toggle-switch>
+            <label for="setting1">Setting 1</label>
+          </rx-prefix>
+        </rx-input>
+
+        <rx-input>
+          <rx-prefix>
+            <rx-toggle-switch
+              id="setting2"
+              ng-model="settings.second">
+            </rx-toggle-switch>
+            <label for="setting2">Setting 2</label>
+          </rx-prefix>
+        </rx-input>
+
+        <rx-input>
+          <rx-prefix>
+            <rx-toggle-switch
+              id="setting3"
+              ng-model="settings.third"
+              ng-disabled="true">
+            </rx-toggle-switch>
+            <label for="setting3">Setting 3</label>
+          </rx-prefix>
+        </rx-input>
+
+        <rx-input>
+          <rx-prefix>
+            <rx-toggle-switch
+              id="setting4"
+              ng-model="settings.fourth"
+              ng-disabled="true">
+            </rx-toggle-switch>
+            <label for="setting4">Setting 4</label>
+          </rx-prefix>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

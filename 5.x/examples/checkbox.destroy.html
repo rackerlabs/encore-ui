@@ -1,0 +1,13 @@
+<p>
+  <input rx-checkbox
+         id="chkRemoveCheckbox"
+         ng-model="chkIsRemoved" />
+  <label for="chkRemoveCheckbox">
+    Remove Following Checkbox:
+  </label>
+
+  <input rx-checkbox
+         checked
+         id="chkRemoveable"
+         ng-if="!chkIsRemoved" />
+</p>

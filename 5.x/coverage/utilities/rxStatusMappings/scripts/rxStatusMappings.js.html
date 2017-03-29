@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxStatusMappings/scripts/rxStatusMappings.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxStatusMappings/scripts/rxStatusMappings.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(35 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">92.86% <small>(13 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(35 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxStatusMappings/scripts/</a> &#187; rxStatusMappings.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">193</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">114</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">288</span>
+<span class="cline-any cline-yes">136</span>
+<span class="cline-any cline-yes">136</span>
+<span class="cline-any cline-yes">124</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">136</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">108</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">97</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">97</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxStatusMappings
+ * @description
+ *
+ * A set of methods for creating mappings between a product's notion
+ * of statuses, and the status identifiers used in EncoreUI
+ *
+ * To accommodate different statuses, the `rxStatusMappings` factory includes
+ * methods for defining mappings from your own statuses to the six defined ones.
+ * The basic methods for this are `rxStatusMappings.addGlobal()` and
+ * `rxStatusMappings.addAPI()`.
+ *
+ * ## mapToActive()/mapToWarning()/mapToError()/mapToInfo()/mapToPending()
+ *
+ * While `.addGlobal()` and `.addAPI()` would be sufficient on their own,
+ * they can be slightly cumbersome. If you have a list of statuses that all
+ * need to get mapped to the same EncoreUI status, the mapping object will
+ * be forced to have repetition, leaving room for errors. For example,
+ * something like this:
+ *
+ * &lt;pre&gt;
+ * rxStatusMappings.addGlobal({
+ *     'BLOCKED': 'ERROR',
+ *     'SHUTDOWN': 'ERROR',
+ *     'FAILED': 'ERROR'
+ * });
+ * &lt;/pre&gt;
+ *
+ * There is required repetition of `"ERROR"` in each pair, and there's always
+ * the chance of misspelling `"ERROR"`. Instead, we provide a utility method
+ * `mapToError` to help with this:
+ *
+ * &lt;pre&gt;
+ * rxStatusMappings.mapToError(['BLOCKED', 'SHUTDOWN', 'FAILED']);
+ * &lt;/pre&gt;
+ *
+ * This has the advantage that it's shorter to type, eliminates the chance of
+ * mistyping or misassigning `"ERROR"`, and keeps all `"ERROR"` mappings
+ * physically grouped. With this, you could easily keep your mapping values
+ * in an Angular `.value` or `.constant`, and just pass them to these methods
+ * in your `.run()` method.
+ *
+ * There are equivalent `mapToWarning`, `mapToActive`, `mapToDisabled`,
+ * `mapToPending` and `mapToInfo` methods.
+ *
+ * All six of these methods can take an array or a single string as the first
+ * argument. The call above is equivalent to this group of individual calls:
+ *
+ * &lt;pre&gt;
+ * rxStatusMappings.mapToError('BLOCKED');
+ * rxStatusMappings.mapToError('SHUTDOWN');
+ * rxStatusMappings.mapToError('FAILED');
+ * &lt;/pre&gt;
+ *
+ * All six can also take `api` as a second, optional parameter. Thus we could
+ * define the `rxStatusMappings.addAPI({ 'FOO': 'ERROR' }, 'z')` example from
+ * above as:
+ *
+ * &lt;pre&gt;
+ * rxStatusMappings.mapToError('FOO', 'z');
+ * &lt;/pre&gt;
+ *
+ */
+.factory('rxStatusMappings', function () {
+    var globalMappings = {};
+    var apiMappings = {};
+    var rxStatusMappings = {};
+&nbsp;
+    var upperCaseCallback = function (objectValue, sourceValue) {
+        return sourceValue.toUpperCase();
+    };
+    /**
+     * @ngdoc function
+     * @name rxStatusMappings.addGlobal
+     * @methodOf utilities.service:rxStatusMappings
+     * @description
+     *
+     * Takes a full set of mappings to be used globally
+     *
+     * `rxStatusMappings.addGlobal()` takes an object as an argument, with the
+     * keys being your own product's statuses, and the values being one of the six
+     * internal statuses that it should map to. For example:
+     *
+     * &lt;pre&gt;
+     * rxStatusMappings.addGlobal({
+     *     'RUNNING': 'ACTIVE',
+     *     'STANDBY': 'INFO',
+     *     'SUSPENDED': 'WARNING',
+     *     'FAILURE': 'ERROR'
+     * });
+     * &lt;/pre&gt;
+     *
+     * These mappings will be used throughout all instances of `rx-status-column`
+     * in your code.
+     *
+     * @param {String} mapping This is mapping with keys and values
+     */
+    rxStatusMappings.addGlobal = function (mapping) {
+        _.assignInWith(globalMappings, mapping, upperCaseCallback);
+    };
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name rxStatusMappings.addAPI
+     * @methodOf utilities.service:rxStatusMappings
+     * @description
+     *
+     * Create a mapping specific to a particular API. This will
+     * only be used when the directive receives the `api="..."`
+     * attribute
+     *
+     * Say that you are using three APIs in your product, `X`, `Y` and `Z`. Both
+     * `X` and `Y` define a status `"FOO"`, which you want to map to EncoreUI's
+     * `"WARNING"`. You can declare this  mapping with
+     * `rxStatusMappings.addGlobal({ 'FOO': 'WARNING' })`. But your API `Z` also
+     * returns a `"FOO"` status, which you need mapped to EncoreUI's
+     * `"ERROR"` status.
+     *
+     * You _could_ do a transformation in your product to convert the `"FOO"`
+     * from `Z` into something else, or you can make use of
+     * `rxStatusMappings.addAPI()`, as follows:
+     *
+     * &lt;pre&gt;
+     * rxStatusMappings.addAPI('z', { 'FOO': 'ERROR' });
+     * &lt;/pre&gt;
+     *
+     * Then in your template code, you would use `rx-status-column` as:
+     *
+     * &lt;pre&gt;
+     * &lt;td rx-status-column status="{{ status }}" api="z"&gt;&lt;/td&gt;
+     * &lt;/pre&gt;
+     *
+     * This will tell EncoreUI that it should first check if the passed in
+     * `status` was defined separately for an api `"z"`, and if so, to use that
+     * mapping. If `status` can't be found in the mappings defined for `"z"`,
+     * then it will fall back to the mappings you defined in your `.addGlobal()`
+     * call.
+     *
+     * @param {String} apiName This is api name of the mapping
+     * @param {String} mapping This is mapping with keys and values
+     */
+    rxStatusMappings.addAPI = function (apiName, mapping) {
+        var api = apiMappings[apiName] || {};
+        _.assignInWith(api, mapping, upperCaseCallback);
+        apiMappings[apiName] = api;
+    };
+&nbsp;
+    var buildMapFunc = function (mapToString) {
+        return function (statusString, api) {
+            var obj = {};
+            if (_.isString(statusString)) {
+                obj[statusString] = mapToString;
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (_.isArray(statusString)) {
+                _.each(statusString, function (str) {
+                    obj[str] = mapToString;
+                });
+            }
+&nbsp;
+            if (api) {
+                rxStatusMappings.addAPI(api, obj);
+            } else {
+                rxStatusMappings.addGlobal(obj);
+            }
+        };
+    };
+&nbsp;
+    // All four of these map a string, or an array of strings,
+    // to the corresponding internal status (Active/Warning/Error/Info)
+    // Each can optionally take a string as the second parameter, indictating
+    // which api the mapping belongs to
+    rxStatusMappings.mapToActive = buildMapFunc('ACTIVE');
+    rxStatusMappings.mapToWarning = buildMapFunc('WARNING');
+    rxStatusMappings.mapToError = buildMapFunc('ERROR');
+    rxStatusMappings.mapToInfo = buildMapFunc('INFO');
+    rxStatusMappings.mapToPending = buildMapFunc('PENDING');
+    rxStatusMappings.mapToDisabled = buildMapFunc('DISABLED');
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name rxStatusMappings.getInternalMapping
+     * @methodOf utilities.service:rxStatusMappings
+     * @description
+     *
+     * `rxStatusMappings` defines a `getInternalMapping(statusString, api)` method,
+     * which the framework uses to map a provided `status` string based on the
+     * mapping rules from all the methods above. It's intended for internal use,
+     * but there's nothing stopping you from using it if you find a need.
+     *
+     * If you ask it to map a string that is not registered for a mapping, it will
+     * return back that same string.
+     *
+     * @param {String} statusString This is status string based on mapping rules
+     * @param {String} api This is an api based on mapping rules
+     */
+    rxStatusMappings.getInternalMapping = function (statusString, api) {
+        if (_.has(apiMappings, api) &amp;&amp; _.has(apiMappings[api], statusString)) {
+            return apiMappings[api][statusString];
+        }
+&nbsp;
+        var mapped = globalMappings[statusString];
+&nbsp;
+        return mapped ? mapped : statusString;
+    };
+&nbsp;
+    return rxStatusMappings;
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

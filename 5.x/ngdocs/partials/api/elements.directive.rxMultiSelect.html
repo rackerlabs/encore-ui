@@ -1,0 +1,53 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxMultiSelect.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxMultiSelect.js#L44" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxMultiSelect</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxmultiselect-page"><p>This component is a multi-select dropdown with checkboxes for each option.
+It is a replacement for <code>&lt;select multiple&gt;</code> when space is an issue, such as
+in the header of a table.
+The options for the control can be specified by passing an array of strings
+(corresponding to the options&#39; values) to the <code>options</code> attribute of the
+directive, or using <code>&lt;rx-select-option&gt;</code>s. An &#39;All&#39; option is automatically
+set as the first option for the dropdown, which allows all options to be
+toggled at once.</p>
+<p>The following two dropdowns are equivalent:
+<pre class="prettyprint linenums">
+&lt;!-- $scope.available = [2014, 2015] --&gt;
+&lt;rx-multi-select ng-model="selected" options="available"&gt;&lt;/rx-multi-select&gt;
+</pre>
+<pre class="prettyprint linenums">
+&lt;rx-multi-select ng-model="selected"&gt;
+  &lt;rx-select-option value="2014"&gt;&lt;/rx-select-option&gt;
+  &lt;rx-select-option value="2015"&gt;&lt;/rx-select-option&gt;
+&lt;/rx-multi-select&gt;
+</pre>
+<p>This component requires the <code>ng-model</code> attribute and binds the model to an
+array of the selected options.</p>
+<p>The preview text (what is shown when the element is not active) follows the following rules:</p>
+<ul>
+<li>If no items are selected, show &quot;None&quot;.</li>
+<li>If only one item is selected from the dropdown, its label will display.</li>
+<li>If &gt; 1 but &lt; n-1 items are selected, show &quot;[#] Selected&quot;.</li>
+<li>If all but one item is selected, show &quot;All except [x]&quot;</li>
+<li>If all items are selected, show &quot;All Selected&quot;.</li>
+</ul>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/elements.directive:rxSelectOption">rxSelectOption</a></code>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-multi-select
+       ng-model="{String}"
+       [options="{Array}"]&gt;
+&lt;/rx-multi-select&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ng-model</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmultiselect-page"><p>The scope property that stores the value of the input</p>
+</div></td></tr><tr><td>options <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="elements-directive-page elements-directive-rxmultiselect-page"><p>A list of the options for the dropdown</p>
+</div></td></tr></tbody></table></div>
+</div>

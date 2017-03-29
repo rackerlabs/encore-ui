@@ -1,0 +1,14 @@
+<div ng-controller="typeaheadSimpleCtrl" rx-form>
+  <rx-form-section stacked>
+    <rx-field>
+      <rx-field-name>States:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input type="text"
+            ng-model="selected1"
+            typeahead="state for state in states | filter:$viewValue | limitTo:8" />
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</div>

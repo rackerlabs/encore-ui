@@ -1,0 +1,38 @@
+<table class="table-striped" ng-controller="tableNestedTableExampleCtrl">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Occupation</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="person in people">
+    <tr>
+      <td>{{ person.name }}</td>
+      <td>{{ person.occupation }}</td>
+      <td class="double-chevron-cell" ng-class="{ expanded: person.expanded }">
+        <a class="double-chevron" ng-click="person.expanded = !person.expanded"></a>
+      </td>
+    </tr>
+    <tr ng-if="person.expanded">
+      <td colspan="3" class="expanded-container">
+        <table class="subtable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Animal</th>
+              <th>Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pet in person.pets">
+              <td>{{ pet.name }}</td>
+              <td>{{ pet.animal }}</td>
+              <td>{{ pet.age }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

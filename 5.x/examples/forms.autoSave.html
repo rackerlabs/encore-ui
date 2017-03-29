@@ -1,0 +1,16 @@
+<p>
+  The text input below will automatically save its content. If you navigate
+  away from this page, and then return, whatever you previously typed will
+  automatically be populated into the text input
+</p>
+<form ng-controller="formsAutoSaveExampleController" rx-form>
+  <rx-form-section controlled-width>
+    <rx-field>
+      <rx-field-content>
+        <rx-input>
+          <input type="text" ng-model="forms.autosave">
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

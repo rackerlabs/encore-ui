@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/Feedback/scripts/rxFeedback.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/Feedback/scripts/rxFeedback.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(25 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(10 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(25 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Feedback/scripts/</a> &#187; rxFeedback.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxFeedback
+ * @restrict E
+ * @scope
+ * @description
+ * # rxFeedback Component
+ *
+ * The rxFeedback component gathers and sends user feedback to a default or
+ * specifiable email list.
+ *
+ * ## Default Submission Function
+ *
+ * The rxFeedback component sends feedback to `/api/encore/feedback`, which
+ * routes details to `encoreui@lists`.
+ *
+ * This endpoint also supports a `product` parameter `/api/encore/feedback/:product`
+ * for sending feedback to a product-specific mailing list.
+ *
+ * ## Feedback Redirect Integration
+ *
+ * To obtain the Feedback Redirect integration, please update `encore-ui-svcs`
+ * to version `0.11.0` or above.  Once you have done so, include
+ * "encore.svcs.feedback" in the list of dependencies for your application,
+ * this will ensure that when a user selects a **Feedback Type** of "Feature
+ * Request", the service will open up a new window redirecting the user to
+ * the **GET Feedback** website,
+ * which will now host all internal requests for features.
+ *
+ * &lt;pre&gt;
+ * angular.module('myApplication', [
+ *     'ngRoute',
+ *     'ngResource',
+ *     'encore.svcs.feedback'
+ * ]);
+ * &lt;/pre&gt;
+ *
+ * By adding the `encore.svcs.feedback` dependency to your application, the
+ * `Feedback` service will be available and automatically initialized by the
+ * `rxFeedback` controller.  Once initialized, the default behaviour of the
+ * `rxFeedback` controller will be altered to perform the GET feedback redirect.
+ *
+ * ### Production
+ * To manually include the Feedback changes without updating your version of
+ * Encore UI (but after updating `encore-ui-svcs`), please include the following:
+ *
+ * Add the following script in your `index.html` (after injected dependencies):
+ *
+ * http://3bea8551c95f45baa125-a22eac1892b2a6dcfdb36104c0e925de.r46.cf1.rackcdn.com/feedback-override.js
+ *
+ * &lt;pre&gt;
+ * &lt;!-- inject:js --&gt;
+ * &lt;!-- endinject --&gt;
+ * &lt;script src="https://6618f7541d71c1a404be-a22eac1892b2a6dcfdb36104c0e925de.ssl.cf1.rackcdn.com/feedback-override.js"&gt;&lt;/script&gt;
+ * &lt;/pre&gt;
+ *
+ * ### Development
+ * For development purposes, you may want to include one of the two following
+ * configurations depending on which type of project you have:
+ *
+ * *The latest version of the [Encore generator](https://github.com/rackerlabs/generator-encore)
+ * will include this proxy*
+ *
+ * **Gulp**: `gulp/util/prism.js`
+ * &lt;pre&gt;
+ * prism.create({
+ *     name: 'encorefeedback',
+ *     context: '/encore/feedback',
+ *     host: 'staging.encore.rackspace.com',
+ *     port: 443,
+ *     https: true,
+ *     changeOrigin: false
+ * });
+ * &lt;/pre&gt;
+ *
+ * **Grunt**: `tasks/util/config`
+ * &lt;pre&gt;
+ * {
+ *     context: '/encore/feedback',
+ *     host: 'staging.encore.rackspace.com',
+ *     port: 443,
+ *     https: true,
+ *     protocol: 'https',
+ *     changeOrigin: false
+ * }
+ * &lt;/pre&gt;
+ *
+ * ## Custom Endpoint
+ *
+ * Adding a custom endpoint is managed in `encore-service-pillar`. Once configured
+ * you can override the default endpoint with `rxFeedbackSvc.setEndpoint`.
+ *
+ * &lt;pre&gt;
+ * angular.module('MyApplication', [
+ *     'ngRoute',
+ *     'ngResource',
+ *     'encore.svcs.feedback',
+ *     // ...
+ * ])
+ * .run(function (rxFeedbackSvc) {
+ *     // Set custom endpoint
+ *     rxFeedbackSvc.setEndpoint('/api/encore/feedback/cloud');
+ *
+ *     // ...
+ * });
+ * &lt;/pre&gt;
+ *
+ * ## Custom Submission Function
+ *
+ * The `rxFeedback` component allows you to define an `on-submit` attribute
+ * that points to a custom function for the purposes of overriding the default
+ * submission logic.  This function should accept a single argument for a
+ * feedback object with the following definition:
+ *
+ * *Feedback Object Structure*:
+ * &lt;pre&gt;
+ * {
+ *   "type": {
+ *     "label": "(string)",
+ *     "placeholder": "(string) placeholder text",
+ *     "prompt": "(string) UI text used to describe the `description` field"
+ *   },
+ *   "description": "(string) user-submitted feedback"
+ * }
+ * &lt;/pre&gt;
+ *
+ * @example
+ * &lt;pre&gt;
+ * // feedback object structure
+ * {
+ *   "type": {
+ *      "label": "(string)",
+ *      "placeholder": "(string) placeholder text",
+ *      "prompt": "(string) UI text used to describe the `description` field"
+ *    },
+ *    "description": "(string) user-submitted feedback"
+ * }
+ * &lt;/pre&gt;
+ *
+ * @param {Object} type JSON object with `label` {String}, `placeholder` {String}, and `prompt` {String}
+ * @param {String} description User-submitted feedback
+ *
+ */
+.directive('rxFeedback', function (rxFeedbackTypes, $location, rxFeedbackSvc, rxScreenshotSvc, rxNotify, rxSession) {
+    return {
+        restrict: 'E',
+        templateUrl: 'templates/rxFeedback.html',
+        scope: {
+            sendFeedback: '=?onSubmit'
+        },
+        link: function (scope) {
+            scope.feedbackTypes = rxFeedbackTypes;
+&nbsp;
+            scope.setCurrentUrl = function (modalScope) {
+                modalScope.currentUrl = $location.url();
+            };
+&nbsp;
+            var showSuccessMessage = function (response) {
+                var message = _.isString(response.message) ? response.message : 'Thanks for your feedback!';
+&nbsp;
+                rxNotify.add(message, {
+                    type: 'success'
+                });
+            };
+&nbsp;
+            var showFailureMessage = function (httpResponse) {
+                var errorMessage = 'An error occurred submitting your feedback';
+&nbsp;
+                if (httpResponse.data &amp;&amp; _.isString(httpResponse.data.message)) {
+                    errorMessage += ': ' + httpResponse.data.message;
+                }
+&nbsp;
+                rxNotify.add(errorMessage, {
+                    type: 'error'
+                });
+            };
+&nbsp;
+            var makeApiCall = function (feedback, screenshot) {
+                rxFeedbackSvc.api.save({
+                    type: feedback.type.label,
+                    description: feedback.description,
+                    screenshot: screenshot,
+                    sso: feedback.sso
+                }, showSuccessMessage, function (httpResponse) {
+                    showFailureMessage(httpResponse);
+&nbsp;
+                    rxFeedbackSvc.fallback(feedback);
+                });
+            };
+&nbsp;
+            if (!_.isFunction(scope.sendFeedback)) {
+                scope.sendFeedback = function (feedback) {
+                    feedback.sso = rxSession.getUserId();
+&nbsp;
+                    var root = document.querySelector('.rx-app');
+&nbsp;
+                    // capture screenshot
+                    var screenshot = rxScreenshotSvc.capture(root);
+&nbsp;
+                    screenshot.then(function (dataUrl) {
+                        makeApiCall(feedback, dataUrl);
+                    }, function (reason) {
+                        makeApiCall(feedback, reason);
+                    });
+                };
+            }
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

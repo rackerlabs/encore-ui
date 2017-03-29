@@ -1,0 +1,42 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxHelpText.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxHelpText.js#L37" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxHelpText</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxhelptext-page"><p>Stylistic element directive used to wrap form input help text.</p>
+<ul>
+<li><strong>block</strong> element <em>(full width of parent)</em></li>
+<li>Best used as a sibling after <a href="#/api/elements.directive:rxInput">rxInput</a>,
+but before <a href="#/api/elements.directive:rxInlineError">rxInlineError</a> elements.</li>
+</ul>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-help-text&gt;
+&lt;/rx-help-text&gt;</pre>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxhelptext-page"><pre class="prettyprint linenums">
+...
+&lt;form rx-form name="demoForm"&gt;
+  &lt;rx-form-section&gt;
+    &lt;rx-field&gt;
+      &lt;rx-field-name&gt;Salary:&lt;/rx-field-name&gt;
+      &lt;rx-field-content&gt;
+        &lt;rx-input&gt;
+          &lt;rx-prefix&gt;$&lt;/rx-prefix&gt;
+          &lt;input type="number" name="salary" /&gt;
+          &lt;rx-suffix&gt;Million&lt;/rx-suffix&gt;
+        &lt;/rx-input&gt;
+        &lt;rx-help-text&gt;Must be greater than $1,000,000&lt;/rx-help-text&gt;
+        &lt;rx-inline-error ng-show="demoForm.salary.$errors.minimum"&gt;
+          Salary must be above $1,000,000
+        &lt;/rx-inline-error&gt;
+      &lt;/rx-field-content&gt;
+    &lt;/rx-field&gt;
+  &lt;/rx-form-section&gt;
+&lt;/form&gt;
+...
+</pre>
+</div></div>
+</div>

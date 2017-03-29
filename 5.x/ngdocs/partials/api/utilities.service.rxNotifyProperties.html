@@ -1,0 +1,39 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxNotifyProperties/scripts/rxNotifyProperties.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxNotifyProperties/scripts/rxNotifyProperties.js#L44" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxNotifyProperties</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxnotifyproperties-page"><p>This factory provides functionality for abstracting &quot;properties&quot;, and allowing
+other directives/controllers/etc. to register for notifications when the properties
+change. It would normally be used for a parent directive&#39;s controller, and child element
+directives that &quot;require&quot; that controller.</p>
+<p>For example, say you have a value you want to track, which we&#39;ll call <code>numSelected</code>.
+This will be a plain integer value that you have complete control over. What you want
+is for other directives/controllers/etc to be able to register for notifications whenever
+<code>numSelected</code> changes.</p>
+<p>The <code>registrationFn</code> method here sets all of this up. In your directive/controller where
+you want your property to live, do something like:</p>
+</div></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="utilities-service-page utilities-service-rxnotifyproperties-page"><pre class="prettyprint linenums">
+stats = { _numSelected: 0 };
+scope.registerForNumSelected = rxNotifyProperties.registrationFn(stats, 'numSelected', '_numSelected');
+</pre>
+<p>This is saying &quot;We have a property <code>_numSelected</code> in <code>stats</code>, and we want it exposed as <code>numSelected</code>
+in <code>stats</code>. Whenever <code>stats.numSelected</code> is modified, other directives/controllers should be notified.&quot;</p>
+<p>In this example, a user registers for notifications by calling:
+<pre class="prettyprint linenums">
+registerForNumSelected(notificationFunction);
+</pre>
+Then, whenever <code>numSelected</code> changes, it will call:
+<pre class="prettyprint linenums">
+notificationFunction(newValue, oldValue);
+</pre>
+<p>This means that if you set:
+<pre class="prettyprint linenums">
+stats.numSelected = 20;
+</pre>
+Everyone that registered for notifications will get their notification function called.</p>
+</div></div>
+</div>

@@ -1,0 +1,22 @@
+<table class="table-striped" ng-controller="tableFilteringExampleCtrl">
+  <thead>
+    <tr><!-- Filter Row -->
+      <td colspan="2">
+        <rx-search-box
+          rx-placeholder="'Filter by any...'"
+          ng-model="searchText">
+        </rx-search-box>
+      </td>
+    </tr>
+    <tr><!-- Column Headings -->
+      <th>Name</th>
+      <th>Occupation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="person in people | filter:searchText">
+      <td>{{ person.name }}</td>
+      <td>{{ person.occupation }}</td>
+    </tr>
+  </tbody>
+</table>

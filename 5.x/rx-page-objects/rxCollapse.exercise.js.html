@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: rxCollapse.exercise.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: rxCollapse.exercise.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
+var chai_1 = require("chai");
+var _ = require("lodash");
+/**
+ * @description rxCollapse exercises.
+ * @example
+ * describe('default exercises', encore.exercise.rxCollapse({
+ *     instance: myPage.hiddenSection, // select one of many widgets from your page objects
+ *     title: 'My Custom rxCollapse Element',
+ *     expanded: true
+ * }));
+ */
+function rxCollapse(options) {
+    options = _.defaults(options, {
+        expanded: false,
+        title: undefined,
+    });
+    return function () {
+        var component;
+        before(function () {
+            component = options.instance;
+        });
+        it('should show the element', function () {
+            chai_1.expect(component.isDisplayed()).to.eventually.be.true;
+        });
+        it('should expand', function () {
+            component.expand();
+            chai_1.expect(component.isExpanded()).to.eventually.be.true;
+        });
+        it('should not expand again', function () {
+            component.expand();
+            chai_1.expect(component.isExpanded()).to.eventually.be.true;
+        });
+        it('should collapse', function () {
+            component.collapse();
+            chai_1.expect(component.isExpanded()).to.eventually.be.false;
+        });
+        it('should not collapse again', function () {
+            component.collapse();
+            chai_1.expect(component.isExpanded()).to.eventually.be.false;
+        });
+        it('should toggle', function () {
+            component.toggle();
+            chai_1.expect(component.isExpanded()).to.eventually.be.true;
+        });
+        if (!_.isUndefined(options.title)) {
+            it('should show a custom title', function () {
+                chai_1.expect(component.getTitle()).to.eventually.equal(options.title);
+            });
+        }
+        else {
+            it('should show "See More" for the title', function () {
+                component.collapse();
+                chai_1.expect(component.getTitle()).to.eventually.equal('See More');
+            });
+            it('should toggle between "See More" and "See Less"', function () {
+                component.expand();
+                chai_1.expect(component.getTitle()).to.eventually.equal('See Less');
+            });
+            it('should toggle between "See Less" and "See More"', function () {
+                component.collapse();
+                chai_1.expect(component.getTitle()).to.eventually.equal('See More');
+            });
+        }
+        after(function () {
+            // put it back according to the options
+            options.expanded ? component.expand() : component.collapse();
+        });
+    };
+}
+exports.rxCollapse = rxCollapse;
+;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

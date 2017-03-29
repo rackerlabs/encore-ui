@@ -1,0 +1,72 @@
+<div ng-controller="rxAutoSaveSimpleCtrl">
+  <form name="demoForm" rx-form>
+    <rx-form-section stacked>
+      <rx-field>
+        <rx-field-name>A checkbox field:</rx-field-name>
+        <rx-field-content>
+          <rx-input>
+            <input rx-checkbox id="chkCheckbox" ng-model="formData.checkbox" />
+            <label for="chkCheckbox">I likely don't disagree</label>
+          </rx-input>
+          <div class="subdued">
+            <div ng-if="formData.checkbox" ng-hide="formData.hideCheckbox">
+              I am possibly not un-authorizing the above: {{ formData.checkbox }}
+            </div>
+            <a id="hideCheckbox" ng-click="formData.hideCheckbox = !formData.hideCheckbox" ng-if="formData.checkbox">
+              ({{ formData.hideCheckbox ? 'Show' : 'Hide this' }} message)
+            </a>
+          </div>
+        </rx-field-content>
+      </rx-field>
+
+      <rx-field>
+        <rx-field-name>Name:</rx-field-name>
+        <rx-field-content>
+          <rx-input>
+            <input type="text" ng-model="formData.name" />
+          </rx-input>
+        </rx-field-content>
+      </rx-field>
+
+      <rx-field>
+        <rx-field-name>Description:</rx-field-name>
+        <rx-field-content>
+          <rx-input>
+            <textarea rows="10" ng-model="formData.description"></textarea>
+          </rx-input>
+        </rx-field-content>
+      </rx-field>
+
+      <rx-field>
+        <rx-field-name>Sensitive Data:</rx-field-name>
+        <rx-field-content>
+          <rx-input>
+            <input type="text" ng-model="formData.sensitive" />
+          </rx-input>
+          <rx-help-text>We'll tell rxAutoSave NOT to save this data.</rx-help-text>
+        </rx-field-content>
+      </rx-field>
+    </rx-form-section>
+
+    <rx-form-section>
+      <div>
+        <rx-button
+            ng-click="clearStorage()"
+            toggle="status.loading"
+            default-msg="Clear rxAutoSave"
+            toggle-msg="Clearing rxAutoSave data"
+            ng-disabled="status.disable">
+        </rx-button>
+
+        <rx-button
+            ng-click="deferredClear()"
+            toggle="status.deferredLoading"
+            default-msg="Clear rxAutoSave by resolving a promise"
+            toggle-msg="Clearing rxAutoSave data"
+            ng-disabled="status.deferredDisable">
+        </rx-button>
+      </div>
+    </rx-form-section>
+  </form>
+
+</div>

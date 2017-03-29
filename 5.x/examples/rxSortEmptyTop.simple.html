@@ -1,0 +1,33 @@
+<div ng-controller="rxSortEmptyTopSimpleCtrl">
+  <p>The table is using <code>rxSortEmptyTop</code> to sort empty columns in ascending and descending order.</p>
+  <table rx-floating-header>
+    <thead>
+      <tr>
+        <th scope="col">
+          <rx-sortable-column
+            sort-method="sortCol(property)"
+            sort-property="name"
+            predicate="sort.predicate"
+            reverse="sort.reverse">
+            Name
+          </rx-sortable-column>
+        </th>
+        <th scope="col">
+          <rx-sortable-column
+            sort-method="sortCol(property)"
+            sort-property="volumeId"
+            predicate="sort.predicate"
+            reverse="sort.reverse">
+            Volume ID
+          </rx-sortable-column>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="serverVolumeData">
+      <tr ng-repeat="resource in serverVolumes | rxSortEmptyTop:sort.predicate:sort.reverse">
+        <th scope="row" class="resource-name">{{resource.name}}</th>
+        <td class="resource-id">{{resource.volumeId}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

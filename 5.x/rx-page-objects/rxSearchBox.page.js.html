@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: rxSearchBox.page.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: rxSearchBox.page.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var rxComponent_1 = require("./rxComponent");
+/**
+ * @class
+ */
+var rxSearchBox = (function (_super) {
+    __extends(rxSearchBox, _super);
+    function rxSearchBox() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(rxSearchBox.prototype, "txtSearch", {
+        get: function () {
+            return this.$('.rxSearchBox-input');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxSearchBox.prototype, "btnClear", {
+        get: function () {
+            return this.$('.rxSearchBox-clear');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @description Getthe search value.
+     * @example
+     * it('should update the search term', function () {
+     *     var searchBox = new rxSearchBox($('searchBox'));
+     *     searchBox.search('Some query');
+     *     expect(searchBox.getTerm()).to.eventually.equal('Some query');
+     * });
+     */
+    rxSearchBox.prototype.getTerm = function () {
+        return this.txtSearch.getAttribute('value');
+    };
+    /**
+     * @description search for the given value.
+     * @example
+     * it('should update the search term', function () {
+     *     var searchBox = new rxSearchBox($('searchBox'));
+     *     searchBox.search('Some query');
+     *     expect(searchBox.getTerm()).to.eventually.equal('Some query');
+     * });
+     */
+    rxSearchBox.prototype.search = function (searchTerm) {
+        this.txtSearch.clear();
+        return this.txtSearch.sendKeys(searchTerm);
+    };
+    /**
+     * @description The placeholder value that exists in the search box before
+     * a user has typed in some text into it.
+     * @example
+     * it('should instruct users to search for users via the placeholder', function () {
+     *     var searchBox = new rxSearchBox($('searchBox'));
+     *     expect(searchBox.getPlaceholder()).to.eventually.equal('Search for a user...');
+     * });
+     */
+    rxSearchBox.prototype.getPlaceholder = function () {
+        return this.txtSearch.getAttribute('placeholder');
+    };
+    /**
+     * @description Whether or not the search box is clearable. To be clearable is determined
+     * by the existence of the clear button next to the search box.
+     */
+    rxSearchBox.prototype.isClearable = function () {
+        return this.btnClear.isPresent();
+    };
+    /**
+     * @description Whether or not the search box is enabled.
+     */
+    rxSearchBox.prototype.isEnabled = function () {
+        return this.txtSearch.isEnabled();
+    };
+    /**
+     * @description Clear the value of the search box using the clear button.
+     * If no clear button is present with the search box, then nothing will happen.
+     * @example
+     * it('should only clear the textbox if it is explicitly clearable', function () {
+     *     var searchBox = new rxSearchBox($('searchBox'));
+     *     expect(searchBox.isClearable()).to.eventually.be.false;
+     *     searchBox.search('Some query');
+     *     searchBox.clear();
+     *     // there is no clear button, so nothing happens
+     *     expect(searchBox.getTerm()).to.eventually.equal('Some query');
+     *     // this will always work, however
+     *     searchBox.search('');
+     *     expect(searchBox.getTerm()).to.eventually.equal('');
+     * });
+     */
+    rxSearchBox.prototype.clear = function () {
+        var _this = this;
+        return this.isClearable().then(function (clearable) { return clearable &amp;&amp; _this.btnClear.click(); });
+    };
+    return rxSearchBox;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxSearchBox.prototype, "isEnabled", null);
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxSearchBox.prototype, "clear", null);
+exports.rxSearchBox = rxSearchBox;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

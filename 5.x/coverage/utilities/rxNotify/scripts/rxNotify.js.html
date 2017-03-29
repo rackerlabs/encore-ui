@@ -1,0 +1,1308 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxNotify/scripts/rxNotify.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxNotify/scripts/rxNotify.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(68 / 68)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">87.5% <small>(28 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(16 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(68 / 68)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxNotify/scripts/</a> &#187; rxNotify.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxNotify
+ * @description
+ * Manages page messages for an application.
+ *
+ * ## rxNotify
+ * The rxNotify component provides status message notifications on a page.
+ *
+ * There may be situations where you will need to use the styling/markup of
+ * rxNotify's messaging queue in status messages of your own - for example,
+ * a modal window which asks if you want to delete an object, with the
+ * appropriate warning or error flags. If this is the case, we recommend using
+ * the {@link elements.directive:rxNotification rxNotification} directive in your views.  Please note, this
+ * differs from {@link elements.directive:rxNotifications rxNotifications} (plural).
+ *
+ * The type attribute can be any type supported by `options.type` for the `rxNotify.add()` function in
+ * the {@link utilities.service:rxNotify rxNotify} service.
+ *
+ * ## Directives
+ * * {@link elements.directive:rxNotification rxNotification}
+ * * {@link elements.directive:rxNotifications rxNotifications}
+ *
+ * # Use Cases
+ *
+ * ## Add Notification in Loading State
+ * &lt;pre&gt;
+ * rxNotify.add('Loading', {
+ *     loading: true,
+ *     dismiss: [$scope, 'loaded']
+ * });
+ * var apiCallback = function (data) {
+ *     $scope.loaded = true;
+ *     // do something with the data
+ * };
+ * &lt;/pre&gt;
+ *
+ * ## Show Notification on Variable Change
+ * &lt;pre&gt;
+ * $scope.loaded = false;
+ * rxNotify.add('Content Loaded', {
+ *     show: [$scope, 'loaded']
+ * });
+ * $timeout(function () {
+ *     $scope.loaded = true;
+ * }, 1500);
+ * &lt;/pre&gt;
+ *
+ * ## Dismiss Notification on Variable Change
+ * &lt;pre&gt;
+ * $scope.loaded = false;
+ * rxNotify.add('Content Loaded', {
+ *     dismiss: [$scope, 'loaded']
+ * });
+ * $timeout(function () {
+ *     $scope.loaded = true;
+ * }, 1500);
+ * &lt;/pre&gt;
+ *
+ *
+ * ## Using a Custom Stack
+ * Say you want to create a stack for a login form.
+ * Let's call the stack 'loginForm' to reference in our code.
+ *
+ * **Controller**
+ * &lt;pre&gt;
+ * rxNotify.add('Username required', {
+ *     type: 'error',
+ *     stack: 'loginForm'
+ * });
+ * &lt;/pre&gt;
+ *
+ * **View**
+ * &lt;pre&gt;
+ * &lt;rx-notifications stack="loginForm"&gt;&lt;/rx-notifications&gt;
+ * &lt;/pre&gt;
+ *
+ * # Stacks
+ *
+ * Stacks are just separate notification areas. Normally, all messages created will go to the `page` stack, which
+ * should be displayed at the top of the page. The `page` stack is used for page-level messages.
+ *
+ * ## Using the Page Stack
+ *
+ * The {@link elements.directive:rxNotifications rxNotifications} directive will gather all notifications for a 
+ * particular stack into a single point on the page.  By default, this directive will collect all notifications 
+ * in the `page` stack.
+ *
+ * &lt;pre&gt;
+ * &lt;rx-notifications&gt;&lt;/rx-notifications&gt;
+ * &lt;/pre&gt;
+ *
+ * See {@link elements.directive:rxNotification rxNotification} for more details.
+ *
+ * ## Using a Custom Stack
+ *
+ * You can also create custom stacks for specific notification areas. Say you have a form on your page that you want to
+ * add error messages to. You can create a custom stack for this form and send form-specific messages to it.
+ *
+ * Please see the *Custom Stack* usage example in the Notifications [demo](../#/elements/Notifications).
+ *
+ * ## Adding an `rxNotification` to the Default Stack
+ *
+ * If you need to add a notification via your Angular template, just set the `stack` parameter on the opening
+ * `&lt;rx-notification&gt;` tag.  This will allow the notification to be added via the `rxNotify.add()` function.
+ *
+ * &lt;pre&gt;
+ * &lt;rx-notification type="error" stack="page"&gt;
+ *   This is an error message being added to the "page" stack with &lt;strong&gt;Custom&lt;/strong&gt; html.
+ * &lt;/rx-notification&gt;
+ * &lt;/pre&gt;
+ *
+ * ## Adding a New Message Queue via `rxNotify`
+ *
+ * To add a new message to a stack, inject `rxNotify` into your Angular function and run:
+ *
+ * &lt;pre&gt;
+ * rxNotify.add('My Message Text');
+ * &lt;/pre&gt;
+ *
+ * This will add a new message to the default stack (`page`) with all default options set.  To customize options, pass
+ * in an `object` as the second argument with your specific options set:
+ *
+ * &lt;pre&gt;
+ * rxNotify.add('My Message Text', {
+ *   stack: 'custom',
+ *   type: 'warning'
+ * });
+ * &lt;/pre&gt;
+ *
+ * ## Dismissing a message programatically
+ *
+ * Most messages are dismissed either by the user, a route change or using the custom `dismiss` property.  If you need
+ * to dismiss a message programmaticaly, you can run `rxNotify.dismiss(message)`, where *message* is the `object`
+ * returned from `rxNotify.add()`.
+ *
+ * ## Clearing all messages in a stack
+ *
+ * You can clear all messages in a specific stack programmatically via the `rxNotify.clear()` function. Simply pass in
+ * the name of the stack to clear:
+ *
+ * &lt;pre&gt;
+ * rxNotify.clear('page');
+ * &lt;/pre&gt;
+ *
+ */
+.service('rxNotify', function ($interval, $rootScope) {
+    var defaultStack = 'page';
+    var stacks = {};
+&nbsp;
+    // initialize a default stack
+    stacks[defaultStack] = [];
+&nbsp;
+    // array that contains messages to show on 'next' (when route changes)
+    var nextQueue = [];
+&nbsp;
+    var messageDefaults = {
+        type: 'info',
+        timeout: -1,
+        loading: false,
+        show: 'immediate',
+        dismiss: 'next',
+        ondismiss: _.noop,
+        stack: 'page',
+        repeat: true
+    };
+&nbsp;
+    /**
+     * @function
+     * @private
+     * @description Adds a message to a stack
+     *
+     * @param {Object} message The message object to add.
+     */
+    var addToStack = function (message) {
+        // if repeat is false, check to see if the message is already in the stack
+        if (!message.repeat) {
+            if (_.find(stacks[message.stack], { text: message.text, type: message.type })) {
+                return;
+            }
+        }
+&nbsp;
+        // if timeout is set, we should remove message after time expires
+        if (message.timeout &gt; -1) {
+            dismissAfterTimeout(message);
+        }
+&nbsp;
+        // make sure there's actual text to add
+        if (message.text.length &gt; 0) {
+            stacks[message.stack].push(message);
+        }
+    };//addToStack
+&nbsp;
+    /**
+     * @function
+     * @private
+     * @description
+     * Sets a timeout to wait a specific time then dismiss message
+     *
+     * @param {Object} message The message object to remove.
+     */
+    function dismissAfterTimeout (message) {
+        // convert seconds to milliseconds
+        var timeoutMs = message.timeout * 1000;
+&nbsp;
+        $interval(function () {
+            dismiss(message);
+        }, timeoutMs, 1);
+    }
+&nbsp;
+    /**
+     * @function
+     * @private
+     * @description
+     * Shows/dismisses message after scope.prop change to true
+     *
+     * @param {Object} message The message object to show/dismiss
+     * @param {String} changeType Whether to 'show' or 'dismiss' the message
+     */
+    var changeOnWatch = function (message, changeType) {
+        var scope = message[changeType][0];
+        var prop = message[changeType][1];
+&nbsp;
+        // function to run to change message visibility
+        var cb;
+&nbsp;
+        // switch which function to call based on type
+        if (changeType === 'show') {
+            cb = addToStack;
+        } else <span class="missing-if-branch" title="else path not taken" >E</span>if (changeType === 'dismiss') {
+            cb = dismiss;
+&nbsp;
+            // add a listener to dismiss message if scope is destroyed
+            scope.$on('$destroy', function () {
+                dismiss(message);
+            });
+        }
+&nbsp;
+        scope.$watch(prop, function (newVal) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (newVal === true) {
+                cb(message);
+            }
+        });
+    };//changeOnWatch
+&nbsp;
+    /**
+     * @function
+     * @private
+     * @description removes all messages that are shown
+     */
+    var clearAllShown = function () {
+        _.forOwn(stacks, function (index, key) {
+            stacks[key] = _.reject(stacks[key], {
+                'dismiss': messageDefaults.dismiss
+            });
+        });
+    };
+&nbsp;
+    /**
+     * @function
+     * @private
+     * @description adds messages marked as 'next' to relevant queues
+     */
+    var addAllNext = function () {
+        _.each(nextQueue, function (message) {
+            // add to appropriate stack
+            addToStack(message);
+        });
+&nbsp;
+        // empty nextQueue of messages
+        nextQueue.length = 0;
+    };
+&nbsp;
+    /**
+     * @name clear
+     * @ngdoc method
+     * @methodOf utilities.service:rxNotify
+     * @description deletes all messages in a stack
+     *
+     * @param {String} stack The name of the stack to clear
+     */
+    var clear = function (stack) {
+        if (stacks.hasOwnProperty(stack)) {
+            // @see http://davidwalsh.name/empty-array
+            stacks[stack].length = 0;
+        }
+    };
+&nbsp;
+    /**
+     * @name dismiss
+     * @ngdoc method
+     * @methodOf utilities.service:rxNotify
+     * @description removes a specific message from a stack
+     *
+     * @param {Object} msg Message object to remove
+     */
+    function dismiss (msg) {
+        // remove message by id
+        stacks[msg.stack] = _.reject(stacks[msg.stack], { 'id': msg.id });
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (_.isFunction(msg.ondismiss)) {
+            $interval(function () {
+                msg.ondismiss(msg);
+            }, 0, 1);
+        }
+    }//dismiss()
+&nbsp;
+    /**
+     * @name add
+     * @ngdoc method
+     * @methodOf utilities.service:rxNotify
+     * @description adds a message to a stack
+     *
+     * @param {String} text Message text
+     * @param {Object=} options Message options
+     * @param {String=} [options.type='info'] Message Type
+     *
+     * Values:
+     * * 'info'
+     * * 'warning'
+     * * 'error'
+     * * 'success'
+     * @param {Integer=} [options.timeout=-1]
+     * Time (in seconds) for message to appear. A value of -1 will display
+     * the message until it is dismissed or the user navigates away from the
+     * page.
+     *
+     * Values:
+     * * -1
+     * * Any positive integer
+     * @param {Boolean=} [options.repeat=true]
+     * Whether the message should be allowed to appear more than once in the stack.
+     * @param {Boolean=} [options.loading=false]
+     * Replaces type icon with spinner. Removes option for use to dismiss message.
+     *
+     * You usually want to associate this with a 'dismiss' property.
+     * @param {String|Array=} [options.show='immediate']
+     * When to have the message appear.
+     *
+     * Values:
+     * * 'immediate'
+     * * 'next'
+     * * [scope, 'property']
+     *   * Pass in a property on a scope to watch for a change.
+     *     When the property equals true, the message is shown.
+     * @param {String|Array=} [options.dismiss='next']
+     * When to have the message disappear.
+     *
+     * Values:
+     * * 'next'
+     * * [scope, 'property']
+     *     * Pass in a property on a scope to watch for a change.
+     *       When the property equals true, the message is dismissed.
+     * @param {Function=} [options.ondismiss=_.noop]
+     * Function that should be run when message is dismissed.
+     * @param {String=} [options.stack='page']
+     * Which message stack the message gets added to.
+     *
+     * Values:
+     * * 'page'
+     * * Any String *(results in a custom stack)*
+     *
+     * @returns {Object} message object
+     */
+    var add = function (text, options) {
+        var message = {
+            text: text
+        };
+&nbsp;
+        options = options || {};
+&nbsp;
+        // add unique id to message for easier identification
+        options.id = _.uniqueId();
+&nbsp;
+        // if stack is specified, add to different stack
+        var stack = options.stack || defaultStack;
+&nbsp;
+        // if new stack doesn't exist, create it
+        if (!_.isArray(stacks[stack])) {
+            stacks[stack] = [];
+        }
+&nbsp;
+        // add defaults to options
+        _.defaults(options, messageDefaults);
+&nbsp;
+        // add options to message
+        _.defaults(message, options);
+&nbsp;
+        // if dismiss is set to array, watch variable
+        if (_.isArray(message.dismiss)) {
+            changeOnWatch(message, 'dismiss');
+        }
+&nbsp;
+        // add message to stack immediately if has default show value
+        if (message.show === messageDefaults.show) {
+            addToStack(message);
+        } else if (message.show === 'next') {
+            nextQueue.push(message);
+        } else <span class="missing-if-branch" title="else path not taken" >E</span>if (_.isArray(message.show)) {
+            changeOnWatch(message, 'show');
+        }
+&nbsp;
+        // return message object
+        return message;
+    };//add()
+&nbsp;
+    // add a listener to root scope which listens for the event that gets fired when the route successfully changes
+    $rootScope.$on('$routeChangeSuccess', function processRouteChange () {
+        clearAllShown();
+        addAllNext();
+    });
+&nbsp;
+    // expose public API
+    return {
+        add: add,
+        clear: clear,
+        dismiss: dismiss,
+        stacks: stacks
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

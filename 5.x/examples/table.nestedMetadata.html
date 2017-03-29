@@ -1,0 +1,29 @@
+<table class="table-striped" ng-controller="tableNestedMetadataExampleCtrl">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Occupation</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="person in people">
+    <tr>
+      <td>{{ person.name }}</td>
+      <td>{{ person.occupation }}</td>
+      <td class="double-chevron-cell" ng-class="{ expanded: person.expanded }">
+        <a class="double-chevron" ng-click="person.expanded = !person.expanded"></a>
+      </td>
+    </tr>
+    <tr ng-if="person.expanded">
+      <td colspan="3" class="expanded-container">
+        <div class="expanded-content">
+          <rx-metadata>
+            <section ng-repeat="(attr, val) in person.pet">
+              <rx-meta label="{{ attr | rxCapitalize}}">{{val}}</rx-meta>
+            </section>
+          </rx-metadata>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

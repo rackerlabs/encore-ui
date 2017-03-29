@@ -1,0 +1,33 @@
+<div ng-controller="copySimpleCtrl" layout layout-margin>
+  <div flex>
+    <h4>Plain Text</h4>
+
+    <h5>Short Paragraph</h5>
+    <p>
+      <rx-copy id="copy-simple-short">This is a short sentence.</rx-copy>
+    </p>
+
+    <h5>Long Paragraph</h5>
+    <p>
+      <rx-copy id="copy-simple-long">
+        A paragraph that will wrap across multiple lines. {{loremIpsum}}
+      </rx-copy>
+    </p>
+  </div>
+
+  <div flex>
+    <h5>Within Metadata</h5>
+    <rx-metadata>
+      <section>
+        <rx-meta label="Short Text">
+          <rx-copy>This is a short metadata description.</rx-copy>
+        </rx-meta>
+        <rx-meta label="Long Text">
+          <rx-copy>
+            A paragraph that will wrap across multiple lines. {{loremIpsum}}
+          </rx-copy>
+        </rx-meta>
+      </section>
+    </rx-metadata>
+  </div>
+</div>

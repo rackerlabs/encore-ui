@@ -1,0 +1,50 @@
+<div class="{{module.name}}-demo">
+  <h1>{{ module.displayName }}</h1>
+
+  <div layout="row" layout-align="middle">
+    <div flex>
+      <rx-stability stability="module.stability"></rx-stability>
+    </div>
+
+    <div flex class="align-right">
+      <span ng-if="module.hasApi">
+        <!-- TODO: Remove legacy logic! -->
+        <span ng-if="module.isLegacy"><!-- for legacy Components -->
+          <a href="ngdocs/index.html#/api/{{ module.name }}/" class="module-api button">View API</a>
+        </span>
+        <span ng-if="!module.isLegacy"><!-- for everything else -->
+          <a href="ngdocs/index.html#/api/{{ module.category }}.{{ module.api }}/" class="module-api button">View API</a>
+        </span>
+      </span>
+      <a href="https://github.com/rackerlabs/encore-ui/tree/next/src/{{ module.category }}/{{ module.name }}/" class="module-source button">View Source</a>
+    </div>
+  </div>
+
+  <!-- TODO: REMOVE! -->
+  <div class="clear module-description" ng-if="module.docs.md">
+    <h2 class="readme-title">Readme</h2>
+    <div ng-bind-html="module.docs.md"></div>
+  </div>
+
+  <!-- TODO: REMOVE ngIf -->
+  <div ng-if="!module.isLegacy" rx-compile="module.docs.html" class="module-demo"></div>
+
+  <!-- TODO: REMOVE! -->
+  <tabset class="clearfix clear" ng-if="module.isLegacy && (module.docs.html || module.docs.js)">
+    <tab heading="Demo">
+      <div rx-compile="module.docs.html" class="module-demo"></div>
+    </tab>
+
+    <tab heading="Markup" ng-if="module.docs.html">
+      <rx-prism language="markup">{{ module.docs.html }}</rx-prism>
+    </tab>
+
+    <tab heading="JavaScript" ng-if="module.docs.js">
+      <rx-prism language="clike">{{ module.docs.js }}</rx-prism>
+    </tab>
+
+    <tab heading="Less" ng-if="module.docs.less">
+      <rx-prism language="css">{{ module.docs.less }}</rx-prism>
+    </tab>
+  </tabset>
+</div>

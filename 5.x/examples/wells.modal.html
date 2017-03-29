@@ -1,0 +1,25 @@
+<rx-modal-action classes="button" template-url="modal-well.html">Open a modal</rx-modal-action>
+
+<script type="text/ng-template" id="modal-well.html">
+  <rx-modal-form title="Change Connection Throttling" rx-form>
+    <rx-form-section>
+      <rx-field>
+        <rx-field-name>Max Connections:</rx-field-name>
+        <rx-field-content>
+          <rx-input>
+            <input type="number"
+              ng-model="fields.maxConnections"
+              ng-init="fields.maxConnections = 1" />
+          </rx-input>
+          <rx-help-text>Simultaneous connections</rx-help-text>
+        </rx-field-content>
+      </rx-field>
+    </rx-form-section>
+    <rx-form-section>
+      <div class="modal-well">
+        <h2>Summary</h2>
+        <p>Allow a maximum of {{ fields.maxConnections }} simultaneous connections from a single IP.</p>
+      </div>
+    </rx-form-section>
+  </rx-modal-form>
+</script>

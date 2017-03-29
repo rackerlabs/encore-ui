@@ -1,0 +1,91 @@
+<div ng-controller="notificationsStackCtrl">
+  <div layout="row">
+    <div rx-form flex>
+      <rx-form-section>
+        <rx-field>
+          <rx-field-name>Message Text:</rx-field-name>
+          <rx-field-content>
+            <rx-input>
+              <input type="text" ng-model="message" />
+            </rx-input>
+          </rx-field-content>
+        </rx-field>
+
+        <rx-field>
+          <rx-field-name>Timeout:</rx-field-name>
+          <rx-field-content>
+            <rx-input>
+              <input type="number" min="-1" ng-model="options.timeout" />
+              <rx-suffix>seconds</rx-suffix>
+            </rx-input>
+          </rx-field-content>
+        </rx-field>
+      </rx-form-section>
+
+      <rx-form-section>
+        <rx-field>
+          <rx-field-name>Type:</rx-field-name>
+          <rx-field-content>
+            <rx-input ng-repeat="type in types">
+              <input rx-radio name="notify-type" id="radType_{{$index}}" ng-model="options.type" value="{{type}}" />
+              <label for="radType_{{$index}}">{{type| rxCapitalize}}</label>
+            </rx-input>
+          </rx-field-content>
+        </rx-field>
+
+        <rx-field>
+          <rx-field-name>Show:</rx-field-name>
+          <rx-field-content>
+            <rx-input>
+              <input rx-radio name="notify-show" id="radNotify_immediate" ng-model="options.show" value="immediate" />
+              <label for="radNotify_immediate">Immediately</label>
+            </rx-input>
+            <rx-input>
+              <input rx-radio name="notify-show" id="radNotify_next" ng-model="options.show" value="next" />
+              <label for="radNotify_next">Next</label>
+            </rx-input>
+          </rx-field-content>
+        </rx-field>
+      </rx-form-section>
+
+      <rx-form-section>
+        <rx-field>
+          <rx-field-name>Options:</rx-field-name>
+          <rx-field-content>
+            <rx-input>
+              <input rx-checkbox id="chkRepeat" ng-model="options.repeat" />
+              <label for="chkRepeat">Repeat</label>
+            </rx-input>
+            <rx-input>
+              <input rx-checkbox id="chkAlertOnDismiss" ng-model="ondismiss.should" />
+              <label for="chkAlertOnDismiss">Alert On Dismiss</label>
+            </rx-input>
+            <rx-input>
+              <input rx-checkbox id="chkLoading" ng-model="options.loading" />
+              <label for="chkLoading">Loading? (shows spinner)</label>
+            </rx-input>
+          </rx-field-content>
+        </rx-field>
+      </rx-form-section>
+
+      <rx-form-section>
+        <div>
+          <button class="button" ng-click="add('demo')">Add to Demo Stack</button>
+          <button class="button" ng-click="add('custom')">Add to Custom Stack</button>
+        </div>
+      </rx-form-section>
+    </div>
+
+    <div flex layout="column" layout-align="top stretch">
+      <div>
+        <h2>Demo Stack</h2>
+        <rx-notifications stack="demo"></rx-notifications>
+      </div>
+
+      <div>
+        <h2>Custom Stack</h2>
+        <rx-notifications stack="custom"></rx-notifications>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxAge/scripts/rxAge.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxAge/scripts/rxAge.js#L64" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAge</code>
+<div><span class="hint">filter in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-filter-page utilities-filter-rxage-page"><p>Several filters are available to parse dates.</p>
+<h4 id="description_two-digit-display">Two Digit Display</h4>
+<ol>
+<li><p>You can just have it use the default abbreviated method and it truncates it
+to the two largest units.</p>
+<pre class="prettyprint linenums">
+   &lt;div ng-controller="rxAgeCtrl"&gt;
+     &lt;ul&gt;
+       &lt;li&gt;{{ageHours}} &rarr; {{ageHours | rxAge}}&lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/div&gt;
+ </pre>
+<code>Tue Sep 22 2015 00:44:00 GMT-0500 (CDT) → 10h 30m</code></p>
+</li>
+</ol>
+<h4 id="description_full-word-representation">Full Word Representation</h4>
+<ol>
+<li><p>You can also pass in a second value of <code>true</code> and have it expand the units
+from the first letter to their full word representation.</p>
+<pre class="prettyprint linenums">
+   &lt;div ng-controller="rxAgeCtrl"&gt;
+     &lt;ul&gt;
+       &lt;li&gt;{{ageHours}} &rarr; {{ageHours | rxAge:true}}&lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/div&gt;
+ </pre>
+<code>Tue Sep 22 2015 00:35:30 GMT-0500 (CDT) → 10 hours, 33 minutes</code></p>
+</li>
+</ol>
+<h4 id="description_mulitple-digits">Mulitple Digits</h4>
+<ol>
+<li><p>Or you can pass in a number from <code>1</code> to <code>3</code> as the second value to allow for
+different amounts of units.</p>
+<pre class="prettyprint linenums">
+   &lt;div ng-controller="rxAgeCtrl"&gt;
+     &lt;ul&gt;
+       &lt;li&gt;{{ageYears}} &rarr; {{ageYears | rxAge:3}}&lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/div&gt;
+ </pre>
+<code>Sun Sep 07 2014 08:46:05 GMT-0500 (CDT) → 380d 2h 27m</code></p>
+</li>
+</ol>
+<h4 id="description_multiple-argument-usage">Multiple Argument Usage</h4>
+<ol>
+<li><p><strong>OR</strong> you can pass in a number as the second argument and <code>true</code> as the
+third argument to combine these two effects.</p>
+<pre class="prettyprint linenums">
+   &lt;div ng-controller="rxAgeCtrl"&gt;
+     &lt;ul&gt;
+       &lt;li&gt;{{ageMonths}} &rarr; {{ageMonths | rxAge:3:true}}&lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/div&gt;
+ </pre>
+<code>Thu Aug 13 2015 06:22:05 GMT-0500 (CDT) → 40 days, 4 hours, 49 minutes</code></p>
+</li>
+</ol>
+<p><strong>NOTE:</strong> This component requires <a href="http://momentjs.com/">moment.js</a> to parse, manipulate, and
+display dates which is provided by Encore Framework.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><h3 id="usage_in-html-template-binding">In HTML Template Binding</h3>
+<div class="in-html-template-binding"><code ng:non-bindable=""><span>{{</span> rxAge_expression | rxAge <span>}}</span></code>
+</div>
+<h3 id="usage_in-javascript">In JavaScript</h3>
+<div class="in-javascript"><code ng:non-bindable="">$filter('rxAge')()</code>
+</div>
+</div>
+</div>

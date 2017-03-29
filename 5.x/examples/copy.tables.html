@@ -1,0 +1,33 @@
+<table ng-controller="copyTableCtrl" class="table-striped rxCopyTable">
+  <colgroup>
+    <col width="100" />
+    <col width="200" />
+    <col />
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Short Value</th>
+      <th>Medium Value</th>
+      <th>Long Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="copy-short">
+        <rx-copy>Short</rx-copy>
+        <rx-copy class="subdued">Secondary Copy Value 1 -- too long for cell</rx-copy>
+      </td>
+      <td class="copy-medium">
+        <rx-copy>A medium-length value.</rx-copy>
+        <rx-copy class="subdued">Secondary Copy Value 2</rx-copy>
+      </td>
+      <td class="copy-long">
+        <rx-copy>
+          An extremely long cell value that won't fit in the width of the cell.
+          {{loremIpsum}}
+        </rx-copy>
+        <rx-copy class="subdued">Secondary Copy Value 3</rx-copy>
+      </td>
+    </tr>
+  </tbody>
+</table>

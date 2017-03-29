@@ -1,0 +1,113 @@
+<form rx-form ng-controller="formAdvancedControlsDemoCtrl">
+
+  <h4>With <code>stacked</code> section attribute</h4>
+  <rx-help-text>
+    To obtain a stacked layout, place the <code>stacked</code>
+    attribute on <code>rx-form-section</code>.
+  </rx-help-text>
+
+  <rx-form-section stacked>
+    <!-- Radio Option + Select -->
+    <rx-field>
+      <h5>Radio + Select</h5>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>
+            <input rx-radio
+              id="radDefault"
+              name="radAdvanced"
+              ng-model="radChoice"
+              value="default" />
+            <label for="radDefault">Default</label>
+          </rx-prefix>
+        </rx-input>
+        <rx-input>
+          <rx-prefix>
+            <input rx-radio
+              id="radCustom"
+              name="radAdvanced"
+              ng-model="radChoice"
+              value="custom" />
+            <label for="radCustom">Custom:</label><br />
+          </rx-prefix>
+          <select rx-select ng-disabled="radChoice !== 'custom'">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </rx-input>
+        <rx-help-text>
+          Useful for condensing large radio groups.
+        </rx-help-text>
+      </rx-field-content>
+    </rx-field>
+
+    <!-- Checkbox + Text -->
+    <rx-field>
+      <h5>Checkbox + Text Input</h5>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>
+            <input rx-checkbox ng-model="inputEnabled" />
+            <label>Label:</label>
+          </rx-prefix>
+          <input type="text"
+            ng-disabled="!inputEnabled"
+            placeholder="Enter Text" />
+        </rx-input>
+        <rx-help-text>
+          Useful for if you want the user to add an optional value, but displaying
+          the field as disabled by default.
+        </rx-help-text>
+      </rx-field-content>
+    </rx-field>
+
+  </rx-form-section>
+
+  <h4>With <code>controlled-width</code> section attribute</h4>
+  <rx-help-text>
+    To prevent fields from taking up too much horizontal space, use the <code>controlled-width</code>
+    attribute on <code>rx-form-section</code>. The fields will still stack if horizontal space is
+    constrained, but they will not exceed a reasonable field width.
+  </rx-help-text>
+
+  <rx-form-section controlled-width>
+    <!-- Dropdown + Text + Dropdown -->
+    <rx-field>
+      <h5>Dropdown + Text Input + Dropdown</h5>
+      <rx-field-name>Name:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>
+            <select rx-select>
+              <option></option>
+              <option>Mr.</option>
+              <option>Mrs.</option>
+              <option>Ms.</option>
+            </select>
+          </rx-prefix>
+          <input type="text" />
+          <rx-suffix>
+            <select rx-select>
+              <option></option>
+              <option>Jr.</option>
+              <option>Sr.</option>
+            </select>
+          </rx-suffix>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <h5>Using <code>rx-search-box</code>.</h5>
+      <rx-field-name>Search Box:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-search-box
+            ng-model="demoSearch"
+            rx-placeholder="'Filter by...'"></rx-search-box>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

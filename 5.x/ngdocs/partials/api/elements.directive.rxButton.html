@@ -1,0 +1,48 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Buttons/scripts/rxButton.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Buttons/scripts/rxButton.js#L44" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxButton</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxbutton-page"><p>Renders a button which will disable when clicked and show a loading message,
+and re-enable when the operation is complete. If you set <code>classes</code> attributes
+<code>&lt;rx-button&gt;</code>, those will get passed to the <code>&lt;button&gt;</code> instance as <code>class</code>.</p>
+<p><code>rxButton</code> is used to create buttons with a dynamically-displayed loading
+indicator. This is meant to be used as a replacement for <code>&lt;button&gt;</code> elements
+in scenarios where the button has multiple states.</p>
+<h4 id="description_button-state">Button State</h4>
+<p>The state of the button is controlled via the <code>toggle</code> attribute, which
+disables the button and replaces the <code>default-msg</code> with the <code>toggle-msg</code> as
+the button&#39;s text.  There are no defaults for these messages, so they must
+be defined if the toggle behavior is desired.  While the button is in the
+toggled state, it is also disabled (no matter what the value of <code>ng-disabled</code>
+may be).</p>
+<p>The button does not modify the variable passed to <code>toggle</code>; it should be
+modified in the handler provided to <code>ng-click</code>.  Usually, the handler will
+set the variable to <code>true</code> immediately, and then to <code>false</code> once the the
+process (e.g. an API call) is complete.</p>
+<h4 id="description_styling">Styling</h4>
+<p>There are several styles of buttons available, and they are documented in the
+Buttons <a href="../#/elements/Buttons">demo</a>. Any classes that need to be
+added to the button should be passed to the <code>classes</code> attribute.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-button
+       loading-msg="{String}"
+       default-msg="{String}"
+       [toggle="{Boolean}"]
+       [ng-disabled="{Expression}"]
+       [classes="{String}"]&gt;
+&lt;/rx-button&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>loadingMsg</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxbutton-page"><p>Text to be displayed when an operation is in progress.</p>
+</div></td></tr><tr><td>defaultMsg</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxbutton-page"><p>Text to be displayed by default when no operation is in progress.</p>
+</div></td></tr><tr><td>toggle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="elements-directive-page elements-directive-rxbutton-page"><p>When true, the button will display the loading text.</p>
+</div> <p><em>(default: false)</em></p></td></tr><tr><td>ngDisabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxbutton-page"><p>If the expression is truthy, then the
+<code>disabled</code> attribute will be set on the button</p>
+</div> <p><em>(default: false)</em></p></td></tr><tr><td>classes <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxbutton-page"><p>The class names to be applied to the button.</p>
+</div> <p><em>(default: "")</em></p></td></tr></tbody></table></div>
+</div>

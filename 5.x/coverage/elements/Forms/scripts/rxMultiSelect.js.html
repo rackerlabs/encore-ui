@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/Forms/scripts/rxMultiSelect.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/Forms/scripts/rxMultiSelect.js</span></h1>
+    <h2>
+        Statements: <span class="metric">94.23% <small>(49 / 52)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">75% <small>(24 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">87.5% <small>(14 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">94.23% <small>(49 / 52)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Forms/scripts/</a> &#187; rxMultiSelect.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">202</span>
+<span class="cline-any cline-yes">167</span>
+<span class="cline-any cline-yes">167</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">26</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">1029</span>
+<span class="cline-any cline-yes">193</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">836</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">165</span>
+<span class="cline-any cline-yes">165</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">226</span>
+<span class="cline-any cline-yes">226</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">226</span>
+<span class="cline-any cline-yes">196</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxMultiSelect
+ * @restrict E
+ * @scope
+ * @requires elements.directive:rxSelectOption
+ * @description
+ * This component is a multi-select dropdown with checkboxes for each option.
+ * It is a replacement for `&lt;select multiple&gt;` when space is an issue, such as
+ * in the header of a table.
+ * The options for the control can be specified by passing an array of strings
+ * (corresponding to the options' values) to the `options` attribute of the
+ * directive, or using `&lt;rx-select-option&gt;`s. An 'All' option is automatically
+ * set as the first option for the dropdown, which allows all options to be
+ * toggled at once.
+ *
+ * The following two dropdowns are equivalent:
+ * &lt;pre&gt;
+ * &lt;!-- $scope.available = [2014, 2015] --&gt;
+ * &lt;rx-multi-select ng-model="selected" options="available"&gt;&lt;/rx-multi-select&gt;
+ *&lt;/pre&gt;
+ *&lt;pre&gt;
+ * &lt;rx-multi-select ng-model="selected"&gt;
+ *   &lt;rx-select-option value="2014"&gt;&lt;/rx-select-option&gt;
+ *   &lt;rx-select-option value="2015"&gt;&lt;/rx-select-option&gt;
+ * &lt;/rx-multi-select&gt;
+ * &lt;/pre&gt;
+ *
+ * This component requires the `ng-model` attribute and binds the model to an
+ * array of the selected options.
+ *
+ *
+ * The preview text (what is shown when the element is not active) follows the following rules:
+ * * If no items are selected, show "None".
+ * * If only one item is selected from the dropdown, its label will display.
+ * * If &gt; 1 but &lt; n-1 items are selected, show "[#] Selected".
+ * * If all but one item is selected, show "All except [x]"
+ * * If all items are selected, show "All Selected".
+ *
+ * @param {String} ng-model The scope property that stores the value of the input
+ * @param {Array=} options A list of the options for the dropdown
+ */
+.directive('rxMultiSelect', function ($document, rxDOMHelper) {
+    return {
+        restrict: 'E',
+        templateUrl: 'templates/rxMultiSelect.html',
+        transclude: true,
+        require: [
+            'rxMultiSelect',
+            'ngModel'
+        ],
+        scope: {
+            selected: '=ngModel',
+            options: '=?',
+            isDisabled: '=ngDisabled',
+        },
+        controller: function ($scope) {
+            if (_.isUndefined($scope.selected)) {
+                $scope.selected = [];
+            }
+&nbsp;
+            this.options = [];
+            this.addOption = function (option) {
+                if (option !== 'all') {
+                    this.options = _.union(this.options, [option]);
+                    this.render();
+                }
+            };
+            this.removeOption = function (option) {
+                if (option !== 'all') {
+                    this.options = _.without(this.options, option);
+                    this.unselect(option);
+                    this.render();
+                }
+            };
+&nbsp;
+            this.select = function (option) {
+                $scope.selected = option === 'all' ? _.clone(this.options) : _.union($scope.selected, [option]);
+            };
+            this.unselect = function (option) {
+                $scope.selected = option === 'all' ? [] : _.without($scope.selected, option);
+            };
+            this.isSelected = function (option) {
+                if (option === 'all') {
+                    return this.options.length === $scope.selected.length;
+                } else {
+                    return _.includes($scope.selected, option);
+                }
+            };
+&nbsp;
+            this.render = function () {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (this.ngModelCtrl) {
+                    this.ngModelCtrl.$render();
+                }
+            };
+        },
+        link: function (scope, element, attrs, controllers) {
+            scope.listDisplayed = false;
+&nbsp;
+            scope.toggleMenu = function () {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!scope.isDisabled) {
+                    scope.listDisplayed = !scope.listDisplayed;
+                }
+            };
+&nbsp;
+            var selectCtrl = controllers[0];
+            var ngModelCtrl = controllers[1];
+&nbsp;
+            ngModelCtrl.$render = function () {
+                scope.$evalAsync(function () {
+                    scope.preview = (function () {
+                        function getLabel (option) {
+                            var optionElement = rxDOMHelper.find(element, '[value="' + option + '"]');
+                            return optionElement.text().trim();
+                        }
+&nbsp;
+                        if (_.isEmpty(scope.selected)) {
+                            return 'None';
+                        } else if (scope.selected.length === 1) {
+                            return getLabel(scope.selected[0]) || <span class="branch-1 cbranch-no" title="branch not covered" >scope.selected[0];</span>
+                        } else if (scope.selected.length === selectCtrl.options.length - 1) {
+                            var option = _.head(_.difference(selectCtrl.options, scope.selected));
+                            return 'All except ' + getLabel(option) || <span class="branch-1 cbranch-no" title="branch not covered" >scope.selected[0];</span>
+                        } else if (scope.selected.length === selectCtrl.options.length) {
+                            return 'All Selected';
+                        } else {
+                            return scope.selected.length + ' Selected';
+                        }
+                    })();
+                });
+            };
+&nbsp;
+            selectCtrl.ngModelCtrl = ngModelCtrl;
+&nbsp;
+            $document.on('click', <span class="fstat-no" title="function not covered" >function (clickEvent) {</span>
+<span class="cstat-no" title="statement not covered" >                if (scope.listDisplayed &amp;&amp; !element[0].contains(clickEvent.target)) {</span>
+<span class="cstat-no" title="statement not covered" >                    scope.$apply(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                        scope.listDisplayed = false;</span>
+                    })
+                }
+            });
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

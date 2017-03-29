@@ -1,0 +1,40 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Collapse/scripts/rxCollapse.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Collapse/scripts/rxCollapse.js#L35" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxCollapse</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxcollapse-page"><p><code>rxCollapse</code> directive hides and shows an element with a transition.  It can be configured to show as either expanded
+or collapsed on page load.  A double chevron(<strong>&gt;&gt;</strong>) is used to toggle between show and hide contents, while keeping
+the header and border visible.</p>
+<h4 id="description_hide/show-content">Hide/Show Content</h4>
+<ul>
+<li>This pattern was developed for areas displaying metadata that may be short on screen real estate, as a way to hide
+data on load that is not as important to the user in the context where they are presented.  <code>rxCollapse</code> toggles
+between the <em>optional</em> <code>title</code> parameter with &quot;<em>See More</em>&quot; or &quot;<em>See Less</em>&quot;.</li>
+<li>This pattern is not very responsive-friendly, since as browser width decreases, columns will wrap. As columns wrap,
+the &quot;<em>See More</em>&quot; <code>rxCollapse</code> elements get lost in the new context, which is bad for user experience.</li>
+<li>To avoid the problem described above, &quot;<em>See More</em>&quot; <code>rxCollapse</code> elements should only be used at the end of the
+final column present on the page, so that when the columns wrap via flexbox, &quot;<em>See More</em>&quot; is always last and doesn&#39;t
+get lost in between metadata key/value pairs.</li>
+</ul>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-collapse
+       [title="{String}"]
+       [expanded="{Boolean}"]&gt;
+&lt;/rx-collapse&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>title <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxcollapse-page"><p>The title to display next to the toggle button. Default is &quot;See More/See Less&quot; toggle.</p>
+</div> <p><em>(default: "See More/See Less")</em></p></td></tr><tr><td>expanded <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="elements-directive-page elements-directive-rxcollapse-page"><p>Initially expanded or collapsed. Default is expanded.</p>
+</div> <p><em>(default: 'true')</em></p></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxcollapse-page"><pre class="prettyprint linenums">
+&lt;rx-collapse title="Filter results" expanded="true"&gt;Text Here&lt;/rx-collapse&gt;
+&lt;rx-collapse expanded="true"&gt;Text Here&lt;/rx-collapse&gt;
+</pre>
+</div></div>
+</div>

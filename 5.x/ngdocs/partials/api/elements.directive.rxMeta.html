@@ -1,0 +1,56 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Metadata/scripts/rxMeta.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Metadata/scripts/rxMeta.js#L52" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxMeta</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxmeta-page"><dl>
+<dt>Display:</dt>
+<dd><strong>block</strong> <em>(full width of parent)</em></dd>
+
+<dt>Parent:</dt>
+<dd>
+  <ul>
+    <li><a href="#/api/elements.directive:rxMetadata">rxMetadata</a></li>
+    <li>SECTION element</li>
+  </ul>
+</dd>
+
+<dt>Siblings:</dt>
+<dd>Any HTML Element</dd>
+
+<dt>Children:</dt>
+<dd>Any HTML Element</dd>
+</dl>
+
+<h4 id="description_long-data-values">Long Data Values</h4>
+<p>For data values that do not naturally break to fit the width of the column, a <code>.force-word-break</code> CSS class is
+available on the <code>&lt;rx-meta&gt;</code> element to prevent the value from overflowing to adjacent content.</p>
+<pre class="prettyprint linenums">
+&lt;rx-meta label="Super Long Value" class="force-word-break"&gt;
+  A super long data value with anunseeminglyunbreakablewordthatcouldoverflowtothenextcolumn
+&lt;/rx-meta&gt;
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-meta
+       [label="{String}"]&gt;
+&lt;/rx-meta&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>label <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmeta-page"><p>Label for metadata definition/value</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxmeta-page"><pre class="prettyprint linenums">
+&lt;rx-metadata&gt;
+  &lt;section&gt;
+    &lt;rx-meta label="Status"&gt;
+      degraded; system maintenance
+    &lt;/rx-meta&gt;
+  &lt;/section&gt;
+&lt;/rx-metadata&gt;
+</pre>
+</div></div>
+</div>

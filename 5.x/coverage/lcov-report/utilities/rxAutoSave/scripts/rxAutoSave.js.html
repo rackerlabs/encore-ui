@@ -1,0 +1,1812 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxAutoSave/scripts/rxAutoSave.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxAutoSave/scripts/rxAutoSave.js</span></h1>
+    <h2>
+        Statements: <span class="metric">97.26% <small>(71 / 73)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">81.82% <small>(18 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(21 / 21)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">97.26% <small>(71 / 73)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxAutoSave/scripts/</a> &#187; rxAutoSave.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">499</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">334</span>
+<span class="cline-any cline-yes">334</span>
+<span class="cline-any cline-yes">72</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">334</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">165</span>
+<span class="cline-any cline-yes">165</span>
+<span class="cline-any cline-yes">165</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">109</span>
+<span class="cline-any cline-yes">109</span>
+<span class="cline-any cline-yes">109</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">113</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">109</span>
+<span class="cline-any cline-yes">109</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">58</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">58</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxAutoSave
+ * @description
+ * A factory that controllers can use to help automatically save and load
+ * form data (via rxLocalStorage) on any given page.
+ *
+ * `rxAutoSave` provides a way to store values in a form for later. For instance, if a user is entering values into a
+ * form, then accidentally navigate to a new page, we likely want the values to be present again when they click the
+ * "Back" button in their browser. By correctly setting up an `rxAutoSave` instance for the form, this can happen
+ * automatically. By default, all saved values will be cleared after two days.
+ *
+ * `rxAutoSave` is a service intended to be used in controllers. No directives are provided. The intent is that the
+ * HTML forms themselves will have no knowledge that their values are being saved. `rxAutoSave` operates by doing a
+ * `$watch` on the model values for a given form, storing those model values whenever they change, and loading them
+ * on instantation.
+ *
+ * The stored data is keyed on the page URL. This means you can track the form state for multiple pages simultaneously.
+ * For example, say you have an "Edit" form. The user has gone to edit some values for "Server1", at
+ * `"/servers/server1/edit"`, and for "Server2" at `"/servers/server2/edit"`. The edit progress for both servers will
+ * be saved independently of each other. `rxAutoSave` will also let you independently store values for multiple forms
+ * appearing on the same page.
+ *
+ * By default, all values are stored in {@link utilities.service:rxLocalStorage rxLocalStoage} which interfaces with the
+ * browser's `localStorage` object. This means that if a user logs into a different computer, their stored values will
+ * not be present.  Use of `rxSessionStorage` is also supported out-of-the-box. If you wish to save form states 
+ * elsewhere (for instance, to an API), see the "Storage Location" section below.
+ *
+ * ## Setting up your template
+ *
+ * Nothing explicit needs to be done in your templates to add support for `rxAutoSave`. The only requirement is that all
+ * the `ng-model` values in a given form are stored within one object (`formData` below). For example, say you have the
+ * following form in your template:
+ *
+ * &lt;pre&gt;
+ *   &lt;form name="demoForm" rx-form&gt;
+ *       &lt;rx-form-section stacked&gt;
+ *           &lt;rx-field&gt;
+ *               &lt;rx-field-name&gt;A checkbox field!:&lt;/rx-field-name&gt;
+ *               &lt;rx-field-content&gt;
+ *                   &lt;rx-input&gt;
+ *                       &lt;input rx-checkbox id="chkCheckbox" ng-model="formData.checkbox" /&gt;
+ *                       &lt;label for="chkCheckbox"&gt;I likely don't disagree&lt;/label&gt;
+ *                   &lt;/rx-input&gt;
+ *               &lt;/rx-field-content&gt;
+ *           &lt;/rx-field&gt;
+ *
+ *           &lt;rx-field&gt;
+ *               &lt;rx-field-name&gt;Name:&lt;/rx-field-name&gt;
+ *               &lt;rx-field-content&gt;
+ *                   &lt;rx-input&gt;
+ *                       &lt;input type="text" ng-model="formData.name" /&gt;
+ *                   &lt;/rx-input&gt;
+ *               &lt;/rx-field-content&gt;
+ *           &lt;/rx-field&gt;
+ *
+ *           &lt;rx-field&gt;
+ *             &lt;rx-field-name&gt;Description:&lt;/rx-field-name&gt;
+ *             &lt;rx-field-content&gt;
+ *                 &lt;rx-input&gt;
+ *                     &lt;textarea rows="10" ng-model="formData.description"&gt;&lt;/textarea&gt;
+ *                 &lt;/rx-input&gt;
+ *             &lt;/rx-field-content&gt;
+ *           &lt;/rx-field&gt;
+ *       &lt;/rx-form-section&gt;
+ *   &lt;/form&gt;
+ * &lt;/pre&gt;
+ *
+ * **NOTE:** All the models for the form are attributes of the `formData` scope variable.
+ *
+ * ## Setting up your controller
+ *
+ * In your controller, you would have something like this in your initialization:
+ *
+ * &lt;pre&gt;
+ *   $scope.formData = {
+ *       checkbox: false,
+ *       name: '',
+ *       description: ''
+ *   };
+ * &lt;/pre&gt;
+ *
+ * By default, every time this page was loaded, the form would be initialized with an unchecked checkbox, a blank
+ * `Name` field and a blank `Description`.
+ *
+ * To have `rxAutoSave` automatically save values, first inject `rxAutoSave` into your controller, and modify
+ * initialization as follows:
+ *
+ * &lt;pre&gt;
+ *   $scope.formData = {
+ *       checkbox: false,
+ *       name: '',
+ *       description: ''
+ *   };
+ *
+ *   var autosave = rxAutoSave($scope, 'formData');
+ * &lt;/pre&gt;
+ *
+ * And that's it! Your `rxAutoSave` instance will watch for any change to `$scope.formData`, and will automatically
+ * write those changes to `rxLocalStorage`.
+ *
+ * A third argument can be passed to `rxAutoSave`, specifying usage options. The default values for these options are:
+ *
+ * &lt;pre&gt;
+ *   var autosave = rxAutoSave($scope, 'formData', {
+ *     clearOnSuccess: null,        // Promise
+ *     ttl: 172800,                 // Integer (seconds) - two days default
+ *     load: true,                  // Boolean or Promise that will resolve with a Boolean
+ *     save: true,                  // Boolean or Promise that will resolve with a Boolean
+ *     exclude: [],                 // String[]
+ *     storageBackend: rxLocalStorage // Object
+ *   });
+ * &lt;/pre&gt;
+ *
+ * All of these options will be described below.
+ *
+ * ## Multiple Forms on one page
+ *
+ * `rxAutoSave` supports independently saving multiple forms on one page. To do this, have each form's model in its own
+ * object, and create individual `rxAutoSave` instances for each. i.e.:
+ *
+ * &lt;pre&gt;
+ *   $scope.form1Data = {
+ *       checkbox: false,
+ *       name: '',
+ *       description: ''
+ *   };
+ *
+ *   $scope.form2Data = {
+ *       customerName: '',
+ *       birthday: ''
+ *   };
+ *
+ *   var autosave1 = rxAutoSave($scope, 'form1Data');
+ *   var autosave2 = rxAutoSave($scope, 'form2Data');
+ * &lt;/pre&gt;
+ *
+ * ## Clearing values
+ *
+ * If you need to clear the stored values, you can call `autosave.clear()`. This will clear the values from
+ * `rxLocalStorage`, but won't affect your `$scope.formData` values.
+ *
+ * More likely, rather than manually calling `autosave.clear()`, you'd like the values to be cleared on a "successful
+ * submit". For example, if your user is editing the form described above, and they click a "Submit" button to send the
+ * values to a server, `rxLocalStorage` should be cleared for this form if the server call is a success.
+ *
+ * To do this, pass an "options" parameter as the third argument to `rxAutoSave`, setting a promise on the
+ * `clearOnSuccess` attribute, i.e.
+ *
+ * &lt;pre&gt;
+ *   var autosave = rxAutoSave($scope, 'formData', { clearOnSuccess: serverSubmitPromise });
+ * &lt;/pre&gt;
+ *
+ * If the `serverSubmitPromise` resolves, then `rxAutoSave` will automatically clear the stored values for `formData` on
+ * this page.
+ *
+ * When instantiating your controller, there's a good chance that the `clearOnSuccess` promise you are interested in
+ * does not actually exist yet, i.e. if you want to clear on a successfull submit, you need the submit `promise`.
+ * Instances of `rxAutoSave` provide a `clearOnSuccess()` method to accept this promise after instantiation:
+ *
+ * &lt;pre&gt;
+ *   var autosave = rxAutoSave($scope, 'formData');
+ *
+ *   // Take some other actions
+ *   ...
+ *
+ *   $scope.onSubmit = function () {
+ *       // Server.save() is some $resource that returns a promise
+ *       var promise = Server.save($scope.formData);
+ *       autosave.clearOnSuccess(promise);
+ *   }
+ * &lt;/pre&gt;
+ *
+ * ## Automatic expiry
+ *
+ * Another way to automatically clear values is to set an explict Time-To-Live (TTL) when instantiating your
+ * `rxAutoSave` instance. This is done with the `ttl` property of the `opts` object,
+ *
+ * &lt;pre&gt;
+ *   // Automatically expire after 24 hours
+ *   var autosave = rxAutoSave($scope, 'formData', { ttl: 86400 });
+ * &lt;/pre&gt;
+ *
+ * By default, a `ttl` of `172800` (two days) is used.
+ *
+ * The `ttl` property takes a length of time in seconds. Whenever something in `formData` changes, the expiry time will
+ * be freshly set. With the example above, whenever `formData` is changed, the new expiry time will be set to 24 hours
+ * from the time of the change. In addition, we freshly set the expiry time whenever the data is loaded. If `formData`
+ * is 12 hours away from expiring, and the user visits the page again, then the expiry will be freshly set to a new 24
+ * hours, whether or not the user makes a change.
+ *
+ * If a user visits a page after the data has expired, the data will be cleared from storage and not automatically
+ * loaded. (i.e. we're not running a continuous background process to look for expired data, we only check for
+ * expiration the next time `rxAutoSave` tries to load the data).
+ *
+ * To turn off automatic expiry for a given form, pass a value of `{ ttl: 0 }`. In this case, the data will never
+ * expire. You will have to clear it at an appropriate time by using one of the methods mentioned above.
+ *
+ * ## Preventing automatic loading
+ *
+ * If you need to prevent `rxAutoSave` from automatically loading stored values, you can again use the optional third
+ * parameter, this time setting `load: false`, i.e.
+ *
+ * &lt;pre&gt;
+ *   var autosave = rxAutoSave($scope, 'formData', { load: false });
+ * &lt;/pre&gt;
+ *
+ * `load:` will accept a boolean, or it can accept a promise that eventually resolves to a boolean. Accepting a promise
+ * will let you delay your decision on whether or not to load (for example, asking a user if they want values loaded).
+ * Note that if you use a promise, `rxAutoSave` will look at its resolved value. If the resolved value is `true`, then
+ * the data will be loaded. If the resolved value is `false`, or the promise fails/rejects, then the data will not be
+ * loaded.
+ *
+ * ## Excluding some values from loading/saving
+ *
+ * By default, `rxAutoSave` automatically loads and saves all the stored values for a form. If you want to prevent it
+ * from loading/saving _some_ values, you can do:
+ *
+ * &lt;pre&gt;
+ *   var autosave = rxAutoSave($scope, 'formData', { exclude: ['description'] });
+ * &lt;/pre&gt;
+ *
+ * This will tell `rxAutoSave` not to load from or save to the stored `description` value, but everything else in
+ * `formData` will be loaded/saved.
+ *
+ * ## Manual saving
+ *
+ * It might be that you don't want your `rxAutoSave` instance to automatically save to the storage backend
+ * automatically. In some cases, you might want to disable automatic saving and instead manually tell your instance
+ * when it should save. To turn off automatic saving, set up your instance as follows:
+ *
+ * &lt;pre&gt;
+ *   var manualsave = rxAutoSave($scope, 'formData', { save: false });
+ * &lt;/pre&gt;
+ *
+ * Then, whenever you want your `autosave` instance to commit the current model values to storage, do
+ *
+ * &lt;pre&gt;
+ *   manualsave.save();
+ * &lt;/pre&gt;
+ *
+ * As with the `load` parameter, you can pass either a boolean or a promise to `save`.
+ *
+ * ## Storage location
+ *
+ * All values for `rxAutoSave` are by default stored in the browser's `localStorage` through the `rxLocalStorage`
+ * service, and keyed on the URL of the page, with a `rxAutoSave::` prefix. For example, if the above form were
+ * present at the URL `'users/JonnyRocket/edit'`, then the form data would be saved into the browser's `localStorage`
+ * at location `'rxAutoSave::users/JonnyRocket/edit'`.
+ *
+ * If you wish to use a different storage backend (`rxSessionStorage`, for instance), use the `storageBackend` 
+ * parameter:
+ *
+ * &lt;pre&gt;
+ *    var autosave = rxAutoSave($scope, 'formData', { storageBackend: rxSessionStorage });
+ * &lt;/pre&gt;
+ *
+ * `storageBackend` requires that you pass it an object which has `getObject(key)` and `setObject(key, val)` methods.
+ * `rxLocalStorage` and `rxSessionStorage` are both provided by EncoreUI, and support this interface.
+ *
+ * You can use your own custom backends as well, as long as it supports `getObject(key)` and `setObject(key, val)`.
+ *
+ * ## Custom Storage Key Values
+ *
+ * Sometimes, it may be necessary to change how a key is formed for the specified `storageBackend`. As previously
+ * stated, these are calculated by prepending `'rxAutoSave::'` before the url. You can override this by passing in a
+ * `keyShaping` function to the options object.
+ *
+ * An example one would be as follows:
+ *
+ * &lt;pre&gt;
+ *   var autosave = rxAutoSave($scope, 'formData', {
+ *       keyShaping: function (key) {
+ *           return key.replace('?cache=false', '');
+ *       }
+ *   });
+ * &lt;/pre&gt;
+ *
+ * The above example could be used to have the current url ignore any caching flags passed in. The `keyShaping`
+ * function will receive the default calculated key (`rxAutoSave::` + $location.path()). By default, `keyShaping`
+ * just returns the original calculated key.
+ *
+ *
+ * @param {Object} scope scope to apply a `$watch` expression
+ * @param {String} variable
+ * variable name corresponding to an object on the given scope
+ * @param {Object=} options usage options
+ * @param {Promise=} options.clearOnSuccess
+ * Clear saved data on successful resolution of given promise.
+ *
+ * @param {Function=} options.keyShaping
+ * Sometimes, it may be necessary to change how a key is formed for the specified
+ * `storageBackend`.  Keys are calculated by prepending `'rxAutoSave::'` before the
+ * url. Your custom `keyShaping` function will take one parameter (`key`), to which
+ * you may modify to your specific needs.
+ *
+ * The below example will ignore any caching flags in the url.
+ * &lt;pre&gt;
+ * var autosave = rxAutoSave($scope, 'formData', {
+ *     keyShaping: function (key) {
+ *         return key.replace('?cache=false', '');
+ *     }
+ * });
+ * &lt;/pre&gt;
+ *
+ * @param {Integer=} [options.ttl=172800]
+ * Time to Live (in seconds) - defaults to 2 days
+ *
+ * Whenever data changes in the watched variable, the expiry time will be freshly set
+ * In addition, we freshly set the expiry time whenever the data is loaded. If the data
+ * is 12 hours away from expiring and a user visits the page again, the expiry will be
+ * freshly set to a new 48 hours, whether or not the user makes a change.
+ *
+ * If a user visits a page after the data has expired, the data will be cleared from
+ * storage and not automatically loaded.
+ * * A continuous background process is not running to look for expired data.
+ * * We only check for expiration the next time `rxAutoSave` tries to load the data.
+ *
+ * To turn off automatic expiry for a given form, pass a value of `{ ttl: 0 }`.
+ * In this case, the data will never expire and you will have to clear it manually at
+ * an appropriate time by using one of the following:
+ *
+ * * `clear()`
+ * * `clearOnSuccess()`
+ *
+ * @param {Boolean|Promise=} [options.load=true]
+ * If false, will prevent data from being automatically loaded onto the scope.
+ *
+ * You may use a promise that resolves to a boolean, if desired.
+ * @param {Boolean|Promise=} [options.save=true]
+ * If false, will prevent data from being automatically saved on change.
+ *
+ * You may use a promise that resolves to a boolean, if desired.
+ * @param {String[]=} options.exclude
+ * A string of property names to exclude from automatic save. This is useful to
+ * exclude saving any sensitive information like passwords, credit card numbers, etc.
+ *
+ * &lt;pre&gt;
+ * var autosave = rxAutoSave($scope, 'formData', {
+ *     exclude: ['password']
+ * });
+ * &lt;/pre&gt;
+ *
+ * @param {Object=} [options.storageBackend=rxLocalStorage]
+ * Must be an object which has `getObject(key)` and `setObject(key, val)` methods.
+ * `rxLocalStorage` and `rxSessionStorage` are both provided by EncoreUI, and support
+ * this interface.
+ *
+ * You can use your own custom backends as well, as long as it supports `getObject(key)`
+ * and `setObject(key, val)`.
+ */
+.factory('rxAutoSave', function ($location, $q, debounce, rxLocalStorage) {
+    /*
+     * We'll version the schema for the stored data, so if we need to change
+     * the schema in the future, we can do automatic migrations. Never
+     * delete any of these documented schemas. If you have to add a new version,
+     * then add it on top, but keep the documentation for the old one around.
+     * VERSION 1
+     *      'rxAutoSave::' + URL =&gt; {
+     *          pageConfig: {
+     *              version: 1
+     *          },
+     *          forms: {
+     *              "form1": {
+     *                   config: {
+     *                      expires: 0,
+     *                  },
+     *                  data: {
+     *                      // Serialized form data
+     *                  }
+     *              },
+     *              "form2": {
+     *                  config: {
+     *                      expires: 33421234322,
+     *                  },
+     *                  data: {
+     *                      // Serialized form data
+     *                  }
+     *              }
+     *          }
+     *      }
+    */
+    var version = 1;
+&nbsp;
+    // This will be used by the rxAutoSave instance to interact with
+    // rxLocalStorage.
+    //
+    // @param watchVar - the string name of the
+    //                   object that's being watched, representing the model for the form.
+    //                   StorageAPI is not publically exposed, it can only be used and accessed
+    //                   by the rxAutoSave instance
+    // @param [storageBackend] - Optional, defaults to rxLocalStorage. If you pass in a storage object,
+    //                           it must support both getObject(key) and setObject(key, val), matching
+    //                           the operations of rxLocalStorage and rxSessionStorage
+    // @param [keyShaping] - Optional, defaults to just returning the originally defined key value.
+    //                       It gets passed the original value defined ('rxAutoSave::' + $location.path())
+    //                       and is expected to return the new key that you wish to have used.
+    var StorageAPI = function (watchVar, storageBackend, keyShaping) {
+        this.key = keyShaping('rxAutoSave::' + $location.path());
+        this.watchVar = watchVar;
+        this.storage = storageBackend ? storageBackend : <span class="branch-1 cbranch-no" title="branch not covered" >rxLocalStorage;</span>
+    };
+&nbsp;
+    // Get all the saved data for this page. If none
+    // exists, then create an empty object that matches
+    // the current schema.
+    StorageAPI.prototype.getAll = function () {
+        return this.storage.getObject(this.key) || {
+            pageConfig: {
+                version: version,
+            },
+            forms: {
+            }
+        };
+    };
+&nbsp;
+    // Given a `watchVar`, return the corresponding
+    // `form` object from rxLocalStorage. This form object should include
+    // both `.data` and `.config` properties.
+    // If no form currently exists for `watchVar`, then an empty
+    // object will be created that matches the current schema
+    StorageAPI.prototype.getForm = function () {
+        var all = this.getAll();
+        if (!_.has(all.forms, this.watchVar)) {
+            all.forms[this.watchVar] = {
+                data: {},
+                config: {
+                    expires: 0
+                }
+            };
+        }
+        return all.forms[this.watchVar];
+    };
+&nbsp;
+    // Given a full form object, save it into rxLocalStorage,
+    // indexed into the forms[watchVar] location for this page
+    StorageAPI.prototype.setForm = function (form) {
+        var all = this.getAll();
+        all.forms[this.watchVar] = form;
+        this.storage.setObject(this.key, all);
+    };
+&nbsp;
+    // Get the current `config` object for a given watchVar
+    StorageAPI.prototype.getConfig = function () {
+        return this.getForm().config;
+    };
+&nbsp;
+    // Return the time that a given form is supposed to
+    // have its saved data expire
+    StorageAPI.prototype.getExpires = function () {
+        return this.getConfig().expires;
+    };
+&nbsp;
+    // For a given watchVar, set a new expiry time, and save
+    // into rxLocalStorage
+    StorageAPI.prototype.setExpiryTime = function (expiryTime) {
+        var form = this.getForm();
+        form.config.expires = expiryTime;
+        this.setForm(form);
+    };
+&nbsp;
+    // Force an expiration for a given watchVar. This will completely
+    // clear the saved data for this watchVar, and set the `expires`
+    // back to 0
+    StorageAPI.prototype.expire = function () {
+        var form = this.getForm();
+        form.data = {};
+        form.config.expires = 0;
+        this.setForm(form);
+    };
+&nbsp;
+    // Return the current saved data for a given watchVar
+    StorageAPI.prototype.getDataObject = function () {
+        return this.getForm().data || <span class="branch-1 cbranch-no" title="branch not covered" >{};</span>
+    };
+&nbsp;
+    // For a given watchVar, store `val` as its saved
+    // data, into rxLocalStorage
+    StorageAPI.prototype.setDataObject = function (val) {
+        var form = this.getForm();
+        form.data = val;
+        this.setForm(form);
+    };
+&nbsp;
+    // This is what we return from rxAutoSave, and calling this
+    // function will return an instance
+    return function (scope, watchVar, opts) {
+        opts = opts || {};
+        _.defaults(opts, {
+            load: true,
+            save: true,
+            clearOnSuccess: undefined,
+            exclude: [],
+            ttl: 172800,
+            keyShaping: _.identity,
+            storageBackend: rxLocalStorage
+        });
+&nbsp;
+        opts.ttl = opts.ttl * 1000; // convert back to milliseconds
+&nbsp;
+        var api = new StorageAPI(watchVar, opts.storageBackend, opts.keyShaping);
+&nbsp;
+        var updateExpiryTime = function () {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (opts.ttl &gt; 0) {
+                api.setExpiryTime(_.now() + opts.ttl);
+            }
+        };
+&nbsp;
+        // Responsible for loading the data from the browser's localStorage into the form
+        var load = function () {
+            var expires = api.getExpires();
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (expires &gt; 0 &amp;&amp; expires &lt;= _.now()) {
+                // This data has expired. Make sure we clear it out
+                // of the browser's localStorage
+<span class="cstat-no" title="statement not covered" >                api.expire();</span>
+<span class="cstat-no" title="statement not covered" >                return;</span>
+            }
+&nbsp;
+            updateExpiryTime();
+&nbsp;
+            // Write all the storedObject values into scope[watchVar], except
+            // for any specified in opts.exclude
+            var storedObject = api.getDataObject();
+            _.assign(scope[watchVar], _.omit(storedObject, opts.exclude));
+        };
+&nbsp;
+        // This is the "instance" that is returned when someone
+        // calls rxAutoSave($scope, 'someWatchVar')
+        var autoSaveInstance = {
+            clear: function () {
+                api.expire();
+            },
+&nbsp;
+            clearOnSuccess: function (promise) {
+                promise.then(this.clear);
+            },
+&nbsp;
+            save: function () {
+                update(scope[watchVar]);
+            },
+&nbsp;
+            getStoredValue: function () {
+                return api.getDataObject();
+            }
+        };
+&nbsp;
+        _.bindAll(autoSaveInstance);
+&nbsp;
+        function update (newVal) {
+            // Get the current data stored for this watchVar
+            var data = api.getDataObject();
+&nbsp;
+            // Overwrite all properties in allWatchVars[watchVar] with properties from
+            // newVal, except for the properties in opts.exclude
+            _.assign(data, _.omit(newVal, opts.exclude));
+&nbsp;
+            // Store the newly changed data in rxLocalStorage
+            api.setDataObject(data);
+&nbsp;
+            // Update the expiry time whenever we modify data
+            updateExpiryTime();
+        }
+&nbsp;
+        // We don't want to write to the browser's localStorage every time the model changes,
+        // because that would turn typing into a textarea into an expensive operation.
+        // We'll instead debounce the the writes for 1 second
+        var debounced = debounce(update, 1000);
+&nbsp;
+        $q.when(opts.save).then(function (shouldSave) {
+            if (shouldSave) {
+                // The `true` third argument tells $watch to do a deep comparison
+                scope.$watch(watchVar, debounced, true);
+            }
+        });
+&nbsp;
+        $q.when(opts.load).then(function (shouldLoad) {
+            if (shouldLoad) {
+                load();
+            }
+        });
+&nbsp;
+        if (!_.isUndefined(opts.clearOnSuccess)) {
+            autoSaveInstance.clearOnSuccess(opts.clearOnSuccess);
+        }
+&nbsp;
+        return autoSaveInstance;
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

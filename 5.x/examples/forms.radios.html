@@ -1,0 +1,24 @@
+<form rx-form>
+  <rx-form-section>
+    <rx-field>
+      <rx-field-name>Reboot:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input rx-radio name="type" id="server_reboot_soft" value="soft" ng-model="fields.reboot_type" required>
+          <label for="server_reboot_soft">Soft</label>
+        </rx-input>
+        <rx-help-text>
+          Performs a graceful shutdown of your system. Services are halted individually and the system is restarted.
+        </rx-help-text>
+
+        <rx-input>
+          <input rx-radio name="type" id="server_reboot_hard" value="hard" ng-model="fields.reboot_type" required>
+          <label for="server_reboot_hard">Hard</label>
+        </rx-input>
+        <rx-help-text>
+          Performs an immediate shutdown of your server. This is the equivalent of unplugging your server.
+        </rx-help-text>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

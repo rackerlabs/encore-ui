@@ -1,0 +1,45 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Modals/scripts/rxModalForm.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Modals/scripts/rxModalForm.js#L35" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxModalForm</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxmodalform-page"><p>Responsible for creating the HTML necessary for modal form</p>
+<p>The <code>&lt;rx-modal-form&gt;</code> directive is helpful for providing a common format to
+forms inside modals (hence the name).</p>
+<p>This directive also provides an &#39;autofocus&#39; mechanism, which will move the
+keyboard focus cursor to the first &#39;tabbable&#39; input available in the form.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-modal-form
+       title="{String}"
+       [subtitle="{String}"]
+       [is-loading="{Boolean}"]
+       [submit-text="{String}"]
+       [cancel-text="{String}"]
+       [return-text="{String}"]
+       [default-focus="{String}"]&gt;
+&lt;/rx-modal-form&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>title</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>Title of modal window</p>
+</div></td></tr><tr><td>subtitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>Subtitle of modal window</p>
+</div></td></tr><tr><td>isLoading <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>True to show a spinner by default</p>
+</div></td></tr><tr><td>submitText <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>&#39;Submit&#39; button text to use.</p>
+</div> <p><em>(default: 'Submit')</em></p></td></tr><tr><td>cancelText <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>&#39;Cancel&#39; button text to use.</p>
+</div> <p><em>(default: 'Cancel')</em></p></td></tr><tr><td>returnText <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>&#39;Return&#39; button text to use.</p>
+</div> <p><em>(default: 'Return')</em></p></td></tr><tr><td>defaultFocus <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalform-page"><p>The default focus element. May be &#39;submit&#39; or &#39;cancel&#39;. If not provided,
+it&#39;ll default to the first &#39;tabbable&#39; input available in the form.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxmodalform-page"><pre class="prettyprint linenums">
+&lt;rx-modal-form
+    title="My Form"
+    is-loading="true"
+    submit-text="Yes!"&gt;
+&lt;/rx-modal-form&gt;
+</pre>
+</div></div>
+</div>

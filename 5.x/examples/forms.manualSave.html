@@ -1,0 +1,41 @@
+<rx-page title="'Forms'">
+  <form rx-form name="form" ng-controller="formsManualSaveExampleController" style="clear: both;">
+    <rx-notification ng-if="form.$dirty" type="info" stack="page">
+      Changes made are not automatically saved. Click "Save Now" to save changes.
+    </rx-notification>
+
+    <h3 class="subdued">
+      <span ng-show="lastSaved">Last saved {{lastSaved | date:'medium'}}</span>
+      <span ng-hide="lastSaved">Unsaved changes.</span>
+      <rx-button
+        classes="submit xs inline"
+        ng-click="form.$setPristine(); save()"
+        default-msg="Save Now"
+        toggle-msg="Saving"
+        toggle="saving"
+        ng-disabled="form.$invalid || form.$pristine">
+      </rx-button>
+    </h3>
+
+    <rx-form-section style="width: 200px;">
+      <rx-field>
+        <rx-field-name>Field:</rx-field-name>
+        <rx-field-content>
+          <rx-input>
+            <input type="text"
+              name="field"
+              ng-model="text"
+              placeholder="Enter some text"
+              ng-pattern="/^\w+$/"
+              ng-required />
+          </rx-input>
+          <rx-help-text>May not contain symbols</rx-help-text>
+
+          <rx-inline-error ng-show="form.field.$error.pattern">
+            There are symbols in the entered text.
+          </rx-inline-error>
+        </rx-field-content>
+      </rx-field>
+    </rx-form-section>
+  </form>
+</rx-page>

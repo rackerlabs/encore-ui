@@ -1,0 +1,25 @@
+#main {
+    float: right;
+    width: 80%;
+}
+
+nav {
+    float: left;
+    width: 20%;
+}
+
+pre.prettyprint {
+    width: 100%;
+}
+
+.subsection-title {
+    margin: 28px 0 3px 0;
+}
+
+.name {
+    font-weight: bold;
+    border-style: solid;
+    border-color: #aaa;
+    border-width: 0 0 1px 4px;
+    padding-left: 4px;
+}

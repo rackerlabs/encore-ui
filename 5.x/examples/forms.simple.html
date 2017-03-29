@@ -1,0 +1,36 @@
+<form rx-form>
+  <rx-form-section>
+    <rx-field>
+      <rx-field-name id="fieldNamePlainTextbox">Plain Textbox:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input type="text" id="txtPlain" />
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name id="fieldIpTextbox">IP Address:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input name="ipaddress"
+            type="text"
+            disabled
+            placeholder="127.0.0.1" />
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name id="fieldCostTextbox">Monthly Cost:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>$</rx-prefix>
+          <input type="number" />
+          <rx-suffix>million</rx-suffix>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+  </rx-form-section>
+</form>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: rxForm.page.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: rxForm.page.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var rxFieldName = require('./rxFieldName.page').rxFieldName;
+
+/**
+ * @namespace rxForm
+ */
+exports.rxForm = {
+    /**
+     * @namespace
+     */
+    textField: {
+        /**
+         * @function
+         * @description
+         * Generates a getter and a setter for a text field on your page.
+         * Text fields include text boxes, text areas, anything that responds to `.clear()` and `.sendKeys()`.
+         * @param {ElementFinder} elem - The ElementFinder for the text field.
+         * @returns {Object} A getter and a setter to be applied to a text field in a page object.
+         *
+         * @example
+         * var yourPage = Page.create({
+         *     plainTextbox: rxForm.textField.generateAccessor(element(by.model('username')));
+         * });
+         *
+         * it('should fill out the text box', function () {
+         *     yourPage.plainTextbox = 'My Username'; // setter
+         *     expect(yourPage.plainTextbox).to.eventually.equal('My Username'); // getter
+         * });
+         */
+        generateAccessor: function (elem) {
+            return {
+                get: function () {
+                    return elem.getAttribute('value');
+                },
+                set: function (input) {
+                    elem.clear();
+                    elem.sendKeys(input);
+                }
+            };
+        }
+    },
+
+    /**
+     * @description
+     * Set `value` in `formData` to the page object's current method `key`.
+     * Aids in filling out form data via javascript objects.
+     * For an example of this in use, see [encore-ui's end to end tests]{@link http://goo.gl/R7Frwv}.
+     * @param {Object} reference - Context to evaluate under as `this` (typically, `this`).
+     * @param {Object} formData - Key-value pairs of deeply-nested form items, and their values to fill.
+     *
+     * @example
+     * var yourPage = Page.create({
+     *     form: {
+     *         set: function (formData) {
+     *             rxForm.fill(this, formData);
+     *         }
+     *     },
+     *
+     *     aTextbox: encore.rxForm.textField.generateAccessor(element(by.model('textbox'))),
+     *
+     *     aRadioButton: encore.rxRadio.generateAccessor(element(by.model('radioButton'))),
+     *     anotherRadioButton: encore.rxRadio.generateAccessor(element(by.model('radioButton_1'))),
+     *
+     *     aSelectDropdown: encore.rxSelect.generateAccessor(element(by.model('dropdown')));
+     *
+     *     aModule: {
+     *         // this is now a namespace within your page object
+     *         get hasMethods() {
+     *             return encore.rxForm.textField.generateAccessor(element(by.model('internalTextbox')))
+     *         },
+     *
+     *         deepNesting: {
+     *             // namespace within a namespace
+     *             get might() {
+     *                 return encore.rxForm.textField.generateAccessor(element(by.model('nested')))
+     *             }
+     *         }
+     *     }
+     *
+     * });
+     *
+     * yourPage.form = {
+     *     aTextbox: 'My Name',
+     *     aRadioButton: true,
+     *     aSelectDropdown: 'My Choice'
+     *     aModule: {
+     *         hasMethods: 'Can Accept Input Too',
+     *         deepNesting: {
+     *             might: 'be overkill at this level'
+     *         }
+     *     }
+     * };
+     * // executing the above would execute all `setter` methods of your form to equal the values listed above.
+     */
+    fill: function (reference, formData) {
+        var next = this;
+        var page = reference;
+        _.forEach(formData, function (value, key) {
+            if (_.isPlainObject(value)) {
+                // There is a deeply-nested function call in the form.
+                reference = page[key];
+                next.fill(reference, value);
+            } else {
+                page[key] = value;
+            }
+        });
+    },
+
+    /**
+     * @description **ALIASED** Directly uses {@link rxFieldName}.
+     */
+    fieldName: rxFieldName
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxOptionTable.html">exercise/rxOptionTable</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxOptionTable.html">rxOptionTable</a></li><li><a href="rxOptionTable.row.html">rxOptionTable.row</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 15:01:38 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxEnvironment/scripts/rxEnvironment.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxEnvironment/scripts/rxEnvironment.js#L81" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxEnvironment</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxenvironment-page"><p>Allows defining environments and retrieving the current environment based on location</p>
+<h4 id="description_adding-new-environments">Adding New Environments</h4>
+<p>If necessary, you can add additional environments with <code>rxEnvironment.add()</code>.
+This takes an object with three properties, <code>name</code>, <code>pattern</code> and <code>url</code>, where</p>
+<ul>
+<li>name: The &quot;friendly&quot; name of your environment, like &quot;local&quot;, &quot;preprod&quot;, etc.</li>
+<li>pattern: A string or RegEx that the current path is matched against</li>
+</ul>
+<p>As an example, if we didn&#39;t already have a <code>&#39;preprod&#39;</code> environment, we could
+add it as follows:</p>
+<pre class="prettyprint linenums">
+rxEnvironment.add({
+    // Matches only https://preprod.encore.rackspace.com
+    name: 'preprod',
+    pattern: /\/\/preprod.encore.rackspace.com/,
+    url: '{{path}}'
+});
+</pre>
+<p>For this demo application, we add a &quot;Github Pages&quot; environment, like this:</p>
+<pre class="prettyprint linenums">
+rxEnvironment.add({
+    name: 'ghPages',
+    pattern: '//rackerlabs.github.io',
+    url: baseGithubUrl + '{{path}}'
+});
+</pre>
+<p>Component built to detect and provide the current environment (e.g. dev, staging, prod)</p>
+<h4 id="description_current-environments">Current Environments</h4>
+<p>This service defines the following Encore specific environments:</p>
+<ul>
+<li><strong>local</strong> - <a href="http://localhost:port">http://localhost:port</a> and <a href="http://server:port">http://server:port</a></li>
+<li><strong>preprod</strong> - <a href="http://preprod.encore.rackspace.com">http://preprod.encore.rackspace.com</a></li>
+<li><strong>unified-preprod</strong> - <a href="https://*.encore.rackspace.com">https://*.encore.rackspace.com</a></li>
+<li><strong>unified</strong> - All environments including <a href="https://encore.rackspace.com">https://encore.rackspace.com</a></li>
+<li><strong>unified-prod</strong> - Only <a href="https://encore.rackspace.com">https://encore.rackspace.com</a></li>
+</ul>
+<p>Please note that we&#39;ve made an assumption that staging/preprod/prod environments
+will all end with <code>encore.rackspace.com</code>. Try to avoid using
+<code>staging.encore.myNewProduct.rackspace.com</code> for new products, and instead set
+up your system as <code>encore.rackspace.com/myNewProduct</code>.</p>
+<h4 id="description_checking-current-environment">Checking Current Environment</h4>
+<p>The <code>rxEnvironment</code> service contains methods for checking if we are currently in
+one of the five listed environments, namely:</p>
+<ul>
+<li><code>rxEnvironment.isLocal()</code></li>
+<li><code>rxEnvironment.isPreProd()</code></li>
+<li><code>rxEnvironment.isUnifiedPreProd()</code></li>
+<li><code>rxEnvironment.isUnified()</code></li>
+<li><code>rxEnvironment.isUnifiedProd()</code></li>
+</ul>
+<p>The normal procedure is to assume that your code is running in local or staging,
+and take special actions if <code>rxEnvironment.isPreProd()</code> or
+<code>rxEnvironment.isUnifiedProd()</code> are <code>true</code>.</p>
+<h4 id="description_overlapping-environments">Overlapping Environments</h4>
+<p>Keep in mind that the environments we define are not mutually exclusive. For
+instance, if we&#39;re at <code>http://preprod.encore.rackspace.com</code>, then we are in
+the <code>preprod</code> environment, the <code>unified-preprod</code> environment, and <code>unified-prod</code>.</p>
+<p>When you want to check if you&#39;re in one of the custom environments, you can
+use <code>envCheck()</code>, i.e.: <code>rxEnvironment.envCheck(&#39;ghPages&#39;)</code></p>
+</div></div>
+</div>

@@ -1,0 +1,130 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Feedback/scripts/rxFeedback.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Feedback/scripts/rxFeedback.js#L145" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxFeedback</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxfeedback-page"><h3 id="description_rxfeedback-component">rxFeedback Component</h3>
+<p>The rxFeedback component gathers and sends user feedback to a default or
+specifiable email list.</p>
+<h4 id="description_rxfeedback-component_default-submission-function">Default Submission Function</h4>
+<p>The rxFeedback component sends feedback to <code>/api/encore/feedback</code>, which
+routes details to <code>encoreui@lists</code>.</p>
+<p>This endpoint also supports a <code>product</code> parameter <code>/api/encore/feedback/:product</code>
+for sending feedback to a product-specific mailing list.</p>
+<h4 id="description_rxfeedback-component_feedback-redirect-integration">Feedback Redirect Integration</h4>
+<p>To obtain the Feedback Redirect integration, please update <code>encore-ui-svcs</code>
+to version <code>0.11.0</code> or above.  Once you have done so, include
+&quot;encore.svcs.feedback&quot; in the list of dependencies for your application,
+this will ensure that when a user selects a <strong>Feedback Type</strong> of &quot;Feature
+Request&quot;, the service will open up a new window redirecting the user to
+the <strong>GET Feedback</strong> website,
+which will now host all internal requests for features.</p>
+<pre class="prettyprint linenums">
+angular.module('myApplication', [
+    'ngRoute',
+    'ngResource',
+    'encore.svcs.feedback'
+]);
+</pre>
+<p>By adding the <code>encore.svcs.feedback</code> dependency to your application, the
+<code>Feedback</code> service will be available and automatically initialized by the
+<code>rxFeedback</code> controller.  Once initialized, the default behaviour of the
+<code>rxFeedback</code> controller will be altered to perform the GET feedback redirect.</p>
+<h5 id="description_rxfeedback-component_feedback-redirect-integration_production">Production</h5>
+<p>To manually include the Feedback changes without updating your version of
+Encore UI (but after updating <code>encore-ui-svcs</code>), please include the following:</p>
+<p>Add the following script in your <code>index.html</code> (after injected dependencies):</p>
+<p><a href="http://3bea8551c95f45baa125-a22eac1892b2a6dcfdb36104c0e925de.r46.cf1.rackcdn.com/feedback-override.js">http://3bea8551c95f45baa125-a22eac1892b2a6dcfdb36104c0e925de.r46.cf1.rackcdn.com/feedback-override.js</a></p>
+<pre class="prettyprint linenums">
+&lt;!-- inject:js --&gt;
+&lt;!-- endinject --&gt;
+&lt;script src="https://6618f7541d71c1a404be-a22eac1892b2a6dcfdb36104c0e925de.ssl.cf1.rackcdn.com/feedback-override.js"&gt;&lt;/script&gt;
+</pre>
+<h5 id="description_rxfeedback-component_feedback-redirect-integration_development">Development</h5>
+<p>For development purposes, you may want to include one of the two following
+configurations depending on which type of project you have:</p>
+<p><em>The latest version of the <a href="https://github.com/rackerlabs/generator-encore">Encore generator</a>
+will include this proxy</em></p>
+<p><strong>Gulp</strong>: <code>gulp/util/prism.js</code>
+<pre class="prettyprint linenums">
+prism.create({
+    name: 'encorefeedback',
+    context: '/encore/feedback',
+    host: 'staging.encore.rackspace.com',
+    port: 443,
+    https: true,
+    changeOrigin: false
+});
+</pre>
+<p><strong>Grunt</strong>: <code>tasks/util/config</code>
+<pre class="prettyprint linenums">
+{
+    context: '/encore/feedback',
+    host: 'staging.encore.rackspace.com',
+    port: 443,
+    https: true,
+    protocol: 'https',
+    changeOrigin: false
+}
+</pre>
+<h4 id="description_rxfeedback-component_custom-endpoint">Custom Endpoint</h4>
+<p>Adding a custom endpoint is managed in <code>encore-service-pillar</code>. Once configured
+you can override the default endpoint with <code>rxFeedbackSvc.setEndpoint</code>.</p>
+<pre class="prettyprint linenums">
+angular.module('MyApplication', [
+    'ngRoute',
+    'ngResource',
+    'encore.svcs.feedback',
+    // ...
+])
+.run(function (rxFeedbackSvc) {
+    // Set custom endpoint
+    rxFeedbackSvc.setEndpoint('/api/encore/feedback/cloud');
+
+    // ...
+});
+</pre>
+<h4 id="description_rxfeedback-component_custom-submission-function">Custom Submission Function</h4>
+<p>The <code>rxFeedback</code> component allows you to define an <code>on-submit</code> attribute
+that points to a custom function for the purposes of overriding the default
+submission logic.  This function should accept a single argument for a
+feedback object with the following definition:</p>
+<p><em>Feedback Object Structure</em>:
+<pre class="prettyprint linenums">
+{
+  "type": {
+    "label": "(string)",
+    "placeholder": "(string) placeholder text",
+    "prompt": "(string) UI text used to describe the `description` field"
+  },
+  "description": "(string) user-submitted feedback"
+}
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-feedback
+       type="{Object}"
+       description="{String}"&gt;
+&lt;/rx-feedback&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>type</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxfeedback-page"><p>JSON object with <code>label</code> {String}, <code>placeholder</code> {String}, and <code>prompt</code> {String}</p>
+</div></td></tr><tr><td>description</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxfeedback-page"><p>User-submitted feedback</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxfeedback-page"><pre class="prettyprint linenums">
+// feedback object structure
+{
+  "type": {
+     "label": "(string)",
+     "placeholder": "(string) placeholder text",
+     "prompt": "(string) UI text used to describe the `description` field"
+   },
+   "description": "(string) user-submitted feedback"
+}
+</pre>
+</div></div>
+</div>

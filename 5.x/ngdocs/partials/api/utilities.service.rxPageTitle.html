@@ -1,0 +1,22 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxPageTitle/scripts/rxPageTitle.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxPageTitle/scripts/rxPageTitle.js#L23" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxPageTitle</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxpagetitle-page"><p><code>rxPageTitle</code> service manages page titles.</p>
+<p>Two methods are available for setting the page title:</p>
+<p>First, <code>setTitle()</code> simply sets the title to whatever raw string is passed in.</p>
+<p>Second, <code>setTitleUnsafeStripHTML()</code> strips any HTML tags from the string, and sets the title to
+the result. This uses the
+<a href="http://stackoverflow.com/questions/5002111/javascript-how-to-strip-html-tags-from-string">technique found here</a>.
+Note the caveats listed there, namely:</p>
+<ol>
+<li>Only tags valid within <code>&lt;div&gt;</code> will be correctly stripped out</li>
+<li>You should not have  any <code>&lt;script&gt;</code> tags within the title</li>
+<li>You should not pass <code>null</code> as the title</li>
+<li>The title must come from a trusted source, i.e. danger danger danger
+<code>&lt;img onerror=&quot;alert(&#39;could run arbitrary JS here&#39;)&quot; src=bogus /&gt;</code></li>
+</ol>
+</div></div>
+</div>

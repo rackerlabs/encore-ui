@@ -1,0 +1,183 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxNotify/scripts/rxNotify.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxNotify/scripts/rxNotify.js#L148" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxNotify</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxnotify-page"><p>Manages page messages for an application.</p>
+<h4 id="description_rxnotify">rxNotify</h4>
+<p>The rxNotify component provides status message notifications on a page.</p>
+<p>There may be situations where you will need to use the styling/markup of
+rxNotify&#39;s messaging queue in status messages of your own - for example,
+a modal window which asks if you want to delete an object, with the
+appropriate warning or error flags. If this is the case, we recommend using
+the <a href="#/api/elements.directive:rxNotification">rxNotification</a> directive in your views.  Please note, this
+differs from <a href="#/api/elements.directive:rxNotifications">rxNotifications</a> (plural).</p>
+<p>The type attribute can be any type supported by <code>options.type</code> for the <code>rxNotify.add()</code> function in
+the <a href="#/api/utilities.service:rxNotify">rxNotify</a> service.</p>
+<h4 id="description_directives">Directives</h4>
+<ul>
+<li><a href="#/api/elements.directive:rxNotification">rxNotification</a></li>
+<li><a href="#/api/elements.directive:rxNotifications">rxNotifications</a></li>
+</ul>
+<h3 id="description_use-cases">Use Cases</h3>
+<h4 id="description_use-cases_add-notification-in-loading-state">Add Notification in Loading State</h4>
+<pre class="prettyprint linenums">
+rxNotify.add('Loading', {
+    loading: true,
+    dismiss: [$scope, 'loaded']
+});
+var apiCallback = function (data) {
+    $scope.loaded = true;
+    // do something with the data
+};
+</pre>
+<h4 id="description_use-cases_show-notification-on-variable-change">Show Notification on Variable Change</h4>
+<pre class="prettyprint linenums">
+$scope.loaded = false;
+rxNotify.add('Content Loaded', {
+    show: [$scope, 'loaded']
+});
+$timeout(function () {
+    $scope.loaded = true;
+}, 1500);
+</pre>
+<h4 id="description_use-cases_dismiss-notification-on-variable-change">Dismiss Notification on Variable Change</h4>
+<pre class="prettyprint linenums">
+$scope.loaded = false;
+rxNotify.add('Content Loaded', {
+    dismiss: [$scope, 'loaded']
+});
+$timeout(function () {
+    $scope.loaded = true;
+}, 1500);
+</pre>
+<h4 id="description_use-cases_using-a-custom-stack">Using a Custom Stack</h4>
+<p>Say you want to create a stack for a login form.
+Let&#39;s call the stack &#39;loginForm&#39; to reference in our code.</p>
+<p><strong>Controller</strong>
+<pre class="prettyprint linenums">
+rxNotify.add('Username required', {
+    type: 'error',
+    stack: 'loginForm'
+});
+</pre>
+<p><strong>View</strong>
+<pre class="prettyprint linenums">
+&lt;rx-notifications stack="loginForm"&gt;&lt;/rx-notifications&gt;
+</pre>
+<h3 id="description_stacks">Stacks</h3>
+<p>Stacks are just separate notification areas. Normally, all messages created will go to the <code>page</code> stack, which
+should be displayed at the top of the page. The <code>page</code> stack is used for page-level messages.</p>
+<h4 id="description_stacks_using-the-page-stack">Using the Page Stack</h4>
+<p>The <a href="#/api/elements.directive:rxNotifications">rxNotifications</a> directive will gather all notifications for a 
+particular stack into a single point on the page.  By default, this directive will collect all notifications 
+in the <code>page</code> stack.</p>
+<pre class="prettyprint linenums">
+&lt;rx-notifications&gt;&lt;/rx-notifications&gt;
+</pre>
+<p>See <a href="#/api/elements.directive:rxNotification">rxNotification</a> for more details.</p>
+<h4 id="description_stacks_using-a-custom-stack">Using a Custom Stack</h4>
+<p>You can also create custom stacks for specific notification areas. Say you have a form on your page that you want to
+add error messages to. You can create a custom stack for this form and send form-specific messages to it.</p>
+<p>Please see the <em>Custom Stack</em> usage example in the Notifications <a href="../#/elements/Notifications">demo</a>.</p>
+<h4 id="description_stacks_adding-an-to-the-default-stack">Adding an <code>rxNotification</code> to the Default Stack</h4>
+<p>If you need to add a notification via your Angular template, just set the <code>stack</code> parameter on the opening
+<code>&lt;rx-notification&gt;</code> tag.  This will allow the notification to be added via the <code>rxNotify.add()</code> function.</p>
+<pre class="prettyprint linenums">
+&lt;rx-notification type="error" stack="page"&gt;
+  This is an error message being added to the "page" stack with &lt;strong&gt;Custom&lt;/strong&gt; html.
+&lt;/rx-notification&gt;
+</pre>
+<h4 id="description_stacks_adding-a-new-message-queue-via">Adding a New Message Queue via <code>rxNotify</code></h4>
+<p>To add a new message to a stack, inject <code>rxNotify</code> into your Angular function and run:</p>
+<pre class="prettyprint linenums">
+rxNotify.add('My Message Text');
+</pre>
+<p>This will add a new message to the default stack (<code>page</code>) with all default options set.  To customize options, pass
+in an <code>object</code> as the second argument with your specific options set:</p>
+<pre class="prettyprint linenums">
+rxNotify.add('My Message Text', {
+  stack: 'custom',
+  type: 'warning'
+});
+</pre>
+<h4 id="description_stacks_dismissing-a-message-programatically">Dismissing a message programatically</h4>
+<p>Most messages are dismissed either by the user, a route change or using the custom <code>dismiss</code> property.  If you need
+to dismiss a message programmaticaly, you can run <code>rxNotify.dismiss(message)</code>, where <em>message</em> is the <code>object</code>
+returned from <code>rxNotify.add()</code>.</p>
+<h4 id="description_stacks_clearing-all-messages-in-a-stack">Clearing all messages in a stack</h4>
+<p>You can clear all messages in a specific stack programmatically via the <code>rxNotify.clear()</code> function. Simply pass in
+the name of the stack to clear:</p>
+<pre class="prettyprint linenums">
+rxNotify.clear('page');
+</pre>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxNotify/scripts/rxNotify.js#L366" class="view-source icon-eye-open"> </a><h3 id="methods_add">add(text, options)</h3>
+<div class="add"><div class="add-page"><p>adds a message to a stack</p>
+</div><h5 id="methods_add_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>text</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="add-page"><p>Message text</p>
+</div></td></tr><tr><td>options <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="add-page"><p>Message options</p>
+</div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>type <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="add-page"><p>Message Type</p>
+<p>Values:</p>
+<ul>
+<li>&#39;info&#39;</li>
+<li>&#39;warning&#39;</li>
+<li>&#39;error&#39;</li>
+<li>&#39;success&#39;</li>
+</ul>
+</div> <p><em>(default: 'info')</em></p></td></tr><tr><td>timeout <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-integer">Integer</a></td><td><div class="add-page"><p>Time (in seconds) for message to appear. A value of -1 will display
+the message until it is dismissed or the user navigates away from the
+page.</p>
+<p>Values:</p>
+<ul>
+<li>-1</li>
+<li>Any positive integer</li>
+</ul>
+</div> <p><em>(default: -1)</em></p></td></tr><tr><td>repeat <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="add-page"><p>Whether the message should be allowed to appear more than once in the stack.</p>
+</div> <p><em>(default: true)</em></p></td></tr><tr><td>loading <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="add-page"><p>Replaces type icon with spinner. Removes option for use to dismiss message.</p>
+<p>You usually want to associate this with a &#39;dismiss&#39; property.</p>
+</div> <p><em>(default: false)</em></p></td></tr><tr><td>show <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="add-page"><p>When to have the message appear.</p>
+<p>Values:</p>
+<ul>
+<li>&#39;immediate&#39;</li>
+<li>&#39;next&#39;</li>
+<li>[scope, &#39;property&#39;]<ul>
+<li>Pass in a property on a scope to watch for a change.
+When the property equals true, the message is shown.</li>
+</ul>
+</li>
+</ul>
+</div> <p><em>(default: 'immediate')</em></p></td></tr><tr><td>dismiss <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="add-page"><p>When to have the message disappear.</p>
+<p>Values:</p>
+<ul>
+<li>&#39;next&#39;</li>
+<li>[scope, &#39;property&#39;]<ul>
+<li>Pass in a property on a scope to watch for a change.
+When the property equals true, the message is dismissed.</li>
+</ul>
+</li>
+</ul>
+</div> <p><em>(default: 'next')</em></p></td></tr><tr><td>ondismiss <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="add-page"><p>Function that should be run when message is dismissed.</p>
+</div> <p><em>(default: _.noop)</em></p></td></tr><tr><td>stack <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="add-page"><p>Which message stack the message gets added to.</p>
+<p>Values:</p>
+<ul>
+<li>&#39;page&#39;</li>
+<li>Any String <em>(results in a custom stack)</em></li>
+</ul>
+</div> <p><em>(default: 'page')</em></p></td></tr></tbody></table></td></tr></tbody></table><h5 id="methods_add_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="add-page"><p>message object</p>
+</div></td></tr></table></div>
+</li>
+<li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxNotify/scripts/rxNotify.js#L283" class="view-source icon-eye-open"> </a><h3 id="methods_clear">clear(stack)</h3>
+<div class="clear"><div class="clear-page"><p>deletes all messages in a stack</p>
+</div><h5 id="methods_clear_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>stack</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="clear-page"><p>The name of the stack to clear</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxNotify/scripts/rxNotify.js#L298" class="view-source icon-eye-open"> </a><h3 id="methods_dismiss">dismiss(msg)</h3>
+<div class="dismiss"><div class="dismiss-page"><p>removes a specific message from a stack</p>
+</div><h5 id="methods_dismiss_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>msg</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="dismiss-page"><p>Message object to remove</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

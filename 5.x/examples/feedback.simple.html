@@ -1,0 +1,14 @@
+<div ng-controller="feedbackSimpleExampleCtrl">
+
+    <rx-feedback id="rxFeedback"></rx-feedback>
+    <span class="subdued">(Will fallback to default email client)</span>
+
+    <hr/>
+
+    <rx-feedback on-submit="alwaysSucceed" id="rxFeedbackSucceeds"></rx-feedback>
+    <span class="subdued">(Will Succeed)</span>
+
+    <rx-feedback on-submit="alwaysFail" id="rxFeedbackFails"></rx-feedback>
+    <span class="subdued">(Will Fail)</span>
+
+</div>

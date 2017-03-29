@@ -1,0 +1,45 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxPageTracker/scripts/rxPageTracker.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxPageTracker/scripts/rxPageTracker.js#L19" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxPageTracker</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxpagetracker-page"><p>This is the data service that can be used in conjunction with the pagination
+objects to store/control page display of data tables and other items.
+This is intended to be used with <a href="#/api/elements.directive:rxPaginate">elements.directive:rxPaginate</a></p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxPageTracker/scripts/rxPageTracker.js#L53" class="view-source icon-eye-open"> </a><h3 id="methods_createinstance">createInstance(options)</h3>
+<div class="createinstance"><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>This is used to generate the instance of the
+rxPageTracker object. It takes an optional <code>options</code> object,
+allowing you to customize the default pager behaviour.</p>
+</div><h5 id="methods_createinstance_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>options <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>Configuration options for the pager</p>
+</div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>itemsPerPage <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>The default number of items to display per page. If you choose a
+value that is not in the default set to itemsPerPage options
+(50, 200, 350, 500), then that value will be inserted into that
+list in the appropriate place</p>
+</div> <p><em>(default: 200)</em></p></td></tr><tr><td>itemSizeList <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">Number[]</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>The &quot;items per page&quot; options to give to the user. As these same
+values are used all throughout Encore, you probably should not alter
+them for your table.</p>
+</div> <p><em>(default: (50, 200, 350, 500))</em></p></td></tr><tr><td>persistItemsPerPage <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>Whether or not a change to this pager&#39;s itemsPerPage should be
+persisted globally to all other pagers</p>
+</div> <p><em>(default: true)</em></p></td></tr><tr><td>pagesToShow <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>This is the number of page numbers to show in the pagination controls</p>
+</div> <p><em>(default: 5)</em></p></td></tr><tr><td>showAll <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>This is used to determine whether or not to use the pagination. If
+<code>true</code>, then all items will be displayed, i.e. pagination will not
+be used</p>
+</div> <p><em>(default: false)</em></p></td></tr></tbody></table></td></tr></tbody></table><h5 id="methods_createinstance_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxpagetracker-createinstance-page"><p>A new pager instance to be passed to the
+<code>page-tracking</code> attribute of <code>&lt;rx-paginate&gt;</code>
+(see <a href="#/api/rxPaginate.directive:rxPaginate">rxPaginate.directive:rxPaginate</a>)</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="utilities-service-page utilities-service-rxpagetracker-page"><pre class="prettyprint linenums">
+$scope.pager = rxPageTracker.createInstance({showAll: true, itemsPerPage: 15});
+</pre>
+<pre class="prettyprint linenums">
+&lt;rx-paginate page-tracking="pager"&gt;&lt;/rx-paginate&gt;
+</pre>
+</div></div>
+</div>

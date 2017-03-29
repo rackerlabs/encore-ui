@@ -1,0 +1,54 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Metadata/scripts/rxMetadata.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Metadata/scripts/rxMetadata.js#L52" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxMetadata</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxmetadata-page"><p>Parent directive used for styling and arranging metadata information.</p>
+<dl>
+  <dt>Display:</dt>
+  <dd><strong>block</strong> <em>(full width of parent)</em></dd>
+
+  <dt>Parent:</dt>
+  <dd>Any HTML Element</dd>
+
+  <dt>Siblings:</dt>
+  <dd>Any HTML Element</dd>
+
+  <dt>Children:</dt>
+  <dd>
+    <ul>
+      <li><a href="#/api/elements.directive:rxMeta">rxMeta</a></li>
+      <li>SECTION element</li>
+    </ul>
+  </dd>
+</dl>
+
+<p>It is highly recommended to use <code>&lt;section&gt;</code> blocks for purposes
+of arranging information into columns.</p>
+<p>Each <code>&lt;section&gt;</code> will be 300px wide and will wrap and stack vertically
+if the container isn&#39;t wide enought to accommodate all sections in a
+single row.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-metadata&gt;
+&lt;/rx-metadata&gt;</pre>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxmetadata-page"><pre class="prettyprint linenums">
+&lt;rx-metadata&gt;
+  &lt;section&gt;
+    &lt;rx-meta label="Status"&gt;
+      degraded; system maintenance
+    &lt;/rx-meta&gt;
+  &lt;/section&gt;
+  &lt;section&gt;
+    &lt;rx-meta label="Field Name"&gt;Field Value Example&lt;/rx-meta&gt;
+  &lt;/section&gt;
+  &lt;section&gt;
+    &lt;rx-meta label="Another Field Name"&gt;Another Field Value Example&lt;/rx-meta&gt;
+  &lt;/section&gt;
+&lt;/rx-metadata&gt;
+</pre>
+</div></div>
+</div>

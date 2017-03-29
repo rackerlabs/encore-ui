@@ -1,0 +1,24 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxLocalStorage/scripts/rxLocalStorage.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxLocalStorage/scripts/rxLocalStorage.js#L23" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxLocalStorage</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxlocalstorage-page"><p>A simple wrapper for injecting the global variable <code>localStorage</code>
+for storing values in the browser&#39;s local storage object. This service is similar to Angular&#39;s
+<code>$window</code> and <code>$document</code> services.  The API works the same as the W3C&#39;s
+specification provided at: <a href="https://html.spec.whatwg.org/multipage/webstorage.html">https://html.spec.whatwg.org/multipage/webstorage.html</a>.
+This service also includes helper functions for getting and setting objects.</p>
+</div></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="utilities-service-page utilities-service-rxlocalstorage-page"><pre class="prettyprint linenums">
+rxLocalStorage.setItem('Batman', 'Robin'); // no return value
+rxLocalStorage.key(0); // returns 'Batman'
+rxLocalStorage.getItem('Batman'); // returns 'Robin'
+rxLocalStorage.removeItem('Batman'); // no return value
+rxLocalStorage.setObject('hero', {name:'Batman'}); // no return value
+rxLocalStorage.getObject('hero'); // returns { name: 'Batman'}
+rxLocalStorage.clear(); // no return value
+</pre>
+</div></div>
+</div>

@@ -1,0 +1,25 @@
+<div ng-controller="progressbarDynamicCtrl" rx-form>
+  <rx-form-section controlled-width>
+    <rx-field>
+      <rx-field-name>Value:</rx-field-name>
+      <rx-field-content>
+        <rx-input>  
+          <input ng-model="value" type="number">
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+    <rx-field>
+      <rx-field-name>Maximum:</rx-field-name>
+      <rx-field-content>
+        <rx-input>  
+          <input ng-model="max" type="number" max="200">
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+  <rx-form-section>
+    <div>
+      <rx-progressbar value="value" max="max">{{value}}/{{max}}</rx-progressbar>
+    </div>
+  </rx-form-section>
+</div>

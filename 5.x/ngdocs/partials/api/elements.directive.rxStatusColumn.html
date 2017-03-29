@@ -1,0 +1,62 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxStatusColumn.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Tables/scripts/rxStatusColumn.js#L61" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxStatusColumn</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxstatuscolumn-page"><p>A directive for drawing colored status columns in a table. This
+takes the place of the <td></td> for the column it&#39;s in.</p>
+<p>For the corresponding <code>&lt;td&gt;</code>, you will need to add the <code>rx-status-column</code>
+attribute, and set the <code>status</code> attribute appropriately. You can optionally
+set <code>api</code> and <code>tooltip-content</code> attributes. <code>tooltip-content</code> sets the
+tooltip that will be used. If not set, it will default to the value you
+passed in for <code>status</code>. The <code>api</code> attribute will be explained below.</p>
+<p>We currently support six statuses, with corresponding CSS styles. Namely,
+<code>&quot;ACTIVE&quot;</code>, <code>&quot;DISABLED&quot;</code>, <code>&quot;WARNING&quot;</code>, <code>&quot;ERROR&quot;</code>, <code>&quot;INFO&quot;</code> and <code>&quot;PENDING&quot;</code>.
+If your code happens to already use those statuses, then you can simply pass
+them to the <code>status</code> attribute as appropriate. However, it&#39;s likely that
+internally you will be receiving a number of different statuses from your
+APIs, and will need to map them to these six statuses.</p>
+<p>The example in the Tables <a href="../#/elements/Tables#status-column">demo</a> shows
+a typical use of this directive, such as:</p>
+<pre class="prettyprint linenums">
+&lt;tbody&gt;
+    &lt;tr ng-repeat="server in servers"&gt;
+        &lt;!-- Both `api` and `tooltip-content` are optional --&gt;
+        &lt;td rx-status-column
+            status="{{ server.status }}"
+            api="{{ server.api }}"
+            tooltip-content="{{ server.status }}"&gt;&lt;/td&gt;
+        &lt;td&gt;{{ server.title }}&lt;/td&gt;
+        &lt;td&gt;{{ server.value }}&lt;/td&gt;
+   &lt;/tr&gt;
+&lt;/tbody&gt;
+</pre>
+<h3 id="description_a-note-about-color-usage-for-rxstatuscolumn">A note about color usage for rxStatusColumn</h3>
+<p>Encore uses the color red for destructive and &quot;delete&quot; actions, and the
+color green for additive or &quot;create&quot; actions, and at first it may seem that
+the styles of rxStatusColumn do not follow that same logic. However, the
+distinction here is that when an action or status on an item is
+&quot;in progress&quot; or &quot;pending&quot; (i.e. the user cannot take any additional action
+on that item until a transition completes), it is given the yellow animated
+<code>PENDING</code> treatment. This is true even for &quot;create&quot;/&quot;add&quot; actions or
+&quot;delete&quot; actions. A general rule of thumb to follow is that if a status
+ends in -<code>ING</code>, it should get the animated yellow stripes of <code>PENDING</code>.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY rx-status-column
+     status="{String}"
+     [api="{String}"]
+     [tooltip="{String}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>status</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxstatuscolumn-page"><p>The status to draw</p>
+</div></td></tr><tr><td>api <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxstatuscolumn-page"><p>Optionally specify which API mapping to use for the status</p>
+</div></td></tr><tr><td>tooltip <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxstatuscolumn-page"><p>The string to use for the tooltip. If omitted, it will default to using the
+passed in status</p>
+</div></td></tr></tbody></table></div>
+</div>

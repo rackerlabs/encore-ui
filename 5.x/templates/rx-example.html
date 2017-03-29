@@ -1,0 +1,47 @@
+<div class="rx-example">
+  <section class="demo-wrapper" ng-include="markupUrl"></section>
+
+  <tabset class="source-tabset">
+    <tab heading="Markup">
+      <div class="source-code-wrapper" ng-class="{ expanded: isExpanded('markup') }">
+        <pre><code class="line-numbers language-markup">{{ example.markup }}</code></pre>
+      </div>
+      <a class="toggle-expand"
+        ng-class="{expanded: isExpanded('markup')}"
+        ng-show="canExpand('markup')"
+        ng-click="toggleExpanded('markup')">
+        <i class="fa fa-fw fa-expand"></i>
+        <i class="fa fa-fw fa-compress"></i>
+        {{ isExpanded('markup') ? 'Collapse' : 'Expand' }} Snippet
+      </a>
+    </tab>
+
+    <tab ng-if="example.javascript" heading="JavaScript">
+      <div class="source-code-wrapper" ng-class="{ expanded: isExpanded('javascript') }">
+        <pre><code class="line-numbers language-clike">{{ example.javascript }}</code></pre>
+      </div>
+      <a class="toggle-expand"
+        ng-class="{expanded: isExpanded('javascript')}"
+        ng-show="canExpand('javascript')"
+        ng-click="toggleExpanded('javascript')">
+        <i class="fa fa-fw fa-expand"></i>
+        <i class="fa fa-fw fa-compress"></i>
+        {{ isExpanded('javascript') ? 'Collapse' : 'Expand' }} Snippet
+      </a>
+    </tab>
+
+    <tab ng-if="example.less" heading="Less">
+      <div class="source-code-wrapper" ng-class="{ expanded: isExpanded('less') }">
+        <pre><code class="line-numbers language-css">{{ example.less }}</code></pre>
+      </div>
+      <a class="toggle-expand"
+        ng-class="{expanded: isExpanded('less')}"
+        ng-show="canExpand('less')"
+        ng-click="toggleExpanded('less')">
+        <i class="fa fa-fw fa-expand"></i>
+        <i class="fa fa-fw fa-compress"></i>
+        {{ isExpanded('less') ? 'Collapse' : 'Expand' }} Snippet
+      </a>
+    </tab>
+  </tabset>
+</div>

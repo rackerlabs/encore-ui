@@ -1,0 +1,43 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxRadio.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxRadio.js#L38" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxRadio</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxradio-page"><p>rxRadio is an attribute directive that wraps a native radio element in markup required for styling purposes.
+To use the directive, you can replace <code>type=&quot;radio&quot;</code> with <code>rx-radio</code>. The directive is smart enough to set
+the correct input type.</p>
+<h3 id="description_styling">Styling</h3>
+<p>Directive results in an inline-block element.
+You can style the output against decendents of the <strong><code>.rxRadio</code></strong> CSS class.</p>
+<h3 id="description_show/hide">Show/Hide</h3>
+<p>If you wish to show/hide your <code>rxRadio</code> element (and its label), we recommend placing the element (and its label)
+inside of a <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> wrapper, and performing the show/hide logic on the wrapper.
+<pre class="prettyprint linenums">
+&lt;span ng-show="isShown"&gt;
+  &lt;input rx-radio id="radDemo" ng-model="radDemo" /&gt;
+  &lt;label for="radDemo"&gt;Label for Demo Radio&lt;/label&gt;
+&lt;/span&gt;
+</pre>
+<p>It is highly recommended that you use <code>ng-show</code> and <code>ng-hide</code> for display logic.
+Because of the way that <code>ng-if</code> and <code>ng-switch</code> directives behave with scope, they may
+introduce unnecessary complexity in your code.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY rx-radio
+     [ng-disabled="{Boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ng-disabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="elements-directive-page elements-directive-rxradio-page"><p>Determines if control is disabled.</p>
+</div> <p><em>(default: false)</em></p></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxradio-page"><pre class="prettyprint linenums">
+&lt;input rx-radio id="radDemo" ng-model="radDemo" /&gt;
+&lt;label for="radDemo"&gt;Label for Demo Radio&lt;/label&gt;
+</pre>
+</div></div>
+</div>

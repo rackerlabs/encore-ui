@@ -1,0 +1,42 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxSearchBox.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxSearchBox.js#L39" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxSearchBox</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxsearchbox-page"><p>The rxSearchBox directive behaves similar to the HTML &quot;Search&quot; input type.
+When the search box is not empty, an &quot;X&quot; button within the element will
+allow you to clear the value. Once clear, the &quot;X&quot; will disappear. A disabled
+search box cannot be cleared of its value via the &quot;X&quot; button because the
+button will not display.</p>
+<p>Though it is described as a search box, you can also use it for filtering
+capabilities (as seen by the placeholder text in the &quot;Customized&quot;
+<a href="../#/elements/Forms#search-box">demo</a>).</p>
+<h3 id="description_styling">Styling</h3>
+<p>You can style the <code>&lt;rx-search-box&gt;</code> element via custom CSS classes the same
+way you would any HTML element. See the customized search box in the
+<a href="../#/elements/Forms#search-box">demo</a> for an example.</p>
+<pre class="prettyprint linenums">
+&lt;rx-search-box
+     ng-model="customSearchModel"
+     rx-placeholder="filterPlaceholder"&gt;
+&lt;/rx-search-box&gt;
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-search-box
+       ng-model="{String}"
+       [ng-disabled="{Boolean}"]
+       [ng-placeholder="{String}"]&gt;
+&lt;/rx-search-box&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ng-model</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxsearchbox-page"><p>Model value to bind the search value.</p>
+</div></td></tr><tr><td>ng-disabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="elements-directive-page elements-directive-rxsearchbox-page"><p>Boolean value to enable/disable the search box.</p>
+</div></td></tr><tr><td>ng-placeholder <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxsearchbox-page"><p>String to override the
+default placeholder.</p>
+</div> <p><em>(default: 'Search...')</em></p></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxsearchbox-page"><pre class="prettyprint linenums">
+&lt;rx-search-box ng-model="searchModel"&gt;&lt;/rx-search-box&gt;
+</pre>
+</div></div>
+</div>

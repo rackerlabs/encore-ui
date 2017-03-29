@@ -1,0 +1,39 @@
+<form rx-form name="formAdvancedTextArea">
+  <rx-form-section>
+    <rx-field>
+      <rx-field-name
+        id="fieldNameRequiredTextarea"
+        ng-required="true">Required Textarea:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <textarea
+            name="lifeStory"
+            rows="10"
+            ng-required="true"
+            ng-model="lifeStory"
+            rx-character-count></textarea>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+    <div>
+      <rx-help-text>
+        <p>
+          Oh look! It's using <code>rx-character-count</code>
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus id ligula sit amet 
+          rhoncus. Quisque semper mi vel tortor sodales, eget dapibus turpis consectetur. Ut tristique 
+          nibh porttitor diam porta finibus. Vivamus porttitor ligula sed ipsum rhoncus, id lobortis ex 
+          volutpat. Ut ut metus erat. Nam et convallis enim. Proin efficitur quam tortor, vitae hendrerit 
+          libero auctor ac. Sed vitae lobortis quam, quis commodo metus. Vestibulum felis arcu, 
+          consectetur ut vulputate nec, commodo ut odio.
+        </p>
+      </rx-help-text>
+      <span ng-if="formAdvancedTextArea.lifeStory.$dirty">
+        <rx-inline-error ng-show="formAdvancedTextArea.lifeStory.$error.required">
+          Cannot Be Blank
+        </rx-inline-error>
+      </span>
+    </div>
+  </rx-form-section>
+</form>

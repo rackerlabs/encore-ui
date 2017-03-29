@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/Forms/scripts/rxDatePicker.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/Forms/scripts/rxDatePicker.js</span></h1>
+    <h2>
+        Statements: <span class="metric">96.59% <small>(85 / 88)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">69.23% <small>(18 / 26)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">88.89% <small>(16 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">97.7% <small>(85 / 87)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Forms/scripts/</a> &#187; rxDatePicker.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">2534</span>
+<span class="cline-any cline-yes">2534</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">160</span>
+<span class="cline-any cline-yes">160</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">176</span>
+<span class="cline-any cline-yes">176</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">1722</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1722</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">10819</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">15955</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">10819</span>
+<span class="cline-any cline-yes">1155</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9664</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">29</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-yes">82</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @name elements.directive:rxDatePicker
+ * @ngdoc directive
+ * @restrict E
+ * @scope
+ * @description
+ * Basic date picker.
+ *
+ * ## Notice
+ * This element is designed to be used in conjunction with other picker
+ * elements to compose a valid ISO 8601 DateTime string in the format of
+ * &lt;code&gt;YYYY-MM-DDTHH:mmZ&lt;/code&gt;.
+ *
+ * `rxDatePicker` provides the user a 10-year range before and after the selected date,
+ * if present.  Otherwise, the range is calculated from today's date.
+ *
+ * * This element will generate a **String** in the format of `YYYY-MM-DD`
+ *   to be used as the date portion of the ISO 8601 standard DateTime string
+ *   mentioned above.
+ * * This element will never generate anything other than a String.
+ *
+ * @param {Expression} ngModel
+ * Expression that evaluates to a date string in `YYYY-MM-DD` format
+ *
+ * @return {String} **IMPORTANT** returns an ISO 8601 standard date string in the
+ * format of `YYYY-MM-DD`.
+ */
+.directive('rxDatePicker', function ($document) {
+    var isoFormat = 'YYYY-MM-DD';
+    const YEAR_RANGE = 10;
+&nbsp;
+    /**
+     * @param {Moment} firstOfMonth
+     * @return {Array&lt;Moment&gt;}
+     * @description
+     * Generate an array of Moment objects representing the visible
+     * days on the calendar. This will automatically pad the calendar
+     * with dates from previous/next month to fill out the weeks.
+     */
+    function buildCalendarDays (firstOfMonth) {
+        var dateToken = firstOfMonth.clone().startOf('day');
+        var currentMonth = dateToken.month();
+        var days = [];
+        var prependDay, appendDay;
+&nbsp;
+        // add calendar month's days
+        while (dateToken.month() === currentMonth) {
+            days.push(dateToken.clone());
+            dateToken.add(1, 'day');
+        }
+&nbsp;
+        // until first item of array is Sunday, prepend earlier days to array
+        while (_.head(days).day() &gt; 0) {
+            prependDay = _.head(days).clone();
+            days.unshift(prependDay.subtract(1, 'day'));
+        }
+&nbsp;
+        // until last item of array is Saturday, append later days to array
+        while (_.last(days).day() &lt; 6) {
+            appendDay = _.last(days).clone();
+            days.push(appendDay.add(1, 'day'));
+        }
+&nbsp;
+        return days;
+    }//buildCalendarDays
+&nbsp;
+    /**
+     * @param {Moment} midpoint
+     * @return {Array&lt;ISO 8601 Year&gt; }
+     * @description
+     * Generate an array of ISO 8601 Year (format "YYYY") years.
+     */
+    function generateCalendarYears (midpoint) {
+        var calendarYears = [];
+        var iterator = midpoint.clone().subtract(YEAR_RANGE, 'years');
+        var limit = midpoint.clone().add(YEAR_RANGE, 'years');
+&nbsp;
+        while (iterator.year() &lt;= limit.year()) {
+            calendarYears.push(iterator.year());
+&nbsp;
+            iterator.add(1, 'year');
+        }
+&nbsp;
+        return calendarYears;
+    }//generateCalendarYears
+&nbsp;
+    return {
+        templateUrl: 'templates/rxDatePicker.html',
+        restrict: 'E',
+        require: 'ngModel',
+        scope: {
+            selected: '=ngModel'
+        },
+        link: function (scope, element, attrs, ngModelCtrl) {
+            var today = moment(new Date());
+&nbsp;
+            scope.calendarVisible = false;
+            // keep track of which month we're viewing in the popup (default to 1st of this month)
+            scope.calendarMonth = today.clone().startOf('month');
+&nbsp;
+            /* ===== "Public" Functions ===== */
+            scope.toggleCalendar = function () {
+                if (_.isUndefined(attrs.disabled)) {
+                    scope.calendarVisible = !scope.calendarVisible;
+                }
+            };//toggleCalendar()
+&nbsp;
+            /**
+             * @param {String} destination
+             * @description Modifies `scope.calendarMonth` to regenerate calendar
+             */
+            scope.navigate = function (destination) {
+                var newCalendarMonth = scope.calendarMonth.clone();
+                switch (destination) {
+                    case 'nextMonth': {
+                        newCalendarMonth.add(1, 'month');
+                        break;
+                    }
+                    case 'prevMonth': {
+                        newCalendarMonth.subtract(1, 'month');
+                        break;
+                    }
+                }
+                scope.calendarMonth = newCalendarMonth;
+            };//navigate
+&nbsp;
+            /**
+             * @param {Moment} date
+             */
+            scope.selectDate = function (date) {
+                scope.selected = date.format(isoFormat);
+                scope.calendarVisible = false;
+            };//selectDate()
+&nbsp;
+            /**
+             * @param {Moment} day
+             * @return {Boolean}
+             */
+            scope.isToday = function (day) {
+                return moment(day).isSame(today, 'day');
+            };//isToday()
+&nbsp;
+            /**
+             * @param {Moment} day
+             * @return {Boolean}
+             */
+            scope.isMonth = function (day) {
+                return moment(day).isSame(scope.calendarMonth, 'month');
+            };//isMonth()
+&nbsp;
+            /**
+             * @param {Moment} day
+             * @return {Boolean}
+             */
+            scope.isSelected = function (day) {
+                if (_.isUndefined(scope.selected)) {
+                    return false;
+                } else {
+                    return moment(day).isSame(scope.selected, 'day');
+                }
+            };//isSelected()
+&nbsp;
+            /* ===== OBSERVERS ===== */
+&nbsp;
+            // Set calendar month on change of selected date
+            scope.$watch('selected', function (newVal) {
+                if (_.isEmpty(newVal)) {
+                    scope.calendarMonth = today.clone().startOf('month');
+                } else {
+                    var parsed = moment(newVal, isoFormat);
+&nbsp;
+                    if (parsed.isValid()) {
+                        scope.calendarMonth = parsed.startOf('month');
+                    }
+                }
+            });
+&nbsp;
+            // Regenerate calendar if month changes
+            scope.$watch('calendarMonth', function (newVal) {
+                scope.calendarDays = buildCalendarDays(newVal);
+                scope.currentMonth = newVal.format('MM');
+                scope.currentYear = newVal.format('YYYY');
+                scope.calendarYears = generateCalendarYears(newVal);
+            });
+&nbsp;
+            scope.$watch('currentMonth', function (newVal) {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!_.isEmpty(newVal)) {
+                    var dateString = [scope.currentYear, newVal, '01'].join('-');
+                    var parsed = moment(dateString, isoFormat);
+&nbsp;
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (parsed.isValid()) {
+                        scope.calendarMonth = parsed;
+                    }
+                }
+            });
+&nbsp;
+            scope.$watch('currentYear', function (newVal) {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!_.isEmpty(newVal)) {
+                    var dateString = [newVal, scope.currentMonth, '01'].join('-');
+                    var parsed = moment(dateString, isoFormat);
+&nbsp;
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (parsed.isValid()) {
+                        scope.calendarMonth = parsed;
+                    }
+                }
+            });
+&nbsp;
+            ngModelCtrl.$formatters.push(function (modelVal) {
+                var parsed = moment(modelVal, isoFormat);
+&nbsp;
+                if (!ngModelCtrl.$isEmpty(modelVal)) {
+                    ngModelCtrl.$setValidity('date', parsed.isValid());
+                }
+&nbsp;
+                if (parsed.isValid()) {
+                    return parsed.format('MMMM DD, YYYY');
+                } else {
+                    return null;
+                }
+            });
+&nbsp;
+            ngModelCtrl.$render = function () {
+                scope.displayValue = ngModelCtrl.$viewValue;
+            };
+&nbsp;
+            $document.on('click', <span class="fstat-no" title="function not covered" >function (clickEvent) {</span>
+<span class="cstat-no" title="statement not covered" >                if (scope.calendarVisible &amp;&amp; !element[0].contains(clickEvent.target)) {</span>
+<span class="cstat-no" title="statement not covered" >                    scope.$apply(<span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >scope.calendarVisible = false; </span>});</span>
+                }
+            });
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

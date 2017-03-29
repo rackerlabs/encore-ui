@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/Tables/scripts/rxFloatingHeader.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/Tables/scripts/rxFloatingHeader.js</span></h1>
+    <h2>
+        Statements: <span class="metric">89.74% <small>(70 / 78)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">63.64% <small>(14 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">78.95% <small>(15 / 19)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">89.74% <small>(70 / 78)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Tables/scripts/</a> &#187; rxFloatingHeader.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxFloatingHeader
+ * @restrict A
+ * @description
+ *
+ *`rxFloatingHeader` is an attribute directive that turns a tableheader into a floating persistent header so that names
+ * of columns are still visible, even as a user scrolls down the page. This is based off of the example at
+ * http://css-tricks.com/persistent-headers/
+ *
+ * * To use it, add an `rx-floating-header` attribute to a `table` element.
+ *
+ * * A common pattern in our products is to place an `&lt;input&gt;` filter at the top of the table, to restrict the items
+ * that are displayed. We support this as well, by placing the `&lt;input&gt;` directly inside of the `&lt;thead&gt;` in its
+ * own `&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;`.
+ *
+ * * Make sure you set the `colspan` attribute on the filter's `&lt;th&gt;`, to match the number of columns you have.
+ *
+ * * `rxFloatingHeader` is also fully compatible with {@link elements.directive:rxSortableColumn rxSortableColumn}
+ * * and {@link elements.directive:rxPaginate}.
+ *
+ * @example
+ * &lt;pre&gt;
+ * &lt;table rx-floating-header&gt;
+ *   &lt;thead&gt;
+ *     &lt;tr&gt;
+ *       &lt;td colspan="2"&gt;
+ *         &lt;rx-search-box
+ *             ng-model="searchText"
+ *             rx-placeholder="'Filter by any...'"&gt;
+ *         &lt;/rx-search-box&gt;
+ *       &lt;/td&gt;
+ *     &lt;/tr&gt;
+ *     &lt;tr&gt;
+ *       &lt;th&gt;Column One Header&lt;/th&gt;
+ *       &lt;th&gt;Column Two Header&lt;/th&gt;
+ *     &lt;/tr&gt;
+ *   &lt;/thead&gt;
+ *   &lt;tbody&gt;
+ *     ...
+ *   &lt;/tbody&gt;
+ * &lt;/table&gt;
+ * &lt;/pre&gt;
+ *
+ */
+.directive('rxFloatingHeader', function ($window, $timeout, rxDOMHelper, debounce) {
+    return {
+        restrict: 'A',
+        controller: function ($scope) {
+            this.update = <span class="fstat-no" title="function not covered" >function () {</span>
+                // It's possible for a child directive to try to call this
+                // before the rxFloatingHeader link function has been run,
+                // meaning $scope.update won't have been configured yet
+<span class="cstat-no" title="statement not covered" >                if (_.isFunction($scope.update)) {</span>
+<span class="cstat-no" title="statement not covered" >                    $scope.update();</span>
+                }
+            };
+&nbsp;
+            this.reapply = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                $scope.reapply();</span>
+            };
+        },
+        link: function (scope, table) {
+            var header; // thead as angular.element
+            var isFloating = false;
+            var _window = angular.element($window);
+            var _resizeHandler;
+&nbsp;
+            /**
+             * @function
+             * @description Apply floating elements
+             */
+            function applyFloat () {
+                isFloating = true;
+                var fillerRows = [];
+&nbsp;
+                var topOffset = 0;
+                _.each(header.find('tr'), function (tr) {
+                    var row = angular.element(tr);
+&nbsp;
+                    // Ensure that the rows are offset so they
+                    // don't overlap while floating.
+                    row.css({ 'top': topOffset.toString() + 'px' });
+                    topOffset += parseInt(rxDOMHelper.height(row));
+&nbsp;
+                    // explicitly apply current geometry to all cells in the row
+                    _.each(row.find('th'), function (th) {
+                        var cell = angular.element(th);
+&nbsp;
+                        var _width = rxDOMHelper.width(cell);
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (_width !== 'auto') {
+                            cell.css({ 'width': _width });
+                        }
+&nbsp;
+                        var _height = rxDOMHelper.height(cell);
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (_height !== 'auto') {
+                            cell.css({ 'height': _height });
+                        }
+                    });
+&nbsp;
+                    // generate filler row
+                    var fillerRow = row.clone();
+                    _.each(fillerRow.find('th'), function (th) {
+                        var cell = angular.element(th);
+                        // Ensure we're not duplicating header content by
+                        // replacing the cell content. The cell inherits
+                        // the explicit geometry determined above.
+                        cell.html('~');
+                    });
+                    fillerRows.push(fillerRow);
+&nbsp;
+                    /* float the ORIGINAL row */
+                    // Must happen after cloning, or else all header rows would float.
+                    row.addClass('rx-floating-header');
+                });
+&nbsp;
+                // append filler rows to header to reserve geometry
+                _.each(fillerRows, function (row) {
+                    header.append(row);
+                });
+            }//applyFloat()
+&nbsp;
+            /**
+             * @function
+             * @description Remove floating elements
+             * Handles cleanup of unnecessary styles, classes, and elements.
+             */
+            function removeFloat () {
+                isFloating = false;
+&nbsp;
+                _.each(header.find('tr'), function (tr) {
+                    var row = angular.element(tr);
+&nbsp;
+                    if (row.hasClass('rx-floating-header')) {
+                        // Cleanup classes/CSS
+                        row.removeClass('rx-floating-header');
+                        row.css({ top: null });
+&nbsp;
+                        _.each(row.find('th'), function (th) {
+                            var cell = angular.element(th);
+                            cell.css({ width: null });
+                        });
+                    } else {
+                        /* Filler Row */
+                        row.remove();
+                    }
+                });
+            }//removeFloat()
+&nbsp;
+            /**
+             * @function
+             * @description Reapply float for certain scenarios
+             *
+             * This function is the key to recalculating floating header
+             * geometry for various scenarios while headers are already
+             * floating.
+             */
+<span class="fstat-no" title="function not covered" >            function reapplyFloat () {</span>
+<span class="cstat-no" title="statement not covered" >                if (isFloating) {</span>
+<span class="cstat-no" title="statement not covered" >                    removeFloat();</span>
+<span class="cstat-no" title="statement not covered" >                    applyFloat();</span>
+                }
+            }//reapplyFloat()
+&nbsp;
+            /**
+             * @function
+             * @description Applys/Removes floating headers
+             *
+             * **NOTE**: This will not work inside of scrollable elements.
+             * It will only float to the top of the page.
+             */
+            function update () {
+                var maxHeight = table[0].offsetHeight;
+&nbsp;
+                if (rxDOMHelper.shouldFloat(table, maxHeight)) {
+                    // If we're not floating, start floating
+                    if (!isFloating) {
+                        applyFloat();
+                    }
+                } else {
+                    // If we're floating, stop floating
+                    if (isFloating) {
+                        removeFloat();
+                    }
+                }
+            }//update()
+&nbsp;
+            // added to scope to call from controller (if needed)
+            scope.reapply = reapplyFloat;
+            scope.update = update;
+&nbsp;
+            /* Event Handlers */
+            _resizeHandler = debounce(reapplyFloat, 500);
+            _window.bind('scroll', update);
+            _window.bind('resize', _resizeHandler);
+&nbsp;
+            scope.$on('$destroy', <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                _window.unbind('scroll', update);</span>
+<span class="cstat-no" title="statement not covered" >                _window.unbind('resize', _resizeHandler);</span>
+            });
+&nbsp;
+            /*
+             * Prepare the table for floating.
+             *
+             * We have to wrap the setup logic in a $timeout so that
+             * rxFloatingHeader can find compiled &lt;input&gt; elements in the header
+             * rows to apply dynamic classes. Otherwise, it'll only see the
+             * uncompiled markup, and the classes won't be added.
+             */
+            $timeout(function () {
+                header = angular.element(table.find('thead'));
+&nbsp;
+                _.each(header.find('tr'), function (tr) {
+                    var row = angular.element(tr);
+&nbsp;
+                    _.each(row.find('th'), function (th) {
+                        var cell = angular.element(th);
+&nbsp;
+                        // This has to run on the next digest cycle to
+                        // find compiled &lt;input&gt; elements in other directives.
+                        var input = cell.find('input');
+&nbsp;
+                        if (input.length) {
+                            var type = input.attr('type');
+                            <span class="missing-if-branch" title="else path not taken" >E</span>if (!type || <span class="branch-1 cbranch-no" title="branch not covered" >type === 'text')</span> {
+                                cell.addClass('filter-header');
+                                input.addClass('filter-box');
+                            }
+                        }
+                    });
+                });
+&nbsp;
+                update();
+            });//setup logic
+        },
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

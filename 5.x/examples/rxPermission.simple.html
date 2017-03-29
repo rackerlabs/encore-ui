@@ -1,0 +1,12 @@
+<div ng-controller="rxPermissionSimpleCtrl">
+  <button class="storeToken button"
+    name="button"
+    ng-click="storeToken()">Store Token</button>
+  <button class="clearToken button button-negative"
+    name="button"
+    ng-click="clearToken()">Clear Token</button>
+
+  <rx-permission role="test">
+    <rx-notifications stack="permission"></rx-notifications>
+  </rx-permission>
+</div>

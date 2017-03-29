@@ -1,0 +1,129 @@
+<h1>Layout 3: Form Page</h1>
+<h2 class="subdued">Sample Create Page</h2>
+
+<form rx-form>
+  <rx-form-section stacked id="form-area">
+    <rx-field>
+      <rx-field-name ng-required="true">Server Name:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input type="text" id="serverName" ng-model="serverName" required>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Text Area:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <textarea rows="10"></textarea>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Region:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <select rx-select
+            name="region"
+            id="region">
+            <option>ORD</option>
+            <option>DFW</option>
+            <option>IAD</option>
+          </select>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Monthly Cost:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-prefix>$</rx-prefix>
+          <input type="number" ng-model="volume.cost" />
+          <rx-suffix>million</rx-suffix>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+
+  <rx-form-section>
+    <div>
+      <tabset class="tab-area">
+        <tab heading="Tab 1">
+          <div ng-controller="radioTableCtrl">
+            <rx-form-section>
+              <rx-field>
+                <rx-field-name>Radio Table</rx-field-name>
+                <rx-field-content>
+                  <table class="table-striped table--option">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Static Content</th>
+                        <th>Expression 2</th>
+                        <th>Expression 3</th>
+                        <th>Expression 4</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="datum in radioTableData">
+                        <td><input rx-radio name="radiooption"></td>
+                        <td>{{ datum.name }}</td>
+                        <td>Some <strong>Text &amp;</strong> HTML</td>
+                        <td>{{ datum.value * 100 | number:2 }}</td>
+                        <td>{{ datum.obj.name | uppercase }}</td>
+                        <td>{{ datum.value | currency }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </rx-field-content>
+              </rx-field>
+            </rx-form-section>
+          </div>
+        </tab>
+
+        <tab heading="Tab 2">
+          <table class="table-striped">
+            <thead>
+              <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 3</th>
+                <th>Column 4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lorem ipsum</td>
+                <td>1aa2bfa9-de8d-42f7-9f6d-e6437855b36e</td>
+                <td>Lorem ipsum dolor sit amet</td>
+                <td>1234567890</td>
+              </tr>
+              <tr>
+                <td>Lorem ipsum</td>
+                <td>1aa2bfa9-de8d-42f7-9f6d-e6437855b36e</td>
+                <td>Lorem ipsum dolor sit amet</td>
+                <td>1234567890</td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+      </tabset>
+    </div>
+  </rx-form-section>
+
+  <rx-form-section>
+    <div>
+      <button class="button submit" type="submit">
+        Submit Form
+      </button>
+
+      <button class="button cancel" type="submit">
+        Cancel
+      </button>
+    </div>
+  </rx-form-section>
+</form>

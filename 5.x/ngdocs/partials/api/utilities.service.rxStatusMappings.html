@@ -1,0 +1,114 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxStatusMappings/scripts/rxStatusMappings.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxStatusMappings/scripts/rxStatusMappings.js#L66" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxStatusMappings</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxstatusmappings-page"><p>A set of methods for creating mappings between a product&#39;s notion
+of statuses, and the status identifiers used in EncoreUI</p>
+<p>To accommodate different statuses, the <code>rxStatusMappings</code> factory includes
+methods for defining mappings from your own statuses to the six defined ones.
+The basic methods for this are <code>rxStatusMappings.addGlobal()</code> and
+<code>rxStatusMappings.addAPI()</code>.</p>
+<h4 id="description_maptoactive">mapToActive()/mapToWarning()/mapToError()/mapToInfo()/mapToPending()</h4>
+<p>While <code>.addGlobal()</code> and <code>.addAPI()</code> would be sufficient on their own,
+they can be slightly cumbersome. If you have a list of statuses that all
+need to get mapped to the same EncoreUI status, the mapping object will
+be forced to have repetition, leaving room for errors. For example,
+something like this:</p>
+<pre class="prettyprint linenums">
+rxStatusMappings.addGlobal({
+    'BLOCKED': 'ERROR',
+    'SHUTDOWN': 'ERROR',
+    'FAILED': 'ERROR'
+});
+</pre>
+<p>There is required repetition of <code>&quot;ERROR&quot;</code> in each pair, and there&#39;s always
+the chance of misspelling <code>&quot;ERROR&quot;</code>. Instead, we provide a utility method
+<code>mapToError</code> to help with this:</p>
+<pre class="prettyprint linenums">
+rxStatusMappings.mapToError(['BLOCKED', 'SHUTDOWN', 'FAILED']);
+</pre>
+<p>This has the advantage that it&#39;s shorter to type, eliminates the chance of
+mistyping or misassigning <code>&quot;ERROR&quot;</code>, and keeps all <code>&quot;ERROR&quot;</code> mappings
+physically grouped. With this, you could easily keep your mapping values
+in an Angular <code>.value</code> or <code>.constant</code>, and just pass them to these methods
+in your <code>.run()</code> method.</p>
+<p>There are equivalent <code>mapToWarning</code>, <code>mapToActive</code>, <code>mapToDisabled</code>,
+<code>mapToPending</code> and <code>mapToInfo</code> methods.</p>
+<p>All six of these methods can take an array or a single string as the first
+argument. The call above is equivalent to this group of individual calls:</p>
+<pre class="prettyprint linenums">
+rxStatusMappings.mapToError('BLOCKED');
+rxStatusMappings.mapToError('SHUTDOWN');
+rxStatusMappings.mapToError('FAILED');
+</pre>
+<p>All six can also take <code>api</code> as a second, optional parameter. Thus we could
+define the <code>rxStatusMappings.addAPI({ &#39;FOO&#39;: &#39;ERROR&#39; }, &#39;z&#39;)</code> example from
+above as:</p>
+<pre class="prettyprint linenums">
+rxStatusMappings.mapToError('FOO', 'z');
+</pre>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxStatusMappings/scripts/rxStatusMappings.js#L144" class="view-source icon-eye-open"> </a><h3 id="methods_addapi">addAPI(apiName, mapping)</h3>
+<div class="addapi"><div class="rxstatusmappings-addapi-page"><p>Create a mapping specific to a particular API. This will
+only be used when the directive receives the <code>api=&quot;...&quot;</code>
+attribute</p>
+<p>Say that you are using three APIs in your product, <code>X</code>, <code>Y</code> and <code>Z</code>. Both
+<code>X</code> and <code>Y</code> define a status <code>&quot;FOO&quot;</code>, which you want to map to EncoreUI&#39;s
+<code>&quot;WARNING&quot;</code>. You can declare this  mapping with
+<code>rxStatusMappings.addGlobal({ &#39;FOO&#39;: &#39;WARNING&#39; })</code>. But your API <code>Z</code> also
+returns a <code>&quot;FOO&quot;</code> status, which you need mapped to EncoreUI&#39;s
+<code>&quot;ERROR&quot;</code> status.</p>
+<p>You <em>could</em> do a transformation in your product to convert the <code>&quot;FOO&quot;</code>
+from <code>Z</code> into something else, or you can make use of
+<code>rxStatusMappings.addAPI()</code>, as follows:</p>
+<pre class="prettyprint linenums">
+rxStatusMappings.addAPI('z', { 'FOO': 'ERROR' });
+</pre>
+<p>Then in your template code, you would use <code>rx-status-column</code> as:</p>
+<pre class="prettyprint linenums">
+&lt;td rx-status-column status="{{ status }}" api="z"&gt;&lt;/td&gt;
+</pre>
+<p>This will tell EncoreUI that it should first check if the passed in
+<code>status</code> was defined separately for an api <code>&quot;z&quot;</code>, and if so, to use that
+mapping. If <code>status</code> can&#39;t be found in the mappings defined for <code>&quot;z&quot;</code>,
+then it will fall back to the mappings you defined in your <code>.addGlobal()</code>
+call.</p>
+</div><h5 id="methods_addapi_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>apiName</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxstatusmappings-addapi-page"><p>This is api name of the mapping</p>
+</div></td></tr><tr><td>mapping</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxstatusmappings-addapi-page"><p>This is mapping with keys and values</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxStatusMappings/scripts/rxStatusMappings.js#L100" class="view-source icon-eye-open"> </a><h3 id="methods_addglobal">addGlobal(mapping)</h3>
+<div class="addglobal"><div class="rxstatusmappings-addglobal-page"><p>Takes a full set of mappings to be used globally</p>
+<p><code>rxStatusMappings.addGlobal()</code> takes an object as an argument, with the
+keys being your own product&#39;s statuses, and the values being one of the six
+internal statuses that it should map to. For example:</p>
+<pre class="prettyprint linenums">
+rxStatusMappings.addGlobal({
+    'RUNNING': 'ACTIVE',
+    'STANDBY': 'INFO',
+    'SUSPENDED': 'WARNING',
+    'FAILURE': 'ERROR'
+});
+</pre>
+<p>These mappings will be used throughout all instances of <code>rx-status-column</code>
+in your code.</p>
+</div><h5 id="methods_addglobal_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>mapping</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxstatusmappings-addglobal-page"><p>This is mapping with keys and values</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxStatusMappings/scripts/rxStatusMappings.js#L197" class="view-source icon-eye-open"> </a><h3 id="methods_getinternalmapping">getInternalMapping(statusString, api)</h3>
+<div class="getinternalmapping"><div class="rxstatusmappings-getinternalmapping-page"><p><code>rxStatusMappings</code> defines a <code>getInternalMapping(statusString, api)</code> method,
+which the framework uses to map a provided <code>status</code> string based on the
+mapping rules from all the methods above. It&#39;s intended for internal use,
+but there&#39;s nothing stopping you from using it if you find a need.</p>
+<p>If you ask it to map a string that is not registered for a mapping, it will
+return back that same string.</p>
+</div><h5 id="methods_getinternalmapping_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>statusString</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxstatusmappings-getinternalmapping-page"><p>This is status string based on mapping rules</p>
+</div></td></tr><tr><td>api</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxstatusmappings-getinternalmapping-page"><p>This is an api based on mapping rules</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

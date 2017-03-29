@@ -1,0 +1,24 @@
+<p>
+  <rx-modal-action
+    ng-disabled="true"
+    classes="button"
+    template-url="disabled.html"
+    id="btnDisabledModal">
+    Edit Account
+  </rx-modal-action>
+</p>
+<p>
+  <rx-modal-action
+    ng-disabled="true"
+    template-url="disabled.html"
+    id="disabledModal">
+    Edit Account
+  </rx-modal-action>
+</p>
+<script type="text/ng-template" id="disabled.html">
+  <rx-modal-form title="Disabled Modal">
+    <rx-notification type="error">
+      This modal should not be visible.
+    </rx-notification>
+  </rx-modal-form>
+</script>

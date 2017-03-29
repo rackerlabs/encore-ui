@@ -1,0 +1,119 @@
+<h1>Typography</h1>
+<ul class="list">
+  <li>
+    Encore uses Google Fonts, particularly Roboto. This font is
+    included in the encore-ui template.
+  </li>
+  <li>
+    We use Google Fonts, in particular the Roboto font. This is automatically
+    imported via CSS when you link <code>encore-ui.css</code> or <code>encore-ui-resp.css</code>.
+  </li>
+</ul>
+
+<section>
+  <header>
+    <h2>Headings/Title Styles</h2>
+  </header>
+
+  <ul class="list">
+    <li>
+      Headings are sized according to their heading level
+      (H1 larger than H2 larger than H3, etc.).
+      You can use H3 for most sub-headers.
+    </li>
+    <li>
+      <strong class="msg-info">Warning</strong>:
+      The <code>.title</code>, <code>.xl</code>, <code>.lg</code>,
+      <code>.sm</code>, and <code>.xs</code> heading classes are
+      deprecated and will be removed in a future release of the
+      framework.
+    </li>
+  </ul>
+
+  <h3>Markup Conversion Table</h3>
+  <table class="table-striped">
+    <thead>
+      <tr>
+        <th>Legacy Selector</th>
+        <th>Current Markup</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>.title.xl</code></td>
+        <td><code>&lt;h1&gt;</code></td>
+      </tr>
+      <tr>
+        <td><code>.title.lg</code></td>
+        <td><code>&lt;h2&gt;</code></td>
+      </tr>
+      <tr>
+        <td><code>.title</code></td>
+        <td><code>&lt;h3&gt;</code></td>
+      </tr>
+      <tr>
+        <td><code>.title.sm</code></td>
+        <td><code>&lt;h4&gt;</code></td>
+      </tr>
+      <tr>
+        <td><code>.title.xs</code></td>
+        <td><code>&lt;h5&gt;</code></td>
+      </tr>
+      <tr>
+        <td><em>N/A</em></td>
+        <td><code>&lt;h6&gt;</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <rx-example name="typography.headings"></rx-example>
+</section>
+
+<section>
+  <header>
+    <h2>Descriptions / Metadata</h2>
+  </header>
+
+  <ul class="list">
+    <li>
+      To display a list of terms with their associated descriptions,
+      use <a href="#/elements/Metadata">rxMetadata</a>.
+      This is used throughout Encore to show metadata, especially on
+      an individual object such as a server or a CBS volume.
+    </li>
+    <li>
+      <span class="msg-info">ENCORE-SPECIFIC:</span>
+      This is an ideal solution if you have anywhere from 5-15
+      definitions (3 columns of 5 definitions). (Click one of the
+      results in the Servers page or Images page under Accounts ->
+      Cloud to see a details page for an example.) Anything
+      more–or anything displaying visual or image content–and
+      you may want to consider a different design pattern.
+    </li>
+  </ul>
+  <rx-example name="typography.metadata"></rx-example>
+</section>
+
+<section>
+  <header>
+    <h2>When There is No Data to Display</h2>
+  </header>
+
+  <ul class="list">
+    <li>
+      In all displays of data, you should use <code>"N/A"</code>
+      where no relevant details are available.
+    </li>
+    <li>
+      <code>"Empty"</code>, <code>"Null"</code>, or blank spaces should
+      be avoided as they may be considered valid inputs.
+    </li>
+    <li>
+      A separate style exists to communicate
+      <a href="#/layout/wells">
+        when data isn't present due to permissions
+      </a>,
+      or when an entire table is empty. (See "Null patterns"
+      section of <a href="#/elements/Tables">Tables</a> style guide.)
+    </li>
+  </ul>
+</section>

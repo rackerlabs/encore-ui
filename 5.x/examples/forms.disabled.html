@@ -1,0 +1,69 @@
+<h4>Disabled Form Controls</h4>
+<form rx-form ng-controller="formsDisabledExamplesCtrl">
+  <rx-form-section>
+    <rx-field>
+      <rx-field-name>Disabled Text Input</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input type="text" value="{{txtDisabled}}" disabled />
+        </rx-input>
+      </rx-field-content>
+
+      <rx-field-name>Disabled Select</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <select rx-select disabled ng-model="selDisabled">
+            <option value="disabled">Disabled Dropdown</option>
+          </select>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Disabled Radio</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input rx-radio id="radDisabledOne" value="1" name="radDisabled" ng-model="radDisabled" disabled />
+          <label for="radDisabledOne">Selected Option</label>
+        </rx-input>
+        <rx-input>
+          <input rx-radio id="radDisabledTwo" value="2" name="radDisabled" ng-model="radDisabled" disabled />
+          <label for="radDisabledTwo">Unselected Option</label>
+        </rx-input>
+      </rx-field-content>
+
+      <rx-field-name>Disabled Checkbox</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input rx-checkbox id="chkDisabledOne" ng-model="chkDisabledOne" disabled />
+          <label for="chkDisabledOne">Checked Option</label>
+        </rx-input>
+        <rx-input>
+          <input rx-checkbox id="chkDisabledTwo" ng-model="chkDisabledTwo" disabled />
+          <label for="chkDisabledTwo">Unchecked Option</label>
+        </rx-input>
+      </rx-field-content>
+
+      <rx-field-name>Disabled Toggle Switch</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <rx-toggle-switch id="togDisabledOn" ng-model="togDisabledOn" ng-disabled="true"></rx-toggle-switch>
+          <label for="togDisabledOn">Toggled ON Option</label>
+        </rx-input>
+        <rx-input>
+          <rx-toggle-switch id="togDisabledOff" ng-model="togDisabledOff" ng-disabled="true"></rx-toggle-switch>
+          <label for="togDisabledOff">Toggled OFF Option</label>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Disabled Textarea</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <textarea ng-model="txtAreaDisabled" disabled rows="8">{{txtAreaDisabled}}</textarea>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

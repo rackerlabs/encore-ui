@@ -1,0 +1,129 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxSelectFilter/scripts/rxSelectFilter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxSelectFilter/scripts/rxSelectFilter.js#L96" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxSelectFilter</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxselectfilter-page"><p>A prototype for creating objects that can be used for filtering arrays.</p>
+<h4 id="description_rxselectfilter">rxSelectFilter</h4>
+<p>This service exposes an object with single method, <code>create()</code>, used to
+create instances of a <code>rxSelectFilter</code>. It is configurable via three options:</p>
+<ul>
+<li><p><code>properties</code>: A list of the properties to create a filter control.
+Assuming the source data is an array of objects, a property is equivalent to
+an object&#39;s key.</p>
+</li>
+<li><p><code>available</code> (optional): An object that tracks which options are available
+for a property.
+Note that the key of the object matches a value in the <code>properties</code> array.</p>
+</li>
+<li><code>selected</code> (optional): An object that tracks which options are selected
+for a property. It has the same form as the <code>available</code> object, but the
+arrays indicate which options are selected, and as such are strict subsets
+of their <code>available</code> counterparts.</li>
+</ul>
+<h5 id="description_rxselectfilter_option-defaults">Option Defaults</h5>
+<p>Every property that is listed in <code>properties</code> but not provided as a key
+to <code>available</code> will be automatically populated the first time <code>applyTo()</code>
+(see below) is called.
+<pre class="prettyprint linenums">
+var filter = rxSelectFilter.create({
+  properties: ['year']
+});
+
+filter.applyTo([{
+  eventId: 1,
+  year: 2013
+}, {
+  eventId: 2,
+  year: 2014
+}, {
+  eventId: 3,
+  year: 2013
+}]);
+// filter.available is { year: [2013, 2014] }
+</pre>
+<strong>Note:</strong> There is an implied requirement that, when relying on the
+auto-populated filter, the input array will have at least one item for every
+available option. For example, this may not be the case when used with
+server-side pagination.</p>
+<p>Every property that is listed in <code>properties</code> but not provided as a key to
+<code>selected</code> is initialized to have all options selected (by looking them up
+in <code>available</code>).  If property is also not provided to <code>available</code>, its
+initialization is delayed until the first call of <code>applyTo()</code>.</p>
+<pre class="prettyprint linenums">
+var filter = rxSelectFilter.create({
+  properties: ['year'],
+  available: {
+      year: [2013, 2014, 2015]
+  }
+});
+// filter.selected is { year: [2013, 2014, 2015] }
+</pre>
+<h5 id="description_rxselectfilter_instances">Instances</h5>
+<p>Instances of <code>rxSelectFilter</code> have an <code>applyTo()</code> method, which applies the
+filter&#39;s internal state of selected options to the array. This will not
+often be called directly, but instead used by the
+<a href="#/api/utilities.filter:rxApply">rxApply</a> filter. As stated previously,
+the first call of <code>applyTo()</code> will initialize any
+<code>properties</code> that have not been defined in <code>available</code> or <code>selected</code>.
+<pre class="prettyprint linenums">
+var filter = rxSelectFilter.create({
+  properties: ['year'],
+  selected: {
+     year: [2014]
+    }
+});
+
+var filteredArray = filter.applyTo([{
+  eventId: 1,
+  year: 2013
+}, {
+  eventId: 2,
+  year: 2014
+}, {
+  eventId: 3,
+  year: 2013
+}]);
+// filteredArray is [{ eventId: 2, year: 2014 }]
+</pre>
+<p>The instance will also have all of the constructor options as public
+properties, so that they can be watched or changed.</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxSelectFilter/scripts/rxSelectFilter.js#L137" class="view-source icon-eye-open"> </a><h3 id="methods_create">create(options)</h3>
+<div class="create"><h5 id="methods_create_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="create-page"><p>Options object</p>
+</div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>properties</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="create-page"><p>A list of the properties to create a filter control. Assuming the
+source data is an array of objects, a property is equivalent to an
+object&#39;s key.
+<pre class="prettyprint linenums">
+rxSelectFilter.create({
+     properties: ['year']
+});
+</pre>
+</div></td></tr><tr><td>available <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="create-page"><p>An object that tracks which options are available for a property.
+<pre class="prettyprint linenums">
+rxSelectFilter.create({
+    // other options...
+    available: {
+       year: [2013, 2014, 2015],
+      }
+});
+</pre>
+</div></td></tr><tr><td>selected <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="create-page"><p>An object that tracks which options are selected for a property.
+It has the same form as the <code>available</code> object, but the arrays indicate
+which options are selected, and as such are strict subsets of their
+<code>available</code> counterparts.
+<pre class="prettyprint linenums">
+rxSelectFilter.create({
+    // other options...
+    selected: {
+        year: [2014],
+      }
+});
+</pre>
+</div></td></tr></tbody></table></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

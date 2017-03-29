@@ -1,0 +1,49 @@
+<form rx-form ng-controller="formIntermediateControlsDemoCtrl" name="formIntermediateControls">
+  <rx-form-section>
+    <rx-field>
+      <rx-field-name
+        ng-required="isNameRequired"
+        id="fieldNameVolumeName">Volume Name:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input type="text"
+            id="txtVolumeName"
+            name="txtVolumeName"
+            ng-model="volumeName"
+            ng-required="isNameRequired"
+            ng-pattern="/^\b(\w)?(\w)\w?\2\1$/" />
+        </rx-input>
+        <rx-help-text>Must be 2-5 letter palindrome (e.g. 'dewed')</rx-help-text>
+        <rx-help-text>Bound Value: {{volumeName}}</rx-help-text>
+        <rx-input>
+          <input rx-checkbox
+            id="chkVolumeNameRequired"
+            ng-model="isNameRequired" />
+          <label for="chkVolumeNameRequired">
+            Check and uncheck with empty volume name to see border
+          </label>
+        </rx-input>
+      </rx-field-content>
+    </rx-field>
+
+    <rx-field>
+      <rx-field-name>Email Address:</rx-field-name>
+      <rx-field-content>
+        <rx-input>
+          <input name="userEmail" type="email" ng-model="userEmail" foocheck />
+        </rx-input>
+        <rx-help-text>Must contain foo.</rx-help-text>
+        <div ng-if="formIntermediateControls.userEmail.$dirty && formIntermediateControls.userEmail.$invalid">
+          <div ng-messages="formIntermediateControls.userEmail.$error" ng-messages-multiple>
+            <rx-inline-error ng-message="email">
+              Invalid Email
+            </rx-inline-error>
+            <rx-inline-error ng-message="foocheck">
+              Your email must contain 'foo'
+            </rx-inline-error>
+          </div>
+        </div>
+      </rx-field-content>
+    </rx-field>
+  </rx-form-section>
+</form>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: rxEnvironment.page.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: rxEnvironment.page.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+
+/**
+ * @namespace
+ * @description Utilities for getting the current or original environment. Can compare either to a list of default
+ * environment names, or custom ones of your choosing.
+ * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+ */
+exports.rxEnvironment = {
+    /**
+     * @function
+     * @description The current environment the user sees. The default is set to something simple and reasonable,
+     * but should you find a need to supply your own environments, be sure to have `environments` defined in
+     * your protractor conf's params section.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @returns {String}
+     * @example
+     * browser.get('localhost:9000/home');
+     * expect(encore.rxEnvironment.current()).to.eventually.equal('localhost');
+     * browser.get('staging.encore.rackspace.com/home');
+     * expect(encore.rxEnvironment.current()).to.eventually.equal('staging');
+     * browser.get('encore.rackspace.com/home');
+     * expect(encore.rxEnvironment.current()).to.eventually.equal('production');
+     */
+    current: function () {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        var component = this;
+        return browser.getCurrentUrl().then(function (url) {
+            return component.compare(url);
+        });
+    },
+
+    /**
+     * @function
+     * @description The original environment, as defined in the current protractor conf file.
+     * Returns a promise to keep the usage consistent with {@link rxEnvironment.current}.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @example
+     * browser.get('localhost:9000/home');
+     * expect(encore.rxEnvironment.original()).to.eventually.equal('localhost');
+     * browser.get('staging.encore.rackspace.com/home');
+     * expect(encore.rxEnvironment.original()).to.eventually.equal('localhost');
+     */
+    original: function () {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        return protractor.promise.fulfilled(this.compare(browser.baseUrl));
+    },
+
+    /**
+     * @private
+     * @function
+     * @see rxEnvironment.environments
+     * @description Compare the url passed in to the list of environments that exist. This is either the hard coded
+     * defaults found in {@link rxEnvironment.environments}, or the ones you choose to include in your conf file
+     * under `browser.params.environments`.
+     * Many parts of this documentation implicitly accept and return promises, since they are so commonly used.
+     * This is not one of those. This needs a string, not a promise. Resolve your own promise first before calling this.
+     * @param {String} url - The url, as a string.
+     */
+    compare: function (url) {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        return _.find(this.environments, function findEnvironment (envName, env) {
+            if (_.includes(url, env)) {
+                return envName;
+            }
+        }) || 'production';
+    },
+
+    /**
+     * @type {Object}
+     * @description The default environments used in nearly all encore applications. You can provide your own
+     * environments by setting your own in your protractor configuration file as `browser.params.environments`.
+     * This object clones the environments found there before filling in any missing entries with reasonable defaults.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @property {String} localhost - 'localhost'
+     * @property {String} staging - 'staging'
+     * @property {String} preprod - 'preprod'
+     * @example
+     * // protractor.conf.js
+     * params: {
+     *     environments: { staging: 'http://198.51.100.24' }
+     * }
+     * // test.js
+     * browser.get('http://198.51.100.24/home');
+     * expect(rxEnvironment.isStaging()).to.eventually.be.true;
+     */
+    environments: _.extend({
+        localhost: 'localhost',
+        staging: 'staging',
+        preprod: 'preprod'
+    }, browser.params.environments),
+
+    /**
+     * @function
+     * @description Whether or not the current environment is in a localhost environment.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @param {Object} [options] - Named arguments.
+     * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
+     * environment when comparing, instead it will compare it to `protractor.baseUrl`.
+     * @returns {Boolean}
+     */
+    isLocalhost: function (options) {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        return this.confirmEnvironment(options, 'localhost');
+    },
+
+    /**
+     * @function
+     * @description Whether or not the current environment is in a staging environment.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @param {Object} [options] - Named arguments.
+     * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
+     * environment when comparing, instead it will compare it to `protractor.baseUrl`.
+     * @returns {Boolean}
+     */
+    isStaging: function (options) {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        return this.confirmEnvironment(options, 'staging');
+    },
+
+    /**
+     * @function
+     * @description Whether or not the current environment is in a preproduction environment.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @param {Object} [options] - Named arguments.
+     * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
+     * environment when comparing, instead it will compare it to `protractor.baseUrl`.
+     * @returns {Boolean}
+     */
+    isPreprod: function (options) {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        return this.confirmEnvironment(options, 'preprod');
+    },
+
+    /**
+     * @function
+     * @description Whether or not the current environment is in a production environment.
+     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @param {Object} [options] - Named arguments.
+     * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
+     * environment when comparing, instead it will compare it to `protractor.baseUrl`.
+     * @returns {Boolean}
+     */
+    isProd: function (options) {
+        console.warn(
+            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+        );
+        return this.confirmEnvironment(options, 'production');
+    },
+
+    /**
+     * @private
+     * @description `options` only supports { useBaseUrl: true }. If { useBaseUrl: false }, just leave undefined.
+     */
+    confirmEnvironment: function (options, environment) {
+        var component = this;
+        if (options === undefined) {
+            options = { useBaseUrl: false };
+        }
+
+        return browser.getCurrentUrl().then(function (url) {
+            return _.isEqual(component.compare(options.useBaseUrl ? protractor.baseUrl : url), environment);
+        });
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxOptionTable.html">exercise/rxOptionTable</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxOptionTable.html">rxOptionTable</a></li><li><a href="rxOptionTable.row.html">rxOptionTable.row</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li><li><a href="tabs.html">tabs</a></li><li><a href="tabs.tab.html">tabs.tab</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 15:01:38 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

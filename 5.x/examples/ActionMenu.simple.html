@@ -1,0 +1,89 @@
+<table class="table-striped" ng-controller="actionMenuSimpleCtrl">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Globally dismissible</td>
+      <td>
+        <rx-action-menu id="globalDismissal">
+          <ul class="actions-area">
+            <li>
+              <rx-modal-action
+                template-url="addActionTemplate.html"
+                classes="msg-action">
+                <i class="fa fa-plus fa-lg"></i> Add
+              </rx-modal-action>
+            </li>
+            <li>
+              <rx-modal-action
+                template-url="deleteActionTemplate.html"
+                classes="msg-warn">
+                <i class="fa fa-times fa-lg"></i> Delete
+              </rx-modal-action>
+            </li>
+          </ul>
+        </rx-action-menu>
+      </td>
+    </tr>
+    <tr>
+      <td>Only dismissible by clicking on cog</td>
+      <td>
+        <rx-action-menu global-dismiss="false">
+          <ul class="actions-area">
+            <li>
+              <rx-modal-action
+                template-url="addActionTemplate.html"
+                classes="msg-action">
+                <i class="fa fa-plus fa-lg"></i> Add
+              </rx-modal-action>
+            </li>
+            <li>
+              <rx-modal-action
+                template-url="deleteActionTemplate.html"
+                classes="msg-warn">
+                <i class="fa fa-times fa-lg"></i> Delete
+              </rx-modal-action>
+            </li>
+          </ul>
+        </rx-action-menu>
+      </td>
+    </tr>
+    <td>Unorthodox Behaviors (no modals, hidden item)</td>
+    <td>
+      <rx-action-menu id="custom">
+        <ul class="actions-area">
+          <li>
+            <button class="btn-link trigger" ng-click="add()">
+              <span class="msg-action"><i class="fa fa-plus fa-lg"></i> Add</span>
+            </button>
+          </li>
+          <li>
+            <button class="btn-link trigger" ng-click="remove()">
+              <span class="msg-warn"><i class="fa fa-times fa-lg"></i> Delete</span>
+            </button>
+          </li>
+          <li ng-show="false">
+            <button class="btn-link trigger">
+              <span class="msg-warn"><i class="fa fa-times fa-lg"></i> Visually Hidden</span>
+            </button>
+          </li>
+        </ul>
+      </rx-action-menu>
+    </td>
+  </tbody>
+</table>
+
+<script type="text/ng-template" id="deleteActionTemplate.html">
+    <rx-modal-form title="Delete Action" submit-text="Delete">
+        <span>Do you want to delete something?</span>
+    </rx-modal-form>
+</script>
+<script type="text/ng-template" id="addActionTemplate.html">
+    <rx-modal-form title="Add Action" submit-text="Add">
+        <span>Do you want to add something?</span>
+    </rx-modal-form>
+</script>

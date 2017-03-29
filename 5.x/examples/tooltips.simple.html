@@ -1,0 +1,16 @@
+<div ng-controller="tooltipsSimpleExampleCtrl">
+  <h3>Tooltip Placement</h3>
+  <rx-button tooltip="Left tooltip" tooltip-placement="left" default-msg="Left tooltip"></rx-button>
+  &nbsp;
+  <rx-button tooltip="Right tooltip" tooltip-placement="right" default-msg="Right tooltip"></rx-button>
+  &nbsp;
+  <rx-button tooltip="A top tooltip" tooltip-placement="top" default-msg="Top tooltip"></rx-button>
+  &nbsp;
+  <rx-button tooltip="A bottom tooltip" tooltip-placement="bottom" default-msg="Bottom tooltip"></rx-button>
+
+  <h3>Simple Tooltip Defined in the Controller</h3>
+  <rx-button tooltip="{{dynamicTooltip}}" default-msg="Hover to see text coming from the controller."></rx-button>
+
+  <h3>HTML Tooltip</h3>
+  <span tooltip-html="htmlTooltip"><span>Hover over this text to see HTML in a tooltip</span>
+</div>

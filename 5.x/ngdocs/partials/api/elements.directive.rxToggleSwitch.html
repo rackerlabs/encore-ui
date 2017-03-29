@@ -1,0 +1,41 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Forms/scripts/rxToggleSwitch.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Forms/scripts/rxToggleSwitch.js#L37" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxToggleSwitch</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><p>Displays an on/off switch toggle</p>
+<p>The switch shows the states of &#39;ON&#39; and &#39;OFF&#39;, which evaluate to <code>true</code> and
+<code>false</code>, respectively.  The model values are configurable with the
+<code>true-value</code> and <code>false-value</code> attributes.</p>
+<p><strong> Note: If the value of the model is not defined at the time of
+initialization, it will be automatically set to the false value. </strong></p>
+<p>The expression passed to the <code>post-hook</code> attribute will be evaluated every
+time the switch is toggled (after the model property is written on the
+scope).  It takes one argument, <code>value</code>, which is the new value of the model.
+This can be used instead of a <code>$scope.$watch</code> on the <code>ng-model</code> property.
+As shown in the <a href="../#/elements/Forms">demo</a>, the <code>ng-disabled</code>
+attribute can be used to prevent further toggles if the <code>post-hook</code> performs
+an asynchronous operation.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-toggle-switch
+       ng-model="{String}"
+       post-hook="{Function}"
+       [ng-disabled="{Expression}"]
+       [true-value="{Expression}"]
+       [false-value="{Expression}"]&gt;
+&lt;/rx-toggle-switch&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ng-model</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><p>The scope property to bind to</p>
+</div></td></tr><tr><td>postHook</td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><p>A function to run when the switch is toggled</p>
+</div></td></tr><tr><td>ngDisabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><p>If the expression is truthy, then the
+<code>disabled</code> attribute will be set on the toggle switch.</p>
+</div> <p><em>(default: false)</em></p></td></tr><tr><td>trueValue <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><p>The value of the scope property when the switch is on</p>
+</div> <p><em>(default: true)</em></p></td></tr><tr><td>falseValue <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><p>The value of the scope property when the switch is off</p>
+</div> <p><em>(default: false)</em></p></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxtoggleswitch-page"><pre class="prettyprint linenums">
+&lt;rx-toggle-switch ng-model="foo"&gt;&lt;/rx-toggle-switch&gt;
+</pre>
+</div></div>
+</div>

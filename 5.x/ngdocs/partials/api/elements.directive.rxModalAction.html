@@ -1,0 +1,79 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Modals/scripts/rxModalAction.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Modals/scripts/rxModalAction.js#L84" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxModalAction</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>Link which will show a modal window on click, and handle callbacks for
+pre/post modal actions</p>
+<h3 id="description_template-url">Template URL</h3>
+<p>Due to the complex nature of the information passed into modal windows,
+HTML is handled via a template (versus transcluding the content).</p>
+<p>One benefit is that this allows for multiple actions to re-use the same
+template. It also allows modal content to live in a separate file, which
+can be helpful for maintainability if the modal HTML is complex. While this
+can be done via <code>ng-include</code>, it would be a little extra work for a common
+scenario.</p>
+<h3 id="description_hooks">Hooks</h3>
+<p><code>rxModalAction</code> allows you to define functions to be called at different
+points of the modal lifecycle.  These hooks are optional and the modal window
+is fully functional without any being defined.</p>
+<h4 id="description_hooks_pre-hook">Pre-hook</h4>
+<p>The <code>pre-hook</code> function is called before the modal window is shown.  Use this
+to populate field information inside of the modal.  This is useful when you
+have information you don&#39;t want loaded when the page is first opened, but do
+need for the modal.  It is also useful for dynamic information that is based
+on actions taken.</p>
+<h4 id="description_hooks_post-hook">Post-hook</h4>
+<p>The <code>post-hook</code> function is called after the modal is submitted.  A
+<code>post-hook</code> is useful to take actions based upon input in the modal.  For
+example, you can use the user input that gets entered to send API requests
+with specific JSON data.  Or you can simply run a pre-defined API call
+(assuming the modal is a simple confirmation dialog).</p>
+<h4 id="description_hooks_dismiss-hook">Dismiss-hook</h4>
+<p>The <code>dismiss-hook</code> function is called after the modal is closed without
+submitting.  This may happen via any of the following scenarios:</p>
+<ul>
+<li>Clicking the &quot;Cancel&quot; button</li>
+<li>Clicking the &quot;X&quot; button in the top right</li>
+<li>Pressing <code>ESC</code></li>
+<li>Explicitly calling <code>$modalInstance.dismiss()</code> in your javascript logic</li>
+</ul>
+<p>This hook is useful for making changes to UI state when the user wants to
+cancel the given action.  For example, you may use this to return an
+indeterminate component to a previous state (e.g. toggle switches).</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-modal-action
+       [pre-hook="{Function}"]
+       [post-hook="{Function}"]
+       [dismiss-hook="{Function}"]
+       [template-url="{String}"]
+       [disable-esc="{*}"]
+       [ng-disabled="{Expression}"]&gt;
+&lt;/rx-modal-action&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>preHook <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>Function to call when a modal is opened</p>
+</div></td></tr><tr><td>postHook <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>Function to call when a modal is submitted (not called when modal cancelled)</p>
+</div></td></tr><tr><td>dismissHook <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>Function to call when a modal is dismissed (not called when modal submitted)</p>
+</div></td></tr><tr><td>templateUrl <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>URL of template to use for modal content</p>
+</div></td></tr><tr><td>disable-esc <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">*</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>If the <code>disable-esc</code> attribute is present, then &quot;Press Esc to close&quot; will be
+disabled for the modal. This attribute takes no values.</p>
+</div></td></tr><tr><td>ngDisabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>If the expression evaluates truthy, then the link for opening the modal will
+be disabled.</p>
+</div> <p><em>(default: false)</em></p></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxmodalaction-page"><pre class="prettyprint linenums">
+&lt;rx-modal-action
+    pre-hook="myPreHook(this)"
+    post-hook="myPostHook(fields)"
+    template-url="modalContent.html"
+    disable-esc&gt;
+        My Link Text
+&lt;/rx-modal-action&gt;
+</pre>
+</div></div>
+</div>

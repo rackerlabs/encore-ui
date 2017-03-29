@@ -1,0 +1,277 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxAutoSave/scripts/rxAutoSave.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/utilities/rxAutoSave/scripts/rxAutoSave.js#L353" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAutoSave</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxautosave-page"><p>A factory that controllers can use to help automatically save and load
+form data (via rxLocalStorage) on any given page.</p>
+<p><code>rxAutoSave</code> provides a way to store values in a form for later. For instance, if a user is entering values into a
+form, then accidentally navigate to a new page, we likely want the values to be present again when they click the
+&quot;Back&quot; button in their browser. By correctly setting up an <code>rxAutoSave</code> instance for the form, this can happen
+automatically. By default, all saved values will be cleared after two days.</p>
+<p><code>rxAutoSave</code> is a service intended to be used in controllers. No directives are provided. The intent is that the
+HTML forms themselves will have no knowledge that their values are being saved. <code>rxAutoSave</code> operates by doing a
+<code>$watch</code> on the model values for a given form, storing those model values whenever they change, and loading them
+on instantation.</p>
+<p>The stored data is keyed on the page URL. This means you can track the form state for multiple pages simultaneously.
+For example, say you have an &quot;Edit&quot; form. The user has gone to edit some values for &quot;Server1&quot;, at
+<code>&quot;/servers/server1/edit&quot;</code>, and for &quot;Server2&quot; at <code>&quot;/servers/server2/edit&quot;</code>. The edit progress for both servers will
+be saved independently of each other. <code>rxAutoSave</code> will also let you independently store values for multiple forms
+appearing on the same page.</p>
+<p>By default, all values are stored in <a href="#/api/utilities.service:rxLocalStorage">rxLocalStoage</a> which interfaces with the
+browser&#39;s <code>localStorage</code> object. This means that if a user logs into a different computer, their stored values will
+not be present.  Use of <code>rxSessionStorage</code> is also supported out-of-the-box. If you wish to save form states 
+elsewhere (for instance, to an API), see the &quot;Storage Location&quot; section below.</p>
+<h4 id="description_setting-up-your-template">Setting up your template</h4>
+<p>Nothing explicit needs to be done in your templates to add support for <code>rxAutoSave</code>. The only requirement is that all
+the <code>ng-model</code> values in a given form are stored within one object (<code>formData</code> below). For example, say you have the
+following form in your template:</p>
+<pre class="prettyprint linenums">
+  &lt;form name="demoForm" rx-form&gt;
+      &lt;rx-form-section stacked&gt;
+          &lt;rx-field&gt;
+              &lt;rx-field-name&gt;A checkbox field!:&lt;/rx-field-name&gt;
+              &lt;rx-field-content&gt;
+                  &lt;rx-input&gt;
+                      &lt;input rx-checkbox id="chkCheckbox" ng-model="formData.checkbox" /&gt;
+                      &lt;label for="chkCheckbox"&gt;I likely don't disagree&lt;/label&gt;
+                  &lt;/rx-input&gt;
+              &lt;/rx-field-content&gt;
+          &lt;/rx-field&gt;
+
+          &lt;rx-field&gt;
+              &lt;rx-field-name&gt;Name:&lt;/rx-field-name&gt;
+              &lt;rx-field-content&gt;
+                  &lt;rx-input&gt;
+                      &lt;input type="text" ng-model="formData.name" /&gt;
+                  &lt;/rx-input&gt;
+              &lt;/rx-field-content&gt;
+          &lt;/rx-field&gt;
+
+          &lt;rx-field&gt;
+            &lt;rx-field-name&gt;Description:&lt;/rx-field-name&gt;
+            &lt;rx-field-content&gt;
+                &lt;rx-input&gt;
+                    &lt;textarea rows="10" ng-model="formData.description"&gt;&lt;/textarea&gt;
+                &lt;/rx-input&gt;
+            &lt;/rx-field-content&gt;
+          &lt;/rx-field&gt;
+      &lt;/rx-form-section&gt;
+  &lt;/form&gt;
+</pre>
+<p><strong>NOTE:</strong> All the models for the form are attributes of the <code>formData</code> scope variable.</p>
+<h4 id="description_setting-up-your-controller">Setting up your controller</h4>
+<p>In your controller, you would have something like this in your initialization:</p>
+<pre class="prettyprint linenums">
+  $scope.formData = {
+      checkbox: false,
+      name: '',
+      description: ''
+  };
+</pre>
+<p>By default, every time this page was loaded, the form would be initialized with an unchecked checkbox, a blank
+<code>Name</code> field and a blank <code>Description</code>.</p>
+<p>To have <code>rxAutoSave</code> automatically save values, first inject <code>rxAutoSave</code> into your controller, and modify
+initialization as follows:</p>
+<pre class="prettyprint linenums">
+  $scope.formData = {
+      checkbox: false,
+      name: '',
+      description: ''
+  };
+
+  var autosave = rxAutoSave($scope, 'formData');
+</pre>
+<p>And that&#39;s it! Your <code>rxAutoSave</code> instance will watch for any change to <code>$scope.formData</code>, and will automatically
+write those changes to <code>rxLocalStorage</code>.</p>
+<p>A third argument can be passed to <code>rxAutoSave</code>, specifying usage options. The default values for these options are:</p>
+<pre class="prettyprint linenums">
+  var autosave = rxAutoSave($scope, 'formData', {
+    clearOnSuccess: null,        // Promise
+    ttl: 172800,                 // Integer (seconds) - two days default
+    load: true,                  // Boolean or Promise that will resolve with a Boolean
+    save: true,                  // Boolean or Promise that will resolve with a Boolean
+    exclude: [],                 // String[]
+    storageBackend: rxLocalStorage // Object
+  });
+</pre>
+<p>All of these options will be described below.</p>
+<h4 id="description_multiple-forms-on-one-page">Multiple Forms on one page</h4>
+<p><code>rxAutoSave</code> supports independently saving multiple forms on one page. To do this, have each form&#39;s model in its own
+object, and create individual <code>rxAutoSave</code> instances for each. i.e.:</p>
+<pre class="prettyprint linenums">
+  $scope.form1Data = {
+      checkbox: false,
+      name: '',
+      description: ''
+  };
+
+  $scope.form2Data = {
+      customerName: '',
+      birthday: ''
+  };
+
+  var autosave1 = rxAutoSave($scope, 'form1Data');
+  var autosave2 = rxAutoSave($scope, 'form2Data');
+</pre>
+<h4 id="description_clearing-values">Clearing values</h4>
+<p>If you need to clear the stored values, you can call <code>autosave.clear()</code>. This will clear the values from
+<code>rxLocalStorage</code>, but won&#39;t affect your <code>$scope.formData</code> values.</p>
+<p>More likely, rather than manually calling <code>autosave.clear()</code>, you&#39;d like the values to be cleared on a &quot;successful
+submit&quot;. For example, if your user is editing the form described above, and they click a &quot;Submit&quot; button to send the
+values to a server, <code>rxLocalStorage</code> should be cleared for this form if the server call is a success.</p>
+<p>To do this, pass an &quot;options&quot; parameter as the third argument to <code>rxAutoSave</code>, setting a promise on the
+<code>clearOnSuccess</code> attribute, i.e.</p>
+<pre class="prettyprint linenums">
+  var autosave = rxAutoSave($scope, 'formData', { clearOnSuccess: serverSubmitPromise });
+</pre>
+<p>If the <code>serverSubmitPromise</code> resolves, then <code>rxAutoSave</code> will automatically clear the stored values for <code>formData</code> on
+this page.</p>
+<p>When instantiating your controller, there&#39;s a good chance that the <code>clearOnSuccess</code> promise you are interested in
+does not actually exist yet, i.e. if you want to clear on a successfull submit, you need the submit <code>promise</code>.
+Instances of <code>rxAutoSave</code> provide a <code>clearOnSuccess()</code> method to accept this promise after instantiation:</p>
+<pre class="prettyprint linenums">
+  var autosave = rxAutoSave($scope, 'formData');
+
+  // Take some other actions
+  ...
+
+  $scope.onSubmit = function () {
+      // Server.save() is some $resource that returns a promise
+      var promise = Server.save($scope.formData);
+      autosave.clearOnSuccess(promise);
+  }
+</pre>
+<h4 id="description_automatic-expiry">Automatic expiry</h4>
+<p>Another way to automatically clear values is to set an explict Time-To-Live (TTL) when instantiating your
+<code>rxAutoSave</code> instance. This is done with the <code>ttl</code> property of the <code>opts</code> object,</p>
+<pre class="prettyprint linenums">
+  // Automatically expire after 24 hours
+  var autosave = rxAutoSave($scope, 'formData', { ttl: 86400 });
+</pre>
+<p>By default, a <code>ttl</code> of <code>172800</code> (two days) is used.</p>
+<p>The <code>ttl</code> property takes a length of time in seconds. Whenever something in <code>formData</code> changes, the expiry time will
+be freshly set. With the example above, whenever <code>formData</code> is changed, the new expiry time will be set to 24 hours
+from the time of the change. In addition, we freshly set the expiry time whenever the data is loaded. If <code>formData</code>
+is 12 hours away from expiring, and the user visits the page again, then the expiry will be freshly set to a new 24
+hours, whether or not the user makes a change.</p>
+<p>If a user visits a page after the data has expired, the data will be cleared from storage and not automatically
+loaded. (i.e. we&#39;re not running a continuous background process to look for expired data, we only check for
+expiration the next time <code>rxAutoSave</code> tries to load the data).</p>
+<p>To turn off automatic expiry for a given form, pass a value of <code>{ ttl: 0 }</code>. In this case, the data will never
+expire. You will have to clear it at an appropriate time by using one of the methods mentioned above.</p>
+<h4 id="description_preventing-automatic-loading">Preventing automatic loading</h4>
+<p>If you need to prevent <code>rxAutoSave</code> from automatically loading stored values, you can again use the optional third
+parameter, this time setting <code>load: false</code>, i.e.</p>
+<pre class="prettyprint linenums">
+  var autosave = rxAutoSave($scope, 'formData', { load: false });
+</pre>
+<p><code>load:</code> will accept a boolean, or it can accept a promise that eventually resolves to a boolean. Accepting a promise
+will let you delay your decision on whether or not to load (for example, asking a user if they want values loaded).
+Note that if you use a promise, <code>rxAutoSave</code> will look at its resolved value. If the resolved value is <code>true</code>, then
+the data will be loaded. If the resolved value is <code>false</code>, or the promise fails/rejects, then the data will not be
+loaded.</p>
+<h4 id="description_excluding-some-values-from-loading/saving">Excluding some values from loading/saving</h4>
+<p>By default, <code>rxAutoSave</code> automatically loads and saves all the stored values for a form. If you want to prevent it
+from loading/saving <em>some</em> values, you can do:</p>
+<pre class="prettyprint linenums">
+  var autosave = rxAutoSave($scope, 'formData', { exclude: ['description'] });
+</pre>
+<p>This will tell <code>rxAutoSave</code> not to load from or save to the stored <code>description</code> value, but everything else in
+<code>formData</code> will be loaded/saved.</p>
+<h4 id="description_manual-saving">Manual saving</h4>
+<p>It might be that you don&#39;t want your <code>rxAutoSave</code> instance to automatically save to the storage backend
+automatically. In some cases, you might want to disable automatic saving and instead manually tell your instance
+when it should save. To turn off automatic saving, set up your instance as follows:</p>
+<pre class="prettyprint linenums">
+  var manualsave = rxAutoSave($scope, 'formData', { save: false });
+</pre>
+<p>Then, whenever you want your <code>autosave</code> instance to commit the current model values to storage, do</p>
+<pre class="prettyprint linenums">
+  manualsave.save();
+</pre>
+<p>As with the <code>load</code> parameter, you can pass either a boolean or a promise to <code>save</code>.</p>
+<h4 id="description_storage-location">Storage location</h4>
+<p>All values for <code>rxAutoSave</code> are by default stored in the browser&#39;s <code>localStorage</code> through the <code>rxLocalStorage</code>
+service, and keyed on the URL of the page, with a <code>rxAutoSave::</code> prefix. For example, if the above form were
+present at the URL <code>&#39;users/JonnyRocket/edit&#39;</code>, then the form data would be saved into the browser&#39;s <code>localStorage</code>
+at location <code>&#39;rxAutoSave::users/JonnyRocket/edit&#39;</code>.</p>
+<p>If you wish to use a different storage backend (<code>rxSessionStorage</code>, for instance), use the <code>storageBackend</code> 
+parameter:</p>
+<pre class="prettyprint linenums">
+   var autosave = rxAutoSave($scope, 'formData', { storageBackend: rxSessionStorage });
+</pre>
+<p><code>storageBackend</code> requires that you pass it an object which has <code>getObject(key)</code> and <code>setObject(key, val)</code> methods.
+<code>rxLocalStorage</code> and <code>rxSessionStorage</code> are both provided by EncoreUI, and support this interface.</p>
+<p>You can use your own custom backends as well, as long as it supports <code>getObject(key)</code> and <code>setObject(key, val)</code>.</p>
+<h4 id="description_custom-storage-key-values">Custom Storage Key Values</h4>
+<p>Sometimes, it may be necessary to change how a key is formed for the specified <code>storageBackend</code>. As previously
+stated, these are calculated by prepending <code>&#39;rxAutoSave::&#39;</code> before the url. You can override this by passing in a
+<code>keyShaping</code> function to the options object.</p>
+<p>An example one would be as follows:</p>
+<pre class="prettyprint linenums">
+  var autosave = rxAutoSave($scope, 'formData', {
+      keyShaping: function (key) {
+          return key.replace('?cache=false', '');
+      }
+  });
+</pre>
+<p>The above example could be used to have the current url ignore any caching flags passed in. The <code>keyShaping</code>
+function will receive the default calculated key (<code>rxAutoSave::</code> + $location.path()). By default, <code>keyShaping</code>
+just returns the original calculated key.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">rxAutoSave(scope, variable[, options]);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>scope</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>scope to apply a <code>$watch</code> expression</p>
+</div></td></tr><tr><td>variable</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>variable name corresponding to an object on the given scope</p>
+</div></td></tr><tr><td>options <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>usage options</p>
+</div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>clearOnSuccess <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Clear saved data on successful resolution of given promise.</p>
+</div></td></tr><tr><td>keyShaping <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Sometimes, it may be necessary to change how a key is formed for the specified
+<code>storageBackend</code>.  Keys are calculated by prepending <code>&#39;rxAutoSave::&#39;</code> before the
+url. Your custom <code>keyShaping</code> function will take one parameter (<code>key</code>), to which
+you may modify to your specific needs.</p>
+<p>The below example will ignore any caching flags in the url.
+<pre class="prettyprint linenums">
+var autosave = rxAutoSave($scope, 'formData', {
+    keyShaping: function (key) {
+        return key.replace('?cache=false', '');
+    }
+});
+</pre>
+</div></td></tr><tr><td>ttl <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-integer">Integer</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Time to Live (in seconds) - defaults to 2 days</p>
+<p>Whenever data changes in the watched variable, the expiry time will be freshly set
+In addition, we freshly set the expiry time whenever the data is loaded. If the data
+is 12 hours away from expiring and a user visits the page again, the expiry will be
+freshly set to a new 48 hours, whether or not the user makes a change.</p>
+<p>If a user visits a page after the data has expired, the data will be cleared from
+storage and not automatically loaded.</p>
+<ul>
+<li>A continuous background process is not running to look for expired data.</li>
+<li>We only check for expiration the next time <code>rxAutoSave</code> tries to load the data.</li>
+</ul>
+<p>To turn off automatic expiry for a given form, pass a value of <code>{ ttl: 0 }</code>.
+In this case, the data will never expire and you will have to clear it manually at
+an appropriate time by using one of the following:</p>
+<ul>
+<li><code>clear()</code></li>
+<li><code>clearOnSuccess()</code></li>
+</ul>
+</div> <p><em>(default: 172800)</em></p></td></tr><tr><td>load <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>If false, will prevent data from being automatically loaded onto the scope.</p>
+<p>You may use a promise that resolves to a boolean, if desired.</p>
+</div> <p><em>(default: true)</em></p></td></tr><tr><td>save <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>If false, will prevent data from being automatically saved on change.</p>
+<p>You may use a promise that resolves to a boolean, if desired.</p>
+</div> <p><em>(default: true)</em></p></td></tr><tr><td>exclude <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String[]</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>A string of property names to exclude from automatic save. This is useful to
+exclude saving any sensitive information like passwords, credit card numbers, etc.</p>
+<pre class="prettyprint linenums">
+var autosave = rxAutoSave($scope, 'formData', {
+    exclude: ['password']
+});
+</pre>
+</div></td></tr><tr><td>storageBackend <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="utilities-service-page utilities-service-rxautosave-page"><p>Must be an object which has <code>getObject(key)</code> and <code>setObject(key, val)</code> methods.
+<code>rxLocalStorage</code> and <code>rxSessionStorage</code> are both provided by EncoreUI, and support
+this interface.</p>
+<p>You can use your own custom backends as well, as long as it supports <code>getObject(key)</code>
+and <code>setObject(key, val)</code>.</p>
+</div> <p><em>(default: rxLocalStorage)</em></p></td></tr></tbody></table></td></tr></tbody></table></div>
+</div>

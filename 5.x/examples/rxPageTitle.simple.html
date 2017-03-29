@@ -1,0 +1,5 @@
+<div ng-controller="rxPageTitleSimpleCtrl">
+  Current Title: {{pageTitle}} <button ng-click="refreshTitle()" class="button">Get Updated Title</button><br />
+
+  <input type="text" ng-change="changeTitle()" ng-model="newTitle" placeholder="New Title" />
+</div>

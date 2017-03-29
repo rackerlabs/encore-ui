@@ -1,0 +1,52 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxFloatingHeader.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Tables/scripts/rxFloatingHeader.js#L47" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxFloatingHeader</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxfloatingheader-page"><p><code>rxFloatingHeader</code> is an attribute directive that turns a tableheader into a floating persistent header so that names
+of columns are still visible, even as a user scrolls down the page. This is based off of the example at
+<a href="http://css-tricks.com/persistent-headers/">http://css-tricks.com/persistent-headers/</a></p>
+<ul>
+<li><p>To use it, add an <code>rx-floating-header</code> attribute to a <code>table</code> element.</p>
+</li>
+<li><p>A common pattern in our products is to place an <code>&lt;input&gt;</code> filter at the top of the table, to restrict the items
+that are displayed. We support this as well, by placing the <code>&lt;input&gt;</code> directly inside of the <code>&lt;thead&gt;</code> in its
+own <code>&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;</code>.</p>
+</li>
+<li><p>Make sure you set the <code>colspan</code> attribute on the filter&#39;s <code>&lt;th&gt;</code>, to match the number of columns you have.</p>
+</li>
+<li><p><code>rxFloatingHeader</code> is also fully compatible with <a href="#/api/elements.directive:rxSortableColumn">rxSortableColumn</a></p>
+</li>
+<li>and <a href="#/api/elements.directive:rxPaginate">elements.directive:rxPaginate</a>.</li>
+</ul>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY rx-floating-header&gt;
+   ...
+&lt;/ANY&gt;</pre>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxfloatingheader-page"><pre class="prettyprint linenums">
+&lt;table rx-floating-header&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;td colspan="2"&gt;
+        &lt;rx-search-box
+            ng-model="searchText"
+            rx-placeholder="'Filter by any...'"&gt;
+        &lt;/rx-search-box&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Column One Header&lt;/th&gt;
+      &lt;th&gt;Column Two Header&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    ...
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</pre>
+</div></div>
+</div>

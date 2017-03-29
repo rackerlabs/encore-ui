@@ -1,0 +1,43 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxBatchActions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Tables/scripts/rxBatchActions.js#L35" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxBatchActions</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxbatchactions-page"><p>This directive is responsible for adding the batch action menu link
+inside a table header. It can only be used when rxBulkSelect is also
+present. It should be placed in a <code>&lt;th&gt;</code> element.</p>
+<p>It will also transclude <code>&lt;li&gt;</code> items, each representing a modal bulk
+select action. You don&#39;t need to include the correctly styled <code>&lt;ul&gt;</code>, it
+will do this for you.</p>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/elements.directive:rxBulkSelect">rxBulkSelect</a></code>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-batch-actions&gt;
+&lt;/rx-batch-actions&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="elements-directive-page elements-directive-rxbatchactions-page"><pre class="prettyprint linenums">
+&lt;th colspan="10"&gt;
+    &lt;rx-batch-actions&gt;
+        &lt;li&gt;
+            &lt;rx-modal-action
+                template-url="templates/suspend-modal.html"
+                controller="SuspendServersCtrl"
+                classes="msg-info"&gt;
+                &lt;i class="fa fa-fw fa-power-off msg-info"&gt;&lt;/i&gt;
+                Suspend Selected Servers
+            &lt;/rx-modal-action&gt;
+        &lt;/li&gt;
+    &lt;/rx-batch-actions&gt;
+&lt;/th&gt;
+</pre>
+</div></div>
+</div>

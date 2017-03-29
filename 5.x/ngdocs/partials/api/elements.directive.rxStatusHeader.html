@@ -1,0 +1,36 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxStatusHeader.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Tables/scripts/rxStatusHeader.js#L36" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxStatusHeader</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxstatusheader-page"><p>Place this attribute directive on the <code>&lt;th&gt;</code> for the status columns. It
+ensures correct styling.</p>
+<p>For the <code>&lt;th&gt;</code> component representing the status column, add the
+<code>rx-status-header</code> attribute, i.e.</p>
+<pre class="prettyprint linenums">
+&lt;th rx-status-header&gt;&lt;/th&gt;
+</pre>
+Note that status columns are sortable with rxSortableColumn, just like any
+other column. The demo below shows an example of this.</p>
+<p><strong>Note:</strong> The <code>&lt;th&gt;</code> is defined as:</p>
+<pre class="prettyprint linenums">
+&lt;th rx-status-header&gt;
+    &lt;rx-sortable-column
+        sort-method="sortcol(property)"
+        sort-property="status"
+        predicate="sort.predicate"
+        reverse="sort.reverse"&gt;
+    &lt;/rx-sortable-column&gt;
+&lt;/th&gt;
+</pre>
+<p>Note that <code>sort-property=&quot;status&quot;</code> is referring to the <code>server.status</code>
+property on each row. Thus the sorting is done in this example by the status
+text coming from the API.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY rx-status-header&gt;
+   ...
+&lt;/ANY&gt;</pre>
+</div>
+</div>

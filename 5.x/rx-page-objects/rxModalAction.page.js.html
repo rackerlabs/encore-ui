@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: rxModalAction.page.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: rxModalAction.page.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var protractor_1 = require("protractor");
+var rxComponent_1 = require("./rxComponent");
+/**
+ * @description By default, every modal will have a title, subtitle, a submit button, a cancel button, and more.
+ * However, you will likely have some custom form elements in a modal, and you'll need to define those
+ * as a page object ahead of time. Extend rxModalAction to provide additional elements.  {@link rxFeedback} uses
+ * rxModal under the hood to provide a few custom form elements on top of this page object, if you need to
+ * reference an example.  Note that it is up to you to open the modal before initializing this object.
+ * @see rxFeedback
+ * @example
+ * class ChangePasswordModal extends rxModal {
+ *     get txtNewPassword() {
+ *         return this.element(by.model('fields.password'));
+ *     }
+ *
+ *     get txtErrorMessage: {
+ *         return this.$('.error-message');
+ *     }
+ *
+ *     get newPassword() {
+ *         return this.txtNewPassword.getAttribute('value');
+ *     }
+ *     set newPassword(password) {
+ *         this.txtNewPassword.clear();
+ *         this.txtNewPassword.sendKeys(password);
+ *     }
+ * };
+ *
+ * // this modal not only has a close button, title, etc...
+ * // but also a couple of form elements for checking an old password and a new password.
+ * myPage.openChangePasswordModal();
+ * let changePasswordModal = new ChangePasswordModal($('.modal'));
+ * changePasswordModal.newPassword = '12345';
+ * changePasswordModal.submit();
+ */
+var rxModalAction = (function (_super) {
+    __extends(rxModalAction, _super);
+    function rxModalAction() {
+        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(rxModalAction.prototype, "btnSubmit", {
+        get: function () {
+            return this.$('.submit');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(rxModalAction.prototype, "btnCancel", {
+        get: function () {
+            return this.$('.cancel');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @description Whether or not the modal is currently displayed.
+     */
+    rxModalAction.prototype.isDisplayed = function () {
+        // Why are we overriding isDisplayed() here to alias isPresent()?
+        return this.isPresent();
+    };
+    /**
+     * @description The modal's title.
+     */
+    rxModalAction.prototype.getTitle = function () {
+        return this.$('.modal-title').getText();
+    };
+    /**
+     * @description The modal's subtitle.
+     */
+    rxModalAction.prototype.getSubtitle = function () {
+        return this.$('.modal-subtitle').getText();
+    };
+    /**
+     * @description Closes the modal by clicking the little "x" in the top right corner.
+     */
+    rxModalAction.prototype.close = function () {
+        this.$('.modal-close').click();
+        return protractor_1.browser.wait(protractor_1.ExpectedConditions.stalenessOf(this));
+    };
+    /**
+     * @description Whether or not the modal can be submitted in its current state.
+     */
+    rxModalAction.prototype.canSubmit = function () {
+        return this.btnSubmit.isEnabled();
+    };
+    /**
+     * @description Clicks the "submit" button. This isn't exactly what you think it is in a multi-step modal!
+     */
+    rxModalAction.prototype.submit = function () {
+        this.btnSubmit.click();
+        return protractor_1.browser.wait(protractor_1.ExpectedConditions.stalenessOf(this));
+    };
+    /**
+     * @description Cancels out of the current modal by clicking the "cancel" button.
+     */
+    rxModalAction.prototype.cancel = function () {
+        this.btnCancel.click();
+        return protractor_1.browser.wait(protractor_1.ExpectedConditions.stalenessOf(this));
+    };
+    return rxModalAction;
+}(rxComponent_1.rxComponentElement));
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxModalAction.prototype, "isDisplayed", null);
+__decorate([
+    rxComponent_1.OverrideWebdriver
+], rxModalAction.prototype, "submit", null);
+exports.rxModalAction = rxModalAction;
+;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

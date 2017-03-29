@@ -1,0 +1,12 @@
+<div ng-controller="rxDiskSizeCtrl" id="rx-disk-size-demo">
+    <ul>
+        <li>{{sizeGB}} &rarr; {{sizeGB | rxDiskSize}}</li>
+        <li>{{sizeTB}} &rarr; {{sizeTB | rxDiskSize}}</li>
+        <li>{{sizePB}} &rarr; {{sizePB | rxDiskSize}}</li>
+    </ul>
+    <ul>
+        <li>{{sizeGB}} GB &rarr; {{sizeGB | rxDiskSize:'GB'}}</li>
+        <li>{{sizeTB}} GB &rarr; {{sizeTB | rxDiskSize:'TB'}}</li>
+        <li>{{sizePB}} GB &rarr; {{sizePB | rxDiskSize:'PB'}}</li>
+    </ul>
+</div>

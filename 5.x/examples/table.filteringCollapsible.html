@@ -1,0 +1,40 @@
+<div ng-controller="tableFilteringCollapsibleExampleCtrl">
+  <rx-collapse title="Filter results">
+    <form rx-form class="collapsible-filter-example-form">
+      <rx-form-section>
+        <rx-field>
+          <rx-field-name>Region </rx-field-name>
+          <rx-field-content>
+            <rx-input>
+              <select rx-select ng-model="filter.region">
+                <option value="">Any</option>
+                <option value="{{region.name}}" ng-repeat="region in regions">{{region.city}}</option>
+              </select>
+            </rx-input>
+          </rx-field-content>
+        </rx-field>
+      </rx-form-section>
+    </form>
+  </rx-collapse>
+
+  <table class="table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>RAM</th>
+        <th>vCPUs</th>
+        <th>System Disk</th>
+        <th>Region</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="server in servers | filter:filter.region">
+        <td>{{server.name}}</td>
+        <td>{{server.ram}}</td>
+        <td>{{server.cpu}}</td>
+        <td>{{server.disk}}</td>
+        <td>{{server.region}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

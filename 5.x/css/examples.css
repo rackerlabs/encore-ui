@@ -1,0 +1,116 @@
+.rx-example {
+  /* ======================================== *\
+   GLOBAL VARIABLES
+\* ======================================== */
+  /* ======================================== *\
+   COMPONENT VARIABLES
+\* ======================================== */
+  /*
+ * Buttons
+ */
+  /*
+ * Button Groups (rxButton)
+ */
+  /*
+ * rxForm
+ */
+  /*
+ * rxAccountInfo
+ */
+  /*
+ * rxCharacterCount
+ */
+  /*
+ * rxRadio
+ */
+  /* Size and radius must be calculated. Percentages are not consistent across browsers. */
+  /*
+ * rxCheckbox
+ */
+  /*
+ * rxSelect
+ */
+  /*
+ * rxBulkSelect
+ */
+  /*
+ * rxFieldName
+ */
+  /*
+ * rxSearchBox
+ */
+  /*
+ * Layouts Module
+ *
+ * Sizes:
+ *  0    <= size < 600     Phone
+ *  600  <= size < 960     Tablet
+ *  960  <= size < 1200    Tablet-Landscape
+ *  1200 <= size           PC
+ */
+  /*
+ * rxMetadata
+ */
+  /*
+ * rxTags
+ */
+  /*
+ * rxToggleSwitch
+ */
+  /*
+ * progressbar
+ */
+  /*
+ * rxBreadcrumbs
+ */
+  /*
+ * Modals
+ */
+  /*
+ * rxPaginate
+ */
+  /*
+/* Tooltips
+ */
+  /* 12-COLUMN FLEXBOX GRID (globals) */
+  /*
+  - 1em is calculated on browser-defined font size
+    - No CSS property can affect this calculation.
+  - As font size increases/decreases (zoom %), more/less room is available,
+    so breakpoints behave more like larger/smaller screens
+*/
+  /* ~640px */
+  /* ~1024px */
+  /* ~1200px */
+  /* ~1440px */
+}
+.rx-example .button-group.demo-button-width {
+  width: 250px;
+}
+.rx-example #vars {
+  /*
+   * rxDatePicker
+   */
+}
+.rx-example .table-demo--batch-action {
+  /* ----- COLUMNS ----- */
+  /* ----- STATUSES ----- */
+}
+.rx-example .table-demo--batch-action .column-action {
+  width: 38px;
+}
+.rx-example .table-demo--batch-action .status--pending {
+  color: #d14904;
+}
+.rx-example .table-demo--batch-action .status--success {
+  color: #2e7d32;
+}
+.rx-example .table-demo--batch-action .status--failure {
+  color: #f44336;
+}
+.rx-example .collapsible-filter-example-form {
+  width: 400px;
+}
+.rx-example .rxStatusMappings-demo .demo-status-column-table {
+  max-width: 500px;
+}

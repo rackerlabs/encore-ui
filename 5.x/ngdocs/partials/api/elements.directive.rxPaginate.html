@@ -1,0 +1,534 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Tables/scripts/rxPaginate.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/a09e7d2/src/elements/Tables/scripts/rxPaginate.js#L514" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxPaginate</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The rxPaginate component adds pagination to a table.</p>
+<p>Two different forms of pagination are supported:</p>
+<ol>
+<li>UI-based pagination, where all items are retrieved at once, and paginated in the UI</li>
+<li>Server-side pagination, where the pagination directive works with a paginated API</li>
+</ol>
+<h3 id="description_ui-based-pagination">UI-Based Pagination</h3>
+<p>With UI-Based pagination, the entire set of data is looped over via an <code>ngRepeat</code> in the table&#39;s
+<code>&lt;tbody&gt;</code>, with the data passed into the <code>Paginate</code> filter. This filter does the work of paginating
+the set of data and communicating with the <code>&lt;rx-paginate&gt;</code> to draw the page selection buttons at the
+bottom of the table.</p>
+<p>As shown in the first example below, the <code>ngRepeat</code> will usually look like this:</p>
+<pre class="prettyprint linenums">
+&lt;tr ng-repeat="server in servers |
+               orderBy: sorter.predicate:sorter.reverse |
+               Paginate:pager "&gt;
+</pre>
+<p>In this case,</p>
+<ol>
+<li><code>servers</code> is a variable bound to your page <code>$scope</code>, and contains the full set of servers.</li>
+<li>This is then passed to <code>orderBy</code>, to perform column sorting with <code>rxSortableColumn</code>.</li>
+<li>The sorted results are then passed to <code>Paginate:pager</code>, where <code>Paginate</code> is a filter from the
+<code>rxPaginate</code> module, and <code>pager</code> is a variable on your scope created like
+<code>$scope.pager = rxPageTracker.createInstance();</code>.</li>
+</ol>
+<p>This <code>pager</code> is responsible for tracking pagination state (i.e. &quot;which page are we on&quot;, &quot;how many
+items per page&quot;, &quot;total number of items tracked&quot;, etc.</p>
+<p>To add the pagination buttons to your table, do the following in your <code>&lt;tfoot&gt;</code>:
+<pre class="prettyprint linenums">
+&lt;tfoot&gt;
+    &lt;tr class="paginate-area"&gt;
+        &lt;td colspan="2"&gt;
+            &lt;rx-paginate page-tracking="pager"&gt;&lt;/rx-paginate&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tfoot&gt;
+</pre>
+<p>Here we are using the <code>&lt;rx-paginate&gt;</code> directive to draw the buttons, passing it the same <code>pager</code>
+instance described above.</p>
+<p>Because all of the <code>servers</code> get passed via <code>ng-repeat</code>, it means you don&#39;t need to take explicit
+action if the set of data changes. You can change <code>$scope.servers</code> at any time, and <code>&lt;rx-paginate&gt;</code>
+will automatically re-process it.</p>
+<h4 id="description_ui-based-pagination_persistence">Persistence</h4>
+<p>The user&#39;s preference for the number of items to display per page will be persisted across applications
+using <a href="#/api/utilities.service:rxLocalStorage">rxLocalStorage</a>. This preference is set whenever the user selects
+a new number to show.</p>
+<p>This applies to both UI-based pagination and API-based pagination.</p>
+<p><em>NOTE</em>: If <code>itemsPerPage</code> is explicitly specified in the <code>opts</code> you pass to <code>rxPageTracker.createInstance()</code>,
+then that pager instance will load using the <code>itemsPerPage</code> you specified, and <em>not</em> the globally persisted value.</p>
+<p><em>NOTE</em>: If you don&#39;t want a specific pager to have its <code>itemsPerPage</code> persisted to other pagers,
+pass <code>persistItemsPerPage: false</code> with the <code>opts</code> to <code>createInstance()</code>.</p>
+<h4 id="description_ui-based-pagination_hiding-the-pagination">Hiding the pagination</h4>
+<p>In some instances, the pagination should be hidden if there isn&#39;t enough data to require it. For example,
+if you have <code>itemsPerPage</code> set to 10, but only have 7 items of data (so only one page). Hiding the
+pagination is pretty simple:</p>
+<pre class="prettyprint linenums">
+&lt;rx-paginate page-tracking="pager" ng-hide="pager.totalPages === 1"&gt;&lt;/rx-paginate&gt;
+</pre>
+<p>You can use this code on any part of your view. For example, if you have pagination in your table
+footer, it&#39;s a good idea to hide the entire footer:</p>
+<pre class="prettyprint linenums">
+&lt;tfoot ng-hide="pager.totalPages === 1"&gt;
+    &lt;tr class="paginate-area"&gt;
+        &lt;td colspan="12"&gt;
+            &lt;rx-paginate page-tracking="pager"&gt;&lt;/rx-paginate&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tfoot&gt;
+</pre>
+<p>This applies to both UI-based pagination and API-based pagination.</p>
+<h3 id="description_api-based-pagination">API-Based Pagination</h3>
+<p>Many APIs support pagination on their own. Previously, we would have to grab <em>all</em> the data at once,
+and use the UI-Based Pagination described above. Now we have support for paginated APIs, such that we
+only retrieve data for given pages when necessary.</p>
+<p>With API-based pagination, the <code>ngRepeat</code> for your table will instead look like this:
+<pre class="prettyprint linenums">
+&lt;tr ng-repeat="server in pagedServers.items"&gt;
+</pre>
+<p>Note a few things here:</p>
+<ol>
+<li>We now loop over a variable provided by the pager.</li>
+<li>We no longer pass the values through <em>any</em> filters. Not a search text filter, not sorting filter,
+and not the <code>Paginate</code> filter.</li>
+</ol>
+<p><strong> BEGIN WARNING </strong></p>
+<p>You should <em>never</em> access <code>pagedServers.items</code> from anywhere other than the <code>ng-repeat</code>. Do not touch
+it in your controller. It is a dynamic value that can change at anytime. It is only intended for use
+by <code>ng-repeat</code>.</p>
+<p><strong> END WARNING </strong></p>
+<p>The <code>&lt;tfoot&gt;</code> will look like this:</p>
+<pre class="prettyprint linenums">
+&lt;tfoot&gt;
+    &lt;tr class="paginate-area"&gt;
+        &lt;td colspan="2"&gt;
+            &lt;rx-paginate
+                page-tracking="pagedServers"
+                server-interface="serverInterface"
+                filter-text="searchText"
+                selections="selectFilter.selected"
+                sort-column="sort.predicate"
+                sort-direction="sort.reverse"&gt;
+            &lt;/rx-paginate&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tfoot&gt;
+</pre>
+<ul>
+<li><code>page-tracking</code> still receives the pager (<code>pagedServers</code> in this case) as an argument. What&#39;s
+new are the next four parameters.</li>
+<li><code>server-interface</code> <em>must</em> be present. It has to be passed an object with a <code>getItems()</code> method
+on it. This method is what <code>&lt;rx-paginate&gt;</code> will use to request data from the paginated API.</li>
+<li><code>filter-text</code>, <code>selections</code>, <code>sort-column</code> and <code>sort-direction</code> are all optional. If present,
+<code>&lt;rx-paginate&gt;</code> will watch the variables for changes, and will call <code>getItems()</code> for updates whenever
+the values change.</li>
+</ul>
+<p><em>Note:</em> If using <code>&lt;rx-select-filter&gt;</code> in the table, the <code>available</code> option passed to the <code>rxSelectFilter</code>
+constructor <strong>must</strong> be provided and include every property.  This is because the filter cannot reliably
+determine all available options from a paginated API.</p>
+<p>You will still create a <code>rxPageTracker</code> instance on your scope, just like in UI-based pagination:</p>
+<pre class="prettyprint linenums">
+$scope.pagedServers = rxPageTracker.createInstance();
+</pre>
+<h4 id="description_api-based-pagination_getitems">getItems()</h4>
+<p>The <code>getItems()</code> method is one you write on your own, and lives as an interface between <code>&lt;rx-paginate&gt;</code>
+and the server-side paginated API that you will be calling. The framework will make calls to <code>getItems()</code>
+when appropriate. Rather than have to teach <code>&lt;rx-paginate&gt;</code> about how to call and parse a multitude of
+different paginated APIs, it is your responsibility to implement this generic method.</p>
+<p><code>getItems()</code> takes two required parameters, and one optional parameter object. When the framework calls it,
+it looks like:</p>
+<pre class="prettyprint linenums">
+getItems(pageNumber, itemsPerPage, {
+    filterText: some_filter_search_text,
+    selections: selected_options_from_filters,
+    sortColumn: the_selected_sort_column,
+    sortDirection: the_direction_of_the_sort_column
+});
+</pre>
+<p>where:</p>
+<ul>
+<li><code>pageNumber</code>: the 0-based page of data that the user has clicked on/requested</li>
+<li><code>itemsPerPage</code>: the value the user currently has selected for how many items per page they wish to see</li>
+<li><code>filterText</code>: the filter search string entered by the user, if any</li>
+<li><code>selections</code>: an object containing the item properties and their selected options</li>
+<li><code>sortColumn</code>: the name of the selected sort column, if any</li>
+<li><code>sortDirection</code>: either <code>&#39;ASCENDING&#39;</code> or <code>&#39;DESCENDING&#39;</code></li>
+</ul>
+<p>When the framework calls <code>getItems()</code>, you <strong><em>must</em> return a promise</strong>. When this promise resolves,
+the resolved object must have the following properties on it:</p>
+<ul>
+<li><code>items</code>: An array containing the actual items/rows of the table returned for the request. This should at
+least contain <code>itemsPerPage</code> items, if that many items exist on the given page</li>
+<li><code>pageNumber</code>: The 0-based page number that these items belong to. Normally this should be the same as the
+<code>pageNumber</code> value passed to <code>getItems()</code></li>
+<li><code>totalNumberOfItems</code>: The total number of items available, given the <code>filterText</code> parameter.</li>
+</ul>
+<p>Examples are below.</p>
+<h4 id="description_api-based-pagination"><code>totalNumberOfItems</code></h4>
+<p>If you could get all items from the API in <em>one call</em>, <code>totalNumberOfItems</code> would reflect the number of items
+returned (given necessary search parameters). For example, say the following request was made:</p>
+<pre class="prettyprint linenums">
+var pageNumber = 0;
+var itemsPerPage = 50;
+
+getItems(pageNumber, itemsPerPage);
+</pre>
+<p>This is asking for all the items on page 0, with the user currently viewing 50 items per page. A valid response
+would return 50 items. However, the <em>total</em> number of items available might be 1000 (i.e. 20 pages of results).
+Your response must then have <code>totalNumberOfItems: 1000</code>. This data is needed so we can display to the
+user &quot;Showing 1-50 of 1000 items&quot; in the footer of the table.</p>
+<p>If <code>filterText</code> is present, then the total number of items might change. Say the request became:</p>
+<pre class="prettyprint linenums">
+var pageNumber = 0;
+var itemsPerPage = 50;
+var opts = {
+        filterText: "Ubuntu"
+    };
+
+getItems(pageNumber, itemsPerPage, opts);
+</pre>
+<p>This means &quot;Filter all your items by the search term &#39;Ubuntu&#39;, then return page 0&quot;.
+If the total number of items matching &quot;Ubuntu&quot; is 200, then your response would have
+<code>totalNumberOfItems: 200</code>. You might only return 50 items in <code>.items</code>, but the framework
+needs to know how many total items are available.</p>
+<h4 id="description_api-based-pagination_forcing-a-refresh">Forcing a Refresh</h4>
+<p>When using API-based pagination, there might be instances where you want to force a reload of
+the current items. For example, if the user takes an action to delete an item. Normally, the
+items in the view are only updated when the user clicks to change the page. To force a refresh, a
+<code>refresh()</code> method is available on the <code>pagedServers</code>. Calling this will tell <code>&lt;rx-paginate&gt;</code> to
+refresh itself. You can also pass it a <code>stayOnPage = true</code> to tell it to make a fresh request for
+the current page, i.e.:
+<pre class="prettyprint linenums">
+var stayOnPage = true;
+pagedServers.refresh(stayOnPage);
+</pre>
+<p>Internally, calling <code>refresh()</code> equates to <code>&lt;rx-paginate&gt;</code> doing a new <code>getItems()</code> call, with
+the current filter/sort criteria. But the point is that you can&#39;t just call <code>getItems()</code> yourself
+to cause an update. The framework has to call that method, so it knows to wait on the returned promise.</p>
+<h4 id="description_api-based-pagination_error-handling">Error Handling</h4>
+<p><code>&lt;rx-paginate&gt;</code> includes a simple way to show error messages when <code>getItems()</code> rejects instead of
+resolves. By passing <code>error-message=&quot;Some error text!&quot;</code> to <code>&lt;rx-paginate&gt;</code>, the string entered
+there will be shown in an rxNotification whenever <code>getItems()</code> fails. If <code>error-message</code> is
+not specified, then nothing will be shown on errors. In either case, on a failure, the table will
+stay on the page it was on before the request went out.</p>
+<p>If you wish to show more complicated error messages (and it is highly recommended that you do!),
+then you&#39;ll have to do that yourself. Either put error handling code directly into your <code>getItems()</code>,
+or have something else wait on the <code>getItems()</code> promise whenever it&#39;s called, and perform the handling there.</p>
+<p>One way to do this is as so:</p>
+<p>Let&#39;s say that you had defined your <code>getItems()</code> method on an object called <code>pageRequest</code>,</p>
+<pre class="prettyprint linenums">
+var pageRequest = {
+        getItems: function (pageNumber, itemsPerPage, opts) {
+            var defer = $q.deferred();
+            ...
+        }
+    };
+</pre>
+<p>You want your <code>getItems()</code> to be unaware of the UI, i.e. you don&#39;t want to mix API and UI logic into one method.</p>
+<p>Instead, you could do something like this:</p>
+<pre class="prettyprint linenums">
+var pageRequest = {
+        getItemsFromAPI: function (pageNumber, itemsPerPage, opts) {
+            var defer = $q.deferred();
+               ...
+        }
+
+        getItems: function (pageNumber, itemsPerPage, opts) {
+            var promise = this.getItemsFromAPI(pageNumber, itemsPerPage, opts);
+
+            rxPromiseNotifications.add(promise, {
+                error: 'Error loading page ' + pageNumber
+            }
+
+            return promise;
+        }
+    };
+</pre>
+<p>Thus we&#39;ve moved the API logic into <code>getItemsFromAPI</code>, and handled the UI logic separately.</p>
+<h4 id="description_api-based-pagination_extra-filtering-parameters">Extra Filtering Parameters</h4>
+<p>By default, <code>&lt;rx-paginate&gt;</code> can automatically work with a search text field (using <code>search-text=</code>).
+If you need to filter by additional criteria (maybe some dropdowns/radiobox, extra filter boxes, etc),
+you&#39;ll need to do a bit more work on your own.</p>
+<p>To filter by some element X, set a <code>$watch</code> on X&#39;s model. Whenever it changes, call
+<code>pagedServers.refresh()</code> to force <code>&lt;rx-paginate&gt;</code> to do a new <code>getItems()</code> call. Then, in your
+<code>getItems()</code>, grab the current value of X and send it out along with the normal criteria that are passed
+into <code>getItems()</code>. Something like:</p>
+<pre class="prettyprint linenums">
+$scope.watch('extraSearch', $scope.pagedServers.refresh);
+
+var serverInterface = {
+        getItems: function (pageNumber, itemsPerPage, opts) {
+            var extraSearch = $scope.extraSearch;
+            return callServerApi(pageNumber, itemsPerPage, opts, extraSearch);
+        }
+    };
+
+   ...
+
+&lt;rx-paginate server-interface="serverInterface" ... &gt;&lt;/rx-paginate&gt;
+</pre>
+<p>Remember that calling <code>refresh()</code> without arguments will tell <code>rx-paginate</code> to make a fresh request for
+page 0. If you call it with <code>true</code> as the first argument, the request will be made with whatever the current
+page is, i.e. <code>getItems(currentPage, ...)</code>. If you have your own search criteria, and they&#39;ve changed since the
+last time this was called, note that the page number might now be different. i.e. If the user was on page 10,
+they entered some new filter text, and you call <code>refresh(true)</code>, there might not even be 10 pages of results
+with that filter applied.</p>
+<p>In general, if you call <code>refresh(true)</code>, you should check if <em>any</em> of the filter criteria have changed since
+the last call. If they have, you should ask for page 0 from the server, not the page number passed in to
+<code>getItems()</code>. If you call <code>refresh()</code> without arguments, then you don&#39;t have to worry about comparing to the
+last-used filter criteria.</p>
+<h4 id="description_api-based-pagination_local-caching">Local Caching</h4>
+<p><strong>If you are ok with a call to your API every time the user goes to a new page in the table, then you can ignore
+this section. If you want to reduce the total number of calls to your API, please read on.</strong></p>
+<p>When a <code>getItems()</code> request is made, the framework passes in the user&#39;s <code>itemsPerPage</code> value. If it is 50, and
+there are 50 results available for the requested page, then you should return <em>at least</em> 50 results. However, you
+may also return <em>more</em> than 50 items.</p>
+<p>Initially, <code>&lt;rx-paginate&gt;</code> will call <code>getItems()</code>, wait for a response, and then update items in the table.  If
+your <code>getItems()</code> returned exactly <code>itemsPerPage</code> results in its <code>items</code> array, and the user navigates to a
+different page of data, <code>getItems()</code> will be called again to fetch new information from the API.  The user will
+then need to wait before they see new data in the table. This remains true for every interaction with page data
+navigation.</p>
+<p>For example, say the following request is made when the page first loads:</p>
+<pre class="prettyprint linenums">
+var pageNumber = 0;
+var itemsPerPage = 50;
+
+getItems(pageNumber, itemsPerPage);
+</pre>
+<p>Because no data is available yet, <code>&lt;rx-paginate&gt;</code> will call <code>getItems()</code>, wait for the response, and then draw
+the items in the table. If you returned exactly 50 items, and the user then clicks &quot;Next&quot; or 2 (to go to the
+second page), then <code>getItems()</code> will have to be called again (<code>getItems(1, 50)</code>), and the user will have to wait
+for the results to come in.</p>
+<p>However, if your <code>getItems()</code> were to pull more than <code>itemsPerPage</code> of data from the API, <code>&lt;rx-paginate&gt;</code> is
+smart enough to navigate through the saved data without needing to make an API request every time the page is
+changed.</p>
+<p>There are some caveats, though.</p>
+<ol>
+<li>Your returned <code>items.length</code> must be a multiple of <code>itemsPerPage</code> (if <code>itemsPerPage = 50</code>, <code>items.length</code>
+must be 50, 100, 150, etc.)</li>
+<li>You will need to calculate the page number sent to the API based on requested values in the UI.</li>
+<li>If the user enters any search text, and you&#39;ve passed the search field to <code>&lt;rx-paginate&gt;</code> via <code>search-text</code>,
+then the cache will be immediately flushed and a new request made.</li>
+<li>If you&#39;ve turned on column-sorting, and passed <code>sort-column</code> to <code>&lt;rx-paginate&gt;</code>, then the cache will be
+flushed whenever the user changes the sort, and a new request will be made to <code>getItems()</code></li>
+<li>If you&#39;ve passed <code>sort-direction</code> to <code>&lt;rx-paginate&gt;, and the user changes the sort
+direction, then the cache will be flushed and a new request will be made to</code>getItems()`</li>
+</ol>
+<p>Details on this are below.</p>
+<h5 id="description_api-based-pagination_local-caching_local-caching-formula">Local Caching Formula</h5>
+<p>You have to be careful with grabbing more items than <code>itemsPerPage</code>, as you&#39;ll need to modify the values
+you send to your server. If you want to be careful, then <strong>don&#39;t ever request more than <code>itemsPerPage</code>
+from your API.</strong></p>
+<p>Let&#39;s say that <code>itemsPerPage</code> is 50, but you want to grab 200 items at a time from the server, to reduce
+the round-trips to your API. We&#39;ll call this 200 the <code>serverItemsPerPage</code>. First, ensure that your
+<code>serverItemsPerPage</code> meets this requirement:</p>
+<pre class="prettyprint linenums">
+(serverItemsPerPage &gt;= itemsPerPage) && (serverItemsPerPage % itemsPerPage === 0)
+</pre>
+<p>If you&#39;re asking for 200 items at a time, the page number on the server won&#39;t match the page number
+requested by the user. Before, a user call for <code>pageNumber = 4</code> and <code>itemsPerPage = 50</code> means
+&quot;Give me items 200-249&quot;. But if you&#39;re telling your API that each page is 200 items long, then
+<code>pageNumber = 4</code> is not what you want to ask your API for (it would return items 800-999!). You&#39;ll need to
+send a custom page number to the server. In this case, you&#39;d need <code>serverPageNumber</code> to be <code>1</code>, i.e.
+the second page of results from the server.</p>
+<p>We have written a utility function do these calculations for you, <code>rxPaginateUtils.calculateApiVals</code>. It
+returns an object with <code>serverPageNumber</code> and <code>offset</code> properties. To use it, your <code>getItems()</code> might
+look something like this.</p>
+<pre class="prettyprint linenums">
+var getItems = function (pageNumber, itemsPerPage) {
+        var deferred = $q.defer();
+        var serverItemsPerPage = 200;
+        var vals = rxPaginateUtils.calculateApiVals(pageNumber, itemsPerPage, serverItemsPerPage);
+
+        yourRequestToAPI(vals.serverPageNumber, serverItemsPerPage)
+        .then(function (items) {
+            deferred.resolve({
+                items: items.slice(vals.offset),
+                pageNumber: pageNumber,
+                totalNumberOfItems: items.totalNumberOfItems
+            });
+
+        });
+
+        return deferred.promise;
+    };
+</pre>
+<p>The following tables should help illustrate what we mean with these conversions. In all three cases,
+there are a total of 120 items available from the API.</p>
+<table>
+<thead>
+<tr>
+<th>pageNumber</th>
+<th>itemsPerPage</th>
+<th>Items</th>
+<th>Action</th>
+<th>serverPageNumber</th>
+<th>serverItemsPerPage</th>
+<th>Items</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>50</td>
+<td>1-50</td>
+<td>getItems()</td>
+<td>0</td>
+<td>50</td>
+<td>1-50</td>
+</tr>
+<tr>
+<td>1</td>
+<td>50</td>
+<td>51-100</td>
+<td>getItems()</td>
+<td>1</td>
+<td>50</td>
+<td>51-100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>50</td>
+<td>101-120</td>
+<td>getItems()</td>
+<td>2</td>
+<td>50</td>
+<td>101-120</td>
+</tr>
+</tbody>
+</table>
+<p>This first table is where you don&#39;t want to do any local caching. You send the <code>pageNumber</code> and
+<code>itemsPerPage</code> to your API, unchanged from what the user requested. Every time the user clicks to go to
+a new page, an API request will take place.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>pageNumber</th>
+<th>itemsPerPage</th>
+<th>Items</th>
+<th>Action</th>
+<th>serverPageNumber</th>
+<th>serverItemsPerPage</th>
+<th>Items</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>50</td>
+<td>1-50</td>
+<td>getItems()</td>
+<td>0</td>
+<td>100</td>
+<td>1-100</td>
+</tr>
+<tr>
+<td>1</td>
+<td>50</td>
+<td>51-100</td>
+<td>use cached</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>50</td>
+<td>101-120</td>
+<td>getItems()</td>
+<td>1</td>
+<td>100</td>
+<td>101-120</td>
+</tr>
+</tbody>
+</table>
+<p>This second example shows the case where the user is still looking at 50 <code>itemsPerPage</code>, but you want to
+grab 100 items at a time from your API.</p>
+<p>When the table loads (i.e. the user wants to look at the first page of results), an &quot;Action&quot; of
+<code>getItems(0, 50)</code> will take place. Using <code>calculateApiVals</code>, the <code>serverPageNumber</code> will be 0 when you
+provide <code>serverItemsPerPage=100</code>. When you resolve the <code>getItems()</code> promise, you&#39;ll return items 1-100.</p>
+<p>When the user clicks on the second page (page 1), <code>getItems()</code> will not be called, <code>&lt;rx-paginate&gt;</code> will
+instead use the values it has cached.</p>
+<p>When the user clicks on the third page (page 2), <code>getItems(2, 50)</code> will be called. You&#39;ll use
+<code>rxPaginateutils.calculateApiVals</code> to calculate that <code>serverPageNumber</code> now needs to be <code>1</code>. Because
+only 120 items in total are available, you&#39;ll eventually resolve the promise with <code>items</code> containing
+items 101-120.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>pageNumber</th>
+<th>itemsPerPage</th>
+<th>Items</th>
+<th>Action</th>
+<th>serverPageNumber</th>
+<th>serverItemsPerPage</th>
+<th>Items</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>50</td>
+<td>1-50</td>
+<td>getItems()</td>
+<td>0</td>
+<td>200</td>
+<td>1-120</td>
+</tr>
+<tr>
+<td>1</td>
+<td>50</td>
+<td>51-100</td>
+<td>use cached</td>
+<td></td>
+<td></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>50</td>
+<td>101-120</td>
+<td>use cached</td>
+<td></td>
+<td></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>In this final example, there are still only 120 items available, but you&#39;re asking your API for 200 items
+at a time. This will cause an API request on the first page, but the next two pages will be cached, and
+<code>&lt;rx-paginate&gt;</code> will use the cached values.</p>
+<p>Directive that takes in the page tracking object and outputs a page
+switching controller. It can be used in conjunction with the Paginate
+filter for UI-based pagination, or can take an optional serverInterface
+object if you instead intend to use a paginated server-side API</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-paginate
+       page-tracking="{Object}"
+       number-of-pages="{Number}"
+       [server-interface="{Object}"]
+       [filter-text="{Object}"]
+       [selections="{Object}"]
+       [sort-column="{Object}"]
+       [sort-direction="{Object}"]
+       [error-message="{String}"]&gt;
+&lt;/rx-paginate&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pageTracking</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>This is the page tracking service instance to be used for this directive.
+See <a href="#/api/utilities.service:rxPageTracker">rxPageTracker</a></p>
+</div></td></tr><tr><td>numberOfPages</td><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>This is the maximum number of pages that the page object will display at a
+time.</p>
+</div></td></tr><tr><td>serverInterface <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>An object with a <code>getItems()</code> method. The requirements of this method are
+described in the rxPaginate module documentation</p>
+</div></td></tr><tr><td>filterText <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The model for the table filter input, if any. This directive will watch that
+model for changes, and request new results from the paginated API, on change</p>
+</div></td></tr><tr><td>selections <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The <code>selected</code> property of a rxSelectFilter instance, if one is being used.
+This directive will watch the filter&#39;s selections, and request new results
+from the paginated API, on change</p>
+</div></td></tr><tr><td>sortColumn <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The model containing the current column the results should sort on. This
+directive will watch that column for changes, and request new results from
+the paginated API, on change</p>
+</div></td></tr><tr><td>sortDirection <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>The model containing the current direction of the current sort column. This
+directive will watch for changes, and request new results from the paginated
+API, on change.</p>
+</div></td></tr><tr><td>errorMessage <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxpaginate-page"><p>An error message that should be displayed if a call to the request fails</p>
+</div></td></tr></tbody></table></div>
+</div>
