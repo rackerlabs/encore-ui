@@ -90,7 +90,7 @@ module.exports = {
             'utils/rx-page-objects/doc/README.md'
         ],
         tasks: [
-            'jsdoc:rxPageObjects',
+            'shell:docRxPageObjects',
             'copy:rxPageObjectsDocs'
         ]
     },

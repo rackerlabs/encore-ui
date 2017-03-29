@@ -17,7 +17,7 @@ module.exports = {
         bower: 'bower',
         build: 'build',
         dist: '<%= config.dir.docs %>/dist', // used for js/css files pushed to CDN/bower
-        docs: 'build/4.x', // used for demo, coverage, and jsdocs files to go to gh-pages
+        docs: 'build/4.x', // used for demo, coverage, and typedoc files to go to gh-pages
         exportableStyles: '<%= config.dir.app %>/styles',
     },
     /* BOWER OUTPUT/DISTRIBUTION */
