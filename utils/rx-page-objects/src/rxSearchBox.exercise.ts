@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import * as component from './rxSearchBox.page';
 
-interface IRxSearchBoxExerciseOptions {
+export interface IRxSearchBoxExerciseOptions {
     instance: component.rxSearchBox;
     disabled?: boolean;
     placeholder?: string;
@@ -18,7 +18,7 @@ interface IRxSearchBoxExerciseOptions {
  *     placeholder: 'Filter by name...'
  * }));
  */
-export function rxSearchBox (options: IRxSearchBoxExerciseOptions) {
+export function rxSearchBoxExercise (options: IRxSearchBoxExerciseOptions) {
 
     options = _.defaults(options, {
         disabled: false,

@@ -1,6 +1,6 @@
 'use strict';
-import {browser, ExpectedConditions as EC} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {browser, ElementFinder, ExpectedConditions as EC} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @description By default, every modal will have a title, subtitle, a submit button, a cancel button, and more.
@@ -37,11 +37,11 @@ import {OverrideWebdriver, rxComponentElement} from './rxComponent';
  */
 export class rxModalAction extends rxComponentElement {
 
-    get btnSubmit() {
+    get btnSubmit(): ElementFinder {
         return this.$('.submit');
     }
 
-    get btnCancel() {
+    get btnCancel(): ElementFinder {
         return this.$('.cancel');
     }
 
@@ -49,7 +49,7 @@ export class rxModalAction extends rxComponentElement {
      * @description Whether or not the modal is currently displayed.
      */
     @OverrideWebdriver
-    isDisplayed() {
+    isDisplayed(): Promise<boolean> {
         // Why are we overriding isDisplayed() here to alias isPresent()?
         return this.isPresent();
     }
@@ -57,21 +57,21 @@ export class rxModalAction extends rxComponentElement {
     /**
      * @description The modal's title.
      */
-    getTitle() {
+    getTitle(): Promise<string> {
         return this.$('.modal-title').getText();
     }
 
     /**
      * @description The modal's subtitle.
      */
-    getSubtitle() {
+    getSubtitle(): Promise<string> {
         return this.$('.modal-subtitle').getText();
     }
 
     /**
      * @description Closes the modal by clicking the little "x" in the top right corner.
      */
-    close() {
+    close(): Promise<void> {
         this.$('.modal-close').click();
         return browser.wait(EC.stalenessOf(this));
     }
@@ -79,7 +79,7 @@ export class rxModalAction extends rxComponentElement {
     /**
      * @description Whether or not the modal can be submitted in its current state.
      */
-    canSubmit() {
+    canSubmit(): Promise<boolean> {
         return this.btnSubmit.isEnabled();
     }
 
@@ -87,7 +87,7 @@ export class rxModalAction extends rxComponentElement {
      * @description Clicks the "submit" button. This isn't exactly what you think it is in a multi-step modal!
      */
     @OverrideWebdriver
-    submit() {
+    submit(): Promise<void> {
         this.btnSubmit.click();
         return browser.wait(EC.stalenessOf(this));
     }
@@ -95,7 +95,7 @@ export class rxModalAction extends rxComponentElement {
     /**
      * @description Cancels out of the current modal by clicking the "cancel" button.
      */
-    cancel() {
+    cancel(): Promise<void> {
         this.btnCancel.click();
         return browser.wait(EC.stalenessOf(this));
     }

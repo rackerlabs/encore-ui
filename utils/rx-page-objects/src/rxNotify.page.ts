@@ -1,6 +1,6 @@
 'use strict';
 
-import {$, by} from 'protractor';
+import {$, by, ElementArrayFinder, ElementFinder} from 'protractor';
 import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
@@ -24,7 +24,7 @@ export type NOTIFY_TYPES = keyof typeof NOTIFY_TYPES;
  * @see rxNotify
  */
 export class rxNotification extends rxComponentElement {
-    get btnDismiss() {
+    get btnDismiss(): ElementFinder {
         return this.$('.notification-dismiss');
     }
 
@@ -39,7 +39,7 @@ export class rxNotification extends rxComponentElement {
      *     expect(notificationType).to.eventually.equal(encore.rxNotify.types.error);
      * });
      */
-    getType() {
+    getType(): Promise<NOTIFY_TYPES> {
         let notificationTypes = /error|info|success|warning/;
         return this.getAttribute('class').then(className => {
             return <NOTIFY_TYPES> className.match(notificationTypes)[0];
@@ -55,7 +55,7 @@ export class rxNotification extends rxComponentElement {
      * });
      */
     @OverrideWebdriver
-    getText() {
+    getText(): Promise<string> {
         return this._originalElement.getText().then(text => {
             // Remove any lingering '× ' characters.
             return text.split('\n')[0].trim();
@@ -72,7 +72,7 @@ export class rxNotification extends rxComponentElement {
      *     expect(encore.rxNotify.all.count()).to.eventually.equal(0);
      * });
      */
-    dismiss() {
+    dismiss(): Promise<void> {
         return this.isDismissable().then(dismissable => {
             if (dismissable) {
                 this.btnDismiss.click();
@@ -80,7 +80,7 @@ export class rxNotification extends rxComponentElement {
         });
     }
 
-    hasSpinner() {
+    hasSpinner(): Promise<boolean> {
         return this.$('.rx-spinner').isPresent();
     }
 
@@ -93,7 +93,7 @@ export class rxNotification extends rxComponentElement {
      *     expect(notification.isDismissable()).to.eventually.be.false;
      * });
      */
-    isDismissable() {
+    isDismissable(): Promise<boolean> {
         return this.btnDismiss.isPresent();
     }
 
@@ -104,7 +104,7 @@ export class rxNotification extends rxComponentElement {
  */
 export class rxNotify extends rxComponentElement {
 
-    get tblNotifications() {
+    get tblNotifications(): ElementArrayFinder {
         return this.all(by.repeater('message in messages'));
     }
 
@@ -117,7 +117,7 @@ export class rxNotify extends rxComponentElement {
      *     expect(encore.rxNotify.all.count()).to.eventually.be.above(0);
      * });
      */
-    static byStack(stackName: string) {
+    static byStack(stackName: string): rxNotify {
         let rootElement = $(`.rx-notifications[stack="${stackName}"]`);
         return new rxNotify(rootElement);
     }
@@ -131,7 +131,7 @@ export class rxNotify extends rxComponentElement {
      *     expect(encore.rxNotify.byStack('banner').count()).to.eventually.be.above(0);
      * });
      */
-    static get all() {
+    static get all(): rxNotify {
         let rootElement = $('html');
         return new rxNotify(rootElement);
     }
@@ -147,7 +147,7 @@ export class rxNotify extends rxComponentElement {
      *     expect(encore.rxNotify.all.count()).to.eventually.equal(2);
      * });
      */
-    count() {
+    count(): Promise<number> {
         return this.tblNotifications.count();
     }
 
@@ -161,7 +161,7 @@ export class rxNotify extends rxComponentElement {
      *     expect(notification.getText()).to.eventually.equal('Good job, ' + browser.params.username + '!');
      * });
      */
-    byText(notificationText: string) {
+    byText(notificationText: string): rxNotification {
         let rootElement = this.element(by.cssContainingText('.rx-notification', notificationText));
         return new rxNotification(rootElement);
     }
@@ -177,7 +177,7 @@ export class rxNotify extends rxComponentElement {
      *     expect(encore.rxNotify.all.count()).to.eventually.equal(0);
      * });
      */
-    dismiss() {
+    dismiss(): Promise<void> {
         return this.tblNotifications.filter(notificationElement => {
             return new rxNotification(notificationElement).isDismissable();
         }).then(notificationElements => {

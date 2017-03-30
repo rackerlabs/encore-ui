@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import {rxMisc} from './rxMisc.page';
 import * as component from './rxPaginate.page';
 
-interface IRxPaginateExerciseOptions {
+export interface IRxPaginateExerciseOptions {
     instance: component.rxPaginate;
     present?: boolean;
     displayed?: boolean;
@@ -25,7 +25,7 @@ interface IRxPaginateExerciseOptions {
  *     totalItems: 300 // some tests require the total number of items to be specified in advance.
  * }));
  */
-export function rxPaginate (options: IRxPaginateExerciseOptions) {
+export function rxPaginateExercise (options: IRxPaginateExerciseOptions) {
     options = _.defaults(options, {
         present: true,
         displayed: true,

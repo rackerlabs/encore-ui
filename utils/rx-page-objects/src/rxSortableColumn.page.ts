@@ -1,5 +1,5 @@
 'use strict';
-import {promise} from 'protractor';
+import {ElementFinder, promise} from 'protractor';
 import {Promise, rxComponentElement} from './rxComponent';
 
 export enum SORT_TYPE {
@@ -24,7 +24,7 @@ export enum SORT_TYPE {
  * };
  */
 export class rxSortableColumn extends rxComponentElement {
-    get btnSort() {
+    get btnSort(): ElementFinder {
         return this.$('.sort-action');
     }
 
@@ -35,7 +35,7 @@ export class rxSortableColumn extends rxComponentElement {
      *     expect(myTable.column('Start Date').name).to.eventually.equal('Start Date');
      * });
      */
-    getName() {
+    getName(): Promise<string> {
         return this.$('.sort-action .display-value').getText();
     }
 
@@ -50,7 +50,7 @@ export class rxSortableColumn extends rxComponentElement {
      *     });
      * });
      */
-    sortAscending() {
+    sortAscending(): Promise<void> {
         return this.sort(SORT_TYPE.ASCENDING);
     }
 
@@ -67,7 +67,7 @@ export class rxSortableColumn extends rxComponentElement {
      *     });
      * });
      */
-    sortDescending() {
+    sortDescending(): Promise<void> {
         return this.sort(SORT_TYPE.DESCENDING);
     }
 
@@ -75,7 +75,7 @@ export class rxSortableColumn extends rxComponentElement {
      * @description The current sort direction of the column.
      * @see rxSortableColumn.SORT_TYPE
      */
-    getSortDirection() {
+    getSortDirection(): Promise<SORT_TYPE> {
         let sortIcon = this.$('.sort-direction-icon');
 
         return sortIcon.isPresent().then(present => {

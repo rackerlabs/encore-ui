@@ -2,8 +2,8 @@
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {by} from 'protractor';
-import {AccessorPromiseString, OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {by, ElementArrayFinder, ElementFinder} from 'protractor';
+import {AccessorPromiseString, OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
 
 /**
@@ -11,15 +11,15 @@ import {rxSelect} from './rxSelect.page';
  */
 export class rxDatePicker extends rxComponentElement {
 
-    private get currentMonth() {
+    private get currentMonth(): ElementFinder {
         return this.element(by.model('currentMonth'));
     }
 
-    private get currentYear() {
+    private get currentYear(): ElementFinder {
         return this.element(by.model('currentYear'));
     }
 
-    get currentMonthDays() {
+    get currentMonthDays(): ElementArrayFinder {
         return this.$$('.day.inMonth');
     }
 
@@ -75,7 +75,7 @@ export class rxDatePicker extends rxComponentElement {
     }
 
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.getAttribute('disabled').then(disabled => !disabled);
     }
 
@@ -87,7 +87,7 @@ export class rxDatePicker extends rxComponentElement {
      * picker.open();
      * picker.open(); // does nothing
      */
-    open() {
+    open(): Promise<void> {
         return this.isOpen().then(open => {
             if (!open) {
                 return this.$('.control').click();
@@ -104,7 +104,7 @@ export class rxDatePicker extends rxComponentElement {
      * picker.close();
      * picker.close(); // does nothing
      */
-    close() {
+    close(): Promise<void> {
         return this.isOpen().then(isOpen => {
             if (isOpen) {
                 return this.$('.control').click();
@@ -115,35 +115,35 @@ export class rxDatePicker extends rxComponentElement {
     /**
      * @description Click over to the next month in the calendar.
      */
-    nextMonth() {
+    nextMonth(): Promise<void> {
         return this.$('.arrow.next').click();
     };
 
     /**
      * @description Click back to the previous month in the calendar.
      */
-    previousMonth() {
+    previousMonth(): Promise<void> {
         return this.$('.arrow.prev').click();
     };
 
     /**
      * @description The currently selected date as a string.
      */
-    getDateSelected() {
+    getDateSelected(): Promise<string> {
         return this.$('.day.selected').getAttribute('data-date');
     };
 
     /**
      * @description Today's date as a string.
      */
-    getDateToday() {
+    getDateToday(): Promise<string> {
         return this.$('.day.today').getAttribute('data-date');
     };
 
     /**
      * @description Whether or not the calendar is in an invalid state.
      */
-    isValid() {
+    isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
             return !_.includes(classes, 'ng-invalid');
         });
@@ -152,7 +152,7 @@ export class rxDatePicker extends rxComponentElement {
     /**
      * @description Whether or not the calendar is open.
      */
-    isOpen() {
+    isOpen(): Promise<boolean> {
         return this.$('.popup:not(.ng-hide)').isPresent();
     };
 };

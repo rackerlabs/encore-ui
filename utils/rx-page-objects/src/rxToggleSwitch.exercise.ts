@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import {rxMisc} from './rxMisc.page';
 import * as component from './rxToggleSwitch.page';
 
-interface IRxToggleSwitchExerciseOptions {
+export interface IRxToggleSwitchExerciseOptions {
     instance: component.rxToggleSwitch;
     enabled?: boolean;
     toggledAtStart?: boolean;
@@ -20,7 +20,7 @@ interface IRxToggleSwitchExerciseOptions {
  *     instance: myPage.emailPreference // select one of many widgets from your page objects
  * }));
  */
-export function rxToggleSwitch(options: IRxToggleSwitchExerciseOptions) {
+export function rxToggleSwitchExercise (options: IRxToggleSwitchExerciseOptions) {
 
     options = _.defaults(options, {
         enabled: true,

@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import * as component from './rxTags.page';
 
-interface IRxTagsExerciseOptions {
+export interface IRxTagsExerciseOptions {
     instance?: component.rxTags;
     sampleText?: string;
 }
@@ -18,7 +18,7 @@ interface IRxTagsExerciseOptions {
  *     sampleText: 'Tag text to use when creating and testing your tags'
  * }));
  */
-export function rxTags (options: IRxTagsExerciseOptions) {
+export function rxTagsExercise (options: IRxTagsExerciseOptions) {
 
     options = _.defaults(options, {
         sampleText: undefined,

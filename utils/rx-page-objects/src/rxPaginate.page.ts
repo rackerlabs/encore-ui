@@ -1,7 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {by, ElementFinder} from 'protractor';
+import {by, ElementArrayFinder, ElementFinder} from 'protractor';
 import {Promise, rxComponentElement} from './rxComponent';
 import {rxMisc} from './rxMisc.page';
 
@@ -10,35 +10,35 @@ import {rxMisc} from './rxMisc.page';
  */
 export class rxPaginate extends rxComponentElement {
 
-    get lnkCurrentPage() {
+    get lnkCurrentPage(): ElementFinder {
         return this.$('.pagination .active a');
     }
 
-    get lnkFirst() {
+    get lnkFirst(): ElementFinder {
         return this.$('.pagination-first a');
     }
 
-    get lnkNext() {
+    get lnkNext(): ElementFinder {
         return this.$('.pagination-next a');
     }
 
-    get lnkPrev() {
+    get lnkPrev(): ElementFinder {
         return this.$('.pagination-prev a');
     }
 
-    get lnkLast() {
+    get lnkLast(): ElementFinder {
         return this.$('.pagination-last a');
     }
 
-    get pages() {
+    get pages(): ElementArrayFinder {
         return this.$$('.pagination .pagination-page a');
     }
 
-    get pageSize() {
+    get pageSize(): ElementFinder {
         return this.$('.pagination-per-page button[disabled="disabled"]');
     }
 
-    get pageSizes() {
+    get pageSizes(): ElementArrayFinder {
         return this.all(by.repeater('i in pageTracking.itemSizeList'));
     }
 
@@ -52,11 +52,11 @@ export class rxPaginate extends rxComponentElement {
      *     expect(pagination.shownItems.getText()).to.eventually.eql('Showing 50 items');
      * });
      */
-    get shownItems() {
+    get shownItems(): ElementFinder {
         return this.element(by.binding('pageTracking'));
     }
 
-    getPage() {
+    getPage(): Promise<number> {
         return this.lnkCurrentPage.getText().then(numString => parseInt(numString, 10));
     }
 
@@ -108,7 +108,7 @@ export class rxPaginate extends rxComponentElement {
      *     expect(myPage.someTable.row(0).name).to.eventually.contain('Created by Automated Test');
      * });
      */
-    first() {
+    first(): Promise<void> {
         return this.scrollAndClickIfDisplayed(this.lnkFirst);
     }
 
@@ -122,7 +122,7 @@ export class rxPaginate extends rxComponentElement {
      *     expect(pagination.getPage()).to.eventually.equal(2);
      * });
      */
-    previous() {
+    previous(): Promise<void> {
         return this.scrollAndClickIfDisplayed(this.lnkPrev);
     }
 
@@ -136,7 +136,7 @@ export class rxPaginate extends rxComponentElement {
      *     expect(pagination.getPage()).to.eventually.equal(2);
      * });
      */
-    next() {
+    next(): Promise<void> {
         return this.scrollAndClickIfDisplayed(this.lnkNext);
     }
 
@@ -150,7 +150,7 @@ export class rxPaginate extends rxComponentElement {
      *     expect(myPage.someTable.row(-1).name).to.eventually.contain('Created by Automated Test');
      * });
      */
-    last() {
+    last(): Promise<void> {
         return this.scrollAndClickIfDisplayed(this.lnkLast);
     }
 
@@ -165,7 +165,7 @@ export class rxPaginate extends rxComponentElement {
      *     expect(encore.rxPaginate.initialize().getPages()).to.eventually.equal([1, 2, 3, 4, 5]);
      * });
      */
-    getPages() {
+    getPages(): Promise<number[]> {
         return this.pages.getText().then(pageNumbers => {
             return _.map(pageNumbers, pageNumber => parseInt(pageNumber, 10));
         });
@@ -180,7 +180,7 @@ export class rxPaginate extends rxComponentElement {
      *     expect(pagination.getPageSizes()).to.eventually.equal([20, 50, 100, 200]);
      * });
      */
-    getPageSizes() {
+    getPageSizes(): Promise<number[]> {
         return this.pageSizes.getText().then(pageSizes => {
             return _.map(pageSizes, pageSize => parseInt(pageSize, 10));
         });
@@ -195,7 +195,7 @@ export class rxPaginate extends rxComponentElement {
      * });
      * @see {@link rxPaginate#changePageSize}
      */
-    getPageSize() {
+    getPageSize(): Promise<number> {
         return this.pageSize.getText().then(parseInt);
     }
 
@@ -213,7 +213,7 @@ export class rxPaginate extends rxComponentElement {
      * });
      * @see {@link rxPaginate#getPageSize}
      */
-    changePageSize(pageSize: number) {
+    changePageSize(pageSize: number): Promise<void> {
         let lnkPage = this.pageSizes.filter(elem => {
             return elem.getText().then(text => (parseInt(text, 10) === pageSize));
         }).first();

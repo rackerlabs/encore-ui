@@ -15,7 +15,7 @@ let yDiff = (e1, e2) => {
     ];
 
     return promise.all(promises).then(locations => {
-        return locations[0] - locations[1];
+        return <number>locations[0] - <number>locations[1];
     });
 };
 
@@ -253,7 +253,7 @@ describe('rxFloatingHeader', () => {
                 let middleRowLocation = multiRowTable.rowLocation('middle');
                 let bottomOffset = innerHeight;
                 rxMisc.transformLocation(middleRowLocation, 'y').then(location => {
-                    let t = calculateTolerance(location - bottomOffset);
+                    let t = calculateTolerance(<number>location - bottomOffset);
                     expect(scrollPosition.y).to.eventually.be.within(t.lower, t.upper);
                 });
             });

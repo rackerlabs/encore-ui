@@ -1,6 +1,6 @@
 'use strict';
-import {by} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {by, ElementArrayFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
@@ -17,7 +17,7 @@ export class Tab extends rxComponentElement {
      *     expect(tab.isActive()).to.eventually.be.true;
      * });
      */
-    isActive() {
+    isActive(): Promise<boolean> {
         return this.getAttribute('class').then(className => className.indexOf('active') > -1);
     }
 
@@ -25,7 +25,7 @@ export class Tab extends rxComponentElement {
      * @description Override getText to trim the result.
      */
     @OverrideWebdriver
-    getText() {
+    getText(): Promise<string> {
         return this._originalElement.getText().then(text => text.trim());
     }
 
@@ -36,7 +36,7 @@ export class Tab extends rxComponentElement {
      *     expect(new tab().byText('Activity').getName()).to.eventually.equal('Activity');
      * });
      */
-    getName() {
+    getName(): Promise<string> {
         return this.getSubtitle().then(subtitle => {
             if (subtitle !== null) {
                 return this.getText().then(name => {
@@ -54,7 +54,7 @@ export class Tab extends rxComponentElement {
      *     expect(new Tabs().byText('Activity').getSubtitle()).to.eventually.equal('recent first');
      * });
      */
-    getSubtitle() {
+    getSubtitle(): Promise<string> {
         let subtitle = this.$('.subdued');
         return subtitle.isPresent().then(present => {
             if (present) {
@@ -71,11 +71,11 @@ export class Tab extends rxComponentElement {
  */
 export class Tabs extends rxComponentElement {
 
-    get cssTabs() {
+    get cssTabs(): string {
         return '.nav-tabs li';
     }
 
-    get tblTabs() {
+    get tblTabs(): ElementArrayFinder {
         return this.$$(this.cssTabs);
     }
 
@@ -89,7 +89,7 @@ export class Tabs extends rxComponentElement {
      *     expect(tab.getName()).to.eventually.equal('Home');
      * });
      */
-    byText(tabName: string) {
+    byText(tabName: string): Tab {
         let tabElement = this.element(by.cssContainingText(this.cssTabs, tabName));
         return new Tab(tabElement);
     }
@@ -101,7 +101,7 @@ export class Tabs extends rxComponentElement {
      *     expect(new Tabs().byIndex(0).name).to.eventually.equal('Home');
      * });
      */
-    byIndex(tabIndex: number) {
+    byIndex(tabIndex: number): Tab {
         return new Tab(this.tblTabs.get(tabIndex));
     }
 
@@ -113,7 +113,7 @@ export class Tabs extends rxComponentElement {
      *     expect(new Tabs().getNames()).to.eventually.eql(tabNames);
      * });
      */
-    getTabs() {
+    getTabs(): Promise<Tab[]> {
         return this.tblTabs.map(tabElement => {
             return new Tab(tabElement).getText();
         });
@@ -132,7 +132,7 @@ export class Tabs extends rxComponentElement {
      *     expect(new Tabs().activeTab.getName()).to.eventually.equal('Home');
      * });
      */
-    get activeTab() {
+    get activeTab(): Tab {
         return new Tab(this.$('.nav-tabs .active'));
     }
 
@@ -144,7 +144,7 @@ export class Tabs extends rxComponentElement {
      * });
      */
     @OverrideWebdriver
-    count() {
+    count(): Promise<number> {
         return this.tblTabs.count();
     }
 

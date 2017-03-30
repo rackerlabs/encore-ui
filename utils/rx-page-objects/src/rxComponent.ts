@@ -1,7 +1,7 @@
 'use strict';
 
 import {browser, by, ElementFinder} from 'protractor';
-import * as webdriver from 'selenium-webdriver';
+import {promise} from 'selenium-webdriver';
 
 export class rxComponentElement extends ElementFinder {
     // tslint:disable-next-line:variable-name
@@ -20,8 +20,8 @@ export class rxComponentElement extends ElementFinder {
 // TODO - this is not the best place for a generic exported type like this.
 // but it works well for now, seeing as how many components will need both
 // generic reusable exported types, as well as rxComponentElement
-export type AccessorPromiseString = string | webdriver.promise.Promise<string>;
-export type Promise<T> = webdriver.promise.Promise<T>; // alias to aid in typing
+export type AccessorPromiseString = string | promise.Promise<string>;
+export type Promise<T> = promise.Promise<T>; // alias to aid in typing
 
 /**
  * @description Decorator that will allow us to easily override methods inherited from webdriver.
