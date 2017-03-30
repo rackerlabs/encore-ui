@@ -1,15 +1,15 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {by, ElementFinder} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {by, ElementArrayFinder, ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
  */
 export class rxSelect extends rxComponentElement {
 
-    get eleFakeSelect() {
+    get eleFakeSelect(): ElementFinder {
         return this.parent.$('.fake-select');
     }
 
@@ -17,7 +17,7 @@ export class rxSelect extends rxComponentElement {
      * @description Whether or not the select element is enabled.
      */
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.eleFakeSelect.isPresent().then(isFakeSelect => {
             if (isFakeSelect) {
                 return this.parent.getAttribute('class').then(classes => {
@@ -32,7 +32,7 @@ export class rxSelect extends rxComponentElement {
      * @description Whether the select element is currently displayed.
      */
     @OverrideWebdriver
-    isDisplayed() {
+    isDisplayed(): Promise<boolean> {
         return this.eleFakeSelect.isDisplayed().then(displayed => {
             return displayed ? this.eleFakeSelect.isDisplayed() : false;
         }, () => {
@@ -44,7 +44,7 @@ export class rxSelect extends rxComponentElement {
      * @description Whether or not the select element exists on the page.
      */
     @OverrideWebdriver
-    isPresent() {
+    isPresent(): Promise<boolean> {
         return this.eleFakeSelect.isPresent().then(isFakeSelect => {
             return isFakeSelect || this._originalElement.isPresent();
         });
@@ -53,7 +53,7 @@ export class rxSelect extends rxComponentElement {
     /**
      * @description Whether the `<select>` element is valid.
      */
-    isValid() {
+    isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
             return _.includes(classes.split(' '), 'ng-valid');
         });
@@ -68,7 +68,7 @@ export class rxSelect extends rxComponentElement {
      *     expect(dropdown.options.getText()).to.eventually.eql(texasLocations);
      * });
      */
-    get options() {
+    get options(): ElementArrayFinder {
         return this.$$('option');
     }
 
@@ -80,11 +80,11 @@ export class rxSelect extends rxComponentElement {
      *     expect(dropdown.selectedOption.getText()).to.eventually.equal('Andrew Yurisich');
      * });
      */
-    get selectedOption() {
+    get selectedOption(): ElementFinder {
         return this.$('option:checked');
     }
 
-    option(optionText) {
+    option(optionText): ElementFinder {
         return this.element(by.cssContainingText('option', optionText));
     }
 
@@ -97,7 +97,7 @@ export class rxSelect extends rxComponentElement {
      *     expect(dropdown.selectedOption.getText()).to.eventually.equal('United States');
      * });
      */
-    select(optionText) {
+    select(optionText): Promise<void> {
         return this.option(optionText).click();
     }
 }

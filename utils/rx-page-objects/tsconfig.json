@@ -4,11 +4,10 @@
         "target": "es5",
         "moduleResolution": "node",
         "sourceMap": false,
-        "declaration": false,
+        "declaration": true,
         "removeComments": false,
         "noImplicitAny": false,
         "experimentalDecorators": true,
-        "allowJs": true,
         "outDir": ".",
         "rootDir": ".",
         "types": [
@@ -20,7 +19,8 @@
     },
     "exclude": [],
     "include": [
-        "src/*.ts",
-        "test/*.ts"
+        "index.ts",
+        "exercise.ts",
+        "src/*.ts"
     ]
 }

@@ -1,37 +1,30 @@
 'use strict';
-import {by} from 'protractor';
-import {rxComponentElement} from './rxComponent';
+import {by, ElementFinder} from 'protractor';
+import {Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
  */
 export class rxCharacterCount extends rxComponentElement {
-    get eleParent() {
+    get eleParent(): rxComponentElement {
         return this.parent.parent;
     }
 
-    get lblRemaining() {
+    get lblRemaining(): ElementFinder {
         return this.eleParent.element(by.binding('remaining'));
-    }
-
-    /**
-     * @description Whether the root element is currently displayed.
-     */
-    isDisplayed() {
-        return this.isDisplayed();
     }
 
     /**
      * @description The remaining number of characters that can be entered.
      */
-    getRemaining() {
+    getRemaining(): Promise<number> {
         return this.lblRemaining.getText().then(parseInt);
     }
 
     /**
      * @description Whether or not the 'near-limit' class is displayed.
      */
-    isNearLimit() {
+    isNearLimit(): Promise<boolean> {
         return this.lblRemaining.getAttribute('class').then(classNames => {
             return classNames.indexOf('near-limit') > -1;
         });
@@ -40,7 +33,7 @@ export class rxCharacterCount extends rxComponentElement {
     /**
      * @description Whether or not the 'over-limit' class is displayed.
      */
-    isOverLimit() {
+    isOverLimit(): Promise<boolean> {
         return this.lblRemaining.getAttribute('class').then(classNames => {
             return classNames.indexOf('over-limit') > -1;
         });
@@ -53,7 +46,7 @@ export class rxCharacterCount extends rxComponentElement {
      * myPage.comment = 'Anda Apine';
      * expect(myPage.getOverLimitText()).to.eventually.equal('a Apine');
      */
-    getOverLimitText() {
+    getOverLimitText(): Promise<string> {
         return this.eleParent.$('.over-limit-text').getText();
     }
 }

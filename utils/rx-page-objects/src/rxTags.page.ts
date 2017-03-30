@@ -1,8 +1,8 @@
 'use strict';
 
-import {browser, by, promise} from 'protractor';
+import {browser, by, ElementFinder, promise} from 'protractor';
 import {Key} from 'selenium-webdriver';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
@@ -20,7 +20,7 @@ export class Tag extends rxComponentElement {
      *     });
      * });
      */
-    isFocused() {
+    isFocused(): Promise<boolean> {
         let active = browser.switchTo().activeElement().getId();
         return promise.all([active, this.getId()]).then(ids => ids[0] === ids[1]);
     }
@@ -34,7 +34,7 @@ export class Tag extends rxComponentElement {
      *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
      * });
      */
-    backspaceRemove() {
+    backspaceRemove(): void {
         this.click();
         this.sendKeys(Key.BACK_SPACE);
     }
@@ -48,7 +48,7 @@ export class Tag extends rxComponentElement {
      * @returns {Promise<String>}
      */
     @OverrideWebdriver
-    getText() {
+    getText(): Promise<string> {
         return this.$('.text').getText();
     }
 
@@ -59,7 +59,7 @@ export class Tag extends rxComponentElement {
      *     expect(new rxTags($('rx-tags')).byText('Banana').getCategory()).to.eventually.equal('fruit');
      * });
      */
-    getCategory() {
+    getCategory(): Promise<string> {
         return this.$('.category').getText().then(text => {
             // Strip the bounding parens
             return text.slice(1, -1);
@@ -75,7 +75,7 @@ export class Tag extends rxComponentElement {
      *     expect(encore.rxNotify.all.isPresent(warning, 'warning')).to.eventually.be.true;
      * });
      */
-    remove() {
+    remove(): Promise<void> {
         return this.$('.fa-times').click();
     }
 }
@@ -95,11 +95,11 @@ export class rxTags extends rxComponentElement {
      * });
      */
     @OverrideWebdriver
-    count() {
+    count(): Promise<number> {
         return this.$$('.tag').count();
     }
 
-    get newTagInput() {
+    get newTagInput(): ElementFinder {
         return this.element(by.model('newTag'));
     }
 
@@ -112,7 +112,7 @@ export class rxTags extends rxComponentElement {
      *     expect(encore.rxNotify.all.isPresent('Warning: "Enterprise"', 'warning')).to.eventually.be.true;
      * });
      */
-    addTag(tagText) {
+    addTag(tagText): Promise<void> {
         this.newTagInput.clear();
         this.newTagInput.sendKeys(tagText, Key.ENTER);
         return this.newTagInput.clear();
@@ -121,7 +121,7 @@ export class rxTags extends rxComponentElement {
     /**
      * @private
      */
-    sendBackspace() {
+    sendBackspace(): Promise<void> {
         /*
             * Protractor isn't properly trapping the `BACK_SPACE = navigate back`
             * functionality so we have to use SHIFT + BACK_SPACE as a workaround.
@@ -146,7 +146,7 @@ export class rxTags extends rxComponentElement {
      *     expect(new rxTags($('rx-tags')).byText('Strawberry').getCategory()).to.eventually.equal('fruit');
      * });
      */
-    byText(tagText) {
+    byText(tagText): Tag {
         return new Tag(this.element(by.cssContainingText('.tag', tagText)));
     }
 

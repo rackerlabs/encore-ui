@@ -1,6 +1,7 @@
 'use strict';
 
-import {AccessorPromiseString, OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {ElementFinder} from 'protractor';
+import {AccessorPromiseString, OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
 
 import * as _ from 'lodash';
@@ -41,41 +42,42 @@ import * as moment from 'moment';
  */
 export class rxTimePicker extends rxComponentElement {
     // Private selectors
-    get eleControl() {
+    get eleControl(): ElementFinder {
         return this.$('.control');
     }
-    get txtHour() {
+    get txtHour(): ElementFinder {
         return this.$('.hour');
     }
-    get txtMinutes() {
+    get txtMinutes(): ElementFinder {
         return this.$('.minutes');
     }
-    get btnSubmit() {
+    get btnSubmit(): ElementFinder {
         return this.$('button.done');
     }
-    get btnCancel() {
+    get btnCancel(): ElementFinder {
         return this.$('button.cancel');
     }
-    get selPeriod() {
+    get selPeriod(): ElementFinder {
         return this.$('.period');
     }
-    get selUtcOffset() {
+    get selUtcOffset(): ElementFinder {
         return this.$('.utcOffset');
     }
-    get txtDisplayValue() {
+    get txtDisplayValue(): ElementFinder {
         return this.$('.displayValue');
     }
 
     // Private Page Objects
-    get pagePeriod() {
+    get pagePeriod(): rxSelect {
         return new rxSelect(this.selPeriod);
     }
-    get pageUtcOffset() {
+    get pageUtcOffset(): rxSelect {
         return new rxSelect(this.selUtcOffset);
     }
 
-    getErrors() {
-        return this.$$('rx-inline-error').getText();
+    getErrors(): Promise<string[]> {
+        // Necessary to cast to any to overcome bad protractor typings
+        return <any> this.$$('rx-inline-error').getText();
     }
 
     get hours(): AccessorPromiseString {
@@ -134,35 +136,35 @@ export class rxTimePicker extends rxComponentElement {
     /**
      * @description Whether the picker can be submitted
      */
-    canSubmit() {
+    canSubmit(): Promise<boolean> {
         return this.btnSubmit.isEnabled();
     }
 
     /**
      * @description Whether the picker can be submitted
      */
-    canCancel() {
+    canCancel(): Promise<boolean> {
         return this.btnCancel.isEnabled();
     }
 
     /**
      * @description Whether the picker is open
      */
-    isOpen() {
+    isOpen(): Promise<boolean> {
         return this.$('.popup').getAttribute('class').then(classes => !_.includes(classes, 'ng-hide'));
     }
 
     /**
      * @description Open picker
      */
-    open() {
+    open(): Promise<void> {
         return this.isOpen().then(opened => (!opened) && this.eleControl.click());
     }
 
     /**
      * @description Close picker
      */
-    close() {
+    close(): Promise<void> {
         return this.isOpen().then(opened => opened && this.eleControl.click());
     }
 
@@ -170,14 +172,14 @@ export class rxTimePicker extends rxComponentElement {
      * @description Submit and close picker
      */
     @OverrideWebdriver
-    submit() {
+    submit(): Promise<void> {
         return this.btnSubmit.click();
     }
 
     /**
      * @description Cancel picker, without updating value
      */
-    cancel() {
+    cancel(): Promise<void> {
         return this.btnCancel.click();
     }
 }
@@ -188,7 +190,7 @@ export class rxTimePicker extends rxComponentElement {
  * **NOTE:** Logic in this function must match the logic in
  * the rxTimePickerUtil service.
  */
-export function parseUtcOffset(stringValue: string) {
+export function parseUtcOffset(stringValue: string): string {
     let regex = /([-+]\d{2}:?\d{2})/;
     let matched = stringValue.match(regex);
     return (matched ? matched[0] : '');

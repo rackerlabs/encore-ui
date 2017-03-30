@@ -2,7 +2,7 @@
 
 import * as _ from 'lodash';
 import {ElementFinder} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @description Functions for interacting with a single checkbox element.
@@ -10,14 +10,14 @@ import {OverrideWebdriver, rxComponentElement} from './rxComponent';
  */
 export class rxCheckbox extends rxComponentElement {
 
-    get eleFakeCheckbox() {
+    get eleFakeCheckbox(): ElementFinder {
         return this.parent.$('.fake-checkbox');
     }
 
     /**
      * @description Whether or not the element in question is a checkbox.
      */
-    isCheckbox() {
+    isCheckbox(): Promise<Boolean> {
         return this.getAttribute('type').then(type => {
             return type === 'checkbox';
         });
@@ -27,7 +27,7 @@ export class rxCheckbox extends rxComponentElement {
      * @description Whether the checkbox is currently displayed.
      */
     @OverrideWebdriver
-    isDisplayed() {
+    isDisplayed(): Promise<boolean> {
         return this.eleFakeCheckbox.isPresent().then(isFakeCheckbox => {
             return isFakeCheckbox ? this.eleFakeCheckbox.isDisplayed() : this._originalElement.isDisplayed();
         });
@@ -37,7 +37,7 @@ export class rxCheckbox extends rxComponentElement {
      * @description Whether or not the checkbox is enabled.
      */
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.eleFakeCheckbox.isPresent().then(isFakeCheckbox => {
             if (isFakeCheckbox) {
                 return this.parent.getAttribute('class').then(classes => {
@@ -52,7 +52,7 @@ export class rxCheckbox extends rxComponentElement {
      * @description Whether or not the checkbox is present on the page.
      */
     @OverrideWebdriver
-    isPresent() {
+    isPresent(): Promise<boolean> {
         return this.eleFakeCheckbox.isPresent().then(isFakeCheckbox => {
             return isFakeCheckbox || this._originalElement.isPresent();
         });
@@ -61,7 +61,7 @@ export class rxCheckbox extends rxComponentElement {
     /**
      * @description Whether the checkbox is valid.
      */
-    isValid() {
+    isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
             return _.includes(classes.split(' '), 'ng-valid');
         });
@@ -72,7 +72,7 @@ export class rxCheckbox extends rxComponentElement {
      * @function
      * @description Make sure checkbox is selected/checked.
      */
-    select() {
+    select(): Promise<void> {
         return this.isSelected().then(selected => {
             if (!selected) {
                 this.click();
@@ -85,7 +85,7 @@ export class rxCheckbox extends rxComponentElement {
      * @function
      * @description Make sure checkbox is deselected.
      */
-    deselect() {
+    deselect(): Promise<void> {
         return this.isSelected().then(selected => {
             if (selected) {
                 this.click();

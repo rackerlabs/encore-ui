@@ -111,7 +111,7 @@ export class rxStatusCell extends rxComponentElement {
      *     expect(myTable.row(0).status.getStatus()).to.eventually.equal('ACTIVE');
      * });
      */
-    getStatus() {
+    getStatus(): Promise<string> {
         return this.getAttribute('status');
     }
 
@@ -153,7 +153,7 @@ export class rxStatusCell extends rxComponentElement {
      * Note that this function must hover over the tooltip in order to retrieve the underlying element.  This means that
      * other mouse actions after retrieving the tooltip may cause the tooltip to hide.
      */
-    get tooltip() {
+    get tooltip(): Tooltip {
         // Hover over cell element to trigger tooltip addition to DOM
         browser.actions().mouseMove(this.$('i')).perform();
         // Create a new Tooltip with new DOM element as rootElement

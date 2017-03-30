@@ -84,23 +84,28 @@ module.exports = {
             'build'
         ]
     },
-    rxPageObjects: {
+    tscRxPageObjects: {
         files: [
-            'utils/rx-page-objects/src/*.js',
-            'utils/rx-page-objects/doc/README.md'
+            'utils/rx-page-objects/doc/README.md',
+            'utils/rx-page-objects/typedoc.js',
+            'utils/rx-page-objects/tsconfig.json',
+            'utils/rx-page-objects/index.ts',
+            'utils/rx-page-objects/src/*.ts',
+            '!utils/rx-page-objects/src/*.d.ts'
         ],
         tasks: [
+            'shell:tscRxPageObjects',
             'shell:docRxPageObjects',
             'copy:rxPageObjectsDocs'
         ]
     },
-    tscRxPageObjects: {
+    tscRxPageObjectsTests: {
         files: [
-            'utils/rx-page-objects/test/*.ts',
-            'utils/rx-page-objects/src/*.ts'
+            'utils/rx-page-objects/tsconfig-test.json',
+            'utils/rx-page-objects/test/*.ts'
         ],
         tasks: [
-            'shell:tscRxPageObjects'
+            'shell:tscRxPageObjectsTests'
         ]
     }
 };

@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import * as component from './rxCollapse.page';
 
-interface IRxCollapseExerciseOptions {
+export interface IRxCollapseExerciseOptions {
     instance: component.rxCollapse;
     expanded?: boolean;
     title?: string;
@@ -20,7 +20,7 @@ interface IRxCollapseExerciseOptions {
  *     expanded: true
  * }));
  */
-export function rxCollapse(options: IRxCollapseExerciseOptions) {
+export function rxCollapseExercise (options: IRxCollapseExerciseOptions) {
     options = _.defaults(options, {
         expanded: false,
         title: undefined,

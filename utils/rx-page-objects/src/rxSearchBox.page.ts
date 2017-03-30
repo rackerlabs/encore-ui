@@ -1,16 +1,17 @@
 'use strict';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
  */
 export class rxSearchBox extends rxComponentElement {
 
-    get txtSearch() {
+    get txtSearch(): ElementFinder {
         return this.$('.rxSearchBox-input');
     }
 
-    get btnClear() {
+    get btnClear(): ElementFinder {
         return this.$('.rxSearchBox-clear');
     }
 
@@ -23,7 +24,7 @@ export class rxSearchBox extends rxComponentElement {
      *     expect(searchBox.getTerm()).to.eventually.equal('Some query');
      * });
      */
-    getTerm () {
+    getTerm(): Promise<string> {
         return this.txtSearch.getAttribute('value');
     }
 
@@ -36,7 +37,7 @@ export class rxSearchBox extends rxComponentElement {
      *     expect(searchBox.getTerm()).to.eventually.equal('Some query');
      * });
      */
-    search(searchTerm: string) {
+    search(searchTerm: string): Promise<void> {
         this.txtSearch.clear();
         return this.txtSearch.sendKeys(searchTerm);
     }
@@ -50,7 +51,7 @@ export class rxSearchBox extends rxComponentElement {
      *     expect(searchBox.getPlaceholder()).to.eventually.equal('Search for a user...');
      * });
      */
-    getPlaceholder() {
+    getPlaceholder(): Promise<string> {
         return this.txtSearch.getAttribute('placeholder');
     }
 
@@ -58,7 +59,7 @@ export class rxSearchBox extends rxComponentElement {
      * @description Whether or not the search box is clearable. To be clearable is determined
      * by the existence of the clear button next to the search box.
      */
-    isClearable() {
+    isClearable(): Promise<boolean> {
         return this.btnClear.isPresent();
     }
 
@@ -66,7 +67,7 @@ export class rxSearchBox extends rxComponentElement {
      * @description Whether or not the search box is enabled.
      */
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.txtSearch.isEnabled();
     }
 
@@ -87,7 +88,7 @@ export class rxSearchBox extends rxComponentElement {
      * });
      */
     @OverrideWebdriver
-    clear() {
+    clear(): Promise<void> {
         return this.isClearable().then(clearable => clearable && this.btnClear.click());
     }
 
