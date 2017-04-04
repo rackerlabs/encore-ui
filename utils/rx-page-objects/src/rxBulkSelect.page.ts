@@ -9,21 +9,21 @@ import {rxCheckbox} from './rxCheckbox.page';
 
 export class rxBulkSelectRow extends rxComponentElement {
     /**
-     * @description The rxCheckbox used to select/deselect the row.
+     * The rxCheckbox used to select/deselect the row.
      */
     get checkbox(): rxCheckbox {
         return new rxCheckbox(this.$('input[type="checkbox"]'));
     }
 
     /**
-     * @description Selects the row using `this.checkbox`.
+     * Selects the row using `this.checkbox`.
      */
     select(): Promise<void> {
         return this.checkbox.select();
     }
 
     /**
-     * @description Selects the row using `this.checkbox`.
+     * Selects the row using `this.checkbox`.
      */
     deselect(): Promise<void> {
         return this.checkbox.deselect();
@@ -51,11 +51,11 @@ export class rxBatchActionMenu extends rxActionMenu {
 };
 
 /**
- * @description Properties for interacting with an rxBulkSelect component.
+ * Properties for interacting with an rxBulkSelect component.
  */
 export class rxBulkSelect extends rxComponentElement {
     /**
-     * @description Whether the bulk select component is currently enabled.
+     * Whether the bulk select component is currently enabled.
      */
     @OverrideWebdriver
     isEnabled(): Promise<boolean> {
@@ -63,14 +63,14 @@ export class rxBulkSelect extends rxComponentElement {
     }
 
     /**
-     * @description The action menu present in the bulk actions action menu area.
+     * The action menu present in the bulk actions action menu area.
      */
     get batchActions(): rxBatchActionMenu {
         return new rxBatchActionMenu(this.$('rx-batch-actions'));
     }
 
     /**
-     * @description The checkbox object used to select all rows in the bulk select component.
+     * The checkbox object used to select all rows in the bulk select component.
      */
     get selectAllCheckbox(): rxCheckbox {
         let eleCheckbox = this.$('[rx-bulk-select-header-check]').$('input[type="checkbox"]');
@@ -82,7 +82,7 @@ export class rxBulkSelect extends rxComponentElement {
     }
 
     /**
-     * @description The message appearing above the bulk select table, if present.
+     * The message appearing above the bulk select table, if present.
      * Only appears when some rows are selected. Otherwise, `null`.
      */
     get bulkMessage(): Promise<string> | Promise<null> {
@@ -92,14 +92,14 @@ export class rxBulkSelect extends rxComponentElement {
     }
 
     /**
-     * @description Clicks the "select all" link that is only present when selected rows exist.
+     * Clicks the "select all" link that is only present when selected rows exist.
      */
     selectAll(): Promise<void> {
         return this.eleBulkMessage.element(by.partialButtonText('Select all')).click();
     }
 
     /**
-     * @description Clicks the "Clear all" link that is only present when selected rows exist.
+     * Clicks the "Clear all" link that is only present when selected rows exist.
      */
     clearSelections(): Promise<void> {
         return this.eleBulkMessage.element(by.partialButtonText('Clear')).click();
@@ -110,7 +110,7 @@ export class rxBulkSelect extends rxComponentElement {
     }
 
     /**
-     * @description returns the row element by index.
+     * returns the row element by index.
      */
     row(index: number): rxBulkSelectRow {
         return new rxBulkSelectRow(this.tblRows.get(index));
@@ -121,7 +121,7 @@ export class rxBulkSelect extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not every available row is selected.
+     * Whether or not every available row is selected.
      */
     anySelected(): Promise<boolean> {
         return this.tblSelectedRows.first().isPresent();

@@ -9,13 +9,8 @@ import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
  *   div.tooltip-arrow
  *   div.tooltip-inner
  */
-
-/**
- * @class
- */
 export class Tooltip extends rxComponentElement {
     /**
-     * @description
      * (READ-ONLY) Text value of tooltip (if present).
      *
      * Warning: This property is known to be unstable in many
@@ -24,11 +19,10 @@ export class Tooltip extends rxComponentElement {
      * If there is no tooltip present on hover, returns `null`.
      *
      * @example
-     * it('should have the correct tooltip text', function () {
-     *     expect(myTooltip.getText()).to.eventually.equal('Some Value');
-     * });
      *
-     * @returns {Promise<String|null>}
+     *     it('should have the correct tooltip text', function () {
+     *         expect(myTooltip.getText()).to.eventually.equal('Some Value');
+     *     });
      */
     @OverrideWebdriver
     getText(): Promise<string>|Promise<null> {

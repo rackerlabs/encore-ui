@@ -12,11 +12,13 @@ export interface IRxTagsExerciseOptions {
 
 /**
  * rxTags exercises
+ *
  * @example
- * describe('default exercises', exercise.rxTags({
- *     instance: new rxTags($('.demo rx-tags')) // select one of many widgets on page
- *     sampleText: 'Tag text to use when creating and testing your tags'
- * }));
+ *
+ *     describe('default exercises', exercise.rxTags({
+ *         instance: new rxTags($('.demo rx-tags')) // select one of many widgets on page
+ *         sampleText: 'Tag text to use when creating and testing your tags'
+ *     }));
  */
 export function rxTagsExercise (options: IRxTagsExerciseOptions) {
 

@@ -11,12 +11,14 @@ export interface IRxSearchBoxExerciseOptions {
     placeholder?: string;
 }
 /**
- * @description rxSearchBox exercises.
+ * rxSearchBox exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxSearchBox({
- *     instance: myPage.searchText, // select one of many widgets from your page objects
- *     placeholder: 'Filter by name...'
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxSearchBox({
+ *         instance: myPage.searchText, // select one of many widgets from your page objects
+ *         placeholder: 'Filter by name...'
+ *     }));
  */
 export function rxSearchBoxExercise (options: IRxSearchBoxExerciseOptions) {
 

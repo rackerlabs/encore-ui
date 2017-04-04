@@ -14,11 +14,13 @@ export interface IRxToggleSwitchExerciseOptions {
 }
 
 /**
- * @description rxToggleSwitch exercises.
+ * rxToggleSwitch exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxToggleSwitch({
- *     instance: myPage.emailPreference // select one of many widgets from your page objects
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxToggleSwitch({
+ *         instance: myPage.emailPreference // select one of many widgets from your page objects
+ *     }));
  */
 export function rxToggleSwitchExercise (options: IRxToggleSwitchExerciseOptions) {
 

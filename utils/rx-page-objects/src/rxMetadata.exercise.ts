@@ -16,21 +16,23 @@ export interface IRxMetadataExerciseOptions {
 }
 /**
  * rxMetadata exercises, with optional transforms to exercising complex metadata
+ *
  * @example
- * describe('metadata', encore.exercise.rxMetadata({
- *     instance: myPage.accountOverviewMetadata,
- *     terms: {
- *         'Signup Date': new Date('March 1st, 2011').valueOf(),
- *         'Overdue Balance': 13256,
- *         'Current Due': 64400,
- *         'Expiration Date': new Date('January 1st, 2021').valueOf()
- *     },
- *     transforms: {
- *         'Current Due': (definition) => {
- *             return definition.getText().then(text => parseInt(text));
+ *
+ *     describe('metadata', encore.exercise.rxMetadata({
+ *         instance: myPage.accountOverviewMetadata,
+ *         terms: {
+ *             'Signup Date': new Date('March 1st, 2011').valueOf(),
+ *             'Overdue Balance': 13256,
+ *             'Current Due': 64400,
+ *             'Expiration Date': new Date('January 1st, 2021').valueOf()
+ *         },
+ *         transforms: {
+ *             'Current Due': (definition) => {
+ *                 return definition.getText().then(text => parseInt(text));
+ *             }
  *         }
- *     }
- * }));
+ *     }));
  */
 export function rxMetadataExercise (options: IRxMetadataExerciseOptions) {
 

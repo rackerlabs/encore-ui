@@ -13,7 +13,7 @@ export interface IRxCheckboxExerciseOptions {
     visible?: boolean;
 }
 /**
- * @description rxCheckbox exercises
+ * rxCheckbox exercises
  */
 export function rxCheckboxExercise (options: IRxCheckboxExerciseOptions) {
     options = _.defaults(options, {

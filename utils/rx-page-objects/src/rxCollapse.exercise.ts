@@ -12,13 +12,14 @@ export interface IRxCollapseExerciseOptions {
 }
 
 /**
- * @description rxCollapse exercises.
+ * rxCollapse exercises.
  * @example
- * describe('default exercises', encore.exercise.rxCollapse({
- *     instance: myPage.hiddenSection, // select one of many widgets from your page objects
- *     title: 'My Custom rxCollapse Element',
- *     expanded: true
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxCollapse({
+ *         instance: myPage.hiddenSection, // select one of many widgets from your page objects
+ *         title: 'My Custom rxCollapse Element',
+ *         expanded: true
+ *     }));
  */
 export function rxCollapseExercise (options: IRxCollapseExerciseOptions) {
     options = _.defaults(options, {
