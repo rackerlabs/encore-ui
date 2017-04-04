@@ -24,7 +24,7 @@ export type AccessorPromiseString = string | promise.Promise<string>;
 export type Promise<T> = promise.Promise<T>; // alias to aid in typing
 
 /**
- * @description Decorator that will allow us to easily override methods inherited from webdriver.
+ * Decorator that will allow us to easily override methods inherited from webdriver.
  * This uses something of a simple hack to prevent protractor from changing the method at runtime.
  */
 export function OverrideWebdriver(target: Object, propertyKey: string | symbol): PropertyDescriptor {

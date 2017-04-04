@@ -6,14 +6,14 @@ import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 export class rxMultiSelectOption extends rxComponentElement {
     /**
-     * @description The value bound to the option.
+     * The value bound to the option.
      */
     getValue(): Promise<string> {
         return this.getAttribute('value');
     }
 
     /**
-     * @description use underlying checkbox to determine if selected.
+     * use underlying checkbox to determine if selected.
      */
     @OverrideWebdriver
     isSelected(): Promise<boolean> {
@@ -21,7 +21,7 @@ export class rxMultiSelectOption extends rxComponentElement {
     }
 
     /**
-     * @description Make sure option is selected.
+     * Make sure option is selected.
      */
     select(): Promise<void> {
         return this.isSelected().then(selected => {
@@ -32,7 +32,7 @@ export class rxMultiSelectOption extends rxComponentElement {
     }
 
     /**
-     * @description Make sure option is deselected.
+     * Make sure option is deselected.
      */
     deselect(): Promise<void> {
         return this.isSelected().then(selected => {
@@ -43,16 +43,13 @@ export class rxMultiSelectOption extends rxComponentElement {
     }
 }
 
-/**
- * @class
- */
 export class rxMultiSelect extends rxComponentElement {
     get lblPreview(): ElementFinder {
         return this.$('.preview');
     }
 
     /**
-     * @description Closes the menu.
+     * Closes the menu.
      */
     close(): Promise<void> {
         return this.isOpen().then(isOpen => {
@@ -63,7 +60,7 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * @description Opens the menu.
+     * Opens the menu.
      */
     open(): Promise<void> {
         return this.isOpen().then(isOpen => {
@@ -74,21 +71,21 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the menu is visible.
+     * Whether or not the menu is visible.
      */
     isOpen(): Promise<boolean> {
         return this.$('.menu').isDisplayed();
     }
 
     /**
-     * @description The preview text for the dropdown.
+     * The preview text for the dropdown.
      */
     getPreviewText(): Promise<string> {
         return this.lblPreview.getText();
     }
 
     /**
-     * @description The ElementArrayFinder for each element in the dropdown.
+     * The ElementArrayFinder for each element in the dropdown.
      */
     get options(): ElementArrayFinder {
         return this.$$('rx-select-option');
@@ -96,16 +93,18 @@ export class rxMultiSelect extends rxComponentElement {
 
     /**
      * @instance
-     * @description Array of the currently selected options. Will return the options
+     * Array of the currently selected options. Will return the options
      * in order that they are defined in the multi select.
+     *
      * @example
-     * it('should select a few options', function () {
-     *     var selected = ['Canada', 'Latvia', 'United States of America'];
-     *     var multiSelect = new encore.rxMultiSelect(element(by.model('countriesVisited')));
-     *     multiSelect.select(selected);
-     *     // multi select lists all countries alphabetically
-     *     expect(multiSelect.selectedOptions.getText()).to.eventually.eql(selected);
-     * });
+     *
+     *     it('should select a few options', function () {
+     *         var selected = ['Canada', 'Latvia', 'United States of America'];
+     *         var multiSelect = new encore.rxMultiSelect(element(by.model('countriesVisited')));
+     *         multiSelect.select(selected);
+     *         // multi select lists all countries alphabetically
+     *         expect(multiSelect.selectedOptions.getText()).to.eventually.eql(selected);
+     *     });
      */
     get selectedOptions(): ElementArrayFinder {
         this.open();
@@ -115,29 +114,32 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * @description The option matching on the partial text in the option's name.
+     * The option matching on the partial text in the option's name.
+     *
      * @example
-     * var multiSelect = new encore.rxMultiSelect(element(by.model('cars')));
-     * var option = multiSelect.option('Ford Bronco');
-     * option.select();
-     * option.deselect();
-     * @see rxCheckbox
+     *
+     *     var multiSelect = new encore.rxMultiSelect(element(by.model('cars')));
+     *     var option = multiSelect.option('Ford Bronco');
+     *     option.select();
+     *     option.deselect();
      */
     option(optionText: string): ElementFinder {
         return this.element(by.cssContainingText('rx-select-option label', optionText));
     }
 
     /**
-     * @description Given a list of options, select each of them. Will add selections to any pre-existing ones..
+     * Given a list of options, select each of them. Will add selections to any pre-existing ones..
+     *
      * @example
-     * it('should select a few options', function () {
-     *     var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
-     *     multiSelect.select(['Jack', 'Jill']);
-     *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
-     *     // will not over ride any pre-existing selections
-     *     multiSelect.select(['Joe', 'Jane', 'Jack']); // "Jack" selected twice
-     *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill', 'Joe', 'Jane']);
-     * });
+     *
+     *     it('should select a few options', function () {
+     *         var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
+     *         multiSelect.select(['Jack', 'Jill']);
+     *         expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
+     *         // will not over ride any pre-existing selections
+     *         multiSelect.select(['Joe', 'Jane', 'Jack']); // "Jack" selected twice
+     *         expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill', 'Joe', 'Jane']);
+     *     });
      */
     select(optionTexts: string[]): void {
         this.open();
@@ -147,15 +149,17 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * @description Given a list of options, deselect each of them. Will not
+     * Given a list of options, deselect each of them. Will not
+     *
      * @example
-     * it('should deselect a few options', function () {
-     *     var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
-     *     multiSelect.select(['Jack', 'Jill']);
-     *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
-     *     multiSelect.deselect(['Jack']);
-     *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jill']);
-     * });
+     *
+     *     it('should deselect a few options', function () {
+     *         var multiSelect = new encore.rxMultiSelect(element(by.model('approvedBy')));
+     *         multiSelect.select(['Jack', 'Jill']);
+     *         expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill']);
+     *         multiSelect.deselect(['Jack']);
+     *         expect(multiSelect.selectedOptions).to.eventually.eql(['Jill']);
+     *     });
      */
     deselect(optionTexts: string[]): void {
         this.open();
@@ -165,7 +169,7 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * @description Whether the '<rx-multi-select>' element is valid.
+     * Whether the '<rx-multi-select>' element is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {

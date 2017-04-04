@@ -12,7 +12,7 @@ export interface IRxRadioExerciseOptions {
     visible?: boolean;
 }
 /**
- * @description rxRadio exercises
+ * rxRadio exercises
  */
 export function rxRadioExercise (options: IRxRadioExerciseOptions) {
 

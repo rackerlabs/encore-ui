@@ -15,8 +15,8 @@ export interface IRxCopyExerciseOptions {
     testCopyArea?: ElementFinder;
 }
 /**
- * @description rxCopy exercises.
- * @see rxCopy
+ * rxCopy exercises.
+ * @see [[rxCopy]]
  */
 export function rxCopyExercise (options: IRxCopyExerciseOptions) {
 

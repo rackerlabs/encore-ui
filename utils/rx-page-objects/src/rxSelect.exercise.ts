@@ -13,7 +13,7 @@ export interface IRxSelectExerciseOptions {
 }
 
 /**
- * @description rxSelect exercises.
+ * rxSelect exercises.
  */
 export function rxSelectExercise (options: IRxSelectExerciseOptions) {
     options = _.defaults(options, {
