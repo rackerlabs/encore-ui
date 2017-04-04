@@ -46,7 +46,6 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-gh-pages": "0.9.1",
     "grunt-html2js": "0.2.9",
-    "grunt-jsdoc": "1.1.0",
     "grunt-karma": "0.10.1",
     "grunt-karma-coveralls": "2.5.3",
     "grunt-lib-phantomjs": "0.6.0",
