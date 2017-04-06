@@ -34,8 +34,8 @@ export { Tooltip } from './src/tooltip.page';
 export { Typeahead } from './src/typeahead.page';
 
 import { IRxBulkSelectExerciseOptions, rxBulkSelectExercise } from './src/rxBulkSelect.exercise';
-import { IRxCheckboxExerciseOptions, rxCheckboxExercise } from './src/rxCheckbox.exercise';
 import { IRxCharacterCountExerciseOptions, rxCharacterCountExercise } from './src/rxCharacterCount.exercise';
+import { IRxCheckboxExerciseOptions, rxCheckboxExercise } from './src/rxCheckbox.exercise';
 import { IRxCollapseExerciseOptions, rxCollapseExercise } from './src/rxCollapse.exercise';
 import { IRxCopyExerciseOptions, rxCopyExercise } from './src/rxCopy.exercise';
 import { IRxDatePickerExerciseOptions, rxDatePickerExercise } from './src/rxDatePicker.exercise';
@@ -48,6 +48,24 @@ import { IRxSearchBoxExerciseOptions, rxSearchBoxExercise } from './src/rxSearch
 import { IRxSelectExerciseOptions, rxSelectExercise } from './src/rxSelect.exercise';
 import { IRxTagsExerciseOptions, rxTagsExercise } from './src/rxTags.exercise';
 import { IRxToggleSwitchExerciseOptions, rxToggleSwitchExercise } from './src/rxToggleSwitch.exercise';
+
+export {
+    IRxBulkSelectExerciseOptions,
+    IRxCheckboxExerciseOptions,
+    IRxCharacterCountExerciseOptions,
+    IRxCollapseExerciseOptions,
+    IRxCopyExerciseOptions,
+    IRxDatePickerExerciseOptions,
+    IRxFieldNameExerciseOptions,
+    IRxMetadataExerciseOptions,
+    IRxMultiSelectOptions,
+    IRxPaginateExerciseOptions,
+    IRxRadioExerciseOptions,
+    IRxSearchBoxExerciseOptions,
+    IRxSelectExerciseOptions,
+    IRxTagsExerciseOptions,
+    IRxToggleSwitchExerciseOptions
+}
 
 export const exercise = {
     rxBulkSelect: rxBulkSelectExercise,
@@ -65,4 +83,4 @@ export const exercise = {
     rxSelect: rxSelectExercise,
     rxTags: rxTagsExercise,
     rxToggleSwitch: rxToggleSwitchExercise,
-}
+};
