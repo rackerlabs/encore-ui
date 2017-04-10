@@ -20,7 +20,6 @@
     "exclude": [],
     "include": [
         "index.ts",
-        "exercise.ts",
         "src/*.ts"
     ]
 }
