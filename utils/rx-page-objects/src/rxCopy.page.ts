@@ -1,7 +1,7 @@
 'use strict';
 
-import {browser} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {browser, ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 import {Tooltip} from './tooltip.page';
 
 /* CSS HIERARCHY
@@ -25,16 +25,16 @@ import {Tooltip} from './tooltip.page';
  */
 export class rxCopy extends rxComponentElement {
     // "Private" (undocumented) selectors
-    private get eleText() { return this.$('.rxCopy__text'); }
-    private get eleTooltip() { return this.$('.rxCopy__tooltip'); }
-    private get icoCheck() { return this.$('.fa-check'); }
-    private get icoClipboard() { return this.$('.fa-clipboard'); }
-    private get icoTimes() { return this.$('.fa-times'); }
+    private get eleText(): ElementFinder { return this.$('.rxCopy__text'); }
+    private get eleTooltip(): ElementFinder { return this.$('.rxCopy__tooltip'); }
+    private get icoCheck(): ElementFinder { return this.$('.fa-check'); }
+    private get icoClipboard(): ElementFinder { return this.$('.fa-clipboard'); }
+    private get icoTimes(): ElementFinder { return this.$('.fa-times'); }
 
     /**
      * @description (READ-ONLY) Tooltip associated with rxCopy element.
      */
-    get tooltip() {
+    get tooltip(): Tooltip {
         this._hoverOverAction();
         // instantiate a new Tooltip from the newly added DOM element
         return new Tooltip(this.eleTooltip);
@@ -43,7 +43,7 @@ export class rxCopy extends rxComponentElement {
     /**
      * @description (READ-ONLY) The copy icon ElementFinder.
      */
-    get icon() {
+    get icon(): ElementFinder {
         return this.$('.rxCopy__action');
     }
 
@@ -51,7 +51,7 @@ export class rxCopy extends rxComponentElement {
      * @description (READ-ONLY) Plain text to copy.
      */
     @OverrideWebdriver
-    getText() {
+    getText(): Promise<string> {
         return this.eleText.getText();
     }// getTeixt()
 
@@ -62,7 +62,7 @@ export class rxCopy extends rxComponentElement {
      * var element = new encore.rxCopy($('.myCopyText'));
      * element.copy();
      */
-    copy() {
+    copy(): Promise<void> {
         this._hoverOverAction();
         return this.icon.click();
     }// copy()
@@ -70,28 +70,28 @@ export class rxCopy extends rxComponentElement {
     /**
      * @description Whether or not the element is waiting for interaction.
      */
-    isWaiting() {
+    isWaiting(): Promise<boolean> {
         return this.icoClipboard.isPresent();
     }// isWaiting()
 
     /**
      * @description Whether or not the copy succeeded.
      */
-    isSuccessful() {
+    isSuccessful(): Promise<boolean> {
         return this.icoCheck.isPresent();
     }// isSuccessful()
 
     /**
      * @description Whether or not the copy failed.
      */
-    isFailure () {
+    isFailure(): Promise<boolean> {
         return this.icoTimes.isPresent();
     }// isFailure()
 
     /**
      * @description Perform a mouse hover over the clickable action element.
      */
-    private _hoverOverAction () {
+    private _hoverOverAction(): void {
         browser.actions().mouseMove(this.icon).perform();
         // I know what you're thinking -- don't. Just leave it.
         // Otherwise, tooltips in tables in Chrome will not actually appear.

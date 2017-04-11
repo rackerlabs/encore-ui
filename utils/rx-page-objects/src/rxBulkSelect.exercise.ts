@@ -7,7 +7,7 @@ import {rxModalAction} from './rxModalAction.page';
 
 import * as component from './rxBulkSelect.page';
 
-interface IRxBulkSelectExerciseOptions {
+export interface IRxBulkSelectExerciseOptions {
     instance: component.rxBulkSelect;
     batchActions?: string [];
     count?: number;
@@ -21,7 +21,7 @@ interface IRxBulkSelectExerciseOptions {
  *     batchActions: ['Create', 'Read', 'Update', 'Delete']
  * }));
  */
-export function rxBulkSelect(options?: IRxBulkSelectExerciseOptions) {
+export function rxBulkSelectExercise (options: IRxBulkSelectExerciseOptions) {
     options = _.defaults(options, {
         batchActions: [],
         count: 10,

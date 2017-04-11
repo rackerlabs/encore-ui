@@ -1,16 +1,17 @@
 'use strict';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
  */
 export class rxFieldName extends rxComponentElement {
-    get symbol() {
+    get symbol(): ElementFinder {
         return this.$('.required-symbol');
     }
 
     @OverrideWebdriver
-    getText() {
+    getText(): Promise<string> {
         return this.$('.rx-field-name-content').getText();
     }
 }

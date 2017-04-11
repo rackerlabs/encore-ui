@@ -1,7 +1,7 @@
 'use strict';
 
 import {$, by, ElementFinder} from 'protractor';
-import {AccessorPromiseString} from './rxComponent';
+import {AccessorPromiseString, Promise} from './rxComponent';
 
 import {rxModalAction} from './rxModalAction.page';
 import {rxSelect} from './rxSelect.page';
@@ -19,18 +19,18 @@ export class rxFeedback extends rxModalAction {
         this.lnkFeedback = rootElement;
     }
 
-    get selReportType() {
+    get selReportType(): rxSelect {
         return new rxSelect($('#selFeedbackType'));
     }
 
-    get txtFeedback() {
+    get txtFeedback(): ElementFinder {
         return this.element(by.model('fields.description'));
     }
 
     /**
      * @description Opens the feedback modal.
      */
-    open() {
+    open(): Promise<void> {
         return this.isDisplayed().then(isDisplayed => {
             if (!isDisplayed) {
                 this.lnkFeedback.$('a').click();
@@ -56,7 +56,7 @@ export class rxFeedback extends rxModalAction {
     /**
      * @description All feedback types available for submission.
      */
-    getTypes() {
+    getTypes(): Promise<string> {
         return this.selReportType.options.getText();
     }
 
@@ -74,14 +74,14 @@ export class rxFeedback extends rxModalAction {
     /**
      * @description The placeholder string that populates the feedback description by default.
      */
-    getDescriptionPlaceholder() {
+    getDescriptionPlaceholder(): Promise<string> {
         return this.txtFeedback.getAttribute('placeholder');
     }
 
     /**
      * @description The label above the description text box.
      */
-    getDescriptionLabel() {
+    getDescriptionLabel(): Promise<string> {
         return this.$('.feedback-description').getText();
     }
 
@@ -94,7 +94,7 @@ export class rxFeedback extends rxModalAction {
      * message. Otherwise, `confirmSuccessFn` will be attempted until it yields a truthy value,
      * using Protractor's `wait` function.  You must also specify a value for `confirmSuccessWithin`.
      */
-    send(feedbackType: string, feedbackText: string) {
+    send(feedbackType: string, feedbackText: string): Promise<void> {
         this.open();
         this.type = feedbackType;
         this.description = feedbackText;

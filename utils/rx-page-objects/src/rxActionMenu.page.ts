@@ -1,13 +1,13 @@
 'use strict';
-import {by} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {by, ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @description class to handle
  */
 export class rxAction extends rxComponentElement {
     @OverrideWebdriver
-    click() {
+    click(): Promise<void> {
         return this.$('.modal-link').click();
     }
 }
@@ -26,14 +26,14 @@ export class rxActionMenu extends rxComponentElement {
      */
     cssFirstAny = '.actions-area > *';
 
-    get icoCog() {
+    get icoCog(): ElementFinder {
         return this.$('.fa-cog');
     }
 
     /**
      * @description Whether or not the action cog is showing its underlying menu.
      */
-    isExpanded() {
+    isExpanded(): Promise<boolean> {
         return this.$('.action-list:not(.ng-hide)').isPresent();
     }
 
@@ -63,7 +63,7 @@ export class rxActionMenu extends rxComponentElement {
      * @description Whether or not the action menu has an item matching the text `actionName`.
      * Will expand the action menu to determine if the action is available.
      */
-    hasAction(actionName: string) {
+    hasAction(actionName: string): Promise<boolean> {
         this.expand();
         return this.action(actionName).isDisplayed().then(displayed => displayed, () => false);
     }
@@ -80,7 +80,7 @@ export class rxActionMenu extends rxComponentElement {
      * @description The number of action items present in the action menu.
      * Does not expand the action menu to determine the count of menu items.
      */
-    actionCount() {
+    actionCount(): Promise<number> {
         return this.$$(this.cssFirstAny).count();
     }
 

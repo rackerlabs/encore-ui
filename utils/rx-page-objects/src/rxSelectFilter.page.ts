@@ -18,7 +18,7 @@ import {rxMultiSelect} from './rxMultiSelect.page';
  *         }
  *     });
  */
-interface IRxMultiSelectFilterData {
+export interface IRxMultiSelectFilterData {
     [id: string]: {
         [id: string]: boolean,
     };
@@ -29,7 +29,7 @@ interface IRxMultiSelectFilterData {
  */
 export class rxSelectFilter extends rxComponentElement {
 
-    multiSelectByLabel(label: string) {
+    multiSelectByLabel(label: string): rxMultiSelect {
         let selectWrapper = this.element(by.cssContainingText('.select-wrapper', label));
         return new rxMultiSelect(selectWrapper.$('rx-multi-select'));
     }
@@ -56,7 +56,7 @@ export class rxSelectFilter extends rxComponentElement {
      *     expect(myPage.myTable.column('Status').data.then(_.uniq)).to.eventually.eql(['Open']);
      * });
      */
-    apply(filterData: IRxMultiSelectFilterData) {
+    apply(filterData: IRxMultiSelectFilterData): void {
         _.each(filterData, (options, label) => {
             let multiSelect = this.multiSelectByLabel(label);
             multiSelect.open();

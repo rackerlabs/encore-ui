@@ -8,12 +8,13 @@ import {Promise} from './rxComponent';
 /**
  * @interface
  */
-interface IScrollToElementOptions {
+export interface IScrollToElementOptions {
     elementTargetPoint?: string;
     positionOnScreen?: string;
 }
 
-type rxMiscLocationSubject = ElementFinder | ElementArrayFinder | ILocation;
+export type rxMiscLocationSubject = ElementFinder | ElementArrayFinder | ILocation;
+export type rxMiscLocationResult = ILocation | number;
 
 /**
  * @class
@@ -46,7 +47,8 @@ export namespace rxMisc {
      *    browser.ignoreSynchronization = false;
      * });
      */
-    export function scrollToElement(elem: ElementFinder | ElementArrayFinder, options?: IScrollToElementOptions) {
+    export function scrollToElement(elem: ElementFinder | ElementArrayFinder,
+                                    options?: IScrollToElementOptions): Promise<void> {
         if (options === undefined) {
             options = {};
         }
@@ -97,7 +99,8 @@ export namespace rxMisc {
      * Both `transformLocation($('.element'), 'y')` and `transformLocation({x: 20, y: 0}, 'y')`
      * return a promise representing the y value of the resulting (or provided) location object.
      */
-    export function transformLocation(elementOrLocation: rxMiscLocationSubject, attribute: string): Promise<any> {
+    export function transformLocation(elementOrLocation: rxMiscLocationSubject,
+                                      attribute: string): Promise<rxMiscLocationResult> {
         if (elementOrLocation instanceof ElementArrayFinder) {
             elementOrLocation = elementOrLocation.first();
         }

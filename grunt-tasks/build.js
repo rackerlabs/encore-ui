@@ -17,6 +17,7 @@ module.exports = function (grunt) {
             'copy:demoExamples',
             'imagemin',
             'shell:tscRxPageObjects',
+            'shell:tscRxPageObjectsTests',
             'shell:docRxPageObjects',
             'copy:rxPageObjectsDocs',
             'ngdocs'

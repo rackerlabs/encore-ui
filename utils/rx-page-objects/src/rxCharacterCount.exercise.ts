@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import * as component from './rxCharacterCount.page';
 
-interface IRxCharacterCountExerciseOptions {
+export interface IRxCharacterCountExerciseOptions {
     instance: component.rxCharacterCount;
     highlight?: boolean;
     ignoreInsignificantWhitespace?: boolean;
@@ -13,7 +13,7 @@ interface IRxCharacterCountExerciseOptions {
     nearLimit?: number;
 }
 
-function repeat(input: string, count: number) {
+function repeat(input: string, count: number): string {
     return new Array(count + 1).join(input);
 }
 /**
@@ -26,7 +26,7 @@ function repeat(input: string, count: number) {
  *     ignoreInsignificantWhitespace: false
  * }));
  */
-export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
+export function rxCharacterCountExercise (options: IRxCharacterCountExerciseOptions) {
     options = _.defaults(options, {
         highlight: false,
         ignoreInsignificantWhitespace: true,

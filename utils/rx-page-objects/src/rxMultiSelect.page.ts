@@ -1,14 +1,14 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {$, by, ElementFinder} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {$, by, ElementArrayFinder, ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 export class rxMultiSelectOption extends rxComponentElement {
     /**
      * @description The value bound to the option.
      */
-    getValue() {
+    getValue(): Promise<string> {
         return this.getAttribute('value');
     }
 
@@ -16,14 +16,14 @@ export class rxMultiSelectOption extends rxComponentElement {
      * @description use underlying checkbox to determine if selected.
      */
     @OverrideWebdriver
-    isSelected() {
+    isSelected(): Promise<boolean> {
         return this.$('input').isSelected();
     }
 
     /**
      * @description Make sure option is selected.
      */
-    select() {
+    select(): Promise<void> {
         return this.isSelected().then(selected => {
             if (!selected) {
                 this.click();
@@ -34,7 +34,7 @@ export class rxMultiSelectOption extends rxComponentElement {
     /**
      * @description Make sure option is deselected.
      */
-    deselect() {
+    deselect(): Promise<void> {
         return this.isSelected().then(selected => {
             if (selected) {
                 this.click();
@@ -47,15 +47,15 @@ export class rxMultiSelectOption extends rxComponentElement {
  * @class
  */
 export class rxMultiSelect extends rxComponentElement {
-    get lblPreview() {
+    get lblPreview(): ElementFinder {
         return this.$('.preview');
     }
 
     /**
      * @description Closes the menu.
      */
-    close() {
-        this.isOpen().then(isOpen => {
+    close(): Promise<void> {
+        return this.isOpen().then(isOpen => {
             if (isOpen) {
                 $('body').click();
             }
@@ -65,8 +65,8 @@ export class rxMultiSelect extends rxComponentElement {
     /**
      * @description Opens the menu.
      */
-    open() {
-        this.isOpen().then(isOpen => {
+    open(): Promise<void> {
+        return this.isOpen().then(isOpen => {
             if (!isOpen) {
                 this.lblPreview.click();
             }
@@ -76,21 +76,21 @@ export class rxMultiSelect extends rxComponentElement {
     /**
      * @description Whether or not the menu is visible.
      */
-    isOpen() {
+    isOpen(): Promise<boolean> {
         return this.$('.menu').isDisplayed();
     }
 
     /**
      * @description The preview text for the dropdown.
      */
-    getPreviewText() {
+    getPreviewText(): Promise<string> {
         return this.lblPreview.getText();
     }
 
     /**
      * @description The ElementArrayFinder for each element in the dropdown.
      */
-    get options() {
+    get options(): ElementArrayFinder {
         return this.$$('rx-select-option');
     }
 
@@ -107,7 +107,7 @@ export class rxMultiSelect extends rxComponentElement {
      *     expect(multiSelect.selectedOptions.getText()).to.eventually.eql(selected);
      * });
      */
-    get selectedOptions() {
+    get selectedOptions(): ElementArrayFinder {
         this.open();
         return this.$$('rx-select-option').filter((elem: ElementFinder) => {
             return new rxMultiSelectOption(elem).isSelected();
@@ -123,7 +123,7 @@ export class rxMultiSelect extends rxComponentElement {
      * option.deselect();
      * @see rxCheckbox
      */
-    option(optionText: string) {
+    option(optionText: string): ElementFinder {
         return this.element(by.cssContainingText('rx-select-option label', optionText));
     }
 
@@ -139,7 +139,7 @@ export class rxMultiSelect extends rxComponentElement {
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jack', 'Jill', 'Joe', 'Jane']);
      * });
      */
-    select(optionTexts: string[]) {
+    select(optionTexts: string[]): void {
         this.open();
         optionTexts.forEach(optionText => {
             new rxMultiSelectOption(this.option(optionText)).select();
@@ -157,7 +157,7 @@ export class rxMultiSelect extends rxComponentElement {
      *     expect(multiSelect.selectedOptions).to.eventually.eql(['Jill']);
      * });
      */
-    deselect(optionTexts: string[]) {
+    deselect(optionTexts: string[]): void {
         this.open();
         optionTexts.forEach(optionText => {
             new rxMultiSelectOption(this.option(optionText)).deselect();
@@ -167,7 +167,7 @@ export class rxMultiSelect extends rxComponentElement {
     /**
      * @description Whether the '<rx-multi-select>' element is valid.
      */
-    isValid() {
+    isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
             return _.includes(classes.split(' '), 'ng-valid');
         });

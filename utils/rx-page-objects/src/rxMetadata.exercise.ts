@@ -7,7 +7,7 @@ import {Promise} from './rxComponent';
 
 import * as component from './rxMetadata.page';
 
-interface IRxMetadataExerciseOptions {
+export interface IRxMetadataExerciseOptions {
     instance: component.rxMetadata;
     present?: boolean;
     visible?: boolean;
@@ -32,7 +32,7 @@ interface IRxMetadataExerciseOptions {
  *     }
  * }));
  */
-export function rxMetadata (options: IRxMetadataExerciseOptions) {
+export function rxMetadataExercise (options: IRxMetadataExerciseOptions) {
 
     options = _.defaults(options, {
         present: true,

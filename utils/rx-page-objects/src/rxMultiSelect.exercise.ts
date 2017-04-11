@@ -6,7 +6,7 @@ import {$} from 'protractor';
 
 import * as component from './rxMultiSelect.page';
 
-interface IRxMultiSelectOptions {
+export interface IRxMultiSelectOptions {
     instance: component.rxMultiSelect;
     inputs?: string[];
     disabled?: boolean;
@@ -20,7 +20,7 @@ interface IRxMultiSelectOptions {
  *     inputs: ['Texas', 'California', 'Virginia', 'Georgia']
  * }));
  */
-export function rxMultiSelect(options: IRxMultiSelectOptions) {
+export function rxMultiSelectExercise (options: IRxMultiSelectOptions) {
     options = _.defaults(options, {
         inputs: [],
         disabled: false,

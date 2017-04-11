@@ -1,14 +1,15 @@
 'use strict';
 
 import * as _ from 'lodash';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
  * @class
  * @description Functionality around interacting with toggle switches.
  */
 export class rxToggleSwitch extends rxComponentElement {
-    get btnToggleSwitch() {
+    get btnToggleSwitch(): ElementFinder {
         return this.$('.rx-toggle-switch');
     }
 
@@ -16,7 +17,7 @@ export class rxToggleSwitch extends rxComponentElement {
      * @description Whether the toggle switch has interaction enabled.
      */
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.btnToggleSwitch.getAttribute('disabled').then(_.isNull);
     }
 
@@ -33,7 +34,7 @@ export class rxToggleSwitch extends rxComponentElement {
      *     expect(mySwitch.isToggled()).to.eventually.be.true;
      * });
      */
-    toggleOn() {
+    toggleOn(): Promise<void> {
         return this.isToggled().then(toggled => (!toggled) && this.btnToggleSwitch.click());
     }
 
@@ -52,14 +53,14 @@ export class rxToggleSwitch extends rxComponentElement {
      *     expect(mySwitch.isToggled()).to.eventually.be.false;
      * });
      */
-    toggleOff() {
+    toggleOff(): Promise<void> {
         return this.isToggled().then(toggled => toggled && this.btnToggleSwitch.click());
     }
 
     /**
      * @description Whether or not the switch component is currently set to the "on" position.
      */
-    isToggled() {
+    isToggled(): Promise<boolean> {
         return this.getText().then(text => (text === 'ON') ? true : false);
     }
 
@@ -73,7 +74,7 @@ export class rxToggleSwitch extends rxComponentElement {
      * });
      */
     @OverrideWebdriver
-    getText() {
+    getText(): Promise<string> {
         return this.btnToggleSwitch.$('span').getText();
     }
 }

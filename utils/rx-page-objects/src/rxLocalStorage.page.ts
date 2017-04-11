@@ -1,6 +1,7 @@
 'use strict';
 
 import {browser} from 'protractor';
+import {Promise} from './rxComponent';
 
 /* tslint:disable no-shadowed-variable */
 
@@ -18,11 +19,11 @@ export namespace rxLocalStorage {
      *   expect(encore.rxLocalStorage.getItem('key')).to.eventually.equal('value');
      * });
      */
-    export function setItem(key: string, value: any) {
+    export function setItem(key: string, value: any): Promise<void> {
         let command = (key: string, value: any) => {
             localStorage.setItem(key, value);
         };
-        browser.executeScript(command, key, JSON.stringify(value));
+        return browser.executeScript(command, key, JSON.stringify(value));
     }
 
     /**
@@ -35,7 +36,7 @@ export namespace rxLocalStorage {
      *     expect(encore.rxLocalStorage.getItem('key')).to.eventually.equal('value');
      * });
      */
-    export function getItem(key: string) {
+    export function getItem(key: string): Promise<string> {
         let command = (key: string) => {
             return JSON.parse(localStorage.getItem(key));
         };
@@ -51,11 +52,11 @@ export namespace rxLocalStorage {
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.false;
      * });
      */
-    export function removeItem(key: string) {
+    export function removeItem(key: string): Promise<void> {
         let command = (key: string) => {
             localStorage.removeItem(key);
         };
-        browser.executeScript(command, key);
+        return browser.executeScript(command, key);
     }
 
     /**
@@ -67,7 +68,7 @@ export namespace rxLocalStorage {
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.true;
      * });
      */
-    export function isPresent(key: string) {
+    export function isPresent(key: string): Promise<boolean> {
         let command = (key: string) => {
             return localStorage.getItem(key) !== null;
         };
