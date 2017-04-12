@@ -147,8 +147,7 @@ export class rxNotify extends rxComponentElement {
     /**
      * The number of notifications present in the scope of the factory created object.  Using this
      * with [[rxNotify.all]] will yield the count of all the notifications on the page.  Using this
-     * with [[rxNotify.byStack('banner')]] will yield the count of all notifications in the `banner`
-     * stack.
+     * with [[rxNotify.byStack]] will yield the count of all notifications in the specified stack.
      *
      * @example
      *
