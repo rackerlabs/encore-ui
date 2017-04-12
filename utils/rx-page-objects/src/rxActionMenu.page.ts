@@ -3,7 +3,8 @@ import {by, ElementFinder} from 'protractor';
 import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
- * class to handle
+ * Provides a base class to extend for custom actions, as well as overriding the
+ * click method for default actiosn.
  */
 export class rxAction extends rxComponentElement {
     @OverrideWebdriver

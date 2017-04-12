@@ -23,7 +23,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * Whether the checkbox is currently displayed.
+     * whether or not the checkbox is currently displayed.
      */
     @OverrideWebdriver
     isDisplayed(): Promise<boolean> {
@@ -58,7 +58,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * Whether the checkbox is valid.
+     * whether or not the checkbox is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {

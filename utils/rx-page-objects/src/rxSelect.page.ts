@@ -26,7 +26,7 @@ export class rxSelect extends rxComponentElement {
     }
 
     /**
-     * Whether the select element is currently displayed.
+     * Whether or not the select element is currently displayed.
      */
     @OverrideWebdriver
     isDisplayed(): Promise<boolean> {
@@ -48,7 +48,7 @@ export class rxSelect extends rxComponentElement {
     }
 
     /**
-     * Whether the `<select>` element is valid.
+     * Whether or not the select element is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
@@ -57,7 +57,7 @@ export class rxSelect extends rxComponentElement {
     }
 
     /**
-     * The options in the dropdown.
+     * The option elements in the dropdown.
      *
      * @example
      *
@@ -72,7 +72,7 @@ export class rxSelect extends rxComponentElement {
     }
 
     /**
-     * The currently selected `<option>` element.
+     * The currently selected option element.
      *
      * @example
      *

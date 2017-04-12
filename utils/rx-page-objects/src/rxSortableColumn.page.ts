@@ -20,7 +20,7 @@ export enum SORT_TYPE {
  *
  *         column: function (name) {
  *             var column = this.eleTableContainer.element(by.cssContainingText($('rx-sortable-column'), name));
- *             return new rxSortableColumn(column, 'item in repeaterString');
+ *             return new rxSortableColumn(column);
  *         }
  *     };
  */
@@ -96,8 +96,9 @@ export class rxSortableColumn extends rxComponentElement {
     }
 
     /**
-     * Prefer using [[rxSortableColumn.sortAscending]]
-     * and [[rxSortableColumn.sortDescending]] over this.
+     * Prefer using [[rxSortableColumn.sortAscending]] and [[rxSortableColumn.sortDescending]] over this.
+     * This method is provided mostly for the purposes of providing an override target for custom subclassed,
+     * sortable columns.
      */
     protected sort(desiredSort: SORT_TYPE): Promise<void> {
         this.btnSort.click();
