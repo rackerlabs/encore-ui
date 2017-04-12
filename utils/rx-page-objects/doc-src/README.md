@@ -7,7 +7,7 @@ Provides high-level access to components in the Encore-UI library through Protra
 You can use it directly in your test code, without using any abstractions at all.
 
 ```js
-it('should have the "Delete" menu option present', function () {
+it('should have the "Delete" menu option present', () => {
     let menu = new encore.rxActionMenu($('rx-action-menu#custom'));
     expect(menu.hasAction('Delete')).to.eventually.be.true;
 });
@@ -19,7 +19,7 @@ Most componend in in rx-page-objects extend the ElementFinder class from the Pro
 the methods and properties of ElementFinder are typically present on any `rxClassName` object.
 
 ```js
-it('should have a custom icon on the "Delete" menu option', function () {
+it('should have a custom icon on the "Delete" menu option', () => {
     let menu = new encore.rxActionMenu($('rx-action-menu#custom'));
     expect(menu.action('Delete').$('.icon-custom').isPresent()).to.eventually.be.true;
 });
@@ -41,7 +41,7 @@ let myHomePage = {
     get pagination() { return new encore.rxPaginate($('#myTable rx-paginate')); },
 };
 
-it('should have three notifications present', function () {
+it('should have three notifications present', () => {
     expect(myHomePage.notifications.count()).to.eventually.eql(3);
 });
 ```
@@ -98,7 +98,7 @@ npm install --save-dev rx-page-objects
 *protractor.conf.js*
 
 ```js
-onPrepare: function () {
+onPrepare: () => {
     encore = require('rx-page-objects');
 },
 ```
