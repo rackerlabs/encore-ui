@@ -45,7 +45,7 @@ export class rxPaginate extends rxComponentElement {
      * @example
      *
      *     it('should always show that there are 50 states', () => {
-     *         var pagination = encore.rxPaginate.initialize();
+     *         var pagination = new encore.rxPaginate($('rx-pagination'));
      *         expect(pagination.shownItems.getText()).to.eventually.eql('Showing 1-20 of 50 items');
      *         pagination.changePageSize(50);
      *         expect(pagination.shownItems.getText()).to.eventually.eql('Showing 50 items');
@@ -173,7 +173,7 @@ export class rxPaginate extends rxComponentElement {
      *
      *     it('should support jumping to page five directly, without cycling', () => {
      *         let pagination = new rxPaginate($('rx-pagination'));
-     *         expect(encore.rxPaginate.initialize().getPages()).to.eventually.equal([1, 2, 3, 4, 5]);
+     *         expect(pagination.getPages()).to.eventually.equal([1, 2, 3, 4, 5]);
      *     });
      */
     getPages(): Promise<number[]> {

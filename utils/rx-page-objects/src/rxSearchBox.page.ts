@@ -13,7 +13,7 @@ export class rxSearchBox extends rxComponentElement {
     }
 
     /**
-     * Getthe search value.
+     * Get the search term.
      *
      * @example
      *
@@ -28,7 +28,7 @@ export class rxSearchBox extends rxComponentElement {
     }
 
     /**
-     * search for the given value.
+     * Search for the given term.
      *
      * @example
      *

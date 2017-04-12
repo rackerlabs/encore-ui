@@ -134,21 +134,21 @@ export class rxTimePicker extends rxComponentElement {
     }
 
     /**
-     * Whether the picker can be submitted
+     * whether or not the picker can be submitted
      */
     canSubmit(): Promise<boolean> {
         return this.btnSubmit.isEnabled();
     }
 
     /**
-     * Whether the picker can be submitted
+     * whether or not the picker can be submitted
      */
     canCancel(): Promise<boolean> {
         return this.btnCancel.isEnabled();
     }
 
     /**
-     * Whether the picker is open
+     * whether or not the picker is open
      */
     isOpen(): Promise<boolean> {
         return this.$('.popup').getAttribute('class').then(classes => !_.includes(classes, 'ng-hide'));
@@ -185,7 +185,7 @@ export class rxTimePicker extends rxComponentElement {
 }
 
 /**
- * return offset value, if present in string
+ * Return offset value, if present in string.
  *
  * **NOTE:** Logic in this function must match the logic in
  * the rxTimePickerUtil service.

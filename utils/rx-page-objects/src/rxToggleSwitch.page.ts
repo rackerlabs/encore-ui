@@ -13,7 +13,7 @@ export class rxToggleSwitch extends rxComponentElement {
     }
 
     /**
-     * Whether the toggle switch has interaction enabled.
+     * whether or not the toggle switch has interaction enabled.
      */
     @OverrideWebdriver
     isEnabled(): Promise<boolean> {
@@ -27,7 +27,7 @@ export class rxToggleSwitch extends rxComponentElement {
      * @example
      *
      *     it('should enable the switch', function () {
-     *         var mySwitch = encore.rxToggleSwitch.initialize();
+     *         var mySwitch = new encore.rxToggleSwitch($('.phasers-online'));
      *         expect(mySwitch.isToggled()).to.eventually.be.false;
      *         mySwitch.toggleOn();
      *         expect(mySwitch.isToggled()).to.eventually.be.true;
@@ -46,7 +46,7 @@ export class rxToggleSwitch extends rxComponentElement {
      * @example
      *
      *     it('should disable the switch', function () {
-     *         var mySwitch = encore.rxToggleSwitch.initialize();
+     *         var mySwitch = new encore.rxToggleSwitch($('.shields-up'));
      *         expect(mySwitch.isToggled()).to.eventually.be.true;
      *         mySwitch.toggleOff();
      *         expect(mySwitch.isToggled()).to.eventually.be.false;
@@ -71,7 +71,7 @@ export class rxToggleSwitch extends rxComponentElement {
      * @example
      *
      *     it('should toggle to the "on" position', function () {
-     *         var mySwitch = encore.rxToggleSwitch.initialize();
+     *         var mySwitch = new encore.rxToggleSwitch($('.torpedos-ready'));
      *         mySwitch.enable();
      *         expect(mySwitch.getText()).to.eventually.equal('ON');
      *     });

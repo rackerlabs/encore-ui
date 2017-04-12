@@ -21,7 +21,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * Whether the radio button is valid.
+     * whether or not the radio button is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
@@ -30,7 +30,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * Whether the radio element is currently displayed.
+     * whether or not the radio element is currently displayed.
      */
     @OverrideWebdriver
     isDisplayed(): Promise<boolean> {

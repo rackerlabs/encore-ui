@@ -114,7 +114,7 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * The option matching on the partial text in the option's name.
+     * Returns a rxMultiSelectOption matching on the partial text in the option's name.
      *
      * @example
      *
@@ -123,12 +123,13 @@ export class rxMultiSelect extends rxComponentElement {
      *     option.select();
      *     option.deselect();
      */
-    option(optionText: string): ElementFinder {
-        return this.element(by.cssContainingText('rx-select-option label', optionText));
+    option(optionText: string): rxMultiSelectOption {
+        let elem = this.element(by.cssContainingText('rx-select-option label', optionText));
+        return new rxMultiSelectOption(elem);
     }
 
     /**
-     * Given a list of options, select each of them. Will add selections to any pre-existing ones..
+     * Given a list of options, select each of them. Will add selections to any pre-existing ones.
      *
      * @example
      *
@@ -149,7 +150,7 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * Given a list of options, deselect each of them. Will not
+     * Given a list of options, deselect each of them.
      *
      * @example
      *
@@ -169,7 +170,7 @@ export class rxMultiSelect extends rxComponentElement {
     }
 
     /**
-     * Whether the '<rx-multi-select>' element is valid.
+     * whether or not the rx-multi-select element is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {

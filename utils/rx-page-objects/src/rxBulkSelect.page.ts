@@ -55,7 +55,7 @@ export class rxBatchActionMenu extends rxActionMenu {
  */
 export class rxBulkSelect extends rxComponentElement {
     /**
-     * Whether the bulk select component is currently enabled.
+     * whether or not the bulk select component is currently enabled.
      */
     @OverrideWebdriver
     isEnabled(): Promise<boolean> {
@@ -110,7 +110,7 @@ export class rxBulkSelect extends rxComponentElement {
     }
 
     /**
-     * returns the row element by index.
+     * Returns a new [[rxBulkSelectRow]] for the specified row index.
      */
     row(index: number): rxBulkSelectRow {
         return new rxBulkSelectRow(this.tblRows.get(index));
