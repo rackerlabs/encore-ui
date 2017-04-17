@@ -20,11 +20,12 @@ export interface IRxDatePickerExerciseOptions {
 /**
  * rxDatePicker exercises.
  * @example
- * describe('default exercises', encore.exercise.rxDatePicker({
- *     instance: myPage.datepicker, // select one of many pagination instances from your page objects
- *     valid: false,
- *     selectedDate: moment().format('YYYY-MM-DD')
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxDatePicker({
+ *         instance: myPage.datepicker, // select one of many pagination instances from your page objects
+ *         valid: false,
+ *         selectedDate: moment().format('YYYY-MM-DD')
+ *     }));
  */
 export function rxDatePickerExercise (options: IRxDatePickerExerciseOptions) {
     options = _.defaults(options, {

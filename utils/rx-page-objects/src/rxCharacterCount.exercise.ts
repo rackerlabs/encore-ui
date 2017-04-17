@@ -17,14 +17,16 @@ function repeat(input: string, count: number): string {
     return new Array(count + 1).join(input);
 }
 /**
- * @description rxCharacterCount exercises.
+ * rxCharacterCount exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxCharacterCount({
- *     instance: myPage.submission // select one of many widgets from your page objects
- *     maxCharacters: 25,
- *     nearLimit: 12,
- *     ignoreInsignificantWhitespace: false
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxCharacterCount({
+ *         instance: myPage.submission // select one of many widgets from your page objects
+ *         maxCharacters: 25,
+ *         nearLimit: 12,
+ *         ignoreInsignificantWhitespace: false
+ *     }));
  */
 export function rxCharacterCountExercise (options: IRxCharacterCountExerciseOptions) {
     options = _.defaults(options, {

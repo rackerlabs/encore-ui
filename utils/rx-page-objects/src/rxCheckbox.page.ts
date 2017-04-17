@@ -5,8 +5,7 @@ import {ElementFinder} from 'protractor';
 import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
- * @description Functions for interacting with a single checkbox element.
- * @class
+ * Functions for interacting with a single checkbox element.
  */
 export class rxCheckbox extends rxComponentElement {
 
@@ -15,7 +14,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the element in question is a checkbox.
+     * Whether or not the element in question is a checkbox.
      */
     isCheckbox(): Promise<Boolean> {
         return this.getAttribute('type').then(type => {
@@ -24,7 +23,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * @description Whether the checkbox is currently displayed.
+     * whether or not the checkbox is currently displayed.
      */
     @OverrideWebdriver
     isDisplayed(): Promise<boolean> {
@@ -34,7 +33,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the checkbox is enabled.
+     * Whether or not the checkbox is enabled.
      */
     @OverrideWebdriver
     isEnabled(): Promise<boolean> {
@@ -49,7 +48,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the checkbox is present on the page.
+     * Whether or not the checkbox is present on the page.
      */
     @OverrideWebdriver
     isPresent(): Promise<boolean> {
@@ -59,7 +58,7 @@ export class rxCheckbox extends rxComponentElement {
     }
 
     /**
-     * @description Whether the checkbox is valid.
+     * whether or not the checkbox is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
@@ -70,7 +69,7 @@ export class rxCheckbox extends rxComponentElement {
     /**
      * @instance
      * @function
-     * @description Make sure checkbox is selected/checked.
+     * Make sure checkbox is selected/checked.
      */
     select(): Promise<void> {
         return this.isSelected().then(selected => {
@@ -83,7 +82,7 @@ export class rxCheckbox extends rxComponentElement {
     /**
      * @instance
      * @function
-     * @description Make sure checkbox is deselected.
+     * Make sure checkbox is deselected.
      */
     deselect(): Promise<void> {
         return this.isSelected().then(selected => {

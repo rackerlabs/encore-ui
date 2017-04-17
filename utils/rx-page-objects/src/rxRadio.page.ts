@@ -4,10 +4,6 @@ import * as _ from 'lodash';
 import {ElementFinder} from 'protractor';
 import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
-/**
- * @class
- */
-
 export class rxRadio extends rxComponentElement {
 
     get eleFakeRadio(): ElementFinder {
@@ -15,7 +11,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the element in question is a radio button.
+     * Whether or not the element in question is a radio button.
      * Useful for situations where input types might change in the future, ensuring that the expected one is being used.
      */
     isRadio(): Promise<boolean> {
@@ -25,7 +21,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * @description Whether the radio button is valid.
+     * whether or not the radio button is valid.
      */
     isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
@@ -34,7 +30,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * @description Whether the radio element is currently displayed.
+     * whether or not the radio element is currently displayed.
      */
     @OverrideWebdriver
     isDisplayed(): Promise<boolean> {
@@ -44,7 +40,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the radio element is enabled.
+     * Whether or not the radio element is enabled.
      */
     @OverrideWebdriver
     isEnabled(): Promise<boolean> {
@@ -59,7 +55,7 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * @description Makes sure that the radio button is selected. If the radio button is already
+     * Makes sure that the radio button is selected. If the radio button is already
      * selected, this function will do nothing.
      */
     select(): Promise<void> {

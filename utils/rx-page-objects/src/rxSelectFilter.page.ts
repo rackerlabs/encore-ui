@@ -7,6 +7,7 @@ import {rxMultiSelect} from './rxMultiSelect.page';
 
 /**
  * @example
+ *
  *     multiSelect.apply({
  *         Account: {
  *             All: false,
@@ -24,9 +25,6 @@ export interface IRxMultiSelectFilterData {
     };
 }
 
-/**
- * @class
- */
 export class rxSelectFilter extends rxComponentElement {
 
     multiSelectByLabel(label: string): rxMultiSelect {
@@ -35,26 +33,27 @@ export class rxSelectFilter extends rxComponentElement {
     }
 
     /**
-     * @description From `filterData`'s key-value pairs, select the options contained in the values against
-     * the {@link rxMultiSelect} (identified by text) in each key.
-     * @see rxMultiSelect
-     * @example
-     * it('should select only the US accounts that are still open', function () {
-     *     var multiSelect = new rxSelectFilter($('rx-multi-select));
-     *     multiSelect.apply({
-     *         Account: {
-     *             All: false,
-     *             US: true
-     *         },
-     *         Status: {
-     *             All: false,
-     *             Open: true
-     *         }
-     *     });
+     * From `filterData`'s key-value pairs, select the options contained in the values against
+     * the [[rxMultiSelect]] (identified by text) in each key.
      *
-     *     expect(myPage.myTable.column('Account').data.then(_.uniq)).to.eventually.eql(['US']);
-     *     expect(myPage.myTable.column('Status').data.then(_.uniq)).to.eventually.eql(['Open']);
-     * });
+     * @example
+     *
+     *     it('should select only the US accounts that are still open', function () {
+     *         var multiSelect = new rxSelectFilter($('rx-multi-select));
+     *         multiSelect.apply({
+     *             Account: {
+     *                 All: false,
+     *                 US: true
+     *             },
+     *             Status: {
+     *                 All: false,
+     *                 Open: true
+     *             }
+     *         });
+     *
+     *         expect(myPage.myTable.column('Account').data.then(_.uniq)).to.eventually.eql(['US']);
+     *         expect(myPage.myTable.column('Status').data.then(_.uniq)).to.eventually.eql(['Open']);
+     *     });
      */
     apply(filterData: IRxMultiSelectFilterData): void {
         _.each(filterData, (options, label) => {

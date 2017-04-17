@@ -7,8 +7,7 @@ import {rxModalAction} from './rxModalAction.page';
 import {rxSelect} from './rxSelect.page';
 
 /**
- * @namespace
- * @description Utilities for interacting with an rxFeedback component.
+ * Utilities for interacting with an rxFeedback component.
  */
 export class rxFeedback extends rxModalAction {
     lnkFeedback: ElementFinder;
@@ -28,7 +27,7 @@ export class rxFeedback extends rxModalAction {
     }
 
     /**
-     * @description Opens the feedback modal.
+     * Opens the feedback modal.
      */
     open(): Promise<void> {
         return this.isDisplayed().then(isDisplayed => {
@@ -39,12 +38,14 @@ export class rxFeedback extends rxModalAction {
     }
 
     /**
-     * @description A getter and setter for changing the type of feedback to be submitted.
+     * A getter and setter for changing the type of feedback to be submitted.
+     *
      * @example
-     * feedback = new rxFeedback();
-     * feedback.open();
-     * feedback.type = 'Kudos';
-     * expect(feedback.type).to.eventually.equal('Kudos');
+     *
+     *     feedback = new rxFeedback();
+     *     feedback.open();
+     *     feedback.type = 'Kudos';
+     *     expect(feedback.type).to.eventually.equal('Kudos');
      */
     get type(): AccessorPromiseString {
         return this.selReportType.selectedOption.getText();
@@ -54,14 +55,14 @@ export class rxFeedback extends rxModalAction {
     }
 
     /**
-     * @description All feedback types available for submission.
+     * All feedback types available for submission.
      */
     getTypes(): Promise<string> {
         return this.selReportType.options.getText();
     }
 
     /**
-     * @description A getter and setter to get or change the feedback's description text.
+     * A getter and setter to get or change the feedback's description text.
      */
     get description(): AccessorPromiseString {
         return this.txtFeedback.getAttribute('value');
@@ -72,21 +73,21 @@ export class rxFeedback extends rxModalAction {
     }
 
     /**
-     * @description The placeholder string that populates the feedback description by default.
+     * The placeholder string that populates the feedback description by default.
      */
     getDescriptionPlaceholder(): Promise<string> {
         return this.txtFeedback.getAttribute('placeholder');
     }
 
     /**
-     * @description The label above the description text box.
+     * The label above the description text box.
      */
     getDescriptionLabel(): Promise<string> {
         return this.$('.feedback-description').getText();
     }
 
     /**
-     * @description A high-level utility function for quickly submitting feedback.
+     * A high-level utility function for quickly submitting feedback.
      * Prepares, writes, and submits feedback.
      * If `confirmSuccessWithin` is defined, a confirmation of submission success must appear
      * within `confirmSuccessWithin` milliseconds.

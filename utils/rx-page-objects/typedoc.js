@@ -2,7 +2,7 @@ module.exports = {
     name: 'rxPageObjects',
     out: './doc',
     readme: './doc-src/README.md',
-    theme: 'default',
+    theme: './doc-src/rx-theme',
     excludeExternals: true,
     excludeNotExported: true,
     excludePrivate: true,

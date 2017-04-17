@@ -3,7 +3,8 @@ import {by, ElementFinder} from 'protractor';
 import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /**
- * @description class to handle
+ * Provides a base class to extend for custom actions, as well as overriding the
+ * click method for default actiosn.
  */
 export class rxAction extends rxComponentElement {
     @OverrideWebdriver
@@ -13,12 +14,11 @@ export class rxAction extends rxComponentElement {
 }
 
 /**
- * @description Functions for querying actions in an action menu, and launching those actions.
- * @class
+ * Functions for querying actions in an action menu, and launching those actions.
  */
 export class rxActionMenu extends rxComponentElement {
     /**
-     * @description This selector will grab any top-level child elements under `.actions-area`, one level deep.
+     * This selector will grab any top-level child elements under `.actions-area`, one level deep.
      * Since action menus allow for free-form html entry, there is no guarantee that any
      * particular structure will appear inside the action menu. However, we can be sure
      * that they'll use the `.actions-area` class to style it, and inside of it will be some
@@ -31,14 +31,14 @@ export class rxActionMenu extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the action cog is showing its underlying menu.
+     * Whether or not the action cog is showing its underlying menu.
      */
     isExpanded(): Promise<boolean> {
         return this.$('.action-list:not(.ng-hide)').isPresent();
     }
 
     /**
-     * @description Clicks the action cog to expand the action menu, unless it's already open.
+     * Clicks the action cog to expand the action menu, unless it's already open.
      */
     expand(): void {
         this.isExpanded().then(expanded => {
@@ -49,7 +49,7 @@ export class rxActionMenu extends rxComponentElement {
     }
 
     /**
-     * @description Clicks the action cog to collapse the action menu, unless it's already closed.
+     * Clicks the action cog to collapse the action menu, unless it's already closed.
      */
     collapse(): void {
         this.isExpanded().then(expanded => {
@@ -60,7 +60,7 @@ export class rxActionMenu extends rxComponentElement {
     }
 
     /**
-     * @description Whether or not the action menu has an item matching the text `actionName`.
+     * Whether or not the action menu has an item matching the text `actionName`.
      * Will expand the action menu to determine if the action is available.
      */
     hasAction(actionName: string): Promise<boolean> {
@@ -69,7 +69,7 @@ export class rxActionMenu extends rxComponentElement {
     }
 
     /**
-     * @description Returns an action's element.
+     * Returns an action's element.
      */
     action(actionName: string) {
         this.expand();
@@ -77,7 +77,7 @@ export class rxActionMenu extends rxComponentElement {
     }
 
     /**
-     * @description The number of action items present in the action menu.
+     * The number of action items present in the action menu.
      * Does not expand the action menu to determine the count of menu items.
      */
     actionCount(): Promise<number> {

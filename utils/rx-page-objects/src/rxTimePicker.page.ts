@@ -8,37 +8,37 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 /**
- * @class
  * @example
- * var picker = new encore.rxTimePicker($('#myTimePicker'));
  *
- * // ===== Modifying Time =====
- * picker.time = '18:45+04:00'; // automatically commits change
- * picker.time; // '18:45+04:00'
- * picker.hour; // '6'
- * picker.minutes; // '45'
- * picker.period; // 'PM'
- * picker.offset; // '+04:00'
+ *     var picker = new encore.rxTimePicker($('#myTimePicker'));
  *
- * // ===== Modifying Time Parts =====
+ *     // ===== Modifying Time =====
+ *     picker.time = '18:45+04:00'; // automatically commits change
+ *     picker.time; // '18:45+04:00'
+ *     picker.hour; // '6'
+ *     picker.minutes; // '45'
+ *     picker.period; // 'PM'
+ *     picker.offset; // '+04:00'
  *
- * // cannot modify without opening picker
- * picker.open();
+ *     // ===== Modifying Time Parts =====
  *
- * picker.hour = 12;
- * picker.minutes = 15;
- * picker.period = 'PM';
- * picker.offset = '-05:00';
- * picker.time; // '18:45+04:00' (currently unchanged)
+ *     // cannot modify without opening picker
+ *     picker.open();
  *
- * // makes changes to `time` and automatically closes picker
- * picker.submit();
+ *     picker.hour = 12;
+ *     picker.minutes = 15;
+ *     picker.period = 'PM';
+ *     picker.offset = '-05:00';
+ *     picker.time; // '18:45+04:00' (currently unchanged)
  *
- * picker.time; // '12:15-05:00' (value updated)
- * picker.hour; // '12'
- * picker.minutes; // '15'
- * picker.period; // 'PM'
- * picker.offset; // '-05:00'
+ *     // makes changes to `time` and automatically closes picker
+ *     picker.submit();
+ *
+ *     picker.time; // '12:15-05:00' (value updated)
+ *     picker.hour; // '12'
+ *     picker.minutes; // '15'
+ *     picker.period; // 'PM'
+ *     picker.offset; // '-05:00'
  */
 export class rxTimePicker extends rxComponentElement {
     // Private selectors
@@ -134,42 +134,42 @@ export class rxTimePicker extends rxComponentElement {
     }
 
     /**
-     * @description Whether the picker can be submitted
+     * whether or not the picker can be submitted
      */
     canSubmit(): Promise<boolean> {
         return this.btnSubmit.isEnabled();
     }
 
     /**
-     * @description Whether the picker can be submitted
+     * whether or not the picker can be submitted
      */
     canCancel(): Promise<boolean> {
         return this.btnCancel.isEnabled();
     }
 
     /**
-     * @description Whether the picker is open
+     * whether or not the picker is open
      */
     isOpen(): Promise<boolean> {
         return this.$('.popup').getAttribute('class').then(classes => !_.includes(classes, 'ng-hide'));
     }
 
     /**
-     * @description Open picker
+     * Open picker
      */
     open(): Promise<void> {
         return this.isOpen().then(opened => (!opened) && this.eleControl.click());
     }
 
     /**
-     * @description Close picker
+     * Close picker
      */
     close(): Promise<void> {
         return this.isOpen().then(opened => opened && this.eleControl.click());
     }
 
     /**
-     * @description Submit and close picker
+     * Submit and close picker
      */
     @OverrideWebdriver
     submit(): Promise<void> {
@@ -177,7 +177,7 @@ export class rxTimePicker extends rxComponentElement {
     }
 
     /**
-     * @description Cancel picker, without updating value
+     * Cancel picker, without updating value
      */
     cancel(): Promise<void> {
         return this.btnCancel.click();
@@ -185,7 +185,7 @@ export class rxTimePicker extends rxComponentElement {
 }
 
 /**
- * @description return offset value, if present in string
+ * Return offset value, if present in string.
  *
  * **NOTE:** Logic in this function must match the logic in
  * the rxTimePickerUtil service.

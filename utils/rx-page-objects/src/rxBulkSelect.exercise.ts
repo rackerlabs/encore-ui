@@ -14,12 +14,14 @@ export interface IRxBulkSelectExerciseOptions {
 }
 
 /**
- * @description rxBulkSelect exercises.
+ * rxBulkSelect exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxBulkSelect({
- *     instance: myPage.bulkSelect, // select one of many widgets from your page objects
- *     batchActions: ['Create', 'Read', 'Update', 'Delete']
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxBulkSelect({
+ *         instance: myPage.bulkSelect, // select one of many widgets from your page objects
+ *         batchActions: ['Create', 'Read', 'Update', 'Delete']
+ *     }));
  */
 export function rxBulkSelectExercise (options: IRxBulkSelectExerciseOptions) {
     options = _.defaults(options, {

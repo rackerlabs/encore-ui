@@ -2,19 +2,16 @@
 import * as _ from 'lodash';
 import {Promise, rxComponentElement} from './rxComponent';
 
-/**
- * @class
- */
 export class rxCollapse extends rxComponentElement {
     /**
-     * @description Whether or not the component is currently expanded.
+     * Whether or not the component is currently expanded.
      */
     isExpanded(): Promise<boolean> {
         return this.$('.expanded').isPresent();
     }
 
     /**
-     * @description Whether or not the component has a custom title.
+     * Whether or not the component has a custom title.
      */
     hasCustomTitle(): Promise<boolean> {
         return this.$('.collapse-title-wrap').getAttribute('class').then(classes => {
@@ -23,7 +20,7 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will return the custom title's text if the component uses one. Otherwise, it'll return
+     * Will return the custom title's text if the component uses one. Otherwise, it'll return
      * the default title, found in the `.sml-title` (see-more-less-title) class.
      */
     getTitle(): Promise<string> {
@@ -37,7 +34,7 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will expand the component if collapsed, or will collapse it if it's expanded.
+     * Will expand the component if collapsed, or will collapse it if it's expanded.
      */
     toggle(): Promise<void> {
         return this.hasCustomTitle().then(hasCustomTitle => {
@@ -50,7 +47,7 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will toggle the component only if it's currently collapsed.
+     * Will toggle the component only if it's currently collapsed.
      */
     expand(): Promise<void> {
         return this.isExpanded().then(expanded => {
@@ -61,7 +58,7 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will toggle the component only if it's currently expanded.
+     * Will toggle the component only if it's currently expanded.
      */
     collapse(): Promise<void> {
         return this.isExpanded().then(expanded => {

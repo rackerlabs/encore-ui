@@ -5,9 +5,6 @@ import {browser, ElementArrayFinder, ElementFinder, promise} from 'protractor';
 import {ILocation} from 'selenium-webdriver';
 import {Promise} from './rxComponent';
 
-/**
- * @interface
- */
 export interface IScrollToElementOptions {
     elementTargetPoint?: string;
     positionOnScreen?: string;
@@ -16,36 +13,38 @@ export interface IScrollToElementOptions {
 export type rxMiscLocationSubject = ElementFinder | ElementArrayFinder | ILocation;
 export type rxMiscLocationResult = ILocation | number;
 
-/**
- * @class
- */
 export namespace rxMisc {
     /**
-     * @description Accepts an ElementFinder, or an ElementArrayFinder, which can have several locations.
+     * Accepts an ElementFinder, or an ElementArrayFinder, which can have several locations.
      * Should the list of elements be stacked vertically (say, in a list of table rows),
      * the element with the smallest Y coordinate will be scrolled to.
+     *
      * @example
-     * var tablePage = {
-     *     get tblRows() {
-     *         return element.all(by.repeater('row in rows'));
-     *     },
      *
-     *     isLoading: function () {
-     *         return $('.infinite-scrolling.loading');
-     *     },
+     *     var tablePage = {
+     *         get tblRows() {
+     *             return element.all(by.repeater('row in rows'));
+     *         },
      *
-     *     triggerLoad: function () {
-     *         // will attempt to put the top of the last row in the middle of the screen
-     *         encore.rxMisc.scrollToElement(this.tblRows.get(-1), { positionOnScreen: 'middle' });
-     *     }
-     * };
+     *         isLoading: function () {
+     *             return $('.infinite-scrolling.loading');
+     *         },
      *
-     * it('should scroll to the bottom of the table and load more stuff', function () {
-     *    browser.ignoreSynchronization = true;
-     *    tablePage.triggerLoad();
-     *    expect(tablePage.isLoading()).to.eventually.equal(true);
-     *    browser.ignoreSynchronization = false;
-     * });
+     *         triggerLoad: function () {
+     *             // will attempt to put the top of the last row in the middle of the screen
+     *             encore.rxMisc.scrollToElement(
+     *                 this.tblRows.get(-1),
+     *                 { positionOnScreen: 'middle' }
+     *             );
+     *         }
+     *     };
+     *
+     *     it('should scroll to the bottom of the table and load more stuff', function () {
+     *        browser.ignoreSynchronization = true;
+     *        tablePage.triggerLoad();
+     *        expect(tablePage.isLoading()).to.eventually.equal(true);
+     *        browser.ignoreSynchronization = false;
+     *     });
      */
     export function scrollToElement(elem: ElementFinder | ElementArrayFinder,
                                     options?: IScrollToElementOptions): Promise<void> {
@@ -93,7 +92,6 @@ export namespace rxMisc {
     }
 
     /**
-     * @description
      * Unify input from either a location object or an ElementFinder into a promise
      * representing the location attribute (x or y) of either input.
      * Both `transformLocation($('.element'), 'y')` and `transformLocation({x: 20, y: 0}, 'y')`
