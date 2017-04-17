@@ -25,7 +25,7 @@ it('should have a custom icon on the "Delete" menu option', () => {
 });
 ```
 
-Please note that in the above example [[rxAction]] inherits the `$` method from Protractor's `ElementFinder`.
+Please note that in the above example `rxAction` inherits the `$` method from Protractor's `ElementFinder`.
 
 The latest documentation on the Protractor API is available here: [Protractor API](http://www.protractortest.org/#/api)
 
