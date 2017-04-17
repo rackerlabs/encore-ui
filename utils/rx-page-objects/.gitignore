@@ -1,7 +1,4 @@
 doc/*
-!doc/jsdoc-custom.css
-!doc/layout.tmpl
-!doc/README.md
 node_modules/
 typings/
 *.d.ts

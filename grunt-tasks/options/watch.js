@@ -86,7 +86,7 @@ module.exports = {
     },
     tscRxPageObjects: {
         files: [
-            'utils/rx-page-objects/doc/README.md',
+            'utils/rx-page-objects/README.md',
             'utils/rx-page-objects/typedoc.js',
             'utils/rx-page-objects/tsconfig.json',
             'utils/rx-page-objects/index.ts',
