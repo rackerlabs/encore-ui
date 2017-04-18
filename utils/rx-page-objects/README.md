@@ -15,7 +15,7 @@ it('should have the "Delete" menu option present', () => {
 
 ### Extends Protractor/Selenium API.
 
-Most componend in in rx-page-objects extend the ElementFinder class from the Protractor API.  This means that
+Most components in rx-page-objects extend the ElementFinder class from the Protractor API.  This means that
 the methods and properties of ElementFinder are typically present on any `rxClassName` object.
 
 ```js
@@ -31,9 +31,9 @@ The latest documentation on the Protractor API is available here: [Protractor AP
 
 ### Construct page objects faster.
 
-Assemble many of the reusable components from rx-page-objects into a easy to maintain page object.
+Assemble many of the reusable components from rx-page-objects into an easy to maintain page object.
 
-Great for when you already use page objects, and want to benefit from using pre-fabricated components.
+Great for when you already use page objects, and want to benefit from using prefabricated components.
 
 ```js
 let myHomePage = {
