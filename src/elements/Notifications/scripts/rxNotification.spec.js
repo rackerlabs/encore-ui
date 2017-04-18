@@ -22,8 +22,8 @@ describe('rxNotification', function () {
         });
 
         it('should have warning CSS class when setting type attribute to warning', function () {
-            // Find the second div and check for class. Why won't it take div.rx-notification?
-            var newEl = el2.find('div').eq(1);
+            // Find the first div and check for class.
+            var newEl = el2.find('div').eq(0);
             expect(newEl.hasClass('notification-warning')).to.be.true;
         });
 

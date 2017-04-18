@@ -17,7 +17,8 @@ angular.module('encore.ui.elements')
 .directive('rxNotification', function (rxNotify) {
     return {
         scope: {
-            type: '@'
+            type: '@', 
+            loading: '='   
         },
         transclude: true,
         restrict: 'E',
