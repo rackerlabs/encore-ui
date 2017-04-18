@@ -4,67 +4,7 @@
   margin-bottom: 1.5em;
 
   .rx-notification {
-    clear: both;
-    font-weight: 800;
-    font-size: 1.2em;
-    padding: 10px 50px;
     margin-bottom: 2px;
-    position: relative;
-    background: no-repeat 18px 50%;
-    background-size: 20px 20px;
-
-    .button {
-      font-weight: normal;
-      margin-bottom: 0;
-    }
-    a {
-      text-decoration: underline;
-    }
-
-    &.notification-success {
-      background-color: @green-100;
-      background-image: url("images/green-checkmark-circled.svg");
-      color: @gray-950;
-      a {
-        color: @gray-950;
-      }
-    }
-    &.notification-info {
-      background-color: @blue-100;
-      background-image: url("images/info-circled.svg");
-      color: @gray-950;
-      a {
-        color: @gray-950;
-      }
-    }
-    &.notification-warning {
-      background-color: @orange-100;
-      background-image: url("images/warning-triangle.svg");
-      color: @gray-950;
-      a {
-        color: @gray-950;
-      }
-    }
-    &.notification-error {
-      background-color: @red-700;
-      background-image: url("images/error-stop.svg");
-      color: @white;
-      a {
-        color: @white;
-      }
-    }
-    &.notification-loading {
-      // Hide icon since it's replaced by spinner
-      background-image: none;
-      .rx-spinner {
-        position: absolute;
-        left: 19px;
-        top: 50%;
-        margin-top: -9px;
-        border-bottom-color: @gray-950;
-        border-right-color: @gray-950;
-      }
-    }
   }
 
   .notification-dismiss {
@@ -73,23 +13,62 @@
     top: 0;
     height: 100%;
     padding: 0 15px;
-    content: "\00D7";
-    opacity: 0.75;
-    color: @gray-950;
+    color: inherit;
     &:hover,
     &:focus {
-      opacity: 1;
       text-decoration: none;
     }
   }
-  .notification-error {
-    .notification-dismiss {
-      opacity: 1;
-      color: @white;
+}
+.rx-notification {
+  font-size: 1.2em;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  .button {
+    margin-bottom: 0;
+  }
+  a {
+    color: inherit;
+    font-weight: 800;
+    text-decoration: underline;
+  }
+  .notification-icon {
+    margin-right: 8px;
+    font-size: 1.3em;
+  }
+  &.notification-success {
+    background-color: @green-700;
+    color: @white;
+  }
+  &.notification-info {
+    background-color: @blue-100;
+    color: @black;
+  }
+  &.notification-warning {
+    background-color: @orange-accent;
+    color: @black;
+  }
+  &.notification-error {
+    background-color: @red-700;
+    color: @white;
+  }
+  &.notification-loading {
+    .notification-icon {
+      display: none;
+    }
+    [rx-spinner] {
+      margin-right: 6px;
+    }
+    .rx-spinner {
+      border-bottom-color: @gray-950;
+      border-right-color: @gray-950;
+      height: 16px;
+      width: 16px;
     }
   }
 }
-
 .animate-fade {
   &.ng-enter,
   &.ng-leave {
