@@ -69,7 +69,12 @@ angular.module('encore.ui.elements')
  * @param {Expression=} [ngDisabled=false]
  * If the expression evaluates truthy, then the link for opening the modal will
  * be disabled.
- *
+ * @param {String=} [controller='rxModalCtrl']
+ * Identifies the controller name to use for modal functionality. At minimum, 
+ * the controller should implement `submit()` and `cancel()` for use by the modal 
+ * footer. Use this attribute if you need advanced behavior of the modal. 
+ * Currently used in wizard-like modals and multi-view modals.
+ * 
  * @example
  * <pre>
  * <rx-modal-action
