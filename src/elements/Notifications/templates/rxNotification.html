@@ -1,5 +1,10 @@
-<div class="rx-notifications">
-    <div class="rx-notification notification-{{type}}">
-        <span class="notification-text" ng-transclude></span>
-    </div>
+<div class="rx-notification notification-{{type}}"
+    ng-class="{'notification-loading': loading === true}">
+    <span class="notification-icon" ng-switch="type">
+      <i class="fa fa-exclamation-circle" ng-switch-when="error"></i>
+      <i class="fa fa-exclamation-triangle" ng-switch-when="warning"></i>
+      <i class="fa fa-info-circle" ng-switch-when="info"></i>
+      <i class="fa fa-check-circle" ng-switch-when="success"></i>
+    </span>
+    <span class="notification-text" ng-transclude></span>
 </div>
