@@ -1,4 +1,4 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Modals/scripts/rxModalAction.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/64d9b54/src/elements/Modals/scripts/rxModalAction.js#L84" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxModalAction</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Modals/scripts/rxModalAction.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/3165ace/src/elements/Modals/scripts/rxModalAction.js#L89" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxModalAction</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
 </span>
 </div>
@@ -50,7 +50,8 @@ indeterminate component to a previous state (e.g. toggle switches).</p>
        [dismiss-hook="{Function}"]
        [template-url="{String}"]
        [disable-esc="{*}"]
-       [ng-disabled="{Expression}"]&gt;
+       [ng-disabled="{Expression}"]
+       [controller="{String}"]&gt;
 &lt;/rx-modal-action&gt;</pre>
 <h3 id="usage_directive-info">Directive info</h3>
 <div class="directive-info"><ul><li>This directive creates new scope.</li>
@@ -64,7 +65,11 @@ indeterminate component to a previous state (e.g. toggle switches).</p>
 disabled for the modal. This attribute takes no values.</p>
 </div></td></tr><tr><td>ngDisabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>If the expression evaluates truthy, then the link for opening the modal will
 be disabled.</p>
-</div> <p><em>(default: false)</em></p></td></tr></tbody></table></div>
+</div> <p><em>(default: false)</em></p></td></tr><tr><td>controller <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxmodalaction-page"><p>Identifies the controller name to use for modal functionality. At minimum, 
+the controller should implement <code>submit()</code> and <code>cancel()</code> for use by the modal 
+footer. Use this attribute if you need advanced behavior of the modal. 
+Currently used in wizard-like modals and multi-view modals.</p>
+</div> <p><em>(default: 'rxModalCtrl')</em></p></td></tr></tbody></table></div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="elements-directive-page elements-directive-rxmodalaction-page"><pre class="prettyprint linenums">
 &lt;rx-modal-action

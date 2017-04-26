@@ -1,123 +1,450 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="default no-js">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Home</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-    <link type="text/css" rel="stylesheet" href="jsdoc-custom.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>rxPageObjects</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/extend.css">
 </head>
-
 <body>
-
-<div id="main">
-
-    <h1 class="page-title">Home</h1>
-
-    
-
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    <section>
-        <article><h1 id="rx-page-objects">rx-page-objects</h1>
-<h3 id="end-to-end-testing-utilities-for-encore-applications-">End to end testing utilities for Encore applications.</h3>
-<p>Provides high-level access to components in the Encore-UI library through Protractor.</p>
-<p>You can use it directly in your test code, without using any abstractions at all.</p>
-<pre class="prettyprint source"><code>it('should have all breadcrumbs present', function () {
-    expect(encore.rxBreadcrumbs.initialize().names).to.eventually.eql(['Home', 'Feature', 'Details']);
-});</code></pre><h3 id="construct-page-objects-faster-">Construct page objects faster.</h3>
-<p>Assemble many of the reusable components from rx-page-objects into a easy to maintain page object.</p>
-<p>Great for when you already use page objects, and want to benefit from using pre-fabricated components.</p>
-<pre class="prettyprint source lang-js"><code>var myHomePage = {
-    get breadcrumbs() { return encore.rxBreadcrumbs.initialize(); },
-    get pagination() { return encore.rxPaginate.initialize($('#myTable rx-paginate')); },
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<a href="index.html" class="title">rxPageObjects</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> rxPageObjects</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="rx-page-objects">rx-page-objects</h1>
+				<h3 id="end-to-end-testing-utilities-for-encore-applications-">End to end testing utilities for Encore applications.</h3>
+				<p>Provides high-level access to components in the Encore-UI library through Protractor.</p>
+				<p>You can use it directly in your test code, without using any abstractions at all.</p>
+				<pre><code class="lang-js">it(<span class="hljs-string">'should have the "Delete" menu option present'</span>, () =&gt; {
+    <span class="hljs-keyword">let</span> menu = <span class="hljs-keyword">new</span> encore.rxActionMenu($(<span class="hljs-string">'rx-action-menu#custom'</span>));
+    expect(menu.hasAction(<span class="hljs-string">'Delete'</span>)).to.eventually.be.true;
+});
+</code></pre>
+				<h3 id="extends-protractor-selenium-api-">Extends Protractor/Selenium API.</h3>
+				<p>Most components in rx-page-objects extend the ElementFinder class from the Protractor API.  This means that
+				the methods and properties of ElementFinder are typically present on any <code>rxClassName</code> object.</p>
+				<pre><code class="lang-js">it(<span class="hljs-string">'should have a custom icon on the "Delete" menu option'</span>, () =&gt; {
+    <span class="hljs-keyword">let</span> menu = <span class="hljs-keyword">new</span> encore.rxActionMenu($(<span class="hljs-string">'rx-action-menu#custom'</span>));
+    expect(menu.action(<span class="hljs-string">'Delete'</span>).$(<span class="hljs-string">'.icon-custom'</span>).isPresent()).to.eventually.be.true;
+});
+</code></pre>
+				<p>Please note that in the above example <code>rxAction</code> inherits the <code>$</code> method from Protractor&#39;s <code>ElementFinder</code>.</p>
+				<p>The latest documentation on the Protractor API is available here: <a href="http://www.protractortest.org/#/api">Protractor API</a></p>
+				<h3 id="construct-page-objects-faster-">Construct page objects faster.</h3>
+				<p>Assemble many of the reusable components from rx-page-objects into an easy to maintain page object.</p>
+				<p>Great for when you already use page objects, and want to benefit from using prefabricated components.</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">let</span> myHomePage = {
+    get notifications() { <span class="hljs-keyword">return</span> encore.rxNotify.all; },
+    get pagination() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> encore.rxPaginate($(<span class="hljs-string">'#myTable rx-paginate'</span>)); },
 };
 
-it('should have all breadcrumbs present', function () {
-    expect(myHomePage.breadcrumbs.names).to.eventually.eql(['Home', 'Feature', 'Details']);
-});</code></pre><h3 id="use-exercises-to-generate-basic-tests-">Use exercises to generate basic tests.</h3>
-<p>Describe your component at a high level, and let rx-page-objects run a set of simple tests for you.</p>
-<pre class="prettyprint source lang-js"><code>describe('Default Pagination Tests', encore.exercise.rxPaginate({
-    instance: myHomePage.pagination,
-    pages: 8,
-    defaultPageSize: 20,
-    pageSizes: [5, 10, 20, 25, 50]
-}));</code></pre><p>From just those few lines of code, the following is tested.</p>
-<pre class="prettyprint source"><code>  ✓ should navigate forward one page at a time
-  ✓ should navigate backwards one page at a time
-  ✓ should navigate to the last page
-  ✓ should jump forward to page 6 using pagination
-  ✓ should jump backward to page 2 using pagination
-  ✓ should not allow navigating `next` the last page
-  ✓ should allow attempting to navigate to the last page when already on the last page
-  ✓ should navigate to the first page
-  ✓ should not allow navigating `prev` the first page
-  ✓ should allow attempting to navigate to the first page when already on the first page
-  ✓ should have all available page sizes
-  ✓ should highlight the current items per page selection
-  ✓ should list the lower bounds of the shown items currently in the table
-  ✓ should list the upper bounds of the shown items currently in the table
-  ✓ should know the total number of pages without visiting it
-  ✓ should switch to a different items per page
-  ✓ should put the user back on the first page after resizing the items per page
-  ✓ should not fail to match the lower bounds of the shown items even if not displayed
-  ✓ should not fail to match the upper bounds of the shown items even if not displayed
-  ✓ should not allow selecting an unavailable items per page</code></pre><p>Exercises are designed to test the basics quickly. It contains no app-specific business logic.</p>
-<p>It will always put your app in the same state it found it in when it started.</p>
-<h2 id="setting-up">Setting up</h2>
-<p><em>command line</em></p>
-<pre class="prettyprint source"><code>npm install --save-dev rx-page-objects</code></pre><p><em>protractor.conf.js</em></p>
-<pre class="prettyprint source lang-js"><code>onPrepare: function () {
-    encore = require('rx-page-objects');
-},</code></pre><p><em>.jshintrc</em></p>
-<pre class="prettyprint source lang-js"><code>&quot;globals&quot;: {
-    encore: true
-}</code></pre></article>
-    </section>
-
-
-
-
-
-
+it(<span class="hljs-string">'should have three notifications present'</span>, () =&gt; {
+    expect(myHomePage.notifications.count()).to.eventually.eql(<span class="hljs-number">3</span>);
+});
+</code></pre>
+				<h3 id="use-exercises-to-generate-basic-tests-">Use exercises to generate basic tests.</h3>
+				<p>Describe your component at a high level, and let rx-page-objects run a set of simple tests for you.</p>
+				<pre><code class="lang-js">describe(<span class="hljs-string">'Default Pagination Tests'</span>, encore.exercise.rxPaginate({
+    <span class="hljs-attr">instance</span>: myHomePage.pagination,
+    <span class="hljs-attr">totalItems</span>: <span class="hljs-number">157</span>,
+    <span class="hljs-attr">defaultPageSize</span>: <span class="hljs-number">20</span>,
+    <span class="hljs-attr">pageSizes</span>: [<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">25</span>, <span class="hljs-number">50</span>]
+}));
+</code></pre>
+				<p>From just those few lines of code, the following is tested.</p>
+				<pre><code>    ✓ should be displayed
+    ✓ should <span class="hljs-keyword">not</span> have `next` link <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">last</span> <span class="hljs-title">page</span>
+    ✓ should allow attempting <span class="hljs-built_in">to</span> navigate <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> next page when already <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">last</span> <span class="hljs-title">page</span>
+    ✓ should allow attempting <span class="hljs-built_in">to</span> navigate <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">last</span> page when already <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">last</span> <span class="hljs-title">page</span>
+    ✓ should navigate <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">first</span> page
+    ✓ should <span class="hljs-keyword">not</span> have `prev` link <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">first</span> <span class="hljs-title">page</span>
+    ✓ should allow attempting <span class="hljs-built_in">to</span> navigate <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> previous page when already <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">first</span> <span class="hljs-title">page</span>
+    ✓ should allow attempting <span class="hljs-built_in">to</span> navigate <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">first</span> page when already <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">first</span> <span class="hljs-title">page</span>
+    ✓ should have all available page sizes
+    ✓ should highlight <span class="hljs-keyword">the</span> current <span class="hljs-keyword">items</span> per page selection
+    ✓ should navigate forward <span class="hljs-literal">one</span> page <span class="hljs-keyword">at</span> <span class="hljs-keyword">a</span> <span class="hljs-built_in">time</span>
+    ✓ should navigate backwards <span class="hljs-literal">one</span> page <span class="hljs-keyword">at</span> <span class="hljs-keyword">a</span> <span class="hljs-built_in">time</span>
+    ✓ should navigate <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">last</span> page
+    ✓ should jump forward <span class="hljs-built_in">to</span> page <span class="hljs-number">6</span> <span class="hljs-keyword">using</span> pagination
+    ✓ should jump backward <span class="hljs-built_in">to</span> page <span class="hljs-number">2</span> <span class="hljs-keyword">using</span> pagination
+    ✓ should <span class="hljs-keyword">switch</span> <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> different <span class="hljs-keyword">items</span> per page
+    ✓ should <span class="hljs-built_in">put</span> <span class="hljs-keyword">the</span> user back <span class="hljs-keyword">on</span> <span class="hljs-title">the</span> <span class="hljs-title">first</span> <span class="hljs-title">page</span> <span class="hljs-title">after</span> <span class="hljs-title">resizing</span> <span class="hljs-title">the</span> <span class="hljs-title">items</span> <span class="hljs-title">per</span> <span class="hljs-title">page</span>
+    ✓ should list have <span class="hljs-keyword">the</span> correct <span class="hljs-keyword">string</span> <span class="hljs-keyword">for</span> <span class="hljs-keyword">the</span> shown <span class="hljs-keyword">items</span>
+    ✓ should <span class="hljs-keyword">not</span> fail <span class="hljs-built_in">to</span> match <span class="hljs-keyword">the</span> <span class="hljs-built_in">upper</span> bounds <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> shown <span class="hljs-keyword">items</span> even <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> displayed
+</code></pre><p>Exercises are designed to test the basics quickly. It contains no app-specific business logic.</p>
+				<p>It will always put your app in the same state it found it in when it started.</p>
+				<h2 id="setting-up">Setting up</h2>
+				<p><em>command line</em></p>
+				<pre><code>npm install --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span> rx-page-objects
+</code></pre><p><em>protractor.conf.js</em></p>
+				<pre><code class="lang-js">onPrepare: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    encore = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rx-page-objects'</span>);
+},
+</code></pre>
+				<p><em>.jshintrc</em></p>
+				<pre><code class="lang-js"><span class="hljs-string">"globals"</span>: {
+    <span class="hljs-attr">encore</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/rxdisksize.html">rx<wbr>Disk<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/rxlocalstorage.html">rx<wbr>Local<wbr>Storage</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/rxmisc.html">rx<wbr>Misc</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/sort_type.html" class="tsd-kind-icon">SORT_<wbr>TYPE</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/tab.html" class="tsd-kind-icon">Tab</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/tabs.html" class="tsd-kind-icon">Tabs</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/tag.html" class="tsd-kind-icon">Tag</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/tooltip.html" class="tsd-kind-icon">Tooltip</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/typeahead.html" class="tsd-kind-icon">Typeahead</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxaction.html" class="tsd-kind-icon">rx<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxactionmenu.html" class="tsd-kind-icon">rx<wbr>Action<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxage.html" class="tsd-kind-icon">rx<wbr>Age</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxbatchactionmenu.html" class="tsd-kind-icon">rx<wbr>Batch<wbr>Action<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxbulkselect.html" class="tsd-kind-icon">rx<wbr>Bulk<wbr>Select</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxbulkselectrow.html" class="tsd-kind-icon">rx<wbr>Bulk<wbr>Select<wbr>Row</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxcharactercount.html" class="tsd-kind-icon">rx<wbr>Character<wbr>Count</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxcheckbox.html" class="tsd-kind-icon">rx<wbr>Checkbox</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxcollapse.html" class="tsd-kind-icon">rx<wbr>Collapse</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxcomponentelement.html" class="tsd-kind-icon">rx<wbr>Component<wbr>Element</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxcopy.html" class="tsd-kind-icon">rx<wbr>Copy</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxdatepicker.html" class="tsd-kind-icon">rx<wbr>Date<wbr>Picker</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxfeedback.html" class="tsd-kind-icon">rx<wbr>Feedback</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxfieldname.html" class="tsd-kind-icon">rx<wbr>Field<wbr>Name</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxmetadata.html" class="tsd-kind-icon">rx<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxmodalaction.html" class="tsd-kind-icon">rx<wbr>Modal<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxmultiselect.html" class="tsd-kind-icon">rx<wbr>Multi<wbr>Select</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxmultiselectoption.html" class="tsd-kind-icon">rx<wbr>Multi<wbr>Select<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxnotification.html" class="tsd-kind-icon">rx<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxnotify.html" class="tsd-kind-icon">rx<wbr>Notify</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxpaginate.html" class="tsd-kind-icon">rx<wbr>Paginate</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxradio.html" class="tsd-kind-icon">rx<wbr>Radio</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxsearchbox.html" class="tsd-kind-icon">rx<wbr>Search<wbr>Box</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxselect.html" class="tsd-kind-icon">rx<wbr>Select</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxselectfilter.html" class="tsd-kind-icon">rx<wbr>Select<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxsortablecolumn.html" class="tsd-kind-icon">rx<wbr>Sortable<wbr>Column</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxstatuscell.html" class="tsd-kind-icon">rx<wbr>Status<wbr>Cell</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxtags.html" class="tsd-kind-icon">rx<wbr>Tags</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxtimepicker.html" class="tsd-kind-icon">rx<wbr>Time<wbr>Picker</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rxtoggleswitch.html" class="tsd-kind-icon">rx<wbr>Toggle<wbr>Switch</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxbulkselectexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Bulk<wbr>Select<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxcharactercountexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Character<wbr>Count<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxcheckboxexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Checkbox<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxcollapseexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Collapse<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxcopyexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Copy<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxdatepickerexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Date<wbr>Picker<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxfieldnameexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Field<wbr>Name<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxmetadataexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Metadata<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxmultiselectfilterdata.html" class="tsd-kind-icon">IRx<wbr>Multi<wbr>Select<wbr>Filter<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxmultiselectoptions.html" class="tsd-kind-icon">IRx<wbr>Multi<wbr>Select<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxpaginateexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Paginate<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxradioexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Radio<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxsearchboxexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Search<wbr>Box<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxselectexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Select<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxtagsexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Tags<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irxtoggleswitchexerciseoptions.html" class="tsd-kind-icon">IRx<wbr>Toggle<wbr>Switch<wbr>Exercise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/iscrolltoelementoptions.html" class="tsd-kind-icon">IScroll<wbr>ToElement<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#accessorpromisestring" class="tsd-kind-icon">Accessor<wbr>Promise<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#promise" class="tsd-kind-icon">Promise</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rxmisclocationresult" class="tsd-kind-icon">rx<wbr>Misc<wbr>Location<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rxmisclocationsubject" class="tsd-kind-icon">rx<wbr>Misc<wbr>Location<wbr>Subject</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#overridewebdriver" class="tsd-kind-icon">Override<wbr>Webdriver</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#parseutcoffset" class="tsd-kind-icon">parse<wbr>Utc<wbr>Offset</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxbulkselectexercise" class="tsd-kind-icon">rx<wbr>Bulk<wbr>Select<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxcharactercountexercise" class="tsd-kind-icon">rx<wbr>Character<wbr>Count<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxcheckboxaccessor" class="tsd-kind-icon">rx<wbr>Checkbox<wbr>Accessor</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxcheckboxexercise" class="tsd-kind-icon">rx<wbr>Checkbox<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxcollapseexercise" class="tsd-kind-icon">rx<wbr>Collapse<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxcopyexercise" class="tsd-kind-icon">rx<wbr>Copy<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxdatepickerexercise" class="tsd-kind-icon">rx<wbr>Date<wbr>Picker<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxfieldnameexercise" class="tsd-kind-icon">rx<wbr>Field<wbr>Name<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxmetadataexercise" class="tsd-kind-icon">rx<wbr>Metadata<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxmultiselectexercise" class="tsd-kind-icon">rx<wbr>Multi<wbr>Select<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxpaginateexercise" class="tsd-kind-icon">rx<wbr>Paginate<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxradioaccessor" class="tsd-kind-icon">rx<wbr>Radio<wbr>Accessor</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxradioexercise" class="tsd-kind-icon">rx<wbr>Radio<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxsearchboxexercise" class="tsd-kind-icon">rx<wbr>Search<wbr>Box<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxselectaccessor" class="tsd-kind-icon">rx<wbr>Select<wbr>Accessor</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxselectexercise" class="tsd-kind-icon">rx<wbr>Select<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxtagsexercise" class="tsd-kind-icon">rx<wbr>Tags<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rxtoggleswitchexercise" class="tsd-kind-icon">rx<wbr>Toggle<wbr>Switch<wbr>Exercise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#textfieldaccessor" class="tsd-kind-icon">text<wbr>Field<wbr>Accessor</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#notify_types" class="tsd-kind-icon">NOTIFY_<wbr>TYPES</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#status_colors" class="tsd-kind-icon">STATUS_<wbr>COLORS</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#status_icons" class="tsd-kind-icon">STATUS_<wbr>ICONS</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#exercise" class="tsd-kind-icon">exercise</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
-</nav>
-
-<br clear="both">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 18:22:48 GMT-0500 (CDT)
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
 </footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
