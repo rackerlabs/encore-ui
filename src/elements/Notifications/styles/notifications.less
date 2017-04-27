@@ -6,69 +6,96 @@
   .rx-notification {
     margin-bottom: 2px;
   }
+}//.rx-notifications
 
-  .notification-dismiss {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    padding: 0 15px;
-    color: inherit;
-    &:hover,
-    &:focus {
-      text-decoration: none;
-    }
-  }
-}
 .rx-notification {
+  display: flex;
   font-size: 1.2em;
-  padding: 10px;
   margin-bottom: 1.5rem;
   position: relative;
 
   .button {
     margin-bottom: 0;
   }
+
   a {
     color: inherit;
     font-weight: 800;
     text-decoration: underline;
   }
-  .notification-icon {
-    margin-right: 8px;
-    font-size: 1.3em;
+
+  .notification-text {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    order: 2;
+    padding: 10px;
   }
+
+  .notification-icon {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    flex-basis: 40px;
+    flex-shrink: 0;
+    font-size: 1.3em;
+    justify-content: center;
+    order: 1;
+    width: 40px;
+
+    & ~ .notification-text {
+      padding-left: 0;
+    }
+  }
+
+  .notification-dismiss {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    flex-basis: 40px;
+    flex-shrink: 0;
+    justify-content: center;
+    order: 3;
+    width: 40px;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+
+    & ~ .notification-text {
+      padding-right: 0;
+    }
+  }
+
+  .rx-spinner {
+    border-bottom-color: @gray-950;
+    border-right-color: @gray-950;
+    height: 16px;
+    width: 16px;
+  }//.rx-spinner
+
   &.notification-success {
     background-color: @green-700;
     color: @white;
   }
+
   &.notification-info {
     background-color: @blue-100;
     color: @black;
   }
+
   &.notification-warning {
     background-color: @orange-accent;
     color: @black;
   }
+
   &.notification-error {
     background-color: @red-700;
     color: @white;
   }
-  &.notification-loading {
-    .notification-icon {
-      display: none;
-    }
-    [rx-spinner] {
-      margin-right: 6px;
-    }
-    .rx-spinner {
-      border-bottom-color: @gray-950;
-      border-right-color: @gray-950;
-      height: 16px;
-      width: 16px;
-    }
-  }
-}
+}//.rx-notification
+
 .animate-fade {
   &.ng-enter,
   &.ng-leave {

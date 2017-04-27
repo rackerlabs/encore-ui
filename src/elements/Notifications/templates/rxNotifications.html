@@ -4,12 +4,9 @@
         ng-repeat="message in messages"
         type="{{message.type}}"
         loading="message.loading"
-        class="animate-fade">
-        <span rx-spinner toggle="message.loading"></span>
-        <span class="notification-text" ng-bind-html="message.text"></span>
-        <button ng-click="dismiss(message)" class="notification-dismiss btn-link" ng-if="!message.loading">
-            &times;
-            <span class="visually-hidden">Dismiss Message</span>
-        </button>
+        class="animate-fade"
+        dismiss-hook="dismiss(message)">
+
+        <span ng-bind-html="message.text"></span>
     </rx-notification>
 </div>
