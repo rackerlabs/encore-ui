@@ -41,7 +41,7 @@ describe('layouts', function () {
         });
 
         it('second tab', function () {
-            new encore.Tabs($('.nav-tabs')).byText('Tab 2').click(true);
+            new encore.rxTabset($('.nav-tabs')).byText('Tab 2').click(true);
             screenshot.snap(this, $('.tab-area'));
         });
     });
