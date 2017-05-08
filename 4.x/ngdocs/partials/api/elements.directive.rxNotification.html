@@ -1,4 +1,4 @@
-<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Notifications/scripts/rxNotification.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/e43fe12/src/elements/Notifications/scripts/rxNotification.js#L17" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxNotification</code>
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/elements/Notifications/scripts/rxNotification.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/7349c0c/src/elements/Notifications/scripts/rxNotification.js#L21" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxNotification</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">elements</code>
 </span>
 </div>
@@ -8,14 +8,19 @@
 </div></div>
 <h2 id="usage">Usage</h2>
 <div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-notification
-       [type="{String}"]&gt;
+       [type="{String}"]
+       [dismiss-hook="{Expression}"]&gt;
 &lt;/rx-notification&gt;</pre>
 <h3 id="usage_directive-info">Directive info</h3>
 <div class="directive-info"><ul><li>This directive creates new scope.</li>
 </ul>
 </div>
 <h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>type <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="elements-directive-page elements-directive-rxnotification-page"><p>The type of notification (e.g. &#39;warning&#39;, &#39;error&#39;)</p>
-</div> <p><em>(default: 'info')</em></p></td></tr></tbody></table></div>
+</div> <p><em>(default: 'info')</em></p></td></tr><tr><td>dismissHook <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">Expression</a></td><td><div class="elements-directive-page elements-directive-rxnotification-page"><p>An expression to execute on dismiss of the
+notification.  If defined, a dismiss button will be rendered for the
+notification. Otherwise, no dismiss button will be rendered.  (Best if used
+in conjunction with the rxNotifications directive and the rxNotify service.)</p>
+</div></td></tr></tbody></table></div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="elements-directive-page elements-directive-rxnotification-page"><pre class="prettyprint linenums">
 &lt;rx-notification type="warning"&gt;This is a message!&lt;/rx-notification&gt;

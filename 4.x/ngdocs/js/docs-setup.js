@@ -316,7 +316,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "elements",
       "shortDescription": "Display a static message with styling taken from rx-notifications.",
-      "keywords": "api directive display elements error info message notification rx-notifications static styling type warning"
+      "keywords": "api button conjunction defined directive dismiss dismisshook display elements error execute expression info message notification rendered rx-notifications rxnotifications rxnotify service static styling type warning"
     },
     {
       "section": "api",
