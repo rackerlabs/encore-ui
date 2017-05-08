@@ -3,17 +3,17 @@
 import {expect} from 'chai';
 import {$} from 'protractor';
 
-import {Tab, Tabs} from '../index';
+import {rxTab, rxTabset} from '../index';
 
 let demoPage = require('../../demo.page');
 
-describe('tabs', () => {
-    let tabs: Tabs;
+describe('rxTabset', () => {
+    let tabs: rxTabset;
     let tabNames = ['Bacon Ipsum', 'Veggie Ipsum', 'Cat Ipsum (meow)', 'Tupac Ipsum'];
 
     before(() => {
         demoPage.go('#/elements/Tabs');
-        tabs = new Tabs($('#tabs'));
+        tabs = new rxTabset($('#tabs'));
     });
 
     it('should show element', () => {
@@ -48,8 +48,8 @@ describe('tabs', () => {
         expect(tabs.byIndex(-1).getSubtitle()).to.eventually.be.null;
     });
 
-    describe('tab', () => {
-        let tab: Tab;
+    describe('rxTab', () => {
+        let tab: rxTab;
 
         before(() => {
             tab = tabs.byText('Cat Ipsum');
@@ -94,7 +94,7 @@ describe('tabs', () => {
         });
 
         it('should find the only tabs on the page', () => {
-            expect(new Tabs($('html')).getTabs()).to.eventually.eql(['Markup', 'JavaScript']);
+            expect(new rxTabset($('html')).getTabs()).to.eventually.eql(['Markup', 'JavaScript']);
         });
 
     });
