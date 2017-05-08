@@ -8,6 +8,10 @@ angular.module('encore.ui.elements')
  * Display a static message with styling taken from `rx-notifications`.
  *
  * @param {String=} [type='info'] The type of notification (e.g. 'warning', 'error')
+ * @param {Expression=} dismissHook An expression to execute on dismiss of the
+ * notification.  If defined, a dismiss button will be rendered for the
+ * notification. Otherwise, no dismiss button will be rendered.  (Best if used
+ * in conjunction with the rxNotifications directive and the rxNotify service.)
  *
  * @example
  * <pre>
@@ -17,8 +21,9 @@ angular.module('encore.ui.elements')
 .directive('rxNotification', function (rxNotify) {
     return {
         scope: {
-            type: '@', 
-            loading: '='   
+            type: '@',
+            loading: '=',
+            dismissHook: '&'
         },
         transclude: true,
         restrict: 'E',
@@ -52,6 +57,9 @@ angular.module('encore.ui.elements')
                     });
                     el.remove();
                 }
+            },
+            post: function (scope, el, attrs) {
+                scope.isDismissable = !scope.loading && !angular.isUndefined(attrs.dismissHook);
             }
         }
     };
