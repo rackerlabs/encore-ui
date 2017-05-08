@@ -35,12 +35,14 @@
         <rx-help-text>Must contain foo.</rx-help-text>
         <div ng-if="formIntermediateControls.userEmail.$dirty && formIntermediateControls.userEmail.$invalid">
           <div ng-messages="formIntermediateControls.userEmail.$error" ng-messages-multiple>
-            <rx-inline-error ng-message="email">
-              Invalid Email
-            </rx-inline-error>
-            <rx-inline-error ng-message="foocheck">
-              Your email must contain 'foo'
-            </rx-inline-error>
+            <span ng-message="email">
+              <rx-inline-error>Invalid Email</rx-inline-error>
+            </span>
+            <span ng-message="foocheck">
+              <rx-inline-error>
+                Your email must contain 'foo'
+              </rx-inline-error>
+            </span>
           </div>
         </div>
       </rx-field-content>
