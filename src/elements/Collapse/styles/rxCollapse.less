@@ -11,14 +11,14 @@ rx-collapse {
       box-sizing: border-box;
       width: 30px;
       padding: 0 10px;
-      background-color: @gray-500;
+      background-color: var(--rx-gray-500);
       vertical-align: middle;
       cursor: pointer;
 
       .double-chevron {
         &:after {
           display: inline-block;
-          color: @white;
+          color: var(--rx-white);
           font-size: 28px;
           .chevron-mixin;
         }
@@ -33,7 +33,7 @@ rx-collapse {
       }
     }
 
-    border: 2px solid @gray-500;
+    border: 2px solid var(--rx-gray-500);
 
     .rx-collapse-title {
       display: inline-block;
@@ -48,7 +48,7 @@ rx-collapse {
   }
   .sml-title {
     cursor: pointer;
-    color: @gray-700;
+    color: var(--rx-gray-700);
     font-size: 10pt;
   }
 

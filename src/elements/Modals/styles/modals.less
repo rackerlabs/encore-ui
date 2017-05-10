@@ -14,10 +14,10 @@
      &[disabled],
      &[disabled]:hover {
          cursor: not-allowed;
-         color: @gray-600;
+         color: var(--rx-gray-600);
 
          &.button {
-             background-color: @gray-300;
+             background-color: var(--rx-gray-300);
          }
      }
  }
@@ -38,7 +38,7 @@
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background: @black;
+  background: var(--rx-black);
   &.fade.in {
     opacity: 0.4;
   }
@@ -50,19 +50,19 @@
   left: 50%;
   z-index: 1050;
   width: 560px;
-  background: @white;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: var(--rx-white);
+  border: 1px solid var(--rx-gray-700);
   transform: translate(-50%, 0);
   -webkit-transform: translate(-50%, 0);
   -moz-transform: translate(-50%, 0);
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px var(--rx-black-a35);
   background-clip: padding-box;
   outline: none;
 }
 
 .modal-header {
   padding: @rxModalAction-padding;
-  border-bottom: 1px solid @gray-200;
+  border-bottom: 1px solid var(--rx-gray-200);
   position: relative;
 
   .modal-title {
@@ -74,7 +74,7 @@
     line-height: 1.5;
     font-size: 1em;
     font-weight: bold;
-    color: @gray-700;
+    color: var(--rx-gray-700);
     margin: 0;
   }
   .modal-close {
@@ -85,10 +85,10 @@
     width: 1em;
     height: 1em;
     text-align: center;
-    color: @gray-600;
+    color: var(--rx-gray-600);
     &:hover,
     &:focus {
-      color: @gray-800;
+      color: var(--rx-gray-800);
     }
 
     &:before {
@@ -122,7 +122,7 @@
 
 .modal-footer {
   padding: @rxModalAction-padding;
-  border-top: 1px solid @gray-200;
+  border-top: 1px solid var(--rx-gray-200);
 }
 
 @media (max-width:480px) {
