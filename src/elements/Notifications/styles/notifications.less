@@ -81,14 +81,39 @@
       opacity: 1;
       text-decoration: none;
     }
-  }
-  .notification-error {
-    .notification-dismiss {
-      opacity: 1;
-      color: @white;
+
+    & ~ .notification-text {
+      padding-right: 0;
     }
   }
-}
+
+  .rx-spinner {
+    border-bottom-color: var(--rx-gray-950);
+    border-right-color: var(--rx-gray-950);
+    height: 16px;
+    width: 16px;
+  }//.rx-spinner
+
+  &.notification-success {
+    background-color: var(--rx-green-700);
+    color: var(--rx-white);
+  }
+
+  &.notification-info {
+    background-color: var(--rx-blue-100);
+    color: var(--rx-black);
+  }
+
+  &.notification-warning {
+    background-color: var(--rx-orange-accent);
+    color: var(--rx-black);
+  }
+
+  &.notification-error {
+    background-color: var(--rx-red-700);
+    color: var(--rx-white);
+  }
+}//.rx-notification
 
 .animate-fade {
   &.ng-enter,

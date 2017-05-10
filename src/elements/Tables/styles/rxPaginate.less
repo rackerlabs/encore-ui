@@ -4,7 +4,7 @@
 
 .back-to-top {
   padding: 10px 20px;
-  color: @blue-700;
+  color: var(--rx-blue-700);
   background: transparent;
   position: relative;
   &:before {
@@ -12,7 +12,7 @@
     font-size: 0;
     position: absolute;
     border: 6px solid transparent;
-    border-bottom-color: @blue-700;
+    border-bottom-color: var(--rx-blue-700);
     border-top: 0;
     left: 0;
     top: 55%;
@@ -31,7 +31,7 @@
 .page-links > div > span:hover,
 .page-links > div > a:focus,
 .page-links > div > span:focus {
-  border-top: 2px solid @gray-300;
+  border-top: 2px solid var(--rx-gray-300);
   padding-top: 3px;
   cursor: pointer;
 }
@@ -40,8 +40,8 @@
 .page-links > .active > a:hover,
 .page-links > .active > a:focus {
   cursor: default;
-  border-top-color: @black;
-  color: @black;
+  border-top-color: var(--rx-black);
+  color: var(--rx-black);
   padding-top: 3px;
   cursor: pointer;
 }
@@ -70,7 +70,7 @@ div.pagination-last {
   button {
     border: 0;
     background: transparent;
-    color: @blue-700;
+    color: var(--rx-blue-700);
     padding: 0 6px;
   }
   button[disabled] {
@@ -106,7 +106,7 @@ div.pagination-last {
   left: -1px;
   width: ~"calc(100% + 2px)";
   height: ~"calc(100% + 2px)";
-  background: rgba(250, 250, 250, 0.8); // == @gray-25 at 80%
+  background: var(--rx-white-a80);
   .loading-text-wrapper {
     width: 100px;
     margin: 20% auto;
@@ -115,11 +115,11 @@ div.pagination-last {
     font-size: 18px;
     margin-top: 15%;
     text-align: center;
-    color: @gray-700;
+    color: var(--rx-gray-700);
  }
   i {
     font-size: 30px;
     margin-left: 25px;
-    color: @gray-700;
+    color: var(--rx-gray-700);
   }
 }
