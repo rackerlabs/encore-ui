@@ -1,84 +1,46 @@
+.msg-action {
+  color: var(--rx-green-700);
+}
+
+.msg-warn {
+  color: var(--rx-red-700);
+}
+
+.msg-info {
+  color: var(--rx-orange-700);
+}
+
+.msg-info-blue {
+  color: var(--rx-blue-700);
+}
+
 // Link Styles
 a {
   text-decoration: none;
   color: @app-link-text-color;
-}
-a:hover,
-a:focus {
-  text-decoration: underline;
-  color: @app-link-hover-text-color;
-}
-a.disabled { // pulled from rxApp.less
-  color: #d5d3d3; // TODO: use global variable
-  cursor: default;
-  pointer-events: none;
-  text-decoration: none;
-}
 
-// Link and Status Messages
-.link-action,
-.link-action a,
-.link-warn,
-.link-warn a {
-  font-size: 1.2em;
-  cursor: pointer;
-}
-
-.link-action:before,
-.link-action a:before {
-  content: "+ ";
-}
-
-.link-warn:before,
-.link-warn a:before {
-  content: "- ";
-}
-
-/* Disabled link styles */
-.link-disabled {
-  pointer-events: none;
-  a {
-    color: @gray-600;
+  [class|="msg"] & {
+    color: inherit;
   }
-  .rx-spinner {
-    margin-left: 10px;
-    border-bottom-color: @gray-600;
-    border-right-color: @gray-600;
-  }
-}
 
-.msg-action,
-.msg-action a {
-  color: @green-700;
   &:hover,
   &:focus {
-    color: saturate(@green-700, 15%);
+    text-decoration: underline;
   }
-}
 
-.msg-warn,
-.msg-warn a {
-  color: @red-700;
-  &:hover,
-  &:focus {
-    color: saturate(@red-700, 15%);
-  }
-}
+  &[disabled] {
+    pointer-events: none;
+    color: @app-disabled-text-color;
 
-.msg-info,
-.msg-info a {
-  color: @orange-700;
-  &:hover,
-  &:focus {
-    color: saturate(@orange-700, 15%);
-  }
-}
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
 
-.msg-info-blue,
-.msg-info-blue a {
-  color: @blue-700;
-  &:hover,
-  &:focus {
-    color: saturate(@blue-700, 15%);
+    .rx-spinner {
+      margin-left: 10px;
+      border-bottom-color: @app-disabled-text-color;
+      border-right-color: @app-disabled-text-color;
+    }
   }
 }

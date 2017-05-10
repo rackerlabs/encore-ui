@@ -51,19 +51,19 @@ rx-copy {
     cursor: pointer;
 
     &--waiting {
-      color: @blue-700;
+      color: var(--rx-blue-700);
 
       &:hover {
-        color: @blue-500;
+        color: var(--rx-blue-500);
       }
     }
 
     &--success {
-      color: @green-500;
+      color: var(--rx-green-500);
     }
 
     &--fail {
-      color: @red-700;
+      color: var(--rx-red-700);
     }
   }//.rxCopy__action
 
@@ -84,23 +84,23 @@ rx-copy {
 
       .rxCopy__action {
         border-left: 1px solid @app-input-border-color;
-        color: @white;
+        color: var(--rx-white);
         padding: 5px 10px;
 
         &--waiting {
-          background-color: @blue-700;
+          background-color: var(--rx-blue-700);
 
           &:hover {
-            background-color: @blue-500;
+            background-color: var(--rx-blue-500);
           }
         }
 
         &--success {
-          background-color: @green-500;
+          background-color: var(--rx-green-500);
         }
 
         &--fail {
-          background-color: @red-700;
+          background-color: var(--rx-red-700);
         }
       }//.rxCopy__action
     }//.bordered
