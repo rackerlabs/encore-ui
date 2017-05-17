@@ -32,7 +32,11 @@ rx-help-text {
 
 rx-inline-error {
   color: @rxForm-error-text-color;
-  font-weight: 900;
+  display: flex;
+
+  .fa {
+    width: 1em;
+  }
 }
 
 rx-help-text {
@@ -244,13 +248,17 @@ rx-field-name {
               }
             }
           }
-
+          
           rx-search-box {
             flex: 1 1;
           }
         }//rx-input
       }//rx-field-content
     }//rx-field
+
+    rx-inline-error {
+      font-style: italic;
+    }//rx-inline-error in forms
 
     // replaces .form-actions
     // [rx-form] > rx-form-section > div
