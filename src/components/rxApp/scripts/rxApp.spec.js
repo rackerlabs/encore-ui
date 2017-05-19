@@ -405,7 +405,7 @@ describe('encore.ui.rxApp', function () {
                 // This is the main purpose of this whole `describe` block,
                 // to test that this can be set in a `.config` and will be used
                 // when running against local/staging
-                angular.module('testApp', function () {})
+                angular.module('testApp', [])
                     .config(function (routesCdnPathProvider) {
                         routesCdnPathProvider.customURL = customURL;
                     });
@@ -565,7 +565,7 @@ describe('encore.ui.rxApp', function () {
 
                 // Initialize a fake module to get at its config block
                 // when running against local
-                angular.module('testApp', function () {})
+                angular.module('testApp', [])
                     .config(function (routesCdnPathProvider) {
                         routesCdnPathProvider.customURL = customURL;
                     });

@@ -64,11 +64,12 @@ angular.module('encore.ui.utilities')
         var cachedRoutes = rxLocalStorage.getObject(routesKey);
 
         $http.get(url)
-            .success(function (routes) {
+            .then(function (response) {
+                var routes = response.data;
                 encoreRoutes.setAll(routes);
                 rxLocalStorage.setObject(routesKey, routes);
             })
-            .error(function () {
+            .catch(function () {
                 if (cachedRoutes) {
                     encoreRoutes.setAll(cachedRoutes);
                     setWarningMessage();

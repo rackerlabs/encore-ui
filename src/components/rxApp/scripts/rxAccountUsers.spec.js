@@ -7,7 +7,7 @@ describe('encore.ui.rxApp', function () {
 
         beforeEach(function () {
 
-            angular.module('testDirective', function () {})
+            angular.module('testDirective', [])
                 .factory('Encore', function () {
                     return {
                         getAccountUsers: function () {
@@ -131,14 +131,14 @@ describe('encore.ui.rxApp', function () {
 
             afterEach(function () {
                 setCanvasURLSpy.restore();
-            }); 
+            });
 
             it('should use oriLocationService on user change', function () {
                 userSelect = helpers.createDirective(angular.element(validTemplate), compile, scope);
                 scope.switchUser('testaccountuser');
 
                 expect(setCanvasURLSpy).to.have.been.calledWith('/server/cloud/323676/testaccountuser');
-                
+
             });
         });
 

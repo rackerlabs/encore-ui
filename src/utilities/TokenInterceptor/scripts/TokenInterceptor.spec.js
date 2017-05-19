@@ -7,7 +7,7 @@ describe('provider:TokenInterceptor (DEPRECATED)', function () {
         module({ suppressDeprecationWarnings: true });
 
         // Initialize a fake module to get at its config block
-        angular.module('testApp', function () {})
+        angular.module('testApp', [])
             .config(function (TokenInterceptorProvider) {
                 TokenInterceptorProvider.exclusionList.push('abcd.com');
             });

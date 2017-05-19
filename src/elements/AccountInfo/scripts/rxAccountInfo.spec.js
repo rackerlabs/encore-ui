@@ -29,7 +29,7 @@ describe('elements:rxAccountInfo', function () {
                 }
             ];
 
-            angular.module('testApp', function () {})
+            angular.module('testApp', [])
                 .factory('Encore', function () {
                     return {
                         getAccount: function () {

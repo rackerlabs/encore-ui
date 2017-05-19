@@ -24,7 +24,7 @@
  */
 angular.module('encore.ui.elements')
 .config(function ($provide) {
-    $provide.decorator('typeaheadDirective', function ($delegate, $filter) {
+    $provide.decorator('uibTypeaheadDirective', function ($delegate, $filter) {
         var typeahead = $delegate[0];
         var link = typeahead.link;
         var lowercase = $filter('lowercase');
