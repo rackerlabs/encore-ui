@@ -1,0 +1,7 @@
+{
+    "displayName": "$rxTooltip",
+    "stability": "stable",
+    "description": "Utility for rxTooltip element",
+    "api": "service:$rxTooltip",
+    "keywords": []
+}

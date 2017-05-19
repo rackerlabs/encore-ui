@@ -259,7 +259,9 @@ describe('Pagination', function () {
                 };
                 api.getItems = function () {
                     deferred = $q.defer();
-                    return deferred.promise;
+                    return deferred.promise.catch(function () {
+                        return response;
+                    });
                 };
                 sinon.spy(api, 'getItems');
                 pageTracking = rxPageTracker;

@@ -7,7 +7,7 @@ describe('rxTags', function () {
         module('encore.ui.utilities');
         module('encore.ui.elements');
         module('templates/rxTags.html');
-
+        module('templates/rxTypeaheadPopup.html');
         inject(function ($rootScope, $compile) {
             scope = $rootScope.$new();
             compile = $compile;

@@ -8,6 +8,7 @@ describe('rxStatusColumn', function () {
 
             // load templates
             module('templates/rxStatusColumn.html');
+            module('templates/rxTooltip-popup.html');
 
             // Inject in angular constructs
             inject(function ($location, $rootScope, $compile, rxStatusMappings) {
@@ -106,13 +107,13 @@ describe('rxStatusColumn', function () {
         it('shall use the passed in status as the tooltip text', function () {
             var validTemplate = '<td rx-status-column status="MyErrorStatus"></td>';
             el = helpers.createDirective(validTemplate, compile, scope);
-            expect(el.find('span').attr('tooltip')).to.equal('MyErrorStatus');
+            expect(el.find('span').attr('rx-tooltip')).to.equal('MyErrorStatus');
         });
 
         it('shall use tooltipContent if passed in', function () {
             var validTemplate = '<td rx-status-column status="MyErrorStatus" tooltip-content="mytooltip"></td>';
             el = helpers.createDirective(validTemplate, compile, scope);
-            expect(el.find('span').attr('tooltip')).to.equal('mytooltip');
+            expect(el.find('span').attr('rx-tooltip')).to.equal('mytooltip');
         });
 
         it('shall update the status column when status changes', function () {
@@ -130,11 +131,11 @@ describe('rxStatusColumn', function () {
             scope.tooltipTest = 'My Tooltip';
             var validTemplate = '<td rx-status-column status="MyErrorStatus" tooltip-content="{{ tooltipTest }}"></td>';
             el = helpers.createDirective(validTemplate, compile, scope);
-            expect(el.find('span').attr('tooltip')).to.equal('My Tooltip');
+            expect(el.find('span').attr('rx-tooltip')).to.equal('My Tooltip');
 
             scope.tooltipTest = 'Another Tooltip';
             scope.$digest();
-            expect(el.find('span').attr('tooltip')).to.equal('Another Tooltip');
+            expect(el.find('span').attr('rx-tooltip')).to.equal('Another Tooltip');
         });
     });
 });

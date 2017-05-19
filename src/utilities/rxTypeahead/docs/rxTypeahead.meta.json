@@ -1,0 +1,7 @@
+{
+    "displayName": "rxTypeahead",
+    "stability": "stable",
+    "description": "Utilities for the Typeahead element",
+    "hasApi": false,
+    "keywords": []
+}

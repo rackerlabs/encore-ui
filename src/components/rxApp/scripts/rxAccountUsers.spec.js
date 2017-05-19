@@ -7,7 +7,7 @@ describe('encore.ui.rxApp', function () {
 
         beforeEach(function () {
 
-            angular.module('testDirective', function () {})
+            angular.module('testDirective', [])
                 .factory('Encore', function () {
                     return {
                         getAccountUsers: function () {
