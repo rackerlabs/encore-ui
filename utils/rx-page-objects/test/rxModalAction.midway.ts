@@ -3,7 +3,7 @@
 import {expect} from 'chai';
 import {$, by, element} from 'protractor';
 
-import {rxModalAction, rxNotify, textFieldAccessor} from '../index';
+import {rxMisc, rxModalAction, rxNotify, textFieldAccessor} from '../index';
 
 let demoPage = require('../../demo.page');
 
@@ -140,7 +140,7 @@ describe('rxModalAction', () => {
         });
 
         it('should not open modal', () => {
-            $('#btnDisabledModal .modal-link').click();
+            rxMisc.safeClick($('#btnDisabledModal .modal-link'));
             expect(defaultModal.isDisplayed()).to.eventually.be.false;
         });
 
