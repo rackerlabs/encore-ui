@@ -92,6 +92,35 @@ export namespace rxMisc {
     }
 
     /**
+     * Accepts an ElementFinder, and clicks in the middle of the referenced element.
+     * This click will always occur and will not throw an exception even if the element
+     * doesn't receive pointer events.
+     *
+     * @example
+     *
+     *     var myModal = {
+     *         get lnkDoSomething() {
+     *             return this.$('a#doSomething');
+     *         },
+     *     };
+     *
+     *     it('should not close the modal when clicking the disabled link', function () {
+     *          rxMisc.safeClick(myModal.lnkDoSomething);
+     *          expect(myModal.isPresent()).to.eventually.be.true;
+     *     });
+     */
+    export function safeClick(elem: ElementFinder): Promise<void> {
+        return elem.getSize().then(size => {
+            let loc: ILocation = {
+                x: size.width / 2,
+                y: size.height / 2,
+            };
+
+            return browser.actions().mouseMove(elem, loc).mouseDown().mouseUp().perform();
+        });
+    }
+
+    /**
      * Unify input from either a location object or an ElementFinder into a promise
      * representing the location attribute (x or y) of either input.
      * Both `transformLocation($('.element'), 'y')` and `transformLocation({x: 20, y: 0}, 'y')`
