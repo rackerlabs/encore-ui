@@ -3,7 +3,7 @@ angular.module('encore.ui.elements')
  * The $tooltip service creates tooltip- and popover-like directives as well as
  * houses global options for them.
  */
-.provider('rxTooltip', function() {
+.provider('$rxTooltip', function() {
   // The default options tooltip and popover.
   var defaultOptions = {
     placement: 'top',
@@ -63,7 +63,7 @@ angular.module('encore.ui.elements')
    * Returns the actual instance of the $tooltip service.
    * TODO support multiple triggers
    */
-  this.$get = ['$window', '$compile', '$timeout', '$document', '$rxPosition', '$interpolate', '$rootScope', '$parse', '$$stackedMap', function($window, $compile, $timeout, $document, $position, $interpolate, $rootScope, $parse, $$stackedMap) {
+  this.$get = function($window, $compile, $timeout, $document, $rxPosition, $interpolate, $rootScope, $parse, $$stackedMap) {
     var openedTooltips = $$stackedMap.createNew();
     $document.on('keyup', keypressListener);
 
@@ -121,7 +121,7 @@ angular.module('encore.ui.elements')
             'content="' + startSym + 'content' + endSym + '" ') +
           'origin-scope="origScope" ' +
           'class="rx-position-measure ' + prefix + '" ' +
-          'tooltip-animation-class="fade"' +
+          'rx-tooltip-animation-class="fade"' +
           'rx-tooltip-classes ' +
           'ng-class="{ in: isOpen }" ' +
           '>' +
@@ -155,9 +155,9 @@ angular.module('encore.ui.elements')
 
               if (!positionTimeout) {
                 positionTimeout = $timeout(function() {
-                  var ttPosition = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
+                  var ttPosition = $rxPosition.positionElements(element, tooltip, ttScope.placement, appendToBody);
                   var initialHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
-                  var elementPos = appendToBody ? $position.offset(element) : $position.position(element);
+                  var elementPos = appendToBody ? $rxPosition.offset(element) : $rxPosition.position(element);
                   tooltip.css({ top: ttPosition.top + 'px', left: ttPosition.left + 'px' });
                   var placementClasses = ttPosition.placement.split('-');
 
@@ -173,7 +173,7 @@ angular.module('encore.ui.elements')
 
                   adjustmentTimeout = $timeout(function() {
                     var currentHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
-                    var adjustment = $position.adjustTop(placementClasses, elementPos, initialHeight, currentHeight);
+                    var adjustment = $rxPosition.adjustTop(placementClasses, elementPos, initialHeight, currentHeight);
                     if (adjustment) {
                       tooltip.css(adjustment);
                     }
@@ -184,10 +184,10 @@ angular.module('encore.ui.elements')
                   // rx-position-measure class or if the placement
                   // has changed we need to position the arrow.
                   if (tooltip.hasClass('rx-position-measure')) {
-                    $position.positionArrow(tooltip, ttPosition.placement);
+                    $rxPosition.positionArrow(tooltip, ttPosition.placement);
                     tooltip.removeClass('rx-position-measure');
                   } else if (lastPlacement !== ttPosition.placement) {
-                    $position.positionArrow(tooltip, ttPosition.placement);
+                    $rxPosition.positionArrow(tooltip, ttPosition.placement);
                   }
                   lastPlacement = ttPosition.placement;
 
@@ -372,7 +372,7 @@ angular.module('encore.ui.elements')
 
               ttScope.popupClass = attrs[prefix + 'Class'];
               ttScope.placement = angular.isDefined(attrs[prefix + 'Placement']) ? attrs[prefix + 'Placement'] : options.placement;
-              var placement = $position.parsePlacement(ttScope.placement);
+              var placement = $rxPosition.parsePlacement(ttScope.placement);
               lastPlacement = placement[1] ? placement[0] + '-' + placement[1] : placement[0];
 
               var delay = parseInt(attrs[prefix + 'PopupDelay'], 10);
@@ -575,5 +575,5 @@ angular.module('encore.ui.elements')
         }
       };
     };
-  }];
+  };
 });

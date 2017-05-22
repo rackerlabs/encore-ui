@@ -1,5 +1,5 @@
 angular.module('encore.ui.elements')
 
-.directive('rxTooltips', function($rxTooltips) {
-  return $rxTooltips('rxTooltips', 'tooltip', 'mouseenter');
+.directive('rxTooltip', function($rxTooltip) {
+  return $rxTooltip('rxTooltip', 'rx-tooltip', 'mouseenter');
 });
