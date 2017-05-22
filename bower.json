@@ -20,7 +20,7 @@
     "font-awesome": "~4.4.0",
     "ng-debounce": "0.1.5"
   },
-  "devDependencies": [
+  "devDependencies": {
     "angular-mocks": "1.6.4",
     "jquery": "2.0.3"
   },
