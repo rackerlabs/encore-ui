@@ -4,15 +4,18 @@ function genericRouteController (breadcrumbs) {
             breadcrumbs = [{
                 name: '',
                 path: ''
-            }]
+            }];
         }
 
         rxBreadcrumbsSvc.set(breadcrumbs);
-    }
+    };
 }
 
 angular.module('demoApp', ['encore.ui', 'ngRoute'])
-.config(function ($routeProvider, rxStatusTagsProvider) {
+.config(function ($routeProvider, $locationProvider, rxStatusTagsProvider) {
+    // Angular 1.6 changes the default value of the prefix to '!', this reverts to previous behavior
+    $locationProvider.hashPrefix('');
+
     $routeProvider
         .when('/', {
             redirectTo: '/overview'
