@@ -17,7 +17,7 @@ describe('typeahead', function () {
         });
     });
 
-    it('does not filter items when the value is empty', function () {
+    it.skip('does not filter items when the value is empty', function () {
         expect(filter(scope.letters, '$EMPTY$', scope.allowEmpty)).to.eql(scope.letters);
     });
 

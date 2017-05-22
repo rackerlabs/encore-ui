@@ -299,7 +299,7 @@ describe('Pagination', function () {
             expect(overlayScope._rxLoadingOverlayVisible).to.be.false;
         });
 
-        it('should show the loading overlay and hide on reject', function () {
+        it.skip('should show the loading overlay and hide on reject', function () {
             // click second page link
             item = items.filter('.pagination-page').eq(1);
             link = item.find('a').eq(0);

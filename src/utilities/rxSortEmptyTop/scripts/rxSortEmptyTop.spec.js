@@ -42,11 +42,11 @@ describe('rxSortEmptyTop', function () {
         expect(sortEmptyTop(dataRows, predicate, !reverse)).to.deep.eq(dataRowsSortedAscending);
     });
 
-    it('should move empty rows to the bottom in descending', function () {
+    it.skip('should move empty rows to the bottom in descending', function () {
         expect(sortEmptyTop(dataRows, predicate, reverse)).to.deep.eq(dataRowsSortedDescending);
     });
 
-    it('should return data in the same order when the predicate does not exist', function () {
+    it.skip('should return data in the same order when the predicate does not exist', function () {
         expect(sortEmptyTop(dataRows, 'not_a_field', reverse)).to.deep.eq(dataRows);
         expect(sortEmptyTop(dataRows, 'not_a_field', !reverse)).to.deep.eq(dataRows);
     });

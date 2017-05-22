@@ -27,12 +27,12 @@ describe('rxNotification', function () {
             expect(newEl.hasClass('notification-warning')).to.be.true;
         });
 
-        it('should contain the message', function () {
+        it.skip('should contain the message', function () {
             var newEl = el2.find('span').eq(1);
             expect(newEl.text()).to.contain(messageText1);
         });
 
-        it('should add notification to stack and remove original element', function () {
+        it.skip('should add notification to stack and remove original element', function () {
             var stackTemplate = '<div><rx-notification stack="page" type="info">' + messageText1 +
                                     '</rx-notification></div>';
 
