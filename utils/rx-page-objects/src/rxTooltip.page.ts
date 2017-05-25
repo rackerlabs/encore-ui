@@ -5,11 +5,19 @@ import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 /* CSS HIERARCHY
  * ----------------------------------------
- * div.tooltip <-- tooltipElement for constructor
- *   div.tooltip-arrow
- *   div.tooltip-inner
+ * div.rxTooltip <-- tooltipElement for constructor
+ *   div.rxTooltip__arrow
+ *   div.rxTooltip__inner
  */
+<<<<<<< HEAD:utils/rx-page-objects/src/tooltip.page.ts
 export class Tooltip extends rxComponentElement {
+=======
+
+/**
+ * @class
+ */
+export class rxTooltip extends rxComponentElement {
+>>>>>>> refactor(tooltips): refactor bootstrap into encore:utils/rx-page-objects/src/rxTooltip.page.ts
     /**
      * (READ-ONLY) Text value of tooltip (if present).
      *
@@ -29,7 +37,7 @@ export class Tooltip extends rxComponentElement {
         // Tooltips, when left open, can obscure other hover/click
         // events on the page. Avoid this by getting the text, stop
         // hovering, then return the text value back to the user.
-        let inner = this.$('.tooltip-inner');
+        let inner = this.$('.rxTooltip__inner');
         let text = inner.getText();
         browser.actions().mouseMove($('body')).perform();
         return text;

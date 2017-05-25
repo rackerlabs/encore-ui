@@ -1,8 +1,9 @@
 angular.module('encore.ui.elements')
 /**
- * Note that it's intentional that these classes are *not* applied through $animate.
- * They must not be animated as they're expected to be present on the tooltip on
- * initialization.
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipClasses
+ * @description
+ * Element for tooltip classes.
  */
 .directive('rxTooltipClasses', function ($rxPosition) {
     return {

@@ -1,14 +1,15 @@
 angular.module('encore.ui.elements')
 /**
- * The $tooltip service creates tooltip- and popover-like directives as well as
- * houses global options for them.
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipTemplateTranclude
+ * @description
+ * Element for transcluding tooltips template.
  */
-// This is mostly ngInclude code but with a custom scope
-.directive('rxTooltipTemplateTransclude', 
+.directive('rxTooltipTemplateTransclude',
     function ($animate, $sce, $compile, $templateRequest) {
         return {
             link: function (scope, elem, attrs) {
-                var origScope = scope.$eval(attrs.tooltipTemplateTranscludeScope);
+                var origScope = scope.$eval(attrs.rxTooltipTemplateTranscludeScope);
 
                 var changeCounter = 0,
                     currentScope,

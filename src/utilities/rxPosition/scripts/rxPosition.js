@@ -1,11 +1,10 @@
 /* eslint-disable */
 angular.module('encore.ui.utilities')
-
 /**
- * A set of utility methods for working with the DOM.
- * It is meant to be used where we need to absolute-position elements in
- * relation to another element (this is the case for tooltips, popovers,
- * typeahead suggestions etc.).
+ * @ngdoc service
+ * @name elements.service:rxPosition
+ * @description
+ * Element for positioning
  */
 .factory('$rxPosition', function ($document, $window) {
     /**

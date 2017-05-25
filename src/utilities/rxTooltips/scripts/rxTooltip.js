@@ -1,6 +1,9 @@
 angular.module('encore.ui.utilities')
 /**
- * The $rxTooltip service creates tooltip- and popover-like directives as well as
+ * @ngdoc service
+ * @name elements.service:rxTooltip
+ * @description
+ * Utility service that creates tooltip- and popover-like directives as well as
  * houses global options for them.
  */
 .provider('$rxTooltip', function () {
@@ -19,7 +22,6 @@ angular.module('encore.ui.utilities')
         'mouseenter': 'mouseleave',
         'click': 'click',
         'outsideClick': 'outsideClick',
-        'focus': 'blur',
         'none': ''
     };
 

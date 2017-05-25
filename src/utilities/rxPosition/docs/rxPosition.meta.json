@@ -3,5 +3,10 @@
     "stability": "prototype",
     "description": "Utilities for rxTooltips element",
     "api": "service:rxPosition",
-    "keywords": []
+    "keywords": [
+      "position",
+      "rxPosition",
+      "tooltips",
+      "rxtooltips"
+    ]
 }

@@ -1,7 +1,7 @@
 'use strict';
 import {browser} from 'protractor';
 import {Promise, rxComponentElement} from './rxComponent';
-import {Tooltip} from './tooltip.page';
+import {rxTooltip} from './rxTooltip.page';
 
 /**
  * Lookup of human-readable versions of the color class names used in the HTML templates.
@@ -163,6 +163,6 @@ export class rxStatusCell extends rxComponentElement {
         // Hover over cell element to trigger tooltip addition to DOM
         browser.actions().mouseMove(this.$('i')).perform();
         // Create a new Tooltip with new DOM element as rootElement
-        return new Tooltip(this.$('.tooltip'));
+        return new rxTooltip(this.$('.rxTooltip'));
     }
 };
