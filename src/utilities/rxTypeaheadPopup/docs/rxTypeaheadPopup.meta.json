@@ -1,0 +1,9 @@
+{
+    "displayName": "rxTypeaheadPopup",
+    "stability": "stable",
+    "description": "Utilities for rxTypeahead element",
+    "api": "directive:rxTypeaheadPopup",
+    "keywords": [
+      "rxTypeahead"
+    ]
+}

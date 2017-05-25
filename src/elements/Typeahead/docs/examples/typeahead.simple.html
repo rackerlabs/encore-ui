@@ -6,8 +6,9 @@
         <rx-input>
           <input type="text"
             ng-model="selected1"
-            typeahead="state for state in states | filter:$viewValue | limitTo:8" />
+            rx-typeahead="state for state in states | filter:$viewValue | limitTo:8" />
         </rx-input>
+        </div>
       </rx-field-content>
     </rx-field>
   </rx-form-section>

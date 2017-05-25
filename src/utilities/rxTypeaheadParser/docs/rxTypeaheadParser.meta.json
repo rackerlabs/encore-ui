@@ -1,0 +1,10 @@
+{
+    "displayName": "rxTypeaheadParser",
+    "stability": "stable",
+    "description": "",
+    "api": "service:rxTypeaheadParser",
+    "keywords": [
+      "typeahead",
+      "rxTypeahead"
+    ]
+}

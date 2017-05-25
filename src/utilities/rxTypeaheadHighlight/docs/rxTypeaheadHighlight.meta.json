@@ -1,0 +1,9 @@
+{
+    "displayName": "rxTypeaheadHighlight",
+    "stability": "stable",
+    "description": "Utilities for rxTypeahead element",
+    "api": "filter:rxTypeaheadHighlight",
+    "keywords": [
+      "rxTypeahead"
+    ]
+}

@@ -1,3 +1,4 @@
+/* eslint-disable */
 describe('$rxPosition service', function () {
     var $document, $rxPosition;
 
@@ -503,3 +504,4 @@ describe('$rxPosition service', function () {
         });
     });
 });
+/* eslint-enable */
