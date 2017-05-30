@@ -2,37 +2,37 @@ angular.module('encore.ui.utilities')
 /**
  * A helper, internal data structure that stores all references attached to key
  */
-.factory('rxMultiMap', function() {
+.factory('rxMultiMap', function () {
     return {
-        createNew: function() {
+        createNew: function () {
             var map = {};
 
             return {
-                entries: function() {
-                    return Object.keys(map).map(function(key) {
+                entries: function () {
+                    return Object.keys(map).map(function (key) {
                         return {
                             key: key,
                             value: map[key]
                         };
                     });
                 },
-                get: function(key) {
+                get: function (key) {
                     return map[key];
                 },
-                hasKey: function(key) {
+                hasKey: function (key) {
                     return !!map[key];
                 },
-                keys: function() {
+                keys: function () {
                     return Object.keys(map);
                 },
-                put: function(key, value) {
+                put: function (key, value) {
                     if (!map[key]) {
                         map[key] = [];
                     }
 
                     map[key].push(value);
                 },
-                remove: function(key, value) {
+                remove: function (key, value) {
                     var values = map[key];
 
                     if (!values) {

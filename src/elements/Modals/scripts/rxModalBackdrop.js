@@ -16,13 +16,13 @@ angular.module('encore.ui.elements')
     return {
         replace: true,
         templateUrl: 'templates/rxModalBackdrop.html',
-        compile: function(tElement, tAttrs) {
+        compile: function (tElement, tAttrs) {
             tElement.addClass(tAttrs.backdropClass);
             return linkFn;
         }
     };
 
-    function linkFn(scope, element, attrs) {
+    function linkFn (scope, element, attrs) {
         // Temporary fix for prefixing
         element.addClass('modal-backdrop');
 
@@ -35,7 +35,7 @@ angular.module('encore.ui.elements')
                 $animate.addClass(element, attrs.modalInClass);
             }
 
-            scope.$on(rxModalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
+            scope.$on(rxModalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
                 var done = setIsAsync();
                 if ($animateCss) {
                     $animateCss(element, {

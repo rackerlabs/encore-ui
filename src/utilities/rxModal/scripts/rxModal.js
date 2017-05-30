@@ -3,21 +3,22 @@ angular.module('encore.ui.utilities')
 .provider('rxModal', function () {
     var $modalProvider = {
 
-        options:  {
+        options: {
             animation: true,
             backdrop: true, //can also be false or 'static'
             keyboard: true
         },
         $get: function ($injector, $rootScope, $q, $templateRequest, $controller, rxModalStack) {
             var $modal = {};
-            function getTemplatePromise(options) {
+            function getTemplatePromise (options) {
                 return options.template ? $q.when(options.template) :
-                $templateRequest(angular.isFunction(options.templateUrl) ? (options.templateUrl)() : options.templateUrl);
+                $templateRequest(angular.isFunction(options.templateUrl) ?
+                    (options.templateUrl)() : options.templateUrl);
             }
 
-            function getResolvePromises(resolves) {
+            function getResolvePromises (resolves) {
                 var promisesArr = [];
-                angular.forEach(resolves, function(value) {
+                angular.forEach(resolves, function (value) {
                     if (angular.isFunction(value) || angular.isArray(value)) {
                         promisesArr.push($q.when($injector.invoke(value)));
                     } else if (angular.isString(value)) {
@@ -30,11 +31,11 @@ angular.module('encore.ui.utilities')
             }
 
             var promiseChain = null;
-            $modal.getPromiseChain = function() {
+            $modal.getPromiseChain = function () {
                 return promiseChain;
             };
 
-            $modal.open = function(modalOptions) {
+            $modal.open = function (modalOptions) {
                 var modalResultDeferred = $q.defer();
                 var modalOpenedDeferred = $q.defer();
                 var modalRenderDeferred = $q.defer();
@@ -44,10 +45,10 @@ angular.module('encore.ui.utilities')
                     result: modalResultDeferred.promise,
                     opened: modalOpenedDeferred.promise,
                     rendered: modalRenderDeferred.promise,
-                    close: function(result) {
+                    close: function (result) {
                         return rxModalStack.close(modalInstance, result);
                     },
-                    dismiss: function(reason) {
+                    dismiss: function (reason) {
                         return rxModalStack.dismiss(modalInstance, reason);
                     }
                 };
@@ -64,7 +65,7 @@ angular.module('encore.ui.utilities')
                 var templateAndResolvePromise =
                 $q.all([getTemplatePromise(modalOptions)].concat(getResolvePromises(modalOptions.resolve)));
 
-                function resolveWithTemplate() {
+                function resolveWithTemplate () {
                     return templateAndResolvePromise;
                 }
 
@@ -75,13 +76,13 @@ angular.module('encore.ui.utilities')
                 var samePromise;
                 samePromise = promiseChain = $q.all([promiseChain])
                 .then(resolveWithTemplate, resolveWithTemplate)
-                .then(function resolveSuccess(tplAndVars) {
+                .then(function resolveSuccess (tplAndVars) {
 
                     var modalScope = (modalOptions.scope || $rootScope).$new();
                     modalScope.$close = modalInstance.close;
                     modalScope.$dismiss = modalInstance.dismiss;
 
-                    modalScope.$on('$destroy', function() {
+                    modalScope.$on('$destroy', function () {
                         if (!modalScope.$$uibDestructionScheduled) {
                             modalScope.$dismiss('$uibUnscheduledDestruction');
                         }
@@ -95,11 +96,11 @@ angular.module('encore.ui.utilities')
                         ctrlLocals.$scope = modalScope;
                         ctrlLocals.$modalInstance = modalInstance;
                         Object.defineProperty(ctrlLocals, '$modalInstance', {
-                            get: function() {
+                            get: function () {
                                 return modalInstance;
                             }
                         });
-                        angular.forEach(modalOptions.resolve, function(value, key) {
+                        angular.forEach(modalOptions.resolve, function (value, key) {
                             ctrlLocals[key] = tplAndVars[resolveIter++];
                         });
 
@@ -130,11 +131,11 @@ angular.module('encore.ui.utilities')
                     });
                     modalOpenedDeferred.resolve(true);
 
-                }, function resolveError(reason) {
+                }, function resolveError (reason) {
                     modalOpenedDeferred.reject(reason);
                     modalResultDeferred.reject(reason);
                 })
-                .finally(function() {
+                .finally(function () {
                     if (promiseChain === samePromise) {
                         promiseChain = null;
                     }
