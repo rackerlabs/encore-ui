@@ -1,4 +1,4 @@
-describe('stacked map', function() {
+describe('stacked map', function () {
     var stackedMap;
 
     beforeEach(function () {
@@ -8,7 +8,7 @@ describe('stacked map', function() {
         });
     });
 
-    it('should add and remove objects by key', function() {
+    it('should add and remove objects by key', function () {
         stackedMap.add('foo', 'foo_value');
         expect(stackedMap.length()).to.eq(1);
         expect(stackedMap.get('foo').key).to.eq('foo');
@@ -19,14 +19,14 @@ describe('stacked map', function() {
         expect(stackedMap.get('foo')).to.be.undefined;
     });
 
-    it('should support listing keys', function() {
+    it('should support listing keys', function () {
         stackedMap.add('foo', 'foo_value');
         stackedMap.add('bar', 'bar_value');
 
         expect(stackedMap.keys()).to.eql(['foo', 'bar']);
     });
 
-    it('should get topmost element', function() {
+    it('should get topmost element', function () {
         stackedMap.add('foo', 'foo_value');
         stackedMap.add('bar', 'bar_value');
         expect(stackedMap.length()).to.eq(2);
@@ -35,7 +35,7 @@ describe('stacked map', function() {
         expect(stackedMap.length()).to.eq(2);
     });
 
-    it('should remove topmost element', function() {
+    it('should remove topmost element', function () {
         stackedMap.add('foo', 'foo_value');
         stackedMap.add('bar', 'bar_value');
 
@@ -43,12 +43,12 @@ describe('stacked map', function() {
         expect(stackedMap.removeTop().key).to.eq('foo');
     });
 
-    it('should preserve semantic of an empty stackedMap', function() {
+    it('should preserve semantic of an empty stackedMap', function () {
         expect(stackedMap.length()).to.eq(0);
         expect(stackedMap.top()).to.be.undefined;
     });
 
-    it('should ignore removal of non-existing elements', function() {
+    it('should ignore removal of non-existing elements', function () {
         expect(stackedMap.remove('non-existing')).to.be.undefined;
     });
 });
