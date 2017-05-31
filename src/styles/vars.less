@@ -5,54 +5,54 @@
 // # 2.0 Color Palette
 
 // ## Reds
-@red-100: #ffcdd2;
-@red-500: #f44336;
-@red-700: #d32f2f;
-@red-accent: #ec515f;
+@red-100: #ffcdd2; //DEPRECATED: Use --rx-red-100
+@red-500: #f44336; //DEPRECATED: Use --rx-red-500
+@red-700: #d32f2f; //DEPRECATED: Use --rx-red-700
+@red-accent: #ec515f; //DEPRECATED: Use --rx-red-accent
 
 // ## Blues
-@blue-100: #bbdefb;
-@blue-500: #3391ff;
-@blue-700: #0d74d1;
-@blue-900: #0d47a1;
-@blue-accent: #00bdff;
+@blue-100: #bbdefb; //DEPRECATED: Use --rx-blue-100
+@blue-500: #3391ff; //DEPRECATED: Use --rx-blue-500
+@blue-700: #0d74d1; //DEPRECATED: Use --rx-blue-700
+@blue-900: #0d47a1; //DEPRECATED: Use --rx-blue-900
+@blue-accent: #00bdff; //DEPRECATED: Use --rx-blue-accent
 
 // ## Greens
-@green-100: #c8e6c9;
-@green-500: #4caf51;
-@green-700: #2e7d32;
-@green-accent: #43b947;
+@green-100: #c8e6c9; //DEPRECATED: Use --rx-green-100
+@green-500: #4caf51; //DEPRECATED: Use --rx-green-500
+@green-700: #2e7d32; //DEPRECATED: Use --rx-green-700
+@green-accent: #43b947; //DEPRECATED: Use --rx-green-accent
 
 // ## Oranges
-@orange-100: #ffecb3;
-@orange-500: #ffc107;
-@orange-700: #d14904;
-@orange-accent: #ffd740;
+@orange-100: #ffecb3; //DEPRECATED: Use --rx-orange-100
+@orange-500: #ffc107; //DEPRECATED: Use --rx-orange-500
+@orange-700: #d14904; //DEPRECATED: Use --rx-orange-700
+@orange-accent: #ffd740; //DEPRECATED: Use --rx-orange-accent
 
 // ## Purples
-@purple-100: #4a5acc;
-@purple-500: #3b44a9;
-@purple-700: #2e3187;
-@purple-accent: #5a74f2;
+@purple-100: #4a5acc; //DEPRECATED: Use --rx-purple-100
+@purple-500: #3b44a9; //DEPRECATED: Use --rx-purple-500
+@purple-700: #2e3187; //DEPRECATED: Use --rx-purple-700
+@purple-accent: #5a74f2; //DEPRECATED: Use --rx-purple-accent
 
 // ## Grays
-@white: #ffffff;
-@gray-0: #ffffff;
-@gray-25: #fafafa;
-@gray-50: #f5f5f5;
-@gray-100: #eeeeee;
-@gray-200: #e7e7e7;
-@gray-300: #e0e0e0;
-@gray-400: #d8d8d8;
-@gray-500: #bdbdbd;
-@gray-600: #9e9e9e;
-@gray-700: #757575;
-@gray-800: #616161;
-@gray-900: #424242;
-@gray-950: #333333;
-@gray-975: #212121;
-@gray-1000: #000000;
-@black: #000000;
+@white: #ffffff; //DEPRECATED: Use --rx-white
+@gray-0: #ffffff; //DEPRECATED: Use --rx-gray-0
+@gray-25: #fafafa; //DEPRECATED: Use --rx-gray-25
+@gray-50: #f5f5f5; //DEPRECATED: Use --rx-gray-50
+@gray-100: #eeeeee; //DEPRECATED: Use --rx-gray-100
+@gray-200: #e7e7e7; //DEPRECATED: Use --rx-gray-200
+@gray-300: #e0e0e0; //DEPRECATED: Use --rx-gray-300
+@gray-400: #d8d8d8; //DEPRECATED: Use --rx-gray-400
+@gray-500: #bdbdbd; //DEPRECATED: Use --rx-gray-500
+@gray-600: #9e9e9e; //DEPRECATED: Use --rx-gray-600
+@gray-700: #757575; //DEPRECATED: Use --rx-gray-700
+@gray-800: #616161; //DEPRECATED: Use --rx-gray-800
+@gray-900: #424242; //DEPRECATED: Use --rx-gray-900
+@gray-950: #333333; //DEPRECATED: Use --rx-gray-950
+@gray-975: #212121; //DEPRECATED: Use --rx-gray-975
+@gray-1000: #000000; //DEPRECATED: Use --rx-gray-1000
+@black: #000000; //DEPRECATED: Use --rx-black
 
 // # Text colors
 @app-headers-text-color: @gray-900;
@@ -61,7 +61,7 @@
 @app-disabled-text-color: @gray-600;
 @app-disabled-icon-color: @gray-600;
 @app-link-text-color: @blue-700;
-@app-link-hover-text-color: saturate(@app-link-text-color, 15%);
+@app-link-hover-text-color: saturate(@app-link-text-color, 15%); //DEPRECATED
 
 // # App Global Form Vars
 @app-label-font-size: 12px;
@@ -115,16 +115,16 @@
 @app-body-font-family: @app-sans-serif-font-family;
 
 // # PreProd warnings
-@preprod-background-color: @red-700;
-@preprod-border-top-color: @red-500;
-@preprod-border-bottom-color: darken(@preprod-background-color, 10%);
-@preprod-focus-background-color: desaturate(@preprod-background-color, 25%);
-@preprod-focus-border-top-color: darken(@preprod-background-color, 10%);
-@preprod-focus-border-bottom-color: darken(@preprod-background-color, 10%);
-@preprod-active-menu-background-color: @red-500;
-@preprod-active-item-background-color: @orange-500;
-@preprod-active-item-text-color: @black;
-@preprod-active-item-arrow-color: @orange-500;
+@preprod-background-color: @red-700; //DEPRECATED
+@preprod-border-top-color: @red-500;  //DEPRECATED 
+@preprod-border-bottom-color: darken(@preprod-background-color, 10%); //DEPRECATED
+@preprod-focus-background-color: desaturate(@preprod-background-color, 25%); //DEPRECATED
+@preprod-focus-border-top-color: darken(@preprod-background-color, 10%); //DEPRECATED
+@preprod-focus-border-bottom-color: darken(@preprod-background-color, 10%); //DEPRECATED
+@preprod-active-menu-background-color: @red-500; //DEPRECATED
+@preprod-active-item-background-color: @orange-500; //DEPRECATED
+@preprod-active-item-text-color: @black; //DEPRECATED
+@preprod-active-item-arrow-color: @orange-500; //DEPRECATED
 
 // App Global Inputs
 @app-input-border-color: @gray-500;
@@ -135,7 +135,7 @@
 @app-input-background-color: @white;
 @app-input-min-height: 26px;
 @app-input-focus-border-color: @blue-500;
-@app-input-focus-box-shadow: 0 1px 1.5px fade(@black, 12%);
+@app-input-focus-box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.12);
 @app-input-width: 250px;
 @app-error-text-color: @red-700;
 @app-input-placeholder-text-color: @gray-600;
@@ -155,7 +155,6 @@
 // # Global Vars for Table, rxBulkSelect and Other Data Row Layouts
 @app-default-row-background-color: @white;
 @app-striped-row-background-color: @gray-25;
-@app-selected-row-background-color: fade(@green-100, 30%);
 
 /* ======================================== *\
    COMPONENT VARIABLES
@@ -270,21 +269,21 @@
  */
 @rxButton-default-text-color: @white;
 @rxButton-default-background-color: @blue-700;
-@rxButton-default-hover-background-color: lighten(@rxButton-default-background-color, 10%);
+@rxButton-default-hover-background-color: @blue-500;
 @rxButton-positive-background-color: @green-700;
-@rxButton-positive-hover-background-color: lighten(@rxButton-positive-background-color, 6%);
+@rxButton-positive-hover-background-color: @green-500;
 @rxButton-negative-background-color: @red-700;
-@rxButton-negative-hover-background-color: lighten(@rxButton-negative-background-color, 10%);
+@rxButton-negative-hover-background-color: @red-500;
 @rxButton-cancel-background-color: @gray-700;
-@rxButton-cancel-hover-background-color: lighten(@rxButton-cancel-background-color, 10%);
+@rxButton-cancel-hover-background-color: @gray-600;
 @rxButton-disabled-text-color: @gray-600;
 @rxButton-disabled-background-color: @gray-300;
 @rxButton-spinner-background-color: @white;
 @rxButton-finish-text-color: @blue-700;
-@rxButton-finish-hover-text-color: lighten(@rxButton-finish-text-color, 10%);
+@rxButton-finish-hover-text-color: @blue-500;
 @rxButton-finish-background-color: @white;
-@rxButton-finish-outline-color: @blue-700; // Color of Inset Line For Button
-@rxButton-finish-hover-outline-color: lighten(@rxButton-finish-outline-color, 10%);
+@rxButton-finish-outline-color: @blue-700; // DEPRECATED
+@rxButton-finish-hover-outline-color: @blue-500; //DEPRECATED
 
 /*
  * Button Groups (rxButton)

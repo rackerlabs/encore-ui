@@ -3,7 +3,7 @@
  */
 
 thead th.bulk-select-header {
-  background: @app-selected-row-background-color;
+  background: var(--rx-green-50);
   text-align: center;
   color: @rxBulkSelect-header-text-color;
   font-weight: normal;
@@ -16,10 +16,7 @@ thead th[rx-bulk-select-header-check] {
 .header-button.btn-link {
   color: @app-link-text-color;
   &:focus {
-    color: @app-link-text-color;
-  }
-  &:hover {
-    color: @app-link-hover-text-color;
+    color: inherit;
   }
 }
 
@@ -29,9 +26,9 @@ thead th[rx-bulk-select-header-check] {
   height: 0;
   & > i {
     cursor: pointer;
-    color: @gray-700;
+    color: var(--rx-gray-700);
     &:hover {
-      color: @gray-800;
+      color: var(--rx-gray-800);
     }
   }
 }
@@ -47,21 +44,20 @@ thead th[rx-bulk-select-header-check] {
   position: absolute;
   top: 0;
   right: -115px;
-  min-width: 20em;
+  min-width: 22em;
   font-size: 12px;
-  border: 4px solid @white;
+  border: 4px solid var(--rx-white);
   border-radius: 4px;
-  background: @white;
-  text-shadow: rgba(0, 0, 0, 0.09) 1px 1px 1px;
-  box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 4px 0px;
+  background: var(--rx-white);
+  box-shadow: 1px 1px 4px 0 var(--rx-black-a35);
   padding: 6px;
 
   &:before {
     content: "\f0d8";
-    text-shadow: rgba(0, 0, 0, 0.35) 0 -1px 1px;
+    text-shadow: 0 -1px 1px var(--rx-black-a35);
     font-family: FontAwesome;
     text-decoration: inherit;
-    color: @white;
+    color: var(--rx-white);
     font-size: 24px;
     display: block;
     left: 230px;
@@ -82,7 +78,7 @@ thead th[rx-bulk-select-header-check] {
 }
 
 .selected td:not(.status) {
-  background: @app-selected-row-background-color;
+  background: var(--rx-green-50);
 }
 
 .batch-action-modal-table .pagination {

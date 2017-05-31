@@ -6,9 +6,9 @@
   width: 15px;
   & > i {
     cursor: pointer;
-    color: @gray-600;
+    color: var(--rx-gray-600);
     &:hover {
-      color: @gray-700;
+      color: var(--rx-gray-700);
     }
   }
 }
@@ -26,19 +26,18 @@
   right: 25px;
   min-width: 20em;
   font-size: 0.9em;
-  border: 4px solid @white;
+  border: 4px solid var(--rx-white);
   border-radius: 4px;
-  background: @white;
-  text-shadow: rgba(0, 0, 0, 0.09) 1px 1px 1px;
-  box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 4px 0px;
+  background: var(--rx-white);
+  box-shadow: 1px 1px 4px 0 var( --rx-black-a35);
   padding: 6px;
 
   &:before {
     content: "\f0da";
-    text-shadow: rgba(0, 0, 0, 0.35) 1px 1px 1px;
+    text-shadow: 1px 1px 1px var( --rx-black-a35);
     font-family: FontAwesome;
     text-decoration: inherit;
-    color: @white;
+    color: var(--rx-white);
     font-size: 24px;
     display: block;
     left: 249px;

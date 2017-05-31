@@ -17,7 +17,7 @@
   position: relative;
   text-align: right;
 
-  box-shadow: inset 1px 2px @rxToggleSwitch-blur-dist @rxToggleSwitch-blur-spread rgba(0, 0, 0, 0.50);
+  box-shadow: inset 0 2px @rxToggleSwitch-blur-dist @rxToggleSwitch-blur-spread var(--rx-black-a35);
   .user-select(none);
   box-sizing: border-box;
 
@@ -25,8 +25,7 @@
     background-color: @app-disabled-background-color;
     color: @app-disabled-text-color;
     &.on {
-      background-color: desaturate(lighten(@rxToggleSwitch-on-state-color, 40%), 30%);
-      color: darken(@app-disabled-text-color, 10%);
+      background-color: var(--rx-green-100);
     }
     cursor: not-allowed;
     .knob {
@@ -58,7 +57,6 @@
     background-color: @rxToggleSwitch-knob-color;
     border: 1px @rxToggleSwitch-knob-border-color solid;
 
-    box-shadow: 0 0 @rxToggleSwitch-blur-dist @rxToggleSwitch-blur-spread rgba(0, 0, 0, 0.55);
     overflow: hidden;
   }
 }
