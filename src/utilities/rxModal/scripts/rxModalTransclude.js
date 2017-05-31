@@ -1,5 +1,10 @@
 angular.module('encore.ui.utilities')
-
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxModalTransclude
+ * @description
+ * Element for modal transclude
+ */
 .directive('rxModalTransclude', function () {
     return {
         link: function ($scope, $element, $attrs, controller, $transclude) {

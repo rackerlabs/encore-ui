@@ -1,5 +1,12 @@
 angular.module('encore.ui.utilities')
-
+/**
+ * @ngdoc service
+ * @name utilities.service:rxModalStack
+ * @requires utilities.factory:rxMultiMap
+ * @requires utilities.factory:rxStackedMap
+ * @description
+ * Service for modal stacks
+ */
 .factory('rxModalStack', function ($animate, $timeout, $document, $compile, $rootScope, $q, $injector, rxMultiMap,
         rxStackedMap) {
 

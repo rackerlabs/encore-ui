@@ -1,5 +1,11 @@
 angular.module('encore.ui.utilities')
-
+/**
+ * @ngdoc service
+ * @name utilities.service:rxModal
+ * @requires utilities.factory:rxModalStack
+ * @description
+ * Service for providing modals
+ */
 .provider('rxModal', function () {
     var $modalProvider = {
 

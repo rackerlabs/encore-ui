@@ -1,5 +1,8 @@
 angular.module('encore.ui.utilities')
 /**
+ * @ngdoc service
+ * @name utilities.service:rxMultiMap
+ * @description
  * A helper, internal data structure that stores all references attached to key
  */
 .factory('rxMultiMap', function () {

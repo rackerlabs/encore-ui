@@ -1,5 +1,8 @@
 angular.module('encore.ui.utilities')
 /**
+ * @ngdoc service
+ * @name utilities.service:rxStackedMap
+ * @description
  * A helper, internal data structure that acts as a map but also allows getting / removing
  * elements in the LIFO order
  */
