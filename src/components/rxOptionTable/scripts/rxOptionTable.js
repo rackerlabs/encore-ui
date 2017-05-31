@@ -34,7 +34,7 @@ angular.module('encore.ui.rxOptionTable')
  * Each object may include the following properties.
  * @param {String} columns.label Column display value
  * @param {String} columns.key Object key used to display data from the data object
- * @param {String=} columns.selectedLabel (optional) Label to display alongside preseleted-values. 
+ * @param {String=} columns.selectedLabel (optional) Label to display alongside preseleted-values.
  * Expressions are allowed; see demonstration samples.
  *
  * Example:
@@ -110,11 +110,13 @@ angular.module('encore.ui.rxOptionTable')
             };
 
             scope.checkDisabled = function (row) {
-                return scope.disableFn({
-                    tableId: element.attr('id'),
-                    fieldId: scope.fieldId,
-                    rowId: row.id
-                });
+                if (_.isFunction(scope.disableFn)) {
+                    return scope.disableFn({
+                        tableId: element.attr('id'),
+                        fieldId: scope.fieldId,
+                        rowId: row.id
+                    });
+                }
             };
 
             // Determines whether the row is the initial choice
