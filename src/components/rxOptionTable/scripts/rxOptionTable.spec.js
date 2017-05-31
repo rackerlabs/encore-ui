@@ -52,7 +52,7 @@ describe('rxOptionTable', function () {
                 expect(checkTableScope.checkDisabled({ 'id': 'option2_id' })).to.be.false;
             });
 
-            it.skip('should validate if there is an empty form but no required flag', function () {
+            it('should validate if there is an empty form but no required flag', function () {
                 var checkboxFormTemplate2 =
                     '<rx-option-table data="tableData" columns="tableColumns" ' +
                     'type="checkbox" model="myModel"></rx-option-table>';
@@ -144,7 +144,7 @@ describe('rxOptionTable', function () {
                 expect(checkTableScope.checkRequired()).to.be.true;
             });
 
-            it.skip('should select all', function () {
+            it('should select all', function () {
                 var checkboxFormTemplate2 =
                     '<rx-option-table data="tableData" columns="tableColumns" ' +
                     'type="checkbox" model="myModel"></rx-option-table>';
