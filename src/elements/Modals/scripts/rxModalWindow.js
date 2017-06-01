@@ -2,7 +2,7 @@ angular.module('encore.ui.elements')
 /**
  * @ngdoc directive
  * @name elements.directive:rxModalWindow
- * @requires utilities.facjkjkjktory:rxModalStack
+ * @requires utilities.factory:rxModalStack
  * @description
  * Element for modal window
  */
