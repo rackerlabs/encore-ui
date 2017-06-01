@@ -28,7 +28,7 @@ export { rxStatusCell, STATUS_COLORS, STATUS_ICONS } from './src/rxStatusCell.pa
 export { rxTags, Tag } from './src/rxTags.page';
 export { parseUtcOffset, rxTimePicker } from './src/rxTimePicker.page';
 export { rxToggleSwitch } from './src/rxToggleSwitch.page';
-export { Tabs, Tab } from './src/tabs.page';
+export { rxTabset, rxTab } from './src/rxTabs.page';
 export { textFieldAccessor } from './src/textField.page';
 export { Tooltip } from './src/tooltip.page';
 export { Typeahead } from './src/typeahead.page';
