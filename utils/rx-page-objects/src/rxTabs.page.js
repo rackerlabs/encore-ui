@@ -1,10 +1,10 @@
 var rxMisc = require('./rxMisc.page').rxMisc;
 var Page = require('astrolabe').Page;
 
-var tabFromElement = function (tabElement) {
+var rxTabFromElement = function (tabElement) {
 
     /**
-     * @namespace tabs.tab
+     * @namespace rxTabset.rxTab
      * @description Functionality around interacting with a single tab.
      * @see tabs
      */
@@ -14,7 +14,7 @@ var tabFromElement = function (tabElement) {
          * @instance
          * @function
          * @returns {Boolean}
-         * @memberof tabs.tab
+         * @memberof rxTabset.rxTab
          * @description Whether or not the tab object is set as active.
          * @example
          * it('should mark the current tab as active when visiting it', function () {
@@ -35,11 +35,11 @@ var tabFromElement = function (tabElement) {
         /**
          * @instance
          * @type {String}
-         * @memberof tabs.tab
+         * @memberof rxTabset.rxTab
          * @description The full name of the tab, meaning it includes both the main name
          * and the subtitle.
-         * @see tabs.tab#name
-         * @see tabs.tab#subtitle
+         * @see rxTabset.rxTab#name
+         * @see rxTabset.rxTab#subtitle
          * @example
          * it('should list the full name of the tab', function () {
          *     var tab = encore.tabs.initialize().byName('Activity');
@@ -57,7 +57,7 @@ var tabFromElement = function (tabElement) {
         /**
          * @instance
          * @type {String}
-         * @memberof tabs.tab
+         * @memberof rxTabset.rxTab
          * @description The name of the tab. Will parse out the subtitle, if it exists.
          * @example
          * it('should have just the name correct', function () {
@@ -84,7 +84,7 @@ var tabFromElement = function (tabElement) {
         /**
          * @instance
          * @type {String}
-         * @memberof tabs.tab
+         * @memberof rxTabset.rxTab
          * @description The subtitle of the tab. Will parse out the name, if it exists.
          * @example
          * it('should have just the subtitle correct', function () {
@@ -110,7 +110,7 @@ var tabFromElement = function (tabElement) {
          * @instance
          * @function
          * @returns {Boolean}
-         * @memberof tabs.tab
+         * @memberof rxTabset.rxTab
          */
         isDisplayed: {
             value: function () {
@@ -122,7 +122,7 @@ var tabFromElement = function (tabElement) {
          * @instance
          * @function
          * @param {Boolean} slowClick - Whether or not to click the tab using {@link rxMisc.slowClick}.
-         * @memberof tabs.tab
+         * @memberof rxTabset.rxTab
          * @example
          * it('should visit the tab', function () {
          *     var tabs = encore.tabs.initialize();
@@ -141,10 +141,10 @@ var tabFromElement = function (tabElement) {
 };
 
 /**
- * @namespace
- * @description Functions for interacting with a collection of tabs.
+ * @namespace rxTabset
+ * @description Functions for interacting with rxTabset.
  */
-var tabs = {
+var rxTabset = {
 
     cssTabs: {
         get: function () {
@@ -161,7 +161,7 @@ var tabs = {
     /**
      * @instance
      * @function
-     * @description Whether or not the tabs collection is displayed
+     * @description Whether or not the rxTabset collection is displayed
      * @returns {Boolean}
      */
     isDisplayed: {
@@ -173,9 +173,9 @@ var tabs = {
     /**
      * @instance
      * @function
-     * @param {String} tabName - The tab to search for in the group of tabs.
+     * @param {String} tabName - The rxTab to search for in the rxTabset.
      * @returns {Boolean}
-     * @description Whether or not the tab by text `tabName` exists in the group of tabs.
+     * @description Whether or not the txTan by text `tabName` exists in the rxTabset.
      * @example
      * it('should have the tab present', function () {
      *     expect(encore.tabs.initialize().hasTab('Home')).to.eventually.be.true;
@@ -193,9 +193,9 @@ var tabs = {
     /**
      * @instance
      * @function
-     * @param {String} tabName - The tab to search for by `tabName`, and return as a {@link tabs.tab} object.
-     * @returns {tabs.tab}
-     * @description Returns a {@link tabs.tab} object for the tab matching `tabName`. This will not be able to
+     * @param {String} tabName - The rxTab to search for by `tabName`, and return as a {@link rxTabset.rxTab} object.
+     * @returns {rxTabset.rxTab}
+     * @description Returns a {@link rxTabset.rxTab} object for the tab matching `tabName`. This will not be able to
      * differentiate between similarly named tabs with different subtitled names. Include any subtitled text
      * to differentiate between them. Matches on partial text matches.
      * @example
@@ -207,16 +207,16 @@ var tabs = {
     byName: {
         value: function (tabName) {
             var tabElement = this.rootElement.element(by.cssContainingText(this.cssTabs, tabName));
-            return tabFromElement(tabElement);
+            return rxTabFromElement(tabElement);
         }
     },
 
     /**
      * @instance
      * @function
-     * @param {Number} index - The position of the tab you want transformed into a {@link tabs.tab} object.
-     * @returns {tabs.tab}
-     * @description Will return the tab at position `index` as a {@link tabs.tab} object.
+     * @param {Number} index - The position of the tab you want transformed into a {@link rxTabset.rxTab} object.
+     * @returns {rxTabset.rxTab}
+     * @description Will return the tab at position `index` as a {@link rxTabset.rxTab} object.
      * @example
      * it('should have the home tab in the first position', function () {
      *     expect(encore.tabs.initialize().byIndex(0).name).to.eventually.equal('Home');
@@ -224,7 +224,7 @@ var tabs = {
      */
     byIndex: {
         value: function (index) {
-            return tabFromElement(this.tblTabs.get(index));
+            return rxTabFromElement(this.tblTabs.get(index));
         }
     },
 
@@ -250,8 +250,8 @@ var tabs = {
 
     /**
      * @instance
-     * @type {tabs.tab}
-     * @description Return a {@link tabs.tab} object for the current active tab.
+     * @type {rxTabset.rxTab}
+     * @description Return a {@link rxTabset.rxTab} object for the current active tab.
      * If you attempt to call this property when there is no active tab, you will
      * trigger a NoSuchElementException.
      * @example
@@ -265,7 +265,7 @@ var tabs = {
      */
     activeTab: {
         get: function () {
-            return tabFromElement(this.rootElement.$('.nav-tabs .active'));
+            return rxTabFromElement(this.rootElement.$('.nav-tabs .active'));
         }
     },
 
@@ -287,12 +287,12 @@ var tabs = {
 
 };
 
-exports.tabs = {
+exports.rxTabset = {
     /**
      * @function
      * @memberof tabs
-     * @param {ElementFinder} tabsElement - The ElementFinder to be transformed into a {@link tabs} object.
-     * @description Creates a {@link tabs} page object from a `tabsElement`, representing the container for
+     * @param {ElementFinder} tabsElement - The ElementFinder to be transformed into a {@link rxTabset} object.
+     * @description Creates a {@link rxTabset} page object from a `tabsElement`, representing the container for
      * a particular list of tabs. If you'd like to track all tabs present on a page at the same time, pass
      * in a selector that highlights all elements on a page, such as `$('html')` or `$('body')`.
      */
@@ -301,9 +301,9 @@ exports.tabs = {
             tabsElement = $('html');
         }
 
-        tabs.rootElement = {
+        rxTabset.rootElement = {
             get: function () { return tabsElement; }
         };
-        return Page.create(tabs);
+        return Page.create(rxTabset);
     }
 };

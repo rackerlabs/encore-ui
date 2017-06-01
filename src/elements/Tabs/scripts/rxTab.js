@@ -29,8 +29,14 @@ angular.module('encore.ui.elements')
             //Empty controller so other directives can require being 'under' a tab
         },
         link: function (scope, elm, attrs, tabsetCtrl, transclude) {
-            scope.$watch('active', function (active) {
-                if (active) {
+            scope.$watch('active', function (active, oldActive) {
+                // Due to an expected behavior in angular, when the directive gets
+                // destroyed and rendered again the watch expression gets triggered
+                // with the same previous values
+                // By force checking that the values are different we avoid
+                // unnecessary calls to tabsetCtrl.select
+                // https://github.com/angular/angular.js/issues/12823
+                if (oldActive !== active && active) {
                     tabsetCtrl.select(scope);
                 }
             });
