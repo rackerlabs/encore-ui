@@ -6,7 +6,7 @@ import {$} from 'protractor';
 
 import * as component from './rxMultiSelect.page';
 
-interface IRxMultiSelectOptions {
+export interface IRxMultiSelectOptions {
     instance: component.rxMultiSelect;
     inputs?: string[];
     disabled?: boolean;
@@ -14,13 +14,15 @@ interface IRxMultiSelectOptions {
 }
 /**
  * rxMultiSelect exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxMultiSelect({
- *     instance: myPage.subscriptionList, // select one of many widgets from your page objects
- *     inputs: ['Texas', 'California', 'Virginia', 'Georgia']
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxMultiSelect({
+ *         instance: myPage.subscriptionList, // select one of many widgets from your page objects
+ *         inputs: ['Texas', 'California', 'Virginia', 'Georgia']
+ *     }));
  */
-export function rxMultiSelect(options: IRxMultiSelectOptions) {
+export function rxMultiSelectExercise (options: IRxMultiSelectOptions) {
     options = _.defaults(options, {
         inputs: [],
         disabled: false,

@@ -1,15 +1,12 @@
 <div class="rx-notifications" ng-show="messages.length > 0">
-    <div
+    <rx-notification
+        ng-init="loading = message.loading"
         ng-repeat="message in messages"
-        class="rx-notification animate-fade notification-{{message.type}}"
-        ng-class="{'notification-loading': message.loading}"
-        rx-spinner
-        toggle="message.loading"
-        ng-init="loading = message.loading">
-        <span class="notification-text" ng-bind-html="message.text"></span>
-        <button ng-click="dismiss(message)" class="notification-dismiss btn-link" ng-if="!message.loading">
-            &times;
-            <span class="visually-hidden">Dismiss Message</span>
-        </button>
-    </div>
+        type="{{message.type}}"
+        loading="message.loading"
+        class="animate-fade"
+        dismiss-hook="dismiss(message)">
+
+        <span ng-bind-html="message.text"></span>
+    </rx-notification>
 </div>

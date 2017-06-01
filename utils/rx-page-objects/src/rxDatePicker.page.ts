@@ -2,29 +2,26 @@
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {by} from 'protractor';
-import {AccessorPromiseString, OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {by, ElementArrayFinder, ElementFinder} from 'protractor';
+import {AccessorPromiseString, OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 import {rxSelect} from './rxSelect.page';
 
-/**
- * @class
- */
 export class rxDatePicker extends rxComponentElement {
 
-    private get currentMonth() {
+    private get currentMonth(): ElementFinder {
         return this.element(by.model('currentMonth'));
     }
 
-    private get currentYear() {
+    private get currentYear(): ElementFinder {
         return this.element(by.model('currentYear'));
     }
 
-    get currentMonthDays() {
+    get currentMonthDays(): ElementArrayFinder {
         return this.$$('.day.inMonth');
     }
 
     /**
-     * @description (get/set) Month value of the picker _calendar_.
+     * (get/set) Month value of the picker _calendar_.
      * **Format:** `MM` (e.g. "04", "05", "06").
      */
     get month(): AccessorPromiseString {
@@ -42,7 +39,7 @@ export class rxDatePicker extends rxComponentElement {
     }
 
     /**
-     * @description (get/set) Year value of the picker _calendar_.
+     * (get/set) Year value of the picker _calendar_.
      *
      * The date picker provides a 10-year range before and after the selected date,
      * if present.  Otherwise, the range is calculated from today's date.
@@ -57,12 +54,14 @@ export class rxDatePicker extends rxComponentElement {
     }
 
     /**
-     * @description (get/set) _Selected value_ of the picker.
+     * (get/set) _Selected value_ of the picker.
      * **Format:** `YYYY-MM-DD` (e.g. "2016-05-25")
+     *
      * @example
-     * let datepicker = new rxDatePicker($('rx-date-picker'));
-     * datepicker.date = '2016-01-01';
-     * expect(datepicker.date).to.eventually.equal('2016-01-01');
+     *
+     *     let datepicker = new rxDatePicker($('rx-date-picker'));
+     *     datepicker.date = '2016-01-01';
+     *     expect(datepicker.date).to.eventually.equal('2016-01-01');
      */
     get date(): AccessorPromiseString {
         return this.$('.displayValue').getAttribute('datetime');
@@ -75,19 +74,21 @@ export class rxDatePicker extends rxComponentElement {
     }
 
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.getAttribute('disabled').then(disabled => !disabled);
     }
 
     /**
-     * @see rxDatePicker#close
-     * @description Ensures that the date picker is open.
+     * Ensures that the date picker is open.
+     * @see [[rxDatePicker.close]]
+     *
      * @example
-     * let picker = new encore.rxDatePicker();
-     * picker.open();
-     * picker.open(); // does nothing
+     *
+     *     let picker = new encore.rxDatePicker();
+     *     picker.open();
+     *     picker.open(); // does nothing
      */
-    open() {
+    open(): Promise<void> {
         return this.isOpen().then(open => {
             if (!open) {
                 return this.$('.control').click();
@@ -96,15 +97,17 @@ export class rxDatePicker extends rxComponentElement {
     };
 
     /**
-     * @see rxDatePicker#open
-     * @description Ensures that the date picker is closed.
+     * Ensures that the date picker is closed.
+     * @see [[rxDatePicker.open]]
+     *
      * @example
-     * let picker = new encore.rxDatePicker();
-     * picker.open();
-     * picker.close();
-     * picker.close(); // does nothing
+     *
+     *     let picker = new encore.rxDatePicker();
+     *     picker.open();
+     *     picker.close();
+     *     picker.close(); // does nothing
      */
-    close() {
+    close(): Promise<void> {
         return this.isOpen().then(isOpen => {
             if (isOpen) {
                 return this.$('.control').click();
@@ -113,46 +116,46 @@ export class rxDatePicker extends rxComponentElement {
     };
 
     /**
-     * @description Click over to the next month in the calendar.
+     * Click over to the next month in the calendar.
      */
-    nextMonth() {
+    nextMonth(): Promise<void> {
         return this.$('.arrow.next').click();
     };
 
     /**
-     * @description Click back to the previous month in the calendar.
+     * Click back to the previous month in the calendar.
      */
-    previousMonth() {
+    previousMonth(): Promise<void> {
         return this.$('.arrow.prev').click();
     };
 
     /**
-     * @description The currently selected date as a string.
+     * The currently selected date as a string.
      */
-    getDateSelected() {
+    getDateSelected(): Promise<string> {
         return this.$('.day.selected').getAttribute('data-date');
     };
 
     /**
-     * @description Today's date as a string.
+     * Today's date as a string.
      */
-    getDateToday() {
+    getDateToday(): Promise<string> {
         return this.$('.day.today').getAttribute('data-date');
     };
 
     /**
-     * @description Whether or not the calendar is in an invalid state.
+     * Whether or not the calendar is in an invalid state.
      */
-    isValid() {
+    isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
             return !_.includes(classes, 'ng-invalid');
         });
     };
 
     /**
-     * @description Whether or not the calendar is open.
+     * Whether or not the calendar is open.
      */
-    isOpen() {
+    isOpen(): Promise<boolean> {
         return this.$('.popup:not(.ng-hide)').isPresent();
     };
 };

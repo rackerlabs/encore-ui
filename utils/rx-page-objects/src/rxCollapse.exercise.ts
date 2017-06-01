@@ -5,22 +5,23 @@ import * as _ from 'lodash';
 
 import * as component from './rxCollapse.page';
 
-interface IRxCollapseExerciseOptions {
+export interface IRxCollapseExerciseOptions {
     instance: component.rxCollapse;
     expanded?: boolean;
     title?: string;
 }
 
 /**
- * @description rxCollapse exercises.
+ * rxCollapse exercises.
  * @example
- * describe('default exercises', encore.exercise.rxCollapse({
- *     instance: myPage.hiddenSection, // select one of many widgets from your page objects
- *     title: 'My Custom rxCollapse Element',
- *     expanded: true
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxCollapse({
+ *         instance: myPage.hiddenSection, // select one of many widgets from your page objects
+ *         title: 'My Custom rxCollapse Element',
+ *         expanded: true
+ *     }));
  */
-export function rxCollapse(options: IRxCollapseExerciseOptions) {
+export function rxCollapseExercise (options: IRxCollapseExerciseOptions) {
     options = _.defaults(options, {
         expanded: false,
         title: undefined,

@@ -4,19 +4,18 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import {rxComponentElement} from './rxComponent';
 
-/**
- * @class
- */
 export class rxAge extends rxComponentElement {
 
     /**
-     * @description A moment date object representing the point in time the `rxAgeString` refers to. This value does
+     * A moment date object representing the point in time the `rxAgeString` refers to. This value does
      * not come back as a promise, but is instead a direct value.
+     *
      * @example
-     * // given the current datetime is January 1st, 1970 at noon UTC.
-     * var oneMonthOneDayAgo = new Date('1969-11-31T12:00:00z').valueOf();
-     * expect(encore.rxAge.toMoment('1m 1d').valueOf()).to.equal(oneMonthOneDayAgo)
-     * expect(encore.rxAge.toMoment('1 month, 1 day').valueOf()).to.equal(oneMonthOneDayAgo)
+     *
+     *     // given the current datetime is January 1st, 1970 at noon UTC.
+     *     var oneMonthOneDayAgo = new Date('1969-11-31T12:00:00z').valueOf();
+     *     expect(encore.rxAge.toMoment('1m 1d').valueOf()).to.equal(oneMonthOneDayAgo)
+     *     expect(encore.rxAge.toMoment('1 month, 1 day').valueOf()).to.equal(oneMonthOneDayAgo)
      */
     static toMoment(rxAgeString: string) {
         let rxAgeParts: string[];

@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import * as _ from 'lodash';
 import * as component from './rxRadio.page';
 
-interface IRxRadioExerciseOptions {
+export interface IRxRadioExerciseOptions {
     instance: component.rxRadio;
     disabled?: boolean;
     selected?: boolean;
@@ -12,9 +12,9 @@ interface IRxRadioExerciseOptions {
     visible?: boolean;
 }
 /**
- * @description rxRadio exercises
+ * rxRadio exercises
  */
-export function rxRadio(options: IRxRadioExerciseOptions) {
+export function rxRadioExercise (options: IRxRadioExerciseOptions) {
 
     options = _.defaults(options, {
         disabled: false,

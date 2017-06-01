@@ -1,32 +1,29 @@
 'use strict';
 import * as _ from 'lodash';
-import {rxComponentElement} from './rxComponent';
+import {Promise, rxComponentElement} from './rxComponent';
 
-/**
- * @class
- */
 export class rxCollapse extends rxComponentElement {
     /**
-     * @description Whether or not the component is currently expanded.
+     * Whether or not the component is currently expanded.
      */
-    isExpanded() {
+    isExpanded(): Promise<boolean> {
         return this.$('.expanded').isPresent();
     }
 
     /**
-     * @description Whether or not the component has a custom title.
+     * Whether or not the component has a custom title.
      */
-    hasCustomTitle() {
+    hasCustomTitle(): Promise<boolean> {
         return this.$('.collapse-title-wrap').getAttribute('class').then(classes => {
             return _.includes(classes.split(' '), 'collapse-title-wrap-custom');
         });
     }
 
     /**
-     * @description Will return the custom title's text if the component uses one. Otherwise, it'll return
+     * Will return the custom title's text if the component uses one. Otherwise, it'll return
      * the default title, found in the `.sml-title` (see-more-less-title) class.
      */
-    getTitle() {
+    getTitle(): Promise<string> {
         return this.hasCustomTitle().then(hasCustomTitle => {
             if (hasCustomTitle) {
                 return this.$('.rx-collapse-title').getText();
@@ -37,9 +34,9 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will expand the component if collapsed, or will collapse it if it's expanded.
+     * Will expand the component if collapsed, or will collapse it if it's expanded.
      */
-    toggle() {
+    toggle(): Promise<void> {
         return this.hasCustomTitle().then(hasCustomTitle => {
             if (hasCustomTitle) {
                 return this.$('.double-chevron').click();
@@ -50,9 +47,9 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will toggle the component only if it's currently collapsed.
+     * Will toggle the component only if it's currently collapsed.
      */
-    expand() {
+    expand(): Promise<void> {
         return this.isExpanded().then(expanded => {
             if (!expanded) {
                 this.toggle();
@@ -61,9 +58,9 @@ export class rxCollapse extends rxComponentElement {
     }
 
     /**
-     * @description Will toggle the component only if it's currently expanded.
+     * Will toggle the component only if it's currently expanded.
      */
-    collapse() {
+    collapse(): Promise<void> {
         return this.isExpanded().then(expanded => {
             if (expanded) {
                 this.toggle();

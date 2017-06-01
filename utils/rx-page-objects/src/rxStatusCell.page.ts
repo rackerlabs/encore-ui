@@ -4,7 +4,7 @@ import {Promise, rxComponentElement} from './rxComponent';
 import {Tooltip} from './tooltip.page';
 
 /**
- * @description Lookup of human-readable versions of the color class names used in the HTML templates.
+ * Lookup of human-readable versions of the color class names used in the HTML templates.
  */
 export const STATUS_COLORS = {
     ACTIVE: 'ACTIVE',
@@ -17,7 +17,7 @@ export const STATUS_COLORS = {
 export type STATUS_COLORS = keyof typeof STATUS_COLORS;
 
 /**
- * @description Lookup of human-readable versions of the icon class names used in the HTML templates.
+ * Lookup of human-readable versions of the icon class names used in the HTML templates.
  */
 export const STATUS_ICONS = {
     ERROR: 'ERROR',
@@ -36,94 +36,98 @@ const ICON_CLASS_STATUS = {
 };
 
 /**
- * @class
- * @description Functionality for interacting with and query the values in a status column. When
- * used in conjunction with {@link rxSortableColumn}, these functions will allow you to interact
+ * Functionality for interacting with and query the values in a status column. When
+ * used in conjunction with [[rxSortableColumn]], these functions will allow you to interact
  * with a single cell in that sortable column as a "status column". Status columns have use a mix
  * of colors and icons to represent a status. Many of these statuses are free-form. It'll be up to
  * you to map what each color and symbol combination means in your app, but some basic ones are
- * included in this namespace via {@link rxStatusCell.statuses}, {@link rxStatusCell.icons}, and
- * {@link rxStatusCell.colors}.
+ * included here via [[STATUS_COLORS]] and [[STATUS_ICONS]].
  *
  * All examples in this documentation will assume that you're using code similar to what's shown
  * in the example below.
- * @see rxSortableColumn
+ * @see [[rxSortableColumn]]
+ *
  * @example
- * let STATUS_TYPES = {
- *     ACTIVE: 'ACTIVE',
- *     DISABLED: 'DISABLED',
- *     DELETED: 'DELETED',
- *     DELETING: 'DELETING',
- *     ERROR: 'ERROR',
- *     MIGRATING: 'MIGRATING',
- *     REBUILD: 'REBUILD',
- *     RESCUE: 'RESCUE',
- *     RESIZE: 'RESIZE',
- *     SUSPENDED: 'SUSPENDED',
- *     UNKNOWN: 'UNKNOWN'
- * };
  *
- * class MyRow {
- *     constructor(rootElement) {
- *         this.rootElement = rootElement;
+ *     let STATUS_TYPES = {
+ *         ACTIVE: 'ACTIVE',
+ *         DISABLED: 'DISABLED',
+ *         DELETED: 'DELETED',
+ *         DELETING: 'DELETING',
+ *         ERROR: 'ERROR',
+ *         MIGRATING: 'MIGRATING',
+ *         REBUILD: 'REBUILD',
+ *         RESCUE: 'RESCUE',
+ *         RESIZE: 'RESIZE',
+ *         SUSPENDED: 'SUSPENDED',
+ *         UNKNOWN: 'UNKNOWN'
+ *     };
+ *
+ *     class MyRow {
+ *         constructor(rootElement) {
+ *             this.rootElement = rootElement;
+ *         }
+ *
+ *         // The tests below focus heavily on this table row property
+ *         get status() {
+ *             return new rxStatusCell(this.rootElement.$('[rx-status-column]'));
+ *         },
+ *
+ *         // just for the sake of having another example present
+ *         get title() {
+ *             return this.rootElement.$('td+td').getText();
+ *         }
  *     }
  *
- *     // The tests below focus heavily on this table row property
- *     get status() {
- *         return new rxStatusCell(this.rootElement.$('[rx-status-column]'));
- *     },
+ *     class MyTable {
+ *         get rootElement() {
+ *             return $('.demo-status-column-table');
+ *         },
  *
- *     // just for the sake of having another example present
- *     get title() {
- *         return this.rootElement.$('td+td').getText();
- *     }
- * }
+ *         get tblServers() {
+ *             return this.rootElement.all(by.repeater('server in servers'));
+ *         },
  *
- * class MyTable {
- *     get rootElement() {
- *         return $('.demo-status-column-table');
- *     },
+ *         column(columnName) {
+ *             let columnElement = this.rootElement.$('rx-sortable-column[sort-property="status"]');
+ *             return new rxSortableColumn(columnElement);
+ *         },
  *
- *     get tblServers() {
- *         return this.rootElement.all(by.repeater('server in servers'));
- *     },
- *
- *     column(columnName) {
- *         let columnElement = this.rootElement.$('rx-sortable-column[sort-property="status"]');
- *         return new rxSortableColumn(columnElement);
- *     },
- *
- *     row(rowIndex) {
- *         let rowElement = this.tblServers.get(rowIndex);
- *         return new MyRow(rowElement);
- *     }
- * });
+ *         row(rowIndex) {
+ *             let rowElement = this.tblServers.get(rowIndex);
+ *             return new MyRow(rowElement);
+ *         }
+ *     });
  */
 export class rxStatusCell extends rxComponentElement {
     /**
-     * @description Represents the custom defined status type.
+     * Represents the custom defined status type.
      * This has no relation to the tooltip text, the icon chosen, or the color used to represent it.
-     * @example
-     * it('should have an active status for the first row', function () {
-     *     expect(myTable.row(0).status.getStatus()).to.eventually.equal(STATUS_TYPES.ACTIVE);
      *
-     *     // or, you could manually type out the 'ACTIVE' string yourself
-     *     expect(myTable.row(0).status.getStatus()).to.eventually.equal('ACTIVE');
-     * });
+     * @example
+     *
+     *     it('should have an active status for the first row', function () {
+     *         expect(myTable.row(0).status.getStatus()).to.eventually.equal(STATUS_TYPES.ACTIVE);
+     *
+     *         // or, you could manually type out the 'ACTIVE' string yourself
+     *         expect(myTable.row(0).status.getStatus()).to.eventually.equal('ACTIVE');
+     *     });
      */
-    getStatus() {
+    getStatus(): Promise<string> {
         return this.getAttribute('status');
     }
 
     /**
-     * @description Represents the status as summarized by the icon selection alone.
+     * Represents the status as summarized by the icon selection alone.
      * Extracted from the font-awesome icon used.
+     *
      * @example
-     * it('should have a warning icon for the 10th row', function () {
-     *     expect(myTable.row(10).status.getIcon()).to.eventually.equal(STATUS_ICONS.WARNING);
-     *     // or, you could manually type out the 'WARNING' string yourself
-     *     expect(myTable.row(9).status.getIcon()).to.eventually.equal('WARNING');
-     * });
+     *
+     *     it('should have a warning icon for the 10th row', function () {
+     *         expect(myTable.row(10).status.getIcon()).to.eventually.equal(STATUS_ICONS.WARNING);
+     *         // or, you could manually type out the 'WARNING' string yourself
+     *         expect(myTable.row(9).status.getIcon()).to.eventually.equal('WARNING');
+     *     });
      */
     getIcon(): Promise<STATUS_ICONS> | Promise<null> {
         return this.$('i').getAttribute('class').then(classes => {
@@ -133,13 +137,15 @@ export class rxStatusCell extends rxComponentElement {
     }
 
     /**
-     * @description Represents the status as summarized by the color selection alone. Extracted from the class name.
+     * Represents the status as summarized by the color selection alone. Extracted from the class name.
+     *
      * @example
-     * it('should have the red "error" color class for the second row', function () {
-     *     expect(myTable.row(1).status.getColor()).to.eventually.equal(STATUS_COLORS.ERROR);
-     *     // or, you could manually type out the 'ERROR' string yourself
-     *     expect(myTable.row(1).status.getColor()).to.eventually.equal('ERROR');
-     * });
+     *
+     *     it('should have the red "error" color class for the second row', function () {
+     *         expect(myTable.row(1).status.getColor()).to.eventually.equal(STATUS_COLORS.ERROR);
+     *         // or, you could manually type out the 'ERROR' string yourself
+     *         expect(myTable.row(1).status.getColor()).to.eventually.equal('ERROR');
+     *     });
      */
     getColor(): Promise<STATUS_COLORS> {
         return this.getAttribute('class').then(classes => {
@@ -149,11 +155,11 @@ export class rxStatusCell extends rxComponentElement {
     }
 
     /**
-     * @description Will appear on hover. Exposes the functions contained within {@link rxStatusCell.tooltip}.
+     * Will appear on hover. Exposes the functions contained within [[rxStatusCell.tooltip]].
      * Note that this function must hover over the tooltip in order to retrieve the underlying element.  This means that
      * other mouse actions after retrieving the tooltip may cause the tooltip to hide.
      */
-    get tooltip() {
+    get tooltip(): Tooltip {
         // Hover over cell element to trigger tooltip addition to DOM
         browser.actions().mouseMove(this.$('i')).perform();
         // Create a new Tooltip with new DOM element as rootElement

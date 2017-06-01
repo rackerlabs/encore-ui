@@ -12,28 +12,28 @@ td.rx-status-column {
     padding-left: 2px;
   }
   &.status-ACTIVE {
-    background: @green-100;
+    background: var(--rx-green-100);
   }
   &.status-PENDING {
-    background: @orange-100;
+    background: var(--rx-orange-100);
     background-image: url("images/status-pending.gif");
   }
   &.status-WARNING {
-    background: @orange-100;
+    background: var(--rx-orange-100);
     i {
-      color: @gray-950;
+      color: var(--rx-gray-950);
     }
   }
   &.status-ERROR {
-    background: @red-700;
+    background: var(--rx-red-700);
     i {
-      color: @white;
+      color: var(--rx-white);
     }
   }
   &.status-INFO {
-    background: @blue-100;
+    background: var(--rx-blue-100);
     i {
-      color: @gray-950;
+      color: var(--rx-gray-950);
     }
   }
   &.status-DISABLED {

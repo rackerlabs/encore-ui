@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import * as component from './rxCharacterCount.page';
 
-interface IRxCharacterCountExerciseOptions {
+export interface IRxCharacterCountExerciseOptions {
     instance: component.rxCharacterCount;
     highlight?: boolean;
     ignoreInsignificantWhitespace?: boolean;
@@ -13,20 +13,22 @@ interface IRxCharacterCountExerciseOptions {
     nearLimit?: number;
 }
 
-function repeat(input: string, count: number) {
+function repeat(input: string, count: number): string {
     return new Array(count + 1).join(input);
 }
 /**
- * @description rxCharacterCount exercises.
+ * rxCharacterCount exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxCharacterCount({
- *     instance: myPage.submission // select one of many widgets from your page objects
- *     maxCharacters: 25,
- *     nearLimit: 12,
- *     ignoreInsignificantWhitespace: false
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxCharacterCount({
+ *         instance: myPage.submission // select one of many widgets from your page objects
+ *         maxCharacters: 25,
+ *         nearLimit: 12,
+ *         ignoreInsignificantWhitespace: false
+ *     }));
  */
-export function rxCharacterCount (options: IRxCharacterCountExerciseOptions) {
+export function rxCharacterCountExercise (options: IRxCharacterCountExerciseOptions) {
     options = _.defaults(options, {
         highlight: false,
         ignoreInsignificantWhitespace: true,

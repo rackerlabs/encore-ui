@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import {Promise} from './rxComponent';
 import * as component from './rxDatePicker.page';
 
-interface IRxDatePickerExerciseOptions {
+export interface IRxDatePickerExerciseOptions {
     instance: component.rxDatePicker;
     displayed?: boolean;
     enabled?: boolean;
@@ -20,13 +20,14 @@ interface IRxDatePickerExerciseOptions {
 /**
  * rxDatePicker exercises.
  * @example
- * describe('default exercises', encore.exercise.rxDatePicker({
- *     instance: myPage.datepicker, // select one of many pagination instances from your page objects
- *     valid: false,
- *     selectedDate: moment().format('YYYY-MM-DD')
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxDatePicker({
+ *         instance: myPage.datepicker, // select one of many pagination instances from your page objects
+ *         valid: false,
+ *         selectedDate: moment().format('YYYY-MM-DD')
+ *     }));
  */
-export function rxDatePicker (options: IRxDatePickerExerciseOptions) {
+export function rxDatePickerExercise (options: IRxDatePickerExerciseOptions) {
     options = _.defaults(options, {
         displayed: true,
         enabled: true,

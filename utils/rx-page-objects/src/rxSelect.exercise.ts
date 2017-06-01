@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import * as _ from 'lodash';
 import * as component from './rxSelect.page';
 
-interface IRxSelectExerciseOptions {
+export interface IRxSelectExerciseOptions {
     instance: component.rxSelect;
     disabled?: boolean;
     visible?: boolean;
@@ -13,9 +13,9 @@ interface IRxSelectExerciseOptions {
 }
 
 /**
- * @description rxSelect exercises.
+ * rxSelect exercises.
  */
-export function rxSelect (options: IRxSelectExerciseOptions) {
+export function rxSelectExercise (options: IRxSelectExerciseOptions) {
     options = _.defaults(options, {
         disabled: false,
         visible: true,

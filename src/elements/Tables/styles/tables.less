@@ -24,13 +24,8 @@ table {
   }//&.subtable
 
   .fa-times.delete-x {
-    color: @gray-700;
+    color: var(--rx-gray-700);
     cursor: pointer;
-
-    &:hover {
-      color: saturate(@red-700, 15%);
-      cursor: pointer;
-    }//&:hover
   }//.fa-times.delete-x
 }//table
 
@@ -45,7 +40,7 @@ table {
   }
 
   .expanded-content {
-    background-color: @white;
+    background-color: var(--rx-white);
     margin-top: 3px;
     .metadata {
       padding: 5px 10px;
@@ -87,7 +82,7 @@ td {
 
       &::after {
         display: inline-block;
-        color: @gray-700;
+        color: var(--gray-700);
         font-size: 20px;
         .chevron-mixin;
       }

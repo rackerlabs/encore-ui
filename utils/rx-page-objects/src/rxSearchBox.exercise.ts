@@ -5,20 +5,22 @@ import * as _ from 'lodash';
 
 import * as component from './rxSearchBox.page';
 
-interface IRxSearchBoxExerciseOptions {
+export interface IRxSearchBoxExerciseOptions {
     instance: component.rxSearchBox;
     disabled?: boolean;
     placeholder?: string;
 }
 /**
- * @description rxSearchBox exercises.
+ * rxSearchBox exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxSearchBox({
- *     instance: myPage.searchText, // select one of many widgets from your page objects
- *     placeholder: 'Filter by name...'
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxSearchBox({
+ *         instance: myPage.searchText, // select one of many widgets from your page objects
+ *         placeholder: 'Filter by name...'
+ *     }));
  */
-export function rxSearchBox (options: IRxSearchBoxExerciseOptions) {
+export function rxSearchBoxExercise (options: IRxSearchBoxExerciseOptions) {
 
     options = _.defaults(options, {
         disabled: false,

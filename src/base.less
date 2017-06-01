@@ -6,12 +6,79 @@
 @import "vars";
 @import (inline) "normalize.css";
 
+:root {
+  // ## Reds
+  --rx-red-100: #ffcdd2;
+  --rx-red-500: #f44336;
+  --rx-red-700: #d32f2f;
+  --rx-red-accent: #ec515f;
+
+  // ## Blues
+  --rx-blue-100: #bbdefb;
+  --rx-blue-500: #3391ff;
+  --rx-blue-700: #0d74d1;
+  --rx-blue-900: #0d47a1;
+  --rx-blue-accent: #00bdff;
+
+  // ## Greens
+  --rx-green-50: #eef7ef;
+  --rx-green-100: #c8e6c9;
+  --rx-green-500: #4caf51;
+  --rx-green-700: #2e7d32;
+  --rx-green-accent: #43b947;
+
+  // ## Oranges
+  --rx-orange-100: #ffecb3;
+  --rx-orange-500: #ffc107;
+  --rx-orange-700: #d14904;
+  --rx-orange-accent: #ffd740;
+
+  // ## Purples
+  --rx-purple-100: #4a5acc;
+  --rx-purple-500: #3b44a9;
+  --rx-purple-700: #2e3187;
+  --rx-purple-accent: #5a74f2;
+
+  // ## Grays
+  --rx-white: #ffffff;
+  --rx-gray-0: #ffffff;
+  --rx-gray-25: #fafafa;
+  --rx-gray-50: #f5f5f5;
+  --rx-gray-100: #eeeeee;
+  --rx-gray-200: #e7e7e7;
+  --rx-gray-300: #e0e0e0;
+  --rx-gray-400: #d8d8d8;
+  --rx-gray-500: #bdbdbd;
+  --rx-gray-600: #9e9e9e;
+  --rx-gray-700: #757575;
+  --rx-gray-800: #616161;
+  --rx-gray-900: #424242;
+  --rx-gray-950: #333333;
+  --rx-gray-975: #212121;
+  --rx-gray-1000: #000000;
+  --rx-black: #000000;
+
+  // ## Supplemental
+  --rx-black-a35: rgba(0, 0, 0, 0.35);
+  --rx-white-a80: rgba(255, 255, 255, 0.8);
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, 
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 // Resets for HTML elements
 html,
 body {
   height: 100%;
   font-size: @app-font-size;
-  color: @gray-900;
+  color: var(--rx-gray-900);
   font-family: @app-font;
 }
 
@@ -72,7 +139,7 @@ h6 {
   margin: 1em 0;
 
   &.subdued {
-    color: @gray-700;
+    color: var(--rx-gray-700);
   }
 }
 
@@ -97,15 +164,7 @@ h6 {
 
 // Other Stuff
 .subdued {
-  color: @gray-700;
-}
-
-// Add hover style if a link or inside a link
-a.subdued:hover,
-a.subdued:focus,
-a:hover .subdued,
-a:focus .subdued {
-  color: darken(@gray-700, 15%);
+  color: var(--rx-gray-700);
 }
 
 // Hidden content
@@ -184,5 +243,5 @@ body:hover .visually-hidden button {
 //TODO: Remove. DEPRECATED
 .action-separator {
   font-size: 1.1em;
-  color: @gray-700;
+  color: var(--rx-gray-700);
 }
