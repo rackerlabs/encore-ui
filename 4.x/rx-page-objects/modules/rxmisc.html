@@ -44,6 +44,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="rxmisc.html#safeclick" class="tsd-kind-icon">safe<wbr>Click</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="rxmisc.html#scrolltoelement" class="tsd-kind-icon">scroll<wbr>ToElement</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="rxmisc.html#transformlocation" class="tsd-kind-icon">transform<wbr>Location</a></li>
 							</ul>
@@ -54,6 +55,50 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="safeclick" class="tsd-anchor"></a>
+					<h3>safe<wbr>Click</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">safe<wbr>Click<span class="tsd-signature-symbol">(</span>elem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ElementFinder</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rackerlabs/encore-ui/blob/239d861d2/utils/rx-page-objects/src/rxMisc.page.ts#L112">src/rxMisc.page.ts:112</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Accepts an ElementFinder, and clicks in the middle of the referenced element.
+										This click will always occur and will not throw an exception even if the element
+									doesn&#39;t receive pointer events.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code><span class="hljs-keyword">var</span> myModal = {
+    <span class="hljs-keyword">get</span> lnkDoSomething() {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.$(<span class="hljs-string">'a#doSomething'</span>);
+    },
+};
+
+it(<span class="hljs-string">'should not close the modal when clicking the disabled link'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+     rxMisc.safeClick(myModal.lnkDoSomething);
+     expect(myModal.isPresent()).to.eventually.be.true;
+});
+</code></pre></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>elem: <span class="tsd-signature-type">ElementFinder</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="scrolltoelement" class="tsd-anchor"></a>
 					<h3>scroll<wbr>ToElement</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -63,7 +108,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rackerlabs/encore-ui/blob/7349c0c38/utils/rx-page-objects/src/rxMisc.page.ts#L49">src/rxMisc.page.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/rackerlabs/encore-ui/blob/239d861d2/utils/rx-page-objects/src/rxMisc.page.ts#L49">src/rxMisc.page.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -124,7 +169,7 @@ it(<span class="hljs-string">'should scroll to the bottom of the table and load 
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rackerlabs/encore-ui/blob/7349c0c38/utils/rx-page-objects/src/rxMisc.page.ts#L100">src/rxMisc.page.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/rackerlabs/encore-ui/blob/239d861d2/utils/rx-page-objects/src/rxMisc.page.ts#L129">src/rxMisc.page.ts:129</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,6 +214,9 @@ it(<span class="hljs-string">'should scroll to the bottom of the table and load 
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="rxmisc.html#safeclick" class="tsd-kind-icon">safe<wbr>Click</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="rxmisc.html#scrolltoelement" class="tsd-kind-icon">scroll<wbr>ToElement</a>
 					</li>

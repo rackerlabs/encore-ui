@@ -100,13 +100,13 @@
   width: 38px;
 }
 .rx-example .table-demo--batch-action .status--pending {
-  color: #d14904;
+  color: var(--rx-orange-700);
 }
 .rx-example .table-demo--batch-action .status--success {
-  color: #2e7d32;
+  color: var(--rx-green-700);
 }
 .rx-example .table-demo--batch-action .status--failure {
-  color: #f44336;
+  color: var(--rx-red-500);
 }
 .rx-example .collapsible-filter-example-form {
   width: 400px;
