@@ -1,15 +1,16 @@
 'use strict';
-import {rxComponentElement} from './rxComponent';
+import {ElementFinder} from 'protractor';
+import {Promise, rxComponentElement} from './rxComponent';
 
 export class Typeahead extends rxComponentElement {
-    get eleMenu() {
+    get eleMenu(): ElementFinder {
         return this.parent.parent.$('.dropdown-menu');
     }
 
     /**
      * Whether or not the menu is open.
      */
-    isOpen() {
+    isOpen(): Promise<boolean> {
         return this.eleMenu.isDisplayed();
     }
 }

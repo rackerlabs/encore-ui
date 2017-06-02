@@ -7,21 +7,23 @@ import {rxModalAction} from './rxModalAction.page';
 
 import * as component from './rxBulkSelect.page';
 
-interface IRxBulkSelectExerciseOptions {
+export interface IRxBulkSelectExerciseOptions {
     instance: component.rxBulkSelect;
     batchActions?: string [];
     count?: number;
 }
 
 /**
- * @description rxBulkSelect exercises.
+ * rxBulkSelect exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxBulkSelect({
- *     instance: myPage.bulkSelect, // select one of many widgets from your page objects
- *     batchActions: ['Create', 'Read', 'Update', 'Delete']
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxBulkSelect({
+ *         instance: myPage.bulkSelect, // select one of many widgets from your page objects
+ *         batchActions: ['Create', 'Read', 'Update', 'Delete']
+ *     }));
  */
-export function rxBulkSelect(options?: IRxBulkSelectExerciseOptions) {
+export function rxBulkSelectExercise (options: IRxBulkSelectExerciseOptions) {
     options = _.defaults(options, {
         batchActions: [],
         count: 10,

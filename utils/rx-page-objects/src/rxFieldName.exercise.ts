@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import * as _ from 'lodash';
 import * as component from './rxFieldName.page';
 
-interface IRxFieldNameExerciseOptions {
+export interface IRxFieldNameExerciseOptions {
     instance: component.rxFieldName;
     name?: string;
     present?: boolean;
@@ -15,7 +15,7 @@ interface IRxFieldNameExerciseOptions {
 /**
  * rxFieldName exercises.
  */
-export function rxFieldName (options: IRxFieldNameExerciseOptions) {
+export function rxFieldNameExercise (options: IRxFieldNameExerciseOptions) {
 
     options = _.defaults(options, {
         visible: true,
@@ -24,7 +24,7 @@ export function rxFieldName (options: IRxFieldNameExerciseOptions) {
     });
 
     return () => {
-        let component;
+        let component: component.rxFieldName;
 
         before(() => {
             component = options.instance;

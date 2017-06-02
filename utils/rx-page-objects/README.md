@@ -1,228 +1,112 @@
 # rx-page-objects
 
-Using EncoreUI Angular components? Writing Selenium end-to-end automation using Protractor? Save time with these convenient page objects!
+### End to end testing utilities for Encore applications.
 
-## Page Objects
+Provides high-level access to components in the Encore-UI library through Protractor.
 
-Many of the components that ship with EncoreUI require end to end testing. Why should we waste all of the work we put into assuring ourselves that the components work, when you're going to need to do the same yourself?
+You can use it directly in your test code, without using any abstractions at all.
 
-**good**:
 ```js
-it('should have actually sorted the column ascending', function () {
-    var column = element(by.cssContainingText('rx-sortable-column', 'Name'));
-    column.$('i.sort-icon').click();
-    column.$('i.sort-icon').click();
-    element.all(by.repeater('user in users').column('Name')).getText().then(function (names) {
-        expect(names).to.eql(names.sort());
-    });
+it('should have the "Delete" menu option present', () => {
+    let menu = new encore.rxActionMenu($('rx-action-menu#custom'));
+    expect(menu.hasAction('Delete')).to.eventually.be.true;
 });
 ```
 
-**better**:
+### Extends Protractor/Selenium API.
+
+Most components in rx-page-objects extend the ElementFinder class from the Protractor API.  This means that
+the methods and properties of ElementFinder are typically present on any `rxClassName` object.
+
 ```js
-it('should have actually sorted the column ascending', function () {
-    var columnElement = element(by.cssContainingText('rx-sortable-column', 'Name'));
-    var column = encore.rxSortableColumn.initialize(columnElement, 'user in users');
-    column.sortAscending();
-    column.data.then(function (names) {
-        expect(names).to.eql(names.sort());
-    });
+it('should have a custom icon on the "Delete" menu option', () => {
+    let menu = new encore.rxActionMenu($('rx-action-menu#custom'));
+    expect(menu.action('Delete').$('.icon-custom').isPresent()).to.eventually.be.true;
 });
 ```
 
-**best**
+Please note that in the above example `rxAction` inherits the `$` method from Protractor's `ElementFinder`.
+
+The latest documentation on the Protractor API is available here: [Protractor API](http://www.protractortest.org/#/api)
+
+### Construct page objects faster.
+
+Assemble many of the reusable components from rx-page-objects into an easy to maintain page object.
+
+Great for when you already use page objects, and want to benefit from using prefabricated components.
+
 ```js
-var Page = require('astrolabe').Page;
+let myHomePage = {
+    get notifications() { return encore.rxNotify.all; },
+    get pagination() { return new encore.rxPaginate($('#myTable rx-paginate')); },
+};
 
-var myPage = Page.create({
-    column: {
-        value: function (columnName) {
-            var columnElement = element(by.cssContainingText('rx-sortable-column', columnName));
-            return encore.rxSortableColumn.initialize(columnElement);
-        }
-    }
-});
-
-it('should have actually sorted the column ascending', function () {
-    var column = myPage.column('Name');
-    column.sortAscending();
-    column.data.then(function (names) {
-        expect(names).to.eql(names.sort());
-    });
+it('should have three notifications present', () => {
+    expect(myHomePage.notifications.count()).to.eventually.eql(3);
 });
 ```
 
-## Forms
+### Use exercises to generate basic tests.
 
-Forms are everywhere. And they are *horribly boring*. Most forms are not innovative by themselves, but can be the epicenter of many tests that validate input, success messages, error responses, etc. How can you make a form with rx-page-objects? Easy!
+Describe your component at a high level, and let rx-page-objects run a set of simple tests for you.
 
-**bad**
 ```js
-it('should fill out the form correctly', function () {
-    element(by.model('user.name')).sendKeys('Charlie Day');
-    element(by.model('user.country')).click();
-    element.all(by.repeater('country in countries')).element(by.cssContainingText('option', 'United States')).click();
-    element(by.buttonText('Submit')).click();
-    expect(element.all(by.repeater('message in messages')).first.getText()).to.eventually.contain('Success');
-});
-
-it('should show an error message when submitting a foreign country', function () {
-    // http://i.imgur.com/ag8KcpB.jpg
-    element(by.model('user.name')).sendKeys('Lāčplēsis');
-    element(by.model('user.country')).click();
-    element.all(by.repeater('country in countries')).element(by.cssContainingText('option', 'Latvia')).click();
-    element(by.buttonText('Submit')).click();
-    expect(element.all(by.repeater('message in messages')).first.getText()).to.eventually.contain('Error');
-});
-
-// copy-pasted tests continue below...I sure hope this form never changes...
+describe('Default Pagination Tests', encore.exercise.rxPaginate({
+    instance: myHomePage.pagination,
+    totalItems: 157,
+    defaultPageSize: 20,
+    pageSizes: [5, 10, 20, 25, 50]
+}));
 ```
 
-**better**
-```js
-var Page = require('astrolabe').Page;
+From just those few lines of code, the following is tested.
 
-var form = Page.create({
-
-    name: {
-        get: function () {
-            return element(by.model('user.name')).getAttribute('value');
-        },
-        set: function (input) {
-            element(by.model('user.name')).clear();
-            element(by.model('user.name')).sendKeys(input);
-        }
-    },
-
-    country: {
-        get: function () {
-            return encore.rxForm.dropdown.initialize(element(by.model('user.country'))).selectedOption;
-        },
-        set: function (countryName) {
-            encore.rxForm.dropdown.initialize(element(by.model('user.country'))).select(countryName);
-        }
-    },
-
-    submit: {
-        value: function () {
-            element(by.buttonText('Submit')).click();
-        }
-    }
-
-});
-
-it('should fill out the form correctly', function () {
-    form.name = 'Charlie Day';
-    form.country = 'United States';
-    form.submit();
-    expect(encore.rxNotify.all.isPresent('Success')).to.eventually.be.true;
-});
-
-it('should show an error message when submitting a foreign country', function () {
-    form.name = 'Lāčplēsis';
-    form.country = 'Latvia';
-    form.submit();
-    expect(encore.rxNotify.all.isPresent('Error')).to.eventually.be.true;
-});
+```
+    ✓ should be displayed
+    ✓ should not have `next` link on the last page
+    ✓ should allow attempting to navigate to the next page when already on the last page
+    ✓ should allow attempting to navigate to the last page when already on the last page
+    ✓ should navigate to the first page
+    ✓ should not have `prev` link on the first page
+    ✓ should allow attempting to navigate to the previous page when already on the first page
+    ✓ should allow attempting to navigate to the first page when already on the first page
+    ✓ should have all available page sizes
+    ✓ should highlight the current items per page selection
+    ✓ should navigate forward one page at a time
+    ✓ should navigate backwards one page at a time
+    ✓ should navigate to the last page
+    ✓ should jump forward to page 6 using pagination
+    ✓ should jump backward to page 2 using pagination
+    ✓ should switch to a different items per page
+    ✓ should put the user back on the first page after resizing the items per page
+    ✓ should list have the correct string for the shown items
+    ✓ should not fail to match the upper bounds of the shown items even if not displayed
 ```
 
-**best**
-```js
-var Page = require('astrolabe').Page;
+Exercises are designed to test the basics quickly. It contains no app-specific business logic.
 
-var form = Page.create({
-
-    fill: {
-        value: function (formData) {
-            encore.rxForm.fill(this, formData);
-            this.submit();
-        }
-    },
-
-    name: encore.rxForm.textField.generateAccessor(element(by.model('user.name'))),
-
-    country: encore.rxForm.dropdown.generateAccessor(element(by.model('user.country')),
-
-    submit: {
-        value: function () {
-            element(by.buttonText('Submit')).click();
-        }
-    }
-
-});
-
-it('should fill out the form correctly', function () {
-    form.fill({
-        name: 'Charlie Day',
-        country: 'United States'
-    });
-    expect(encore.rxNotify.all.isPresent('Success')).to.eventually.be.true;
-});
-
-it('should show an error message when submitting a foreign country', function () {
-    form.fill({
-        name: 'Lāčplēsis',
-        country: 'Latvia'
-    });
-    expect(encore.rxNotify.all.isPresent('Error')).to.eventually.be.true;
-});
-```
-
-More examples of supported form entry elements can be found in the [test library's API documentation](http://rackerlabs.github.io/encore-ui/rx-page-objects/index.html#rxForm).
-
-When you're using rx-page-objects in your app, you can get back to focusing on what matters -- testing the *business logic* that your app provides, not that all the little buttons, notifications, and menus are working.
-
-## Exercises
-
-But what happens when you need to make sure your rxCharacterCount directives *actually work*? Or that you correctly implemented a pagination component on a table?
-
-What you need is a way to quickly run boring, repetitive tests that ensure your team didn't make any mistakes "wiring up" the component on the page. Because face it, if a user can't get past page one in your table, it's going to look bad on you. Somebody's gotta test the boring stuff.
-
-But why write dozens of the same tests for *every* single pagination widget in your app, when you can use ours?
-
-**bad**:
-```js
-describe('user list table', function () {
-    describe('pagination', function () {
-        it('should be present');
-        it('should have a next button');
-        it('should have a previous button');
-        // this goes on for a while...
-    }))
-});
-```
-
-**good**:
-```js
-describe('user list table', function () {
-    describe('pagination', encore.exercise.rxPaginate({
-        instance: somePageObject.pagination,
-        pageSizes: [3, 50, 200, 350, 500],
-        defaultPageSize: 3
-    }));
-});
-```
+It will always put your app in the same state it found it in when it started.
 
 ## Setting up
 
 *command line*
 
-    npm install --save-dev rx-page-objects
+```
+npm install --save-dev rx-page-objects
+```
 
 *protractor.conf.js*
 
-    onPrepare: function () {
-        encore = require('rx-page-objects');
-    },
+```js
+onPrepare: () => {
+    encore = require('rx-page-objects');
+},
+```
 
 *.jshintrc*
 
-    "globals": {
-        encore: true
-    }
-
-## Links
-
-[Full Documentation](http://rackerlabs.github.io/encore-ui/rx-page-objects/index.html).
-
-[Components Demo](http://rackerlabs.github.io/encore-ui/#/overview).
+```js
+"globals": {
+    encore: true
+}
+```

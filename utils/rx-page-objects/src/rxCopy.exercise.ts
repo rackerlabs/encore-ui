@@ -6,7 +6,7 @@ import {browser, ElementFinder} from 'protractor';
 import {Key} from 'selenium-webdriver';
 import * as component from './rxCopy.page';
 
-interface IRxCopyExerciseOptions {
+export interface IRxCopyExerciseOptions {
     instance: component.rxCopy;
     displayed?: boolean;
     enabled?: boolean;
@@ -15,10 +15,10 @@ interface IRxCopyExerciseOptions {
     testCopyArea?: ElementFinder;
 }
 /**
- * @description rxCopy exercises.
- * @see rxCopy
+ * rxCopy exercises.
+ * @see [[rxCopy]]
  */
-export function rxCopy(options: IRxCopyExerciseOptions) {
+export function rxCopyExercise (options: IRxCopyExerciseOptions) {
 
     options = _.defaults(options, {
         displayed: true,

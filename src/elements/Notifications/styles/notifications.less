@@ -4,91 +4,97 @@
   margin-bottom: 1.5em;
 
   .rx-notification {
-    clear: both;
-    font-weight: 800;
-    font-size: 1.2em;
-    padding: 10px 50px;
     margin-bottom: 2px;
-    position: relative;
-    background: no-repeat 18px 50%;
-    background-size: 20px 20px;
+  }
+}//.rx-notifications
 
-    .button {
-      font-weight: normal;
-      margin-bottom: 0;
-    }
-    a {
-      text-decoration: underline;
-    }
+.rx-notification {
+  display: flex;
+  font-size: 1.2em;
+  margin-bottom: 1.5rem;
+  position: relative;
 
-    &.notification-success {
-      background-color: @green-100;
-      background-image: url("images/green-checkmark-circled.svg");
-      color: @gray-950;
-      a {
-        color: @gray-950;
-      }
-    }
-    &.notification-info {
-      background-color: @blue-100;
-      background-image: url("images/info-circled.svg");
-      color: @gray-950;
-      a {
-        color: @gray-950;
-      }
-    }
-    &.notification-warning {
-      background-color: @orange-100;
-      background-image: url("images/warning-triangle.svg");
-      color: @gray-950;
-      a {
-        color: @gray-950;
-      }
-    }
-    &.notification-error {
-      background-color: @red-700;
-      background-image: url("images/error-stop.svg");
-      color: @white;
-      a {
-        color: @white;
-      }
-    }
-    &.notification-loading {
-      // Hide icon since it's replaced by spinner
-      background-image: none;
-      .rx-spinner {
-        position: absolute;
-        left: 19px;
-        top: 50%;
-        margin-top: -9px;
-        border-bottom-color: @gray-950;
-        border-right-color: @gray-950;
-      }
+  .button {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: inherit;
+    font-weight: 800;
+    text-decoration: underline;
+  }
+
+  .notification-text {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    order: 2;
+    padding: 10px;
+  }
+
+  .notification-icon {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    flex-basis: 40px;
+    flex-shrink: 0;
+    font-size: 1.3em;
+    justify-content: center;
+    order: 1;
+    width: 40px;
+
+    & ~ .notification-text {
+      padding-left: 0;
     }
   }
 
   .notification-dismiss {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    padding: 0 15px;
-    content: "\00D7";
-    opacity: 0.75;
-    color: @gray-950;
+    align-items: center;
+    color: inherit;
+    display: flex;
+    flex-basis: 40px;
+    flex-shrink: 0;
+    justify-content: center;
+    order: 3;
+    width: 40px;
+
     &:hover,
     &:focus {
-      opacity: 1;
       text-decoration: none;
     }
-  }
-  .notification-error {
-    .notification-dismiss {
-      opacity: 1;
-      color: @white;
+
+    & ~ .notification-text {
+      padding-right: 0;
     }
   }
-}
+
+  .rx-spinner {
+    border-bottom-color: var(--rx-gray-950);
+    border-right-color: var(--rx-gray-950);
+    height: 16px;
+    width: 16px;
+  }//.rx-spinner
+
+  &.notification-success {
+    background-color: var(--rx-green-700);
+    color: var(--rx-white);
+  }
+
+  &.notification-info {
+    background-color: var(--rx-blue-100);
+    color: var(--rx-black);
+  }
+
+  &.notification-warning {
+    background-color: var(--rx-orange-accent);
+    color: var(--rx-black);
+  }
+
+  &.notification-error {
+    background-color: var(--rx-red-700);
+    color: var(--rx-white);
+  }
+}//.rx-notification
 
 .animate-fade {
   &.ng-enter,

@@ -16,7 +16,7 @@
     "postinstall": "cd utils/rx-page-objects; npm i; cd -; grunt hooks",
     "eslint-dev": "eslint -c .eslintrc.json --ignore-path .eslintignore-dev {src,demo}",
     "eslint-test": "eslint -c .eslintrc.test.json --ignore-path .eslintignore-test {src,demo}",
-    "tslint-test": "cd utils/rx-page-objects; $(npm bin)/tslint -c tslint.json {test,src}/*.ts"
+    "tslint-test": "cd utils/rx-page-objects; $(npm bin)/tslint -c tslint.json -e '{test,src}/*.d.ts' {test,src}/*.ts index.ts"
   },
   "dependencies": {
     "normalize.css": "^3.0.2"
@@ -46,7 +46,6 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-gh-pages": "0.9.1",
     "grunt-html2js": "0.2.9",
-    "grunt-jsdoc": "1.1.0",
     "grunt-karma": "0.10.1",
     "grunt-karma-coveralls": "2.5.3",
     "grunt-lib-phantomjs": "0.6.0",

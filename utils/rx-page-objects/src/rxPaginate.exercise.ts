@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import {rxMisc} from './rxMisc.page';
 import * as component from './rxPaginate.page';
 
-interface IRxPaginateExerciseOptions {
+export interface IRxPaginateExerciseOptions {
     instance: component.rxPaginate;
     present?: boolean;
     displayed?: boolean;
@@ -18,14 +18,16 @@ interface IRxPaginateExerciseOptions {
 }
 /**
  * rxPaginate exercises.
+ *
  * @example
- * describe('default exercises', encore.exercise.rxPaginate({
- *     instance: myPage.pagination, // select one of many pagination instances from your page objects
- *     pages: 20 // will exercise full functionality at 6, limited functionality at 2
- *     totalItems: 300 // some tests require the total number of items to be specified in advance.
- * }));
+ *
+ *     describe('default exercises', encore.exercise.rxPaginate({
+ *         instance: myPage.pagination, // select one of many pagination instances from your page objects
+ *         pages: 20 // will exercise full functionality at 6, limited functionality at 2
+ *         totalItems: 300 // some tests require the total number of items to be specified in advance.
+ *     }));
  */
-export function rxPaginate (options: IRxPaginateExerciseOptions) {
+export function rxPaginateExercise (options: IRxPaginateExerciseOptions) {
     options = _.defaults(options, {
         present: true,
         displayed: true,

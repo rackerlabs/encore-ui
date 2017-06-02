@@ -7,6 +7,7 @@ import {rxMultiSelect} from './rxMultiSelect.page';
 
 /**
  * @example
+ *
  *     multiSelect.apply({
  *         Account: {
  *             All: false,
@@ -18,45 +19,43 @@ import {rxMultiSelect} from './rxMultiSelect.page';
  *         }
  *     });
  */
-interface IRxMultiSelectFilterData {
+export interface IRxMultiSelectFilterData {
     [id: string]: {
         [id: string]: boolean,
     };
 }
 
-/**
- * @class
- */
 export class rxSelectFilter extends rxComponentElement {
 
-    multiSelectByLabel(label: string) {
+    multiSelectByLabel(label: string): rxMultiSelect {
         let selectWrapper = this.element(by.cssContainingText('.select-wrapper', label));
         return new rxMultiSelect(selectWrapper.$('rx-multi-select'));
     }
 
     /**
-     * @description From `filterData`'s key-value pairs, select the options contained in the values against
-     * the {@link rxMultiSelect} (identified by text) in each key.
-     * @see rxMultiSelect
-     * @example
-     * it('should select only the US accounts that are still open', function () {
-     *     var multiSelect = new rxSelectFilter($('rx-multi-select));
-     *     multiSelect.apply({
-     *         Account: {
-     *             All: false,
-     *             US: true
-     *         },
-     *         Status: {
-     *             All: false,
-     *             Open: true
-     *         }
-     *     });
+     * From `filterData`'s key-value pairs, select the options contained in the values against
+     * the [[rxMultiSelect]] (identified by text) in each key.
      *
-     *     expect(myPage.myTable.column('Account').data.then(_.uniq)).to.eventually.eql(['US']);
-     *     expect(myPage.myTable.column('Status').data.then(_.uniq)).to.eventually.eql(['Open']);
-     * });
+     * @example
+     *
+     *     it('should select only the US accounts that are still open', function () {
+     *         var multiSelect = new rxSelectFilter($('rx-multi-select));
+     *         multiSelect.apply({
+     *             Account: {
+     *                 All: false,
+     *                 US: true
+     *             },
+     *             Status: {
+     *                 All: false,
+     *                 Open: true
+     *             }
+     *         });
+     *
+     *         expect(myPage.myTable.column('Account').data.then(_.uniq)).to.eventually.eql(['US']);
+     *         expect(myPage.myTable.column('Status').data.then(_.uniq)).to.eventually.eql(['Open']);
+     *     });
      */
-    apply(filterData: IRxMultiSelectFilterData) {
+    apply(filterData: IRxMultiSelectFilterData): void {
         _.each(filterData, (options, label) => {
             let multiSelect = this.multiSelectByLabel(label);
             multiSelect.open();

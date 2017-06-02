@@ -2,52 +2,48 @@
 
 import * as _ from 'lodash';
 import {ElementFinder} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
-
-/**
- * @class
- */
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 
 export class rxRadio extends rxComponentElement {
 
-    get eleFakeRadio() {
+    get eleFakeRadio(): ElementFinder {
         return this.parent.$('.fake-radio');
     }
 
     /**
-     * @description Whether or not the element in question is a radio button.
+     * Whether or not the element in question is a radio button.
      * Useful for situations where input types might change in the future, ensuring that the expected one is being used.
      */
-    isRadio() {
+    isRadio(): Promise<boolean> {
         return this.getAttribute('type').then(type => {
             return type === 'radio';
         });
     }
 
     /**
-     * @description Whether the radio button is valid.
+     * whether or not the radio button is valid.
      */
-    isValid() {
+    isValid(): Promise<boolean> {
         return this.getAttribute('class').then(classes => {
             return _.includes(classes.split(' '), 'ng-valid');
         });
     }
 
     /**
-     * @description Whether the radio element is currently displayed.
+     * whether or not the radio element is currently displayed.
      */
     @OverrideWebdriver
-    isDisplayed() {
+    isDisplayed(): Promise<boolean> {
         return this.eleFakeRadio.isPresent().then(isFakeRadio => {
             return isFakeRadio ? this.eleFakeRadio.isDisplayed() : this._originalElement.isDisplayed();
         });
     }
 
     /**
-     * @description Whether or not the radio element is enabled.
+     * Whether or not the radio element is enabled.
      */
     @OverrideWebdriver
-    isEnabled() {
+    isEnabled(): Promise<boolean> {
         return this.eleFakeRadio.isPresent().then(isFakeRadio => {
             if (isFakeRadio) {
                 return this.parent.getAttribute('class').then(classes => {
@@ -59,10 +55,10 @@ export class rxRadio extends rxComponentElement {
     }
 
     /**
-     * @description Makes sure that the radio button is selected. If the radio button is already
+     * Makes sure that the radio button is selected. If the radio button is already
      * selected, this function will do nothing.
      */
-    select() {
+    select(): Promise<void> {
         return this.isSelected().then(selected => {
             if (!selected) {
                 this.click();

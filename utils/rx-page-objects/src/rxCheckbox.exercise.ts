@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import * as component from './rxCheckbox.page';
 
-interface IRxCheckboxExerciseOptions {
+export interface IRxCheckboxExerciseOptions {
     instance: component.rxCheckbox;
     disabled?: boolean;
     selected?: boolean;
@@ -13,9 +13,9 @@ interface IRxCheckboxExerciseOptions {
     visible?: boolean;
 }
 /**
- * @description rxCheckbox exercises
+ * rxCheckbox exercises
  */
-export function rxCheckbox(options: IRxCheckboxExerciseOptions) {
+export function rxCheckboxExercise (options: IRxCheckboxExerciseOptions) {
     options = _.defaults(options, {
         disabled: false,
         selected: false,
