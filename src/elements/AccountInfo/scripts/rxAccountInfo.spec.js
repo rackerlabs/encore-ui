@@ -30,6 +30,9 @@ describe('elements:rxAccountInfo', function () {
             ];
 
             angular.module('testApp', [])
+                .config(function ($qProvider) {
+                    $qProvider.errorOnUnhandledRejections(false);
+                })
                 .factory('Encore', function () {
                     return {
                         getAccount: function () {
@@ -179,7 +182,7 @@ describe('elements:rxAccountInfo', function () {
             expect(el.find('img').attr('data-description'), 'badge tooltip description').to.equal('A badge!');
         });
 
-        it.skip('should display an error notification when it cannot load badges', function () {
+        it('should display an error notification when it cannot load badges', function () {
             badges.$deferred.reject();
             scope.$digest();
             expect(rxnotify.stacks[defaultStack][0].text).to.equal('Error retrieving badges for this account');
@@ -189,7 +192,7 @@ describe('elements:rxAccountInfo', function () {
             expect(_.keys(teamBadges)).to.not.contain('$deferred');
         });
 
-        it.skip('should display an error notification when it cannot load account name', function () {
+        it('should display an error notification when it cannot load account name', function () {
             account.$deferred.reject();
             scope.$digest();
             expect(rxnotify.stacks[defaultStack][0].text).to.equal('Error retrieving account name');
@@ -210,7 +213,7 @@ describe('elements:rxAccountInfo', function () {
                 expect(el.find('img').attr('data-description'), 'badge description').to.equal('A team badge!');
             });
 
-            it.skip('should display an error notification when it cannot load badges', function () {
+            it('should display an error notification when it cannot load badges', function () {
                 teamBadges.$deferred.reject();
                 scope.$digest();
                 expect(rxnotify.stacks[defaultStack][0].text).to.equal('Error retrieving badges for this team');
