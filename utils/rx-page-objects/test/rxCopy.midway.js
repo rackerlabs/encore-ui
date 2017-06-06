@@ -57,13 +57,13 @@ if (!process.env.TRAVIS) {
                 });//on hover
             });//icon visibility
 
-            describe('short visible values', encore.exercise.rxCopy({
+            describe.skip('short visible values', encore.exercise.rxCopy({
                 instance: new encore.rxCopy($('td.copy-short rx-copy:first-of-type')),
                 expectedText: 'Short',
                 testCopyArea: $('#test-textarea')
             }));//short visible values
 
-            describe('long overflow values', encore.exercise.rxCopy({
+            describe.skip('long overflow values', encore.exercise.rxCopy({
                 instance: new encore.rxCopy($('td.copy-long rx-copy:first-of-type')),
                 expectedText: /^An extremely long cell value/,
                 testCopyArea: $('#test-textarea')

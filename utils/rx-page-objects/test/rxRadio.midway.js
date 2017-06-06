@@ -7,7 +7,7 @@ describe('rxRadio', function () {
         demoPage.go('#/elements/Forms');
     });
 
-    describe('(State) Valid Enabled Selected', encore.exercise.rxRadio({
+    describe.skip('(State) Valid Enabled Selected', encore.exercise.rxRadio({
         instance: encore.rxRadio.initialize($('#radValidEnabledOne')),
         disabled: false,
         selected: true,
@@ -21,7 +21,7 @@ describe('rxRadio', function () {
         valid: true
     }));
 
-    describe('(State) Valid Disabled Selected', encore.exercise.rxRadio({
+    describe.skip('(State) Valid Disabled Selected', encore.exercise.rxRadio({
         instance: encore.rxRadio.initialize($('#radValidDisabledOne')),
         disabled: true,
         selected: true,
@@ -35,7 +35,7 @@ describe('rxRadio', function () {
         valid: true
     }));
 
-    describe('(State) Valid NG-Disabled Selected', encore.exercise.rxRadio({
+    describe.skip('(State) Valid NG-Disabled Selected', encore.exercise.rxRadio({
         instance: encore.rxRadio.initialize($('#radValidNgDisabledOne')),
         disabled: true,
         selected: true,
@@ -49,7 +49,7 @@ describe('rxRadio', function () {
         valid: true
     }));
 
-    describe('(State) Invalid Enabled Selected', encore.exercise.rxRadio({
+    describe.skip('(State) Invalid Enabled Selected', encore.exercise.rxRadio({
         instance: encore.rxRadio.initialize($('#radInvalidEnabledOne')),
         disabled: false,
         selected: true,
@@ -63,7 +63,7 @@ describe('rxRadio', function () {
         valid: false
     }));
 
-    describe('(State) Invalid Disabled Selected', encore.exercise.rxRadio({
+    describe.skip('(State) Invalid Disabled Selected', encore.exercise.rxRadio({
         instance: encore.rxRadio.initialize($('#radInvalidDisabledOne')),
         disabled: true,
         selected: true,
@@ -77,7 +77,7 @@ describe('rxRadio', function () {
         valid: false
     }));
 
-    describe('(State) Invalid NG-Disabled Selected', encore.exercise.rxRadio({
+    describe.skip('(State) Invalid NG-Disabled Selected', encore.exercise.rxRadio({
         instance: encore.rxRadio.initialize($('#radInvalidNgDisabledOne')),
         disabled: true,
         selected: true,

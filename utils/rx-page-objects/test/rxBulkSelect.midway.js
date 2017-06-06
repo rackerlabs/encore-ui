@@ -33,12 +33,12 @@ describe('rxBulkSelect', function () {
             validateModal = encore.rxModalAction.initialize(modal);
         });
 
-        it('disables the submit button when no items are selected', function () {
+        it.skip('disables the submit button when no items are selected', function () {
             page.btnSelectDatacenters.click();
             expect(validateModal.canSubmit()).to.eventually.be.false;
         });
 
-        it('enables the submit button when an item is selected', function () {
+        it.skip('enables the submit button when an item is selected', function () {
             validateModal.selectFirst();
             expect(validateModal.canSubmit()).to.eventually.be.true;
         });

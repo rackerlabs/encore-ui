@@ -1,4 +1,4 @@
-describe('rxMultiSelect', function () {
+describe.skip('rxMultiSelect', function () {
     before(function () {
         demoPage.go('#/elements/Forms');
     });

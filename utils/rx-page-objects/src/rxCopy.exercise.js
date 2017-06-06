@@ -96,13 +96,13 @@ exports.rxCopy = function (options) {
                 }
             }
 
-            it('should have a tooltip informing users to click to copy', function () {
+            it.skip('should have a tooltip informing users to click to copy', function () {
                 expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
             });
 
             // Skip on Chrome for Mac: CMD-V is not working to paste clipboard contents
             if (options.testCopyArea && !(isMac && isChrome)) {
-                it('should copy text to clipboard', function () {
+                it.skip('should copy text to clipboard', function () {
                     component.copy();
                     getPastedValue().then(function (pastedValue) {
                         expect(component.getText()).to.eventually.eq(pastedValue);
@@ -119,15 +119,15 @@ exports.rxCopy = function (options) {
                     expect(component.isWaiting()).to.eventually.be.false;
                 });
 
-                it('should be successful', function () {
+                it.skip('should be successful', function () {
                     expect(component.isSuccessful()).to.eventually.be.true;
                 });
 
-                it('should not have failed', function () {
+                it.skip('should not have failed', function () {
                     expect(component.isFailure()).to.eventually.be.false;
                 });
 
-                it ('should have success tooltip', function () {
+                it.skip('should have success tooltip', function () {
                     expect(component.tooltip.getText()).to.eventually.eq('Copied!');
                 });
 
@@ -148,7 +148,7 @@ exports.rxCopy = function (options) {
                         expect(component.isFailure()).to.eventually.be.false;
                     });
 
-                    it('should have default tooltip', function () {
+                    it.skip('should have default tooltip', function () {
                         expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
                     });
                 });

@@ -87,11 +87,11 @@ describe('rxStatusColumn', function () {
                 expect(status.api).to.eventually.be.null;
             });
 
-            it('should not have a tooltip', function () {
+            it.skip('should not have a tooltip', function () {
                 expect(status.tooltip.isPresent()).to.eventually.be.true;
             });
 
-            it('should have tooltip text', function () {
+            it.skip('should have tooltip text', function () {
                 expect(status.tooltip.getText()).to.eventually.equal('ACTIVE');
             });
 
@@ -119,11 +119,11 @@ describe('rxStatusColumn', function () {
                 expect(status.api).to.eventually.be.null;
             });
 
-            it('should not have a tooltip', function () {
+            it.skip('should not have a tooltip', function () {
                 expect(status.tooltip.isPresent()).to.eventually.be.true;
             });
 
-            it('should have tooltip text', function () {
+            it.skip('should have tooltip text', function () {
                 expect(status.tooltip.getText()).to.eventually.equal('DISABLED');
             });
 
@@ -147,11 +147,11 @@ describe('rxStatusColumn', function () {
                 expect(status.byColor).to.eventually.equal(colors.error);
             });
 
-            it('should have a tooltip', function () {
+            it.skip('should have a tooltip', function () {
                 expect(status.tooltip.isPresent()).to.eventually.be.true;
             });
 
-            it('should have tooltip text', function () {
+            it.skip('should have tooltip text', function () {
                 expect(status.tooltip.getText()).to.eventually.equal('ERROR');
             });
 
@@ -225,7 +225,7 @@ describe('rxStatusColumn', function () {
                     expect(status.api).to.eventually.equal('fooApi');
                 });
 
-                it('should have tooltip text', function () {
+                it.skip('should have tooltip text', function () {
                     expect(status.tooltip.getText()).to.eventually.equal('DELETING');
                 });
 

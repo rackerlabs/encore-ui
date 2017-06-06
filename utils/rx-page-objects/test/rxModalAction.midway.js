@@ -1,4 +1,4 @@
-describe('rxModalAction', function () {
+describe.skip('rxModalAction', function () {
     var changePasswordModal, triggerModal;
 
     var customFunctionality = {

@@ -1,4 +1,4 @@
-describe('typeahead', function () {
+describe.skip('typeahead', function () {
     var typeahead;
 
     before(function () {

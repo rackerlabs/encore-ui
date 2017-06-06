@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 var feedback = encore.rxFeedback;
 
-describe('rxFeedback', function () {
+describe.skip('rxFeedback', function () {
     var successfulFeedback, unsuccessfulFeedback;
     var defaultFeedback = 'Software Bug';
 

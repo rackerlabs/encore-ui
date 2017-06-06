@@ -120,7 +120,7 @@ exports.rxBulkSelect = function (options) {
                     expect(component.batchActions.hasAction(action)).to.eventually.be.true;
                 });
 
-                it('should be able to open the modal for batch action "' + action + '"', function () {
+                it.skip('should be able to open the modal for batch action "' + action + '"', function () {
                     var modal = component.batchActions.action(action).openModal();
                     expect(modal.isDisplayed()).to.eventually.be.true;
                     modal.close();

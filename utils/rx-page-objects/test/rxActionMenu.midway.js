@@ -91,7 +91,7 @@ describe('rxActionMenu', function () {
             expect(actionItem.getText()).to.eventually.equal('Add');
         });
 
-        it('should include custom functionality for a modal', function () {
+        it.skip('should include custom functionality for a modal', function () {
             var modal = actionItem.openModal({});
             expect(modal.title).to.eventually.equal('Add Action');
             modal.cancel();

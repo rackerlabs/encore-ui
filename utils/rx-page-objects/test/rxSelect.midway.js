@@ -5,7 +5,7 @@ describe('rxSelect', function () {
         demoPage.go('#/elements/Forms');
     });
 
-    describe('(State) Valid Enabled', encore.exercise.rxSelect({
+    describe.skip('(State) Valid Enabled', encore.exercise.rxSelect({
         instance: encore.rxSelect.initialize($('#selValidEnabled')),
         disabled: false,
         visible: true,
@@ -29,7 +29,7 @@ describe('rxSelect', function () {
         selectedText: 'Disabled by \'disabled\' attribute'
     }));
 
-    describe('(State) Invalid Enabled', encore.exercise.rxSelect({
+    describe.skip('(State) Invalid Enabled', encore.exercise.rxSelect({
         instance: encore.rxSelect.initialize($('#selInvalidEnabled')),
         disabled: false,
         visible: true,

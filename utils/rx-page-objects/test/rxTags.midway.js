@@ -1,4 +1,4 @@
-describe('rxTags', function () {
+describe.skip('rxTags', function () {
 
     before(function () {
         demoPage.go('#/elements/Tags');

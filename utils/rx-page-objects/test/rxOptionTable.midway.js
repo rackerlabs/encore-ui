@@ -99,7 +99,7 @@ describe('rxOptionTable', function () {
             component = rxOptionTablePage.initialize($('#checkboxOptionTable'));
         });
 
-        it('should have one row selected', function () {
+        it.skip('should have one row selected', function () {
             expect(component.selections).to.eventually.eql([0]);
         });
 
@@ -108,7 +108,7 @@ describe('rxOptionTable', function () {
             expect(component.selections).to.eventually.be.empty;
         });
 
-        it('should select many rows', function () {
+        it.skip('should select many rows', function () {
             component.selectMany([{ Name: 'Item 1' }, { Name: 'Item 2' }]);
             expect(component.selections).to.eventually.eql([0, 1]);
         });
