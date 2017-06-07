@@ -1,6 +1,6 @@
-var tabsPage = encore.tabs;
+var tabsPage = encore.rxTabset;
 
-describe('tabs', function () {
+describe('rxTabs', function () {
     var tabs;
     var tabNames = ['Bacon Ipsum', 'Veggie Ipsum', 'Cat Ipsum (meow)', 'Tupac Ipsum'];
 
