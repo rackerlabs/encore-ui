@@ -9,15 +9,11 @@ import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
  *   div.rxTooltip__arrow
  *   div.rxTooltip__inner
  */
-<<<<<<< HEAD:utils/rx-page-objects/src/tooltip.page.ts
-export class Tooltip extends rxComponentElement {
-=======
 
 /**
  * @class
  */
 export class rxTooltip extends rxComponentElement {
->>>>>>> refactor(tooltips): refactor bootstrap into encore:utils/rx-page-objects/src/rxTooltip.page.ts
     /**
      * (READ-ONLY) Text value of tooltip (if present).
      *
@@ -43,4 +39,4 @@ export class rxTooltip extends rxComponentElement {
         return text;
     }// get text()
 
-}// Tooltip
+}// rxTooltip

@@ -1,9 +1,8 @@
 'use strict';
 
-import {browser} from 'protractor';
-import {OverrideWebdriver, rxComponentElement} from './rxComponent';
+import {browser, ElementFinder} from 'protractor';
+import {OverrideWebdriver, Promise, rxComponentElement} from './rxComponent';
 import {rxTooltip} from './rxTooltip.page';
-
 
 /* CSS HIERARCHY
  * ----------------------------------------
@@ -32,7 +31,7 @@ export class rxCopy extends rxComponentElement {
     /**
      * (READ-ONLY) Tooltip associated with rxCopy element.
      */
-    get tooltip(): Tooltip {
+    get tooltip(): rxTooltip {
         this._hoverOverAction();
         // instantiate a new Tooltip from the newly added DOM element
         return new rxTooltip(this.eleTooltip);

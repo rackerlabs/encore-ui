@@ -30,7 +30,7 @@ export { parseUtcOffset, rxTimePicker } from './src/rxTimePicker.page';
 export { rxToggleSwitch } from './src/rxToggleSwitch.page';
 export { rxTabset, rxTab } from './src/rxTabs.page';
 export { textFieldAccessor } from './src/textField.page';
-export { Tooltip } from './src/tooltip.page';
+export { rxTooltip } from './src/rxTooltip.page';
 export { Typeahead } from './src/typeahead.page';
 
 import { IRxBulkSelectExerciseOptions, rxBulkSelectExercise } from './src/rxBulkSelect.exercise';
