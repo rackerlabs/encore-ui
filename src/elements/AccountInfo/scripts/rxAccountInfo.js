@@ -111,6 +111,7 @@ angular.module('encore.ui.elements')
                 scope.accountName = account.name;
                 scope.accountStatus = account.status;
                 scope.accountAccessPolicy = account.accessPolicy;
+                scope.accountCollectionsStatus = account.collectionsStatus;
                 scope.statusClass = '';
                 var statusClass = AccountStatusGroup(account.status);
                 if (statusClass === 'warning') {

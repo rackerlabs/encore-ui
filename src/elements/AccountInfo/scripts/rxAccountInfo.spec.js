@@ -10,7 +10,8 @@ describe('elements:rxAccountInfo', function () {
             account = {
                 name: 'Mosso',
                 status: 'Active',
-                accessPolicy: 'Full'
+                accessPolicy: 'Full',
+                collectionsStatus: 'CURRENT'
             };
 
             badges = [
@@ -139,6 +140,12 @@ describe('elements:rxAccountInfo', function () {
             account.$deferred.resolve(account);
             scope.$digest();
             expect(el.text()).to.contain('Terminated');
+        });
+
+        it('should populate the account collection status: CURRENT', function () {
+            account.$deferred.resolve(account);
+            scope.$digest();
+            expect(el.text()).to.contain('CURRENT');
         });
 
         it('should set an empty status class for an Active account', function () {
