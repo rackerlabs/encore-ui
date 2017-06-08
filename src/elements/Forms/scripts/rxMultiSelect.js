@@ -112,7 +112,7 @@ angular.module('encore.ui.elements')
                     scope.preview = (function () {
                         function getLabel (option) {
                             var optionElement = rxDOMHelper.find(element, '[value="' + option + '"]');
-                            return optionElement.text().trim();
+                            return optionElement.text().trim() || option.trim();
                         }
 
                         if (_.isEmpty(scope.selected)) {

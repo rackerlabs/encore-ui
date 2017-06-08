@@ -20,7 +20,7 @@ angular.module('encore.ui.elements')
  * @param {String} value The value of the option. If no transcluded content is provided,
  *                       the value will also be used as the option's text.
  */
-.directive('rxSelectOption', function (rxDOMHelper) {
+.directive('rxSelectOption', function () {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxSelectOption.html',
@@ -29,9 +29,10 @@ angular.module('encore.ui.elements')
             value: '@'
         },
         require: '^^rxMultiSelect',
+        controller: function ($scope) {
+            $scope.transclusion = _.isEmpty($scope.$parent.options);
+        },
         link: function (scope, element, attrs, selectCtrl) {
-            scope.transclusion = rxDOMHelper.find(element, '[ng-transclude] > *').length > 0;
-
             scope.toggle = function (isSelected) {
                 if (isSelected) {
                     selectCtrl.unselect(scope.value);

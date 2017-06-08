@@ -27,7 +27,7 @@ describe('rxMultiSelect', function () {
         };
     });
 
-    it.skip('renders the preview text properly with preselected options', function () {
+    it('renders the preview text properly with preselected options', function () {
         scope.types = _.without(scope.options, 'E');
         var el = createDirective(optionsTemplate);
         var isolateScope = el.isolateScope();
