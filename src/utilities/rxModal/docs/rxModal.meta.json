@@ -1,0 +1,9 @@
+{
+    "displayName": "rxModal",
+    "stability": "stable",
+    "description": "",
+    "api": "service:rxModal",
+    "keywords": [
+        "Modal"
+    ]
+}

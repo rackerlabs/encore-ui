@@ -81,7 +81,7 @@ angular.module('encore.ui.elements')
  * </rx-modal-action>
  * </pre>
  */
-.directive('rxModalAction', function ($uibModal) {
+.directive('rxModalAction', function (rxModal) {
     var createModal = function (config, scope) {
         config = _.defaults(config, {
             templateUrl: config.templateUrl,
@@ -91,7 +91,7 @@ angular.module('encore.ui.elements')
 
         config.windowClass = 'rxModal';
 
-        var modal = $uibModal.open(config);
+        var modal = rxModal.open(config);
 
         return modal;
     };
