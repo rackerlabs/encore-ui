@@ -30,6 +30,8 @@ angular.module('encore.ui.elements')
         },
         require: '^^rxMultiSelect',
         link: function (scope, element, attrs, selectCtrl) {
+            // Previous implementation accessed the DOM and was always returning false after the upgrade to 1.6.
+            // By simply checking the scope's $parent we can avoid accessing the DOM and acheive the same result.
             scope.transclusion = _.isEmpty(scope.$parent.options);
             scope.toggle = function (isSelected) {
                 if (isSelected) {
