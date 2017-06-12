@@ -1,7 +1,7 @@
 @import "vars";
 
 // Base class
-.tooltip {
+.rxTooltip {
   position: absolute;
   z-index: @tooltip-z-index;
   display: block;
@@ -34,49 +34,49 @@
   &.left {
     margin-left: -@tooltip-arrow-length;
   }
-}
 
-// Wrapper for the tooltip content
-.tooltip-inner {
-  border: @tooltip-border-width solid @tooltip-border-color;
-  max-width: @tooltip-max-width;
-  color: @tooltip-text-color;
-  text-align: center;
-  text-decoration: none;
-  background-color: @tooltip-background-color;
-  border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 4px 0px;
-  padding: 15px;
+  // Wrapper for the tooltip content
+  &__inner {
+    border: @tooltip-border-width solid @tooltip-border-color;
+    max-width: @tooltip-max-width;
+    color: @tooltip-text-color;
+    text-align: center;
+    text-decoration: none;
+    background-color: @tooltip-background-color;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 4px 0px;
+    padding: 15px;
 
-  .tooltip-header {
-    color: @tooltip-header-text-color;
-    text-align: left;
-    font-size: 15px;
-    padding-bottom: 5px;
-    font-weight: 600;
+    &__header {
+      color: @tooltip-header-text-color;
+      text-align: left;
+      font-size: 15px;
+      padding-bottom: 5px;
+      font-weight: 600;
+    }
   }
-}
 
-// Arrows
-.tooltip-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border: @tooltip-arrow-border-length solid transparent;
-  text-shadow: rgba(0, 0, 0, 0.09) 1px 1px 1px;
-
-  &:before {
-    pointer-events: none;
-    content: " ";
+  // Arrows
+  &__arrow {
     position: absolute;
-    border: @tooltip-arrow-length solid transparent;
+    width: 0;
+    height: 0;
+    border: @tooltip-arrow-border-length solid transparent;
+    text-shadow: rgba(0, 0, 0, 0.09) 1px 1px 1px;
+
+    &:before {
+      pointer-events: none;
+      content: " ";
+      position: absolute;
+      border: @tooltip-arrow-length solid transparent;
+    }
   }
 }
 
-.tooltip {
+.rxTooltip {
   &.left,
   &.right {
-    .tooltip-arrow {
+    .rxTooltip__arrow {
       top: 50%;
       margin-top: -(@tooltip-arrow-border-width / 2);
 
@@ -88,7 +88,7 @@
 
   &.top,
   &.bottom {
-    .tooltip-arrow {
+    .rxTooltip__arrow {
       left: 50%;
       margin-left: -(@tooltip-arrow-border-width / 2);
 
@@ -98,7 +98,7 @@
     }
   }
 
-  &.top .tooltip-arrow {
+  &.top .rxTooltip__arrow {
     bottom: -(@tooltip-arrow-length);
     border-bottom-width: 0;
     border-top-color: @tooltip-arrow-border-color;
@@ -109,7 +109,7 @@
     }
   }
 
-  &.right .tooltip-arrow {
+  &.right .rxTooltip__arrow {
     left: -(@tooltip-arrow-length);
     border-left-width: 0;
     border-right-color: @tooltip-arrow-border-color;
@@ -120,7 +120,7 @@
     }
   }
 
-  &.bottom .tooltip-arrow {
+  &.bottom .rxTooltip__arrow {
     top: -(@tooltip-arrow-length);
     border-top-width: 0;
     border-bottom-color: @tooltip-arrow-border-color;
@@ -131,7 +131,7 @@
     }
   }
 
-  &.left .tooltip-arrow {
+  &.left .rxTooltip__arrow {
     right: -(@tooltip-arrow-length);
     border-right-width: 0;
     border-left-color: @tooltip-arrow-border-color;
