@@ -29,10 +29,8 @@ angular.module('encore.ui.elements')
             value: '@'
         },
         require: '^^rxMultiSelect',
-        controller: function ($scope) {
-            $scope.transclusion = _.isEmpty($scope.$parent.options);
-        },
         link: function (scope, element, attrs, selectCtrl) {
+            scope.transclusion = _.isEmpty(scope.$parent.options);
             scope.toggle = function (isSelected) {
                 if (isSelected) {
                     selectCtrl.unselect(scope.value);
