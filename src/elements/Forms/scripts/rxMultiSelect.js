@@ -41,7 +41,7 @@ angular.module('encore.ui.elements')
  * @param {String} ng-model The scope property that stores the value of the input
  * @param {Array=} options A list of the options for the dropdown
  */
-.directive('rxMultiSelect', function ($document, rxDOMHelper) {
+.directive('rxMultiSelect', function ($document, $timeout, rxDOMHelper) {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxMultiSelect.html',
@@ -108,11 +108,11 @@ angular.module('encore.ui.elements')
             var ngModelCtrl = controllers[1];
 
             ngModelCtrl.$render = function () {
-                scope.$evalAsync(function () {
+                $timeout(function () {
                     scope.preview = (function () {
                         function getLabel (option) {
                             var optionElement = rxDOMHelper.find(element, '[value="' + option + '"]');
-                            return optionElement.text().trim() || option;
+                            return optionElement.text().trim();
                         }
 
                         if (_.isEmpty(scope.selected)) {
