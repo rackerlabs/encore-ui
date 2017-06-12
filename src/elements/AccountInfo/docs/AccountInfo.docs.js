@@ -82,7 +82,12 @@ angular.module('demoApp')
             } else if (config.id === '3265') {
                 deferred.resolve({ name: 'UnverifiedAccount', status: 'Unverified', accessPolicy: 'Full' });
             } else {
-                deferred.resolve({ name: 'Mosso', status: 'Active', accessPolicy: 'Full' });
+                deferred.resolve({
+                    name: 'Mosso',
+                    status: 'Active',
+                    accessPolicy: 'Full',
+                    collectionsStatus: 'CURRENT'
+                });
             }
 
             deferred.promise.then(success, failure);

@@ -110,6 +110,17 @@ var rxAccountInfo = {
     },
 
     /**
+     * @instance
+     * @description The account collections Status.
+     * @type {String}
+     */
+    collectionsStatus: {
+        get: function () {
+            return this.rootElement.element(by.binding('accountCollectionsStatus')).getText();
+        }
+    },
+
+    /**
      * @description The resulting status is lowercased so that it is easy to use with {@link rxAccountInfo.statuses}.
      * @instance
      * @type {String}
