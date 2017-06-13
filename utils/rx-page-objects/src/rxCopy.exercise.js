@@ -97,7 +97,7 @@ exports.rxCopy = function (options) {
             }
 
             it('should have a tooltip informing users to click to copy', function () {
-                expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
+                expect(component.rxTooltip.getText()).to.eventually.eq('Click to Copy');
             });
 
             // Skip on Chrome for Mac: CMD-V is not working to paste clipboard contents
@@ -128,7 +128,7 @@ exports.rxCopy = function (options) {
                 });
 
                 it ('should have success tooltip', function () {
-                    expect(component.tooltip.getText()).to.eventually.eq('Copied!');
+                    expect(component.rxTooltip.getText()).to.eventually.eq('Copied!');
                 });
 
                 describe('and after a short wait', function () {
@@ -149,7 +149,7 @@ exports.rxCopy = function (options) {
                     });
 
                     it('should have default tooltip', function () {
-                        expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
+                        expect(component.rxTooltip.getText()).to.eventually.eq('Click to Copy');
                     });
                 });
             });

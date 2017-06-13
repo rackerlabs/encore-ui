@@ -4,10 +4,10 @@
   <div class="rxCopy__action rxCopy__action--{{copyState}}"
     ng-click="copyText()"
     ng-switch="copyState"
-    tooltip-class="rxCopy__tooltip"
-    tooltip-html="tooltip"
-    tooltip-placement="left"
-    tooltip-popup-delay="250">
+    rx-tooltip-class="rxCopy__tooltip"
+    rx-tooltip-html="tooltip"
+    rx-tooltip-placement="left"
+    rx-tooltip-popup-delay="250">
 
     <i class="fa fa-fw fa-clipboard" ng-switch-when="waiting"></i>
     <i class="fa fa-fw fa-check" ng-switch-when="success"></i>

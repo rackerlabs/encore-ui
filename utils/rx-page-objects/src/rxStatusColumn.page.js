@@ -1,5 +1,5 @@
 var Page = require('astrolabe').Page;
-var Tooltip = require('./tooltip.page').Tooltip;
+var rxTooltip = require('./rxTooltip.page').rxTooltip;
 
 var classNameToStatus = function (iconClassName) {
     iconClassName = iconClassName.replace(/fa fa-lg/, '').trim();
@@ -140,7 +140,7 @@ var rxStatusColumn = {
     /**
      * @instance
      * @description Will appear on hover. Exposes the functions contained within {@link rxStatusColumn.tooltip}.
-     * @type {Tooltip}
+     * @type {rxTooltip}
      */
     tooltip: {
         get: function () {
@@ -148,7 +148,7 @@ var rxStatusColumn = {
             // Hover over cell element to trigger tooltip addition to DOM
             browser.actions().mouseMove(cellElement.$('i')).perform();
             // Create a new Tooltip with new DOM element as rootElement
-            return new Tooltip(cellElement.$('.tooltip'));
+            return new rxTooltip(cellElement.$('.rxTooltip'));
         }
     }
 

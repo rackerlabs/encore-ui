@@ -1,6 +1,6 @@
 'use strict';
 
-var Tooltip = require('./tooltip.page').Tooltip;
+var rxTooltip = require('./rxTooltip.page').rxTooltip;
 
 /* CSS HIERARCHY
  * ----------------------------------------
@@ -40,13 +40,13 @@ class rxCopy {
 
     /**
      * @description (READ-ONLY)
-     * Tooltip associated with rxCopy element
-     * @type {Tooltip}
+     * rxTooltip associated with rxCopy element
+     * @type {rxTooltip}
      */
-    get tooltip () {
+    get rxTooltip () {
         this._hoverOverAction();
         // instantiate a new Tooltip from the newly added DOM element
-        return new Tooltip(this.rootElement.$('.rxCopy__tooltip'));
+        return new rxTooltip(this.rootElement.$('.rxCopy__tooltip'));
     }//get tooltip()
 
     /**

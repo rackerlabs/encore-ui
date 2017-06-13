@@ -1,0 +1,12 @@
+{
+    "displayName": "rxPosition",
+    "stability": "prototype",
+    "description": "Utilities for rxTooltips element",
+    "api": "service:rxPosition",
+    "keywords": [
+      "position",
+      "rxPosition",
+      "tooltips",
+      "rxtooltips"
+    ]
+}

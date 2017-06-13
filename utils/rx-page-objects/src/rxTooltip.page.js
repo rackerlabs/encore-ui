@@ -2,24 +2,24 @@
 
 /* CSS HIERARCHY
  * ----------------------------------------
- * div.tooltip <-- tooltipElement for constructor
- *   div.tooltip-arrow
- *   div.tooltip-inner
+ * div.rxTooltip <-- tooltipElement for constructor
+ *   div.rxTooltip__arrow
+ *   div.rxTooltip__inner
  */
 
 /**
  * @class
  */
-class Tooltip {
+class rxTooltip {
     /**
      * @param {ElementFinder} tooltipElement
-     * ElementFinder to be transformed into a Tooltip page object
+     * ElementFinder to be transformed into a rxTooltip page object
      */
     constructor (tooltipElement) {
         this.rootElement = tooltipElement;
 
         // Private selectors
-        this.eleInnerText = this.rootElement.$('.tooltip-inner');
+        this.eleInnerText = this.rootElement.$('.rxTooltip__inner');
     }//constructor
 
     /**
@@ -64,6 +64,6 @@ class Tooltip {
     isPresent () {
         return this.rootElement.isPresent();
     }
-}//Tooltip
+}//rxTooltip
 
-exports.Tooltip = Tooltip;
+exports.rxTooltip = rxTooltip;
