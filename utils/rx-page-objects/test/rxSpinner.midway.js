@@ -3,7 +3,7 @@ describe('rxSpinner', function () {
         demoPage.go('#/elements/Spinner');
     });
 
-    it.skip('should show element', function () {
-        expect(encore.rxSpinner.rxSpinnerElement.isDisplayed()).toEqual(true);
+    it('should show element', function () {
+        expect(encore.rxSpinner.rxSpinnerElement.isDisplayed()).to.eventually.eq(true);
     });
 });

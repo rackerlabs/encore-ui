@@ -37,7 +37,7 @@ describe('rxApp', function () {
             expect(rxAppCustom.isExpanded()).to.eventually.be.false;
         });
 
-        it.skip('should expand the navigation', function () {
+        it('should expand the navigation', function () {
             rxAppCustom.expand();
             expect(rxAppCustom.isExpanded()).to.eventually.be.true;
         });

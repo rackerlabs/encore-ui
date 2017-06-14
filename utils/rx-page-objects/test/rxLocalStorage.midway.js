@@ -19,7 +19,7 @@ describe('utilities:rxLocalStorage', function () {
         expect(rxLocalStorage.getItem('anInt')).to.eventually.equal(anInt);
     });
 
-    it.skip('should set and return a float #FRMW-1130', function () {
+    it('should set and return a float #FRMW-1130', function () {
         var aFloat = 42.0000002;
 
         rxLocalStorage.setItem('aFloat', aFloat);

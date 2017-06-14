@@ -9,7 +9,7 @@ exports.rxSpinner = Page.create({
             console.warn(
                 'DEPRECATED: rxSpinner will be removed in rxPageObjects 4.0.0'
             );
-            return element(by.id('rxSpinnerElement'));
+            return $('.rx-spinner');
         }
     }
 });
