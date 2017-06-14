@@ -259,7 +259,7 @@ describe('Pagination', function () {
                 };
                 api.getItems = function () {
                     deferred = $q.defer();
-                    return deferred.promise.catch(_.noop).then(function () {
+                    return deferred.promise.catch(function () {
                         return response;
                     });
                 };
