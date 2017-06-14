@@ -259,7 +259,9 @@ describe('Pagination', function () {
                 };
                 api.getItems = function () {
                     deferred = $q.defer();
-                    return deferred.promise;
+                    return deferred.promise.catch(function () {
+                        return response;
+                    });
                 };
                 sinon.spy(api, 'getItems');
                 pageTracking = rxPageTracker;
@@ -299,7 +301,7 @@ describe('Pagination', function () {
             expect(overlayScope._rxLoadingOverlayVisible).to.be.false;
         });
 
-        it.skip('should show the loading overlay and hide on reject', function () {
+        it('should show the loading overlay and hide on reject', function () {
             // click second page link
             item = items.filter('.pagination-page').eq(1);
             link = item.find('a').eq(0);
