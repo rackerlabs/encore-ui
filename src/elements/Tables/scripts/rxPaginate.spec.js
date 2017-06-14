@@ -1,4 +1,4 @@
-describe('Pagination', function () {
+describe.only('Pagination', function () {
     var originalItems = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
         mockPageTracker = {
             itemsPerPage: 3,
@@ -259,7 +259,9 @@ describe('Pagination', function () {
                 };
                 api.getItems = function () {
                     deferred = $q.defer();
-                    return deferred.promise;
+                    return deferred.promise.catch(_.noop).then(function () {
+                        return response;
+                    });
                 };
                 sinon.spy(api, 'getItems');
                 pageTracking = rxPageTracker;
@@ -299,7 +301,7 @@ describe('Pagination', function () {
             expect(overlayScope._rxLoadingOverlayVisible).to.be.false;
         });
 
-        it.skip('should show the loading overlay and hide on reject', function () {
+        it('should show the loading overlay and hide on reject', function () {
             // click second page link
             item = items.filter('.pagination-page').eq(1);
             link = item.find('a').eq(0);
