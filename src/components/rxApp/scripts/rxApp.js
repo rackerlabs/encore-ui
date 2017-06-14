@@ -21,8 +21,8 @@ angular.module('encore.ui.rxApp')
  * <rx-app site-title="Custom Title"></rx-app>
  * </pre>
  */
-.directive('rxApp', function (encoreRoutes, rxAppRoutes, hotkeys,
-                              rxEnvironment, routesCdnPath, rxSession, $window, suppressDeprecationWarnings) {
+.directive('rxApp', function (encoreRoutes, rxAppRoutes, rxEnvironment,
+                              routesCdnPath, rxSession, $window, suppressDeprecationWarnings) {
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: rxApp will be removed in EncoreUI 4.0.0'
@@ -94,16 +94,6 @@ angular.module('encore.ui.rxApp')
 
             // default hideFeedback to false
             scope.hideFeedback = scope.hideFeedback ? true : false;
-
-            if (scope.collapsibleNav) {
-                hotkeys.add({
-                    combo: 'h',
-                    description: 'Show/hide the main menu',
-                    callback: function () {
-                        scope.collapsedNav = !scope.collapsedNav;
-                    }
-                });
-            }
         }
     };
 });
