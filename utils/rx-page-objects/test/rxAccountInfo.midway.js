@@ -26,6 +26,10 @@ describe('elements:rxAccountInfo', function () {
         expect(rxAccountInfo.accessPolicy).to.eventually.equal('Full');
     });
 
+    it('should show the account collection status', function () {
+        expect(rxAccountInfo.collectionsStatus).to.eventually.equal('CURRENT');
+    });
+
     describe('badges', function () {
         var badgeNames = ['Creative Commons', 'Attribution', 'Non-Commercial', 'Public Domain'];
 
