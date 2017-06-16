@@ -1,7 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
  * @deprecated
- * Please use rxTokenInterceptor instead. This item will be removed on the 4.0.0 release.
+ * Please use rxTokenInterceptor instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:TokenInterceptor
  * @description
@@ -14,7 +14,7 @@ angular.module('encore.ui.utilities')
         if (!suppressDeprecationWarnings) {
             console.warn (
                 'DEPRECATED: TokenInterceptor - Please use rxTokenInterceptor. ' +
-                'TokenInterceptor will be removed in EncoreUI 4.0.0'
+                'TokenInterceptor will be removed in a future release of EncoreUI.'
             );
         }
         var url = $document[0].createElement('a');

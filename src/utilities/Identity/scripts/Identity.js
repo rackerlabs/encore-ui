@@ -1,7 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
  * @deprecated
- * Please use rxIdentity instead. This item will be removed on the 4.0.0 release.
+ * Please use rxIdentity instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:Identity
  * @requires utilities.service:rxIdentity
@@ -10,7 +10,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn (
             'DEPRECATED: Identity - Please use rxIdentity.' +
-            'Identity will be removed in EncoreUI 4.0.0'
+            'Identity will be removed in a future release of EncoreUI'
         );
     }
     return rxIdentity;

@@ -1,6 +1,6 @@
 angular.module('encore.ui.utilities')
 /**
- * @deprecated This service will be removed in EncoreUI 4.0.0
+ * @deprecated This service will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:StatusUtil
  * @description
@@ -17,7 +17,7 @@ angular.module('encore.ui.utilities')
 .service('StatusUtil', function ($route, $rootScope, rxStatus, suppressDeprecationWarnings) {
     if (!suppressDeprecationWarnings) {
         console.warn(
-            'DEPRECATED: StatusUtil will be removed in EncoreUI 4.0.0'
+            'DEPRECATED: StatusUtil will be removed in a future release of EncoreUI.'
         );
     }
     return {

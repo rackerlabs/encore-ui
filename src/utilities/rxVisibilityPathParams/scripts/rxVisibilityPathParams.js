@@ -1,10 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
- * @deprecated This item will be removed in EncoreUI 4.0.0
  * @ngdoc service
  * @name utilities.service:rxVisibilityPathParams
- * @deprecated
- * This service is deprecated and will be removed in EncoreUI 4.0.0
  * @description
  * Returns an object with `name` and `method` params that can
  * be passed to
@@ -19,13 +16,7 @@ angular.module('encore.ui.utilities')
  * visibility: [ 'rxPathParams', { param: 'userName' } ]
  * </pre>
  */
-.factory('rxVisibilityPathParams', function ($routeParams, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxVisibilityPathParams will be removed in EncoreUI 4.0.0'
-        );
-    }
-
+.factory('rxVisibilityPathParams', function ($routeParams) {
     var pathParams = {
         name: 'rxPathParams',
         method: function (scope, args) {

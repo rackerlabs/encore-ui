@@ -4,7 +4,7 @@ var rxOptionTable = require('./rxOptionTable.page').rxOptionTable;
 /**
  * @description rxOptionTable exercises.
  * @exports exercise/rxOptionTable
- * @deprecated rxOptionTable will be removed in rxPageObjects 4.0.0
+ * @deprecated rxOptionTable will be removed in a future release of rxPageObjects.
  * @param {Object} [options] - Test options. Used to build valid tests.
  * @param {rxOptionTable} [options.instance={@link rxOptionTable.initialize}] - Component to exercise.
  * @param {string} [options.visible=true] - Determines if the option table is visible
@@ -23,7 +23,7 @@ exports.rxOptionTable = function (options) {
 
     return function () {
         console.warn(
-            'DEPRECATED: rxOptionTable will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxOptionTable will be removed in a future release of rxPageObjects.'
         );
         var component;
 

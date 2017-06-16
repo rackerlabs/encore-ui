@@ -2,7 +2,7 @@ var Page = require('astrolabe').Page;
 
 /**
  * @namespace
- * @deprecated rxInfoPanel will be removed in rxPageObjects 4.0.0
+ * @deprecated rxInfoPanel will be removed in a future release of rxPageObjects.
  */
 var rxInfoPanel = {
     /**
@@ -46,13 +46,13 @@ exports.rxInfoPanel = {
     /**
      * @function
      * @memberof rxInfoPanel
-     * @deprecated rxInfoPanel will be removed in rxPageObjects 4.0.0
+     * @deprecated rxInfoPanel will be removed in a future release of rxPageObjects.
      * @param {ElementFinder} rxInfoPanelElement - The ElementFinder to be turned into an rxInfoPanel page object.
      * @returns {rxInfoPanel}
      */
     initialize: function (rxInfoPanelElement) {
         console.warn(
-            'DEPRECATED: rxInfoPanel will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxInfoPanel will be removed in a future release of rxPageObjects.'
         );
         if (rxInfoPanelElement === undefined) {
             rxInfoPanelElement = $('rx-info-panel');

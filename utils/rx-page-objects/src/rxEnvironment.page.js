@@ -4,7 +4,7 @@ var _ = require('lodash');
  * @namespace
  * @description Utilities for getting the current or original environment. Can compare either to a list of default
  * environment names, or custom ones of your choosing.
- * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+ * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
  */
 exports.rxEnvironment = {
     /**
@@ -12,7 +12,7 @@ exports.rxEnvironment = {
      * @description The current environment the user sees. The default is set to something simple and reasonable,
      * but should you find a need to supply your own environments, be sure to have `environments` defined in
      * your protractor conf's params section.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @returns {String}
      * @example
      * browser.get('localhost:9000/home');
@@ -24,7 +24,7 @@ exports.rxEnvironment = {
      */
     current: function () {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         var component = this;
         return browser.getCurrentUrl().then(function (url) {
@@ -36,7 +36,7 @@ exports.rxEnvironment = {
      * @function
      * @description The original environment, as defined in the current protractor conf file.
      * Returns a promise to keep the usage consistent with {@link rxEnvironment.current}.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @example
      * browser.get('localhost:9000/home');
      * expect(encore.rxEnvironment.original()).to.eventually.equal('localhost');
@@ -45,7 +45,7 @@ exports.rxEnvironment = {
      */
     original: function () {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         return protractor.promise.fulfilled(this.compare(browser.baseUrl));
     },
@@ -63,7 +63,7 @@ exports.rxEnvironment = {
      */
     compare: function (url) {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         return _.find(this.environments, function findEnvironment (envName, env) {
             if (_.includes(url, env)) {
@@ -77,7 +77,7 @@ exports.rxEnvironment = {
      * @description The default environments used in nearly all encore applications. You can provide your own
      * environments by setting your own in your protractor configuration file as `browser.params.environments`.
      * This object clones the environments found there before filling in any missing entries with reasonable defaults.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @property {String} localhost - 'localhost'
      * @property {String} staging - 'staging'
      * @property {String} preprod - 'preprod'
@@ -99,7 +99,7 @@ exports.rxEnvironment = {
     /**
      * @function
      * @description Whether or not the current environment is in a localhost environment.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @param {Object} [options] - Named arguments.
      * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
      * environment when comparing, instead it will compare it to `protractor.baseUrl`.
@@ -107,7 +107,7 @@ exports.rxEnvironment = {
      */
     isLocalhost: function (options) {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         return this.confirmEnvironment(options, 'localhost');
     },
@@ -115,7 +115,7 @@ exports.rxEnvironment = {
     /**
      * @function
      * @description Whether or not the current environment is in a staging environment.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @param {Object} [options] - Named arguments.
      * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
      * environment when comparing, instead it will compare it to `protractor.baseUrl`.
@@ -123,7 +123,7 @@ exports.rxEnvironment = {
      */
     isStaging: function (options) {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         return this.confirmEnvironment(options, 'staging');
     },
@@ -131,7 +131,7 @@ exports.rxEnvironment = {
     /**
      * @function
      * @description Whether or not the current environment is in a preproduction environment.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @param {Object} [options] - Named arguments.
      * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
      * environment when comparing, instead it will compare it to `protractor.baseUrl`.
@@ -139,7 +139,7 @@ exports.rxEnvironment = {
      */
     isPreprod: function (options) {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         return this.confirmEnvironment(options, 'preprod');
     },
@@ -147,7 +147,7 @@ exports.rxEnvironment = {
     /**
      * @function
      * @description Whether or not the current environment is in a production environment.
-     * @deprecated rxEnvironment will be removed in rxPageObjects 4.0.0
+     * @deprecated rxEnvironment will be removed in a future release of rxPageObjects.
      * @param {Object} [options] - Named arguments.
      * @param {Boolean} [options.useBaseUrl=false] - Set this to `true` to not use the browser's current
      * environment when comparing, instead it will compare it to `protractor.baseUrl`.
@@ -155,7 +155,7 @@ exports.rxEnvironment = {
      */
     isProd: function (options) {
         console.warn(
-            'DEPRECATED: rxEnvironment will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxEnvironment will be removed in a future release of rxPageObjects.'
         );
         return this.confirmEnvironment(options, 'production');
     },

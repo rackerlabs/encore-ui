@@ -2,8 +2,6 @@ angular.module('encore.ui.utilities')
 /**
  * @ngdoc service
  * @name utilities.service:routesCdnPath
- * @deprecated
- * This service is deprecated and will be removed in EncoreUI 4.0.0
  * @description
  * `routesCdnPath` is configured as a `.provider`. This is to allow users to override the URL used when in a
  * local/staging environment.
@@ -32,13 +30,7 @@ angular.module('encore.ui.utilities')
 .provider('routesCdnPath', function () {
     this.customURL = null;
 
-    this.$get = function (suppressDeprecationWarnings) {
-        if (!suppressDeprecationWarnings) {
-            console.warn(
-                'DEPRECATED: routesCdnPath will be removed in EncoreUI 4.0.0'
-            );
-        }
-
+    this.$get = function () {
         var staging = this.customURL ||
             'https://5593626d69acc4cdb66a-521ce2b7cdb9308893eabb7915d88c0c.ssl.cf1.rackcdn.com/encoreNav.json';
 

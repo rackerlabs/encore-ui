@@ -1,6 +1,5 @@
 angular.module('encore.ui.rxApp')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
  * @ngdoc directive
  * @name rxApp.directive:rxAppNavItem
  * @restrict E
@@ -14,13 +13,7 @@ angular.module('encore.ui.rxApp')
  * <rx-app-nav-item ng-repeat="item in items"></rx-app-nav-item>
  * </pre>
  */
-.directive('rxAppNavItem', function ($compile, $location, $route, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxAppNavItem will be removed in EncoreUI 4.0.0'
-        );
-    }
-
+.directive('rxAppNavItem', function ($compile, $location, $route) {
     var linker = function (scope, element) {
         var injectContent = function (selector, content) {
             var el = element[0].querySelector(selector);

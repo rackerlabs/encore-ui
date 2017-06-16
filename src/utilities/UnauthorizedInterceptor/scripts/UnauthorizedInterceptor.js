@@ -1,7 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
  * @deprecated
- * Please use rxUnauthorizedInterceptor instead. This item will be removed on the 4.0.0 release.
+ * Please use rxUnauthorizedInterceptor instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:UnauthorizedInterceptor
  * @requires utilities.service:rxUnauthorizedInterceptor
@@ -10,7 +10,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn (
             'DEPRECATED: UnauthorizedInterceptor - Please use rxUnauthorizedInterceptor. ' +
-            'UnauthorizedInterceptor will be removed in EncoreUI 4.0.0'
+            'UnauthorizedInterceptor will be removed in a future release of EncoreUI.'
         );
     }
     return rxUnauthorizedInterceptor;

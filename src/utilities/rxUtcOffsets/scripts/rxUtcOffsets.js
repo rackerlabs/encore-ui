@@ -54,7 +54,7 @@ angular.module('encore.ui.utilities')
 
 /**
  * @deprecated
- * Please use rxUtcOffsets instead. This item will be removed on the 4.0.0 release.
+ * Please use rxUtcOffsets instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc parameters
  * @name utilities.constant:UtcOffsets
  * @requires utilities.constant:rxUtcOffsets
@@ -63,7 +63,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn (
             'DEPRECATED: UtcOffsets - Please use rxUtcOffsets. ' +
-            'UtcOffsets will be removed in EncoreUI 4.0.0'
+            'UtcOffsets will be removed in a future release of EncoreUI.'
         );
     }
     return rxUtcOffsets;

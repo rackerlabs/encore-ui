@@ -182,7 +182,7 @@ angular.module('encore.ui.utilities')
 
 /**
  * @deprecated
- * Please use rxSelectFilter instead. This item will be removed on the 4.0.0 release.
+ * Please use rxSelectFilter instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:SelectFilter
  * @requires utilities.service:rxSelectFilter
@@ -191,7 +191,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: SelectFilter - Please use rxSelectFilter. ' +
-            'SelectFilter will be removed in EncoreUI 4.0.0'
+            'SelectFilter will be removed in a future release of EncoreUI.'
         );
     }
     return rxSelectFilter;

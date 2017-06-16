@@ -1,7 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
  * @deprecated
- * Please use rxSession instead. This item will be removed on the 4.0.0 release.
+ * Please use rxSession instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:Session
  * @requires utilities.service:rxSession
@@ -10,7 +10,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: Session - Please use rxSession.' +
-            'Session will be removed in EncoreUI 4.0.0'
+            'Session will be removed in a future release of EncoreUI.'
         );
     }
     return rxSession;

@@ -1,6 +1,5 @@
 angular.module('encore.ui.utilities')
 /**
- * @deprecated This item will be removed in EncoreUI 4.0.0
  * @ngdoc service
  * @name utilities.service:rxStatusTags
  * @description
@@ -31,12 +30,7 @@ angular.module('encore.ui.utilities')
         };
     };
 
-    this.$get = function (suppressDeprecationWarnings) {
-        if (!suppressDeprecationWarnings) {
-            console.warn(
-                'DEPRECATED: rxStatusTags will be removed in EncoreUI 4.0.0'
-            );
-        }
+    this.$get = function () {
         return {
             // Given a status tag key, return the `text` and `class` specified
             // for the tag

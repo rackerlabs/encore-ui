@@ -1,18 +1,11 @@
 angular.module('encore.ui.rxApp')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
  * @ngdoc directive
  * @name rxApp.directive:rxBillingSearch
  * @restrict E
  * @description [TBD]
  */
-.directive('rxBillingSearch', function ($location, $window, $injector, encoreRoutes, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxBillingSearch will be removed in EncoreUI 4.0.0'
-        );
-    }
-
+.directive('rxBillingSearch', function ($location, $window, $injector, encoreRoutes) {
     return {
         templateUrl: 'templates/rxBillingSearch.html',
         restrict: 'E',

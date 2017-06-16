@@ -1,6 +1,6 @@
 angular.module('encore.ui.utilities')
 /**
- * @deprecated This item will be removed in EncoreUI 4.0.0
+ * @deprecated This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:rxBreadcrumbsSvc
  * @description
@@ -10,7 +10,7 @@ angular.module('encore.ui.utilities')
 .factory('rxBreadcrumbsSvc', function (suppressDeprecationWarnings) {
     if (!suppressDeprecationWarnings) {
         console.warn(
-            'DEPRECATED: rxBreadcrumbsSvc will be removed in EncoreUI 4.0.0'
+            'DEPRECATED: rxBreadcrumbsSvc will be removed in a future release of EncoreUI.'
         );
     }
 
