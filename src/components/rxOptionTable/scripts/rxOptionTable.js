@@ -1,6 +1,6 @@
 angular.module('encore.ui.rxOptionTable')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
+ * @deprecated This directive will be removed in a future release of EncoreUI.
  * @ngdoc directive
  * @name rxOptionTable.directive:rxOptionTable
  * @restrict E
@@ -34,7 +34,7 @@ angular.module('encore.ui.rxOptionTable')
  * Each object may include the following properties.
  * @param {String} columns.label Column display value
  * @param {String} columns.key Object key used to display data from the data object
- * @param {String=} columns.selectedLabel (optional) Label to display alongside preseleted-values. 
+ * @param {String=} columns.selectedLabel (optional) Label to display alongside preseleted-values.
  * Expressions are allowed; see demonstration samples.
  *
  * Example:
@@ -61,7 +61,7 @@ angular.module('encore.ui.rxOptionTable')
 .directive('rxOptionTable', function ($interpolate, suppressDeprecationWarnings) {
     if (!suppressDeprecationWarnings) {
         console.warn(
-            'DEPRECATED: rxOptionTable will be removed in EncoreUI 4.0.0'
+            'DEPRECATED: rxOptionTable will be removed in a future release of EncoreUI.'
         );
     }
     return {

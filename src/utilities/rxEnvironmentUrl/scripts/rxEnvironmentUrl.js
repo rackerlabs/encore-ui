@@ -1,6 +1,6 @@
 angular.module('encore.ui.utilities')
 /**
- * @deprecated rxEnvironmentUrl will be removed in EncoreUI 4.0.0
+ * @deprecated rxEnvironmentUrl will be removed in a future release of EncoreUI.
  * @ngdoc filter
  * @name utilities.filter:rxEnvironmentUrl
  * @description
@@ -20,7 +20,7 @@ angular.module('encore.ui.utilities')
     return function (details) {
         if (!suppressDeprecationWarnings) {
             console.warn(
-                'DEPRECATED: rxEnvironmentUrl will be removed in EncoreUI 4.0.0'
+                'DEPRECATED: rxEnvironmentUrl will be removed in a future release of EncoreUI.'
             );
         }
         var environment = rxEnvironment.get();

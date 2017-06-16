@@ -2,7 +2,7 @@ angular.module('encore.ui.utilities')
 /**
  * @deprecated
  * Please use rxIdentity or rxSession instead.
- * This item will be removed on the 4.0.0 release.
+ * This item will be removed in a future release of EncoreUI.
  *
  * @ngdoc service
  * @name utilities.service:rxAuth
@@ -15,7 +15,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn (
             'DEPRECATED: rxAuth - Please use rxIdentity or rxSession. ' +
-            'rxAuth will be removed in EncoreUI 4.0.0'
+            'rxAuth will be removed in a future release of EncoreUI.'
         );
     }
     var svc = {};

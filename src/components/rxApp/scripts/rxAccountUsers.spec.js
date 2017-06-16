@@ -40,7 +40,6 @@ describe('encore.ui.rxApp', function () {
             module(function ($provide) {
                 provide = $provide;
             });
-
             module({ suppressDeprecationWarnings: true });
 
             inject(function ($rootScope, $compile, $templateCache, _$location_, _$route_, $q, encoreRoutes) {
@@ -131,14 +130,14 @@ describe('encore.ui.rxApp', function () {
 
             afterEach(function () {
                 setCanvasURLSpy.restore();
-            }); 
+            });
 
             it('should use oriLocationService on user change', function () {
                 userSelect = helpers.createDirective(angular.element(validTemplate), compile, scope);
                 scope.switchUser('testaccountuser');
 
                 expect(setCanvasURLSpy).to.have.been.calledWith('/server/cloud/323676/testaccountuser');
-                
+
             });
         });
 

@@ -1,6 +1,5 @@
 angular.module('encore.ui.rxApp')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
  * @ngdoc directive
  * @name rxApp.directive:rxPage
  * @restrict E
@@ -129,13 +128,7 @@ angular.module('encore.ui.rxApp')
  * <rx-page title="'Page Title'"></rx-page>
  * </pre>
  */
-.directive('rxPage', function (suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxPage will be removed in EncoreUI 4.0.0'
-        );
-    }
-
+.directive('rxPage', function () {
     return {
         restrict: 'E',
         transclude: true,

@@ -4,6 +4,7 @@ describe('service:rxEnvironment', function () {
     beforeEach(function () {
         // load module
         module('encore.ui.utilities');
+        module({ suppressDeprecationWarnings: true });
 
         // Inject in angular constructs
         inject(function ($location, $rootScope, rxEnvironment, $log) {

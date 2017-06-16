@@ -1,6 +1,5 @@
 angular.module('encore.ui.rxApp')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
  * @ngdoc directive
  * @name rxApp.directive:rxApp
  * @restrict E
@@ -22,12 +21,7 @@ angular.module('encore.ui.rxApp')
  * </pre>
  */
 .directive('rxApp', function (encoreRoutes, rxAppRoutes, hotkeys,
-                              rxEnvironment, routesCdnPath, rxSession, $window, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxApp will be removed in EncoreUI 4.0.0'
-        );
-    }
+                              rxEnvironment, routesCdnPath, rxSession, $window) {
     return {
         restrict: 'E',
         transclude: true,

@@ -9,7 +9,7 @@ angular.module('encore.ui.utilities')
 
 /**
  * @deprecated
- * Please use rxFeedbackApi instead. This item will be removed on the 4.0.0 release.
+ * Please use rxFeedbackApi instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc parameters
  * @name utilities.constant:feedbackApi
  * @requires utilities.constant:rxFeedbackApi
@@ -18,7 +18,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn (
             'DEPRECATED: feedbackApi - Please use rxFeedbackApi. ' +
-            'feedbackApi will be removed in EncoreUI 4.0.0'
+            'feedbackApi will be removed in a future release of EncoreUI.'
         );
     }
     return rxFeedbackApi;

@@ -48,7 +48,7 @@
 
     /**
      * @deprecated
-     * Use rxPaginate instead. This filter will be removed on the 4.0.0 release.
+     * Use rxPaginate instead. This filter will be removed in a future release of EncoreUI.
      * @ngdoc filter
      * @name utilities.filter:Paginate
      * @requires utilities.filter:rxPaginate
@@ -58,9 +58,9 @@
             if (!suppressDeprecationWarnings) {
                 console.warn(
                     'DEPRECATED: Paginate - Please use rxPaginate. ' +
-                    'Paginate will be removed in EncoreUI 4.0.0'
+                    'Paginate will be removed in a future release of EncoreUI.'
                 );
-            }  
+            }
             return rxPaginateFilter(rxPageTracker, rxPaginateUtils)(items, pager);
         };
     }//PaginateFilter

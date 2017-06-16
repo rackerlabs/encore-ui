@@ -1,6 +1,6 @@
 angular.module('encore.ui.elements')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
+ * @deprecated This directive will be removed in a future release of EncoreUI.
  * @ngdoc directive
  * @name elements.directive:rxAccountInfo
  * @restrict E
@@ -38,7 +38,7 @@ angular.module('encore.ui.elements')
     AccountStatusGroup, $interpolate, suppressDeprecationWarnings) {
     if (!suppressDeprecationWarnings) {
         console.warn(
-            'DEPRECATED: rxAccountInfo will be removed in EncoreUI 4.0.0'
+            'DEPRECATED: rxAccountInfo will be removed in a future release of EncoreUI.'
         );
     }
 

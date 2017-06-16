@@ -2,7 +2,7 @@ var Page = require('astrolabe').Page;
 
 /**
  * @namespace
- * @deprecated rxApp will be removed in rxPageObjects 4.0.0
+ * @deprecated rxApp will be removed in a future release of rxPageObjects.
  */
 var rxApp = {
     cssCollapseButtonSelector: {
@@ -122,14 +122,14 @@ exports.rxApp = {
      * @function
      * @memberof rxApp
      * @description Creates a page object from an `rx-app` DOM element.
-     * @deprecated rxApp will be removed in rxPageObjects 4.0.0
+     * @deprecated rxApp will be removed in a future release of rxPageObjects.
      * @param {ElementFinder} [rxFeedbackElement=$('rx-app')] -
      * ElementFinder to be transformed into an {@link rxApp} object.
      * @returns {rxApp}
      */
     initialize: function (rxAppElement) {
         console.warn(
-            'DEPRECATED: rxApp will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxApp will be removed in a future release of rxPageObjects.'
         );
         if (rxAppElement === undefined) {
             rxAppElement = $('rx-app');

@@ -48,7 +48,7 @@
 
     /**
      * @deprecated
-     * Use rxPager instead. This filter will be removed on the 4.0.0 release.
+     * Use rxPager instead. This filter will be removed in a future release of EncoreUI.
      * @ngdoc filter
      * @name utilities.filter:Page
      * @requires utilities.filter:rxPager
@@ -58,7 +58,7 @@
             if (!suppressDeprecationWarnings) {
                 console.warn(
                     'DEPRECATED: Page - Please use rxPager. ' +
-                    'Page will be removed in EncoreUI 4.0.0'
+                    'Page will be removed in a future release of EncoreUI.'
                 );
             }
             return rxPagerFilter()(pager);

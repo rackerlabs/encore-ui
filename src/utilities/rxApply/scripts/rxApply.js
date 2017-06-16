@@ -27,7 +27,7 @@
 
     /**
      * @deprecated
-     * Use rxApply instead. This filter will be removed on the 4.0.0 release.
+     * Use rxApply instead. This filter will be removed in a future release of EncoreUI.
      * @ngdoc filter
      * @name utilities.filter:Apply
      * @requires utilities.filter:rxApply
@@ -37,7 +37,7 @@
             if (!suppressDeprecationWarnings) {
                 console.warn(
                     'DEPRECATED: Apply - Please use rxApply. ' +
-                    'Apply will be removed in EncoreUI 4.0.0'
+                    'Apply will be removed in a future release of EncoreUI.'
                 );
             }
             return rxApplyFilter()(list, filter);

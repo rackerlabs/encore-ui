@@ -1,10 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
- * @deprecated This item will be removed in EncoreUI 4.0.0
  * @ngdoc service
  * @name utilities.service:rxVisibility
- * @deprecated
- * This service is deprecated and will be removed in EncoreUI 4.0.0
  * @description
  * Provides an interface for adding new `visibility` methods for nav menus.  Methods added via `addMethod` should
  * have a `function (scope, args)` interface.
@@ -19,13 +16,7 @@ angular.module('encore.ui.utilities')
  * function (scope, args) {}
  * </pre>
  */
-.factory('rxVisibility', function (suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxVisibility will be removed in EncoreUI 4.0.0'
-        );
-    }
-
+.factory('rxVisibility', function () {
     var methods = {};
 
     var addMethod = function (methodName, method) {

@@ -38,7 +38,7 @@
 
     /**
      * @deprecated
-     * Please use rxTitleize instead. This filter will be removed in EncoreUI 4.0.0'
+     * Please use rxTitleize instead. This filter will be removed in a future release of EncoreUI.'
      * @ngdoc filter
      * @name utilities.filter:titleize
      * @requires utilities.filter:rxTitleize
@@ -48,7 +48,7 @@
             if (!suppressDeprecationWarnings) {
                 console.warn(
                     'DEPRECATED: titleize - Please use rxTitleize. ' +
-                    'titleize will be removed in EncoreUI 4.0.0'
+                    'titleize will be removed in a future release of EncoreUI.'
                 );
             }
             return rxTitleizeFilter()(inputString);

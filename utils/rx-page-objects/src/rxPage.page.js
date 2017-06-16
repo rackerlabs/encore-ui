@@ -2,7 +2,7 @@ var Page = require('astrolabe').Page;
 
 /**
  * @namespace
- * @deprecated rxPage will be removed in rxPageObjects 4.0.0
+ * @deprecated rxPage will be removed in a future release of rxPageObjects.
  */
 var rxPage = {
     lblTitle: {
@@ -66,14 +66,14 @@ exports.rxPage = {
      * @function
      * @memberof rxPage
      * @description Creates a page object from an `rx-page` DOM element.
-     * @deprecated rxPage will be removed in rxPageObjects 4.0.0
+     * @deprecated rxPage will be removed in a future release of rxPageObjects.
      * @param {ElementFinder} [rxFeedbackElement=$('rx-page')] -
      * ElementFinder to be transformed into an {@link rxPage} object.
      * @returns {rxPage}
      */
     initialize: function (rxPageElement) {
         console.warn(
-            'DEPRECATED: rxPage will be removed in rxPageObjects 4.0.0'
+            'DEPRECATED: rxPage will be removed in a future release of rxPageObjects.'
         );
         if (rxPageElement === undefined) {
             rxPageElement = $('rx-page');

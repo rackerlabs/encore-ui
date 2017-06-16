@@ -106,7 +106,7 @@ angular.module('encore.ui.utilities')
         }
 
         // run the href through rxEnvironmentUrl in case it's defined as such
-        // remove in EncoreUI 4.0.0
+        // TODO: remove in a future release
         url = rxEnvironmentUrlFilter(url);
 
         if ($route.current) {
@@ -132,7 +132,7 @@ angular.module('encore.ui.utilities')
 })
 /**
  * @deprecated
- * Please use rxUrlUtils instead. This item will be removed on the 4.0.0 release.
+ * Please use rxUrlUtils instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:urlUtils
  * @requires utilities.service:rxUrlUtils
@@ -141,7 +141,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: urlUtils - Please use rxUrlUtils. ' +
-            'urlUtils will be removed in EncoreUI 4.0.0'
+            'urlUtils will be removed in a future release of EncoreUI.'
         );
     }
     return rxUrlUtils;

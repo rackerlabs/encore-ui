@@ -72,7 +72,7 @@ angular.module('encore.ui.utilities')
 
 /**
  * @deprecated
- * Please use rxNotifyProperties instead. This item will be removed on the 4.0.0 release.
+ * Please use rxNotifyProperties instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:NotifyProperties
  * @requires utilities.service:rxNotifyProperties
@@ -81,7 +81,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: NotifyProperties - Please use rxNotifyProperties. ' +
-            'NotifyProperties will be removed in EncoreUI 4.0.0'
+            'NotifyProperties will be removed in a future release of EncoreUI.'
         );
     }
     return rxNotifyProperties;

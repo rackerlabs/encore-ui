@@ -1,6 +1,6 @@
 angular.module('encore.ui.elements')
 /**
- * @deprecated This directive will be removed in EncoreUI 4.0.0
+ * @deprecated This directive will be removed in a future release of EncoreUI.
  * @ngdoc directive
  * @name elements.directive:rxBreadcrumbs
  * @restrict E
@@ -35,7 +35,7 @@ angular.module('encore.ui.elements')
 .directive('rxBreadcrumbs', function (suppressDeprecationWarnings) {
     if (!suppressDeprecationWarnings) {
         console.warn(
-            'DEPRECATED: rxBreadcrumbs will be removed in EncoreUI 4.0.0'
+            'DEPRECATED: rxBreadcrumbs will be removed in a future release of EncoreUI.'
         );
     }
 

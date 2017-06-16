@@ -55,7 +55,7 @@ angular.module('encore.ui.utilities')
 
 /**
  * @deprecated
- * Please use rxErrorFormatter instead. This item will be removed on the 4.0.0 release.
+ * Please use rxErrorFormatter instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:ErrorFormatter
  * @requires utilities.service:rxErrorFormatter
@@ -64,7 +64,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: ErrorFormatter - Please use rxErrorFormatter. ' +
-            'ErrorFormatter will be removed in EncoreUI 4.0.0'
+            'ErrorFormatter will be removed in a future release of EncoreUI.'
         );
     }
     return rxErrorFormatter;

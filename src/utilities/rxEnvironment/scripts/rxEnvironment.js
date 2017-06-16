@@ -84,7 +84,7 @@ angular.module('encore.ui.utilities')
  * with overlapping environments, and could potentially generate the wrong URL.
  *
  * ## A Warning About `rxEnvironment.get().name` ##
- * ## DEPRECATED: `rxEnvironment.get()` will be removed in EncoreUI 4.0.0 ##
+ * ## DEPRECATED: `rxEnvironment.get()` will be removed in a future release of EncoreUI ##
  * You might find older Encore code that uses `rxEnvironment.get().name` to get
  * the name of the current environment. This pattern should be avoided,
  * specifically because of the overlapping environment issue discussed above.
@@ -195,7 +195,7 @@ angular.module('encore.ui.utilities')
     this.get = function (href) {
         if (!suppressDeprecationWarnings) {
             console.warn (
-                'DEPRECATED: rxEnvironment.get() will be removed in EncoreUI 4.0.0'
+                'DEPRECATED: rxEnvironment.get() will be removed in a future release of EncoreUI'
             );
         }
 
@@ -289,7 +289,7 @@ angular.module('encore.ui.utilities')
 })
 /**
  * @deprecated
- * Please use rxEnvironment instead. This item will be removed on the 4.0.0 release.
+ * Please use rxEnvironment instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc service
  * @name utilities.service:Environment
  * @requires utilities.service:rxEnvironment
@@ -298,7 +298,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn(
             'DEPRECATED: Environment - Please use rxEnvironment. ' +
-            'Environment will be removed in EncoreUI 4.0.0'
+            'Environment will be removed in a future release of EncoreUI.'
         );
     }
     return rxEnvironment;

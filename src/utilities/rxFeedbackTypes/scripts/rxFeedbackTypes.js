@@ -31,7 +31,7 @@ angular.module('encore.ui.utilities')
 
 /**
  * @deprecated
- * Please use rxFeedbackTypes instead. This item will be removed on the 4.0.0 release.
+ * Please use rxFeedbackTypes instead. This item will be removed in a future release of EncoreUI.
  * @ngdoc parameters
  * @name utilities.value:feedbackTypes
  * @requires utilities.value:rxFeedbackTypes
@@ -40,7 +40,7 @@ angular.module('encore.ui.utilities')
     if (!suppressDeprecationWarnings) {
         console.warn (
             'DEPRECATED: feedbackTypes - Please use rxFeedbackTypes. ' +
-            'feedbackTypes will be removed in EncoreUI 4.0.0'
+            'feedbackTypes will be removed in a future release of EncoreUI.'
         );
     }
     return rxFeedbackTypes;
