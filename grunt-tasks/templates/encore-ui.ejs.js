@@ -1,5 +1,4 @@
 angular.module('encore.ui', [
-    'ui.bootstrap',
     'encore.ui.tpls',
     'ngMessages',
     <%= _.uniq(config.srcModules).join(',\n    ') %>
