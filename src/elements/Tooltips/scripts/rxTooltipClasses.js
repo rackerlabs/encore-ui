@@ -13,8 +13,8 @@ angular.module('encore.ui.elements')
             // arrow has space during position measure.
             // tooltip.positionTooltip()
             if (scope.placement) {
-                // // There are no top-left etc... classes
-                // // in TWBS, so we need the primary position.
+                // There are no top-left etc... classes
+                // in TWBS, so we need the primary position.
                 var position = $rxPosition.parsePlacement(scope.placement);
                 element.addClass(position[0]);
             }

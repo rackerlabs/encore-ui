@@ -149,14 +149,6 @@ describe('$rxPosition service', function () {
             expect(vpOffset.bottom).to.be.above(-180);
             expect(vpOffset.left).to.eq(-5);
             expect(vpOffset.right).to.be.above(-180);
-
-            //brittle
-            // expect(vpOffset).to.eq({
-            //   top: -5,
-            //   bottom: -162,
-            //   left: -5,
-            //   right: -162
-            // });
         });
     });
 

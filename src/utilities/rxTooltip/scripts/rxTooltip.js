@@ -1,7 +1,7 @@
 angular.module('encore.ui.utilities')
 /**
  * @ngdoc service
- * @name elements.service:rxTooltip
+ * @name utilities.service:$rxTooltip
  * @description
  * Utility service that creates tooltip- and popover-like directives as well as
  * houses global options for them.

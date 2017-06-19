@@ -1,9 +1,8 @@
 {
-    "displayName": "rxTooltips",
+    "displayName": "$rxTooltip",
     "stability": "prototype",
     "description": "Utilities for rxTooltips element",
-    "api": "service:rxTooltips",
+    "api": "service:$rxTooltip",
     "keywords": [
-      "rxTooltips",
     ]
 }

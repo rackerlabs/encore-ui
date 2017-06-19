@@ -2,7 +2,7 @@
 angular.module('encore.ui.utilities')
 /**
  * @ngdoc service
- * @name elements.service:rxPosition
+ * @name utilities.service:$rxPosition
  * @description
  * Element for positioning
  */
