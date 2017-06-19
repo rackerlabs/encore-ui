@@ -12,7 +12,6 @@ angular.module('encore.ui.elements', [
     'encore.ui.utilities',
     'ngSanitize',
     'ngAnimate',
-    'ui.bootstrap',
     'debounce'
 ])
 .run(function ($compile, $templateCache) {
