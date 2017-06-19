@@ -350,13 +350,16 @@ describe('$rxPosition service', function () {
         };
 
         for (var pos in positions) {
-            top = positions[pos][0];
-            left = positions[pos][1];
-            it('should position element on ' + pos, function (){
-                actual = $rxPosition.positionElements({}, new TargetElMock(10, 10), pos);
-                expect(actual).to.bePositionedAt(top, left);
-            });
-        };
+            // This is essentially calling Object.prototype.hasOwnProperty
+            if (_.has(pos, positions)) {
+                top = positions[pos][0];
+                left = positions[pos][1];
+                it('should position element on ' + pos, function (){
+                    actual = $rxPosition.positionElements({}, new TargetElMock(10, 10), pos);
+                    expect(actual).to.bePositionedAt(top, left);
+                });
+            }
+        }
     });
 
     describe('positionElements - append-to-body: true', function () {
@@ -395,13 +398,16 @@ describe('$rxPosition service', function () {
         };
 
         for (var pos in positions) {
-            top = positions[pos][0];
-            left = positions[pos][1];
-            it('should position element on ' + pos, function (){
-                actual = $rxPosition.positionElements({}, new TargetElMock(10, 10), pos, true);
-                expect(actual).to.bePositionedAt(top, left);
-            });
-        };
+            // This is essentially calling Object.prototype.hasOwnProperty
+            if (_.has(pos, positions)) {
+                top = positions[pos][0];
+                left = positions[pos][1];
+                it('should position element on ' + pos, function (){
+                    actual = $rxPosition.positionElements({}, new TargetElMock(10, 10), pos, true);
+                    expect(actual).to.bePositionedAt(top, left);
+                });
+            }
+        }
     });
 
     describe('smart positioning', function () {
