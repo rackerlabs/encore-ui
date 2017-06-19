@@ -12,7 +12,6 @@
     "angular-resource": "1.6.4",
     "angular-route": "1.6.4",
     "angular-messages": "1.6.4",
-    "angular-bootstrap": "2.5",
     "lodash": "4.x",
     "moment": "~2.9.0",
     "html2canvas": "~0.4.1",
