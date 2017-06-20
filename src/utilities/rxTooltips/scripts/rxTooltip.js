@@ -66,8 +66,8 @@ angular.module('encore.ui.utilities')
      * TODO support multiple triggers
      */
     this.$get = function ($window, $compile, $timeout, $document, $rxPosition,
-    $interpolate, $rootScope, $parse, $$stackedMap) {
-        var openedTooltips = $$stackedMap.createNew();
+    $interpolate, $rootScope, $parse, rxStackedMap) {
+        var openedTooltips = rxStackedMap.createNew();
         $document.on('keyup', keypressListener);
 
         $rootScope.$on('$destroy', function () {
