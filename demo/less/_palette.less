@@ -9,16 +9,16 @@
   &.red {
     .color {
       &.primary { // aka 500
-        background-color: @red-500;
+        background-color: var(--rx-red-500);
       }
       &.secondary-100 {
-        background-color: @red-100;
+        background-color: var(--rx-red-100);
       }
       &.secondary-700 {
-        background-color: @red-700;
+        background-color: var(--rx-red-700);
       }
       &.accent {
-        background-color: @red-accent;
+        background-color: var(--rx-red-accent);
       }
     }//.color
   }//&.red
@@ -26,19 +26,19 @@
   &.blue {
     .color {
       &.primary {
-        background-color: @blue-700;
+        background-color: var(--rx-blue-700);
       }
       &.secondary-100 {
-        background-color: @blue-100;
+        background-color: var(--rx-blue-100);
       }
       &.secondary-500 {
-        background-color: @blue-500;
+        background-color: var(--rx-blue-500);
       }
       &.secondary-900 {
-        background-color: @blue-900;
+        background-color: var(--rx-blue-900);
       }
       &.accent {
-        background-color: @blue-accent;
+        background-color: var(--rx-blue-accent);
       }
     }//.color
   }//&.blue
@@ -46,16 +46,19 @@
   &.green {
     .color {
       &.primary { // aka 500
-        background-color: @green-500;
+        background-color: var(--rx-green-500);
+      }
+      &.secondary-50 {
+        background-color: var(--rx-green-50);
       }
       &.secondary-100 {
-        background-color: @green-100;
+        background-color: var(--rx-green-100);
       }
       &.secondary-700 {
-        background-color: @green-700;
+        background-color: var(--rx-green-700);
       }
       &.accent {
-        background-color: @green-accent;
+        background-color: var(--rx-green-accent);
       }
     }//.color
   }//&.green
@@ -63,16 +66,16 @@
   &.orange {
     .color {
       &.primary { // aka 500
-        background-color: @orange-500;
+        background-color: var(--rx-orange-500);
       }
       &.secondary-100 {
-        background-color: @orange-100;
+        background-color: var(--rx-orange-100);
       }
       &.secondary-700 {
-        background-color: @orange-700;
+        background-color: var(--rx-orange-700);
       }
       &.accent {
-        background-color: @orange-accent;
+        background-color: var(--rx-orange-accent);
       }
     }//.color
   }//&.orange
@@ -80,16 +83,16 @@
   &.purple {
     .color {
       &.primary { // aka 500
-        background-color: @purple-500;
+        background-color: var(--rx-purple-500);
       }
       &.secondary-100 {
-        background-color: @purple-100;
+        background-color: var(--rx-purple-100);
       }
       &.secondary-700 {
-        background-color: @purple-700;
+        background-color: var(--rx-purple-700);
       }
       &.accent {
-        background-color: @purple-accent;
+        background-color: var(--rx-purple-accent);
       }
     }//.color
   }//&.purple
@@ -97,58 +100,64 @@
   &.gray {
     .color {
       &.shade-0 {
-        background-color: @white;
+        background-color: var(--rx-white);
       }
       &.shade-25 {
-        background-color: @gray-25;
+        background-color: var(--rx-gray-25);
       }
       &.shade-50 {
-        background-color: @gray-50;
+        background-color: var(--rx-gray-50);
       }
       &.shade-100 {
-        background-color: @gray-100;
+        background-color: var(--rx-gray-100);
       }
       &.shade-200 {
-        background-color: @gray-200;
+        background-color: var(--rx-gray-200);
       }
       &.shade-300 {
-        background-color: @gray-300;
+        background-color: var(--rx-gray-300);
       }
       &.shade-400 {
-        background-color: @gray-400;
+        background-color: var(--rx-gray-400);
       }
       &.shade-500 {
-        background-color: @gray-500;
+        background-color: var(--rx-gray-500);
       }
       &.shade-600 {
-        background-color: @gray-600;
+        background-color: var(--rx-gray-600);
       }
       &.shade-700 {
-        background-color: @gray-700;
+        background-color: var(--rx-gray-700);
       }
       &.shade-800 {
-        background-color: @gray-800;
+        background-color: var(--rx-gray-800);
       }
       &.shade-900 {
-        background-color: @gray-900;
+        background-color: var(--rx-gray-900);
       }
       &.shade-950 {
-        background-color: @gray-950;
+        background-color: var(--rx-gray-950);
       }
       &.shade-975 {
-        background-color: @gray-975;
+        background-color: var(--rx-gray-975);
       }
       &.shade-1000 {
-        background-color: @black;
+        background-color: var(--rx-gray-1000);
+      }
+      &.black-a85 {
+        background-color: var(--rx-black-a35);
+      }
+      &.white-a80{
+        background-color: var(--rx-white-a80);
       }
     }//.color
   }//&.gray
 
   .light-text {
-    color: @gray-0;
+    color: var(--rx-gray-0);
   }
   .dark-text {
-    color: @gray-950;
+    color: var(--rx-gray-950);
   }
 
   .color {
@@ -175,7 +184,6 @@
       }
       small {
         display: block;
-        font-family: "Roboto Mono", monospace;
       }
     }
 
@@ -189,8 +197,12 @@
   }//.color
 
   .detail {
-    background-color: @gray-0;
-    border: 1px solid @gray-300;
+    background-color: var(--rx-gray-0);
+    border: 1px solid var(--rx-gray-300);
     padding: 10px;
   }//.detail
 }//.palette
+
+.monospace {
+  font-family: "Roboto Mono", monospace;
+}
