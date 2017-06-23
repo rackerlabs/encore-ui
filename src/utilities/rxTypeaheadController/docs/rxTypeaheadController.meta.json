@@ -1,7 +1,0 @@
-{
-    "displayName": "rxTypeaheadController",
-    "stability": "stable",
-    "description": "Controller for Typeahead.",
-    "api": "controller:rxTypeaheadController",
-    "keywords": []
-}

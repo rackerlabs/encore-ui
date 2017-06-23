@@ -1,9 +1,0 @@
-{
-    "displayName": "rxTypeaheadMatch",
-    "stability": "stable",
-    "description": "Utilities for rxTypeahead element",
-    "api": "directive:rxTypeaheadMatch",
-    "keywords": [
-      "rxTypeahead"
-    ]
-}
