@@ -1,6 +1,7 @@
+angular.module('encore.ui.elements')
 /**
  * @ngdoc overview
- * @name elements.directive:typeahead
+ * @name elements.directive:rxTypeahead
  * @description
  * # typeahead Component
  *
@@ -22,9 +23,17 @@
  * for an example.
  *
  */
-angular.module('encore.ui.elements')
+.directive('rxTypeahead', function () {
+    return {
+        controller: 'rxTypeaheadController',
+        require: ['ngModel', 'rxTypeahead'],
+        link: function (originalScope, element, attrs, ctrls) {
+            ctrls[1].init(ctrls[0]);
+        }
+    };
+})
 .config(function ($provide) {
-    $provide.decorator('uibTypeaheadDirective', function ($delegate, $filter) {
+    $provide.decorator('rxTypeaheadDirective', function ($delegate, $filter) {
         var typeahead = $delegate[0];
         var link = typeahead.link;
         var lowercase = $filter('lowercase');
@@ -34,7 +43,7 @@ angular.module('encore.ui.elements')
                 var ngModelCtrl = ctrls[0];
                 link.apply(this, arguments);
 
-                if (/allowEmpty/.test(attrs.typeahead)) {
+                if (/allowEmpty/.test(attrs.rxTypeahead)) {
                     var EMPTY_KEY = '$EMPTY$';
 
                     // Wrap the directive's $parser such that the $viewValue

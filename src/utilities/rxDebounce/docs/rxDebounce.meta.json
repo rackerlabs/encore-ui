@@ -1,0 +1,8 @@
+{
+    "displayName": "$$rxDebounce",
+    "stability": "prototype",
+    "description": "Utilities for rxTypeahead element",
+    "api": "service:rxDebounce",
+    "keywords": [
+    ]
+}
