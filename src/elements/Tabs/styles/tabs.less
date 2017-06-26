@@ -2,7 +2,7 @@
 
 .nav-tabs {
   display: flex;
-  border-bottom: 9px solid @blue-700;
+  border-bottom: 9px solid var(--rx-blue-700);
   clear: both;
 
   li {
@@ -13,32 +13,32 @@
 
   a {
     display: block;
-    background: @blue-900;
-    color: @gray-300;
+    background: var(--rx-blue-900);
+    color: var(--rx-gray-300);
     padding: 10px 20px;
 
     .subdued {
-      color: @gray-500;
+      color: var(--rx-gray-500);
     }
 
     &:hover:not(.active),
     &:focus:not(.active) {
       cursor: pointer;
-      color: @white;
+      color: var(--rx-white);
       text-decoration: none;
 
       .subdued {
-        color: @gray-500;
+        color: var(--rx-gray-500);
       }
     }
   }
 
   .active a {
-    background: @blue-700;
-    color: @white;
+    background: var(--rx-blue-700);
+    color: var(--rx-white);
 
     .subdued {
-      color: @gray-500;
+      color: var(--rx-gray-500);
     }
   }
 }
@@ -46,11 +46,11 @@
 .tab-pane {
   clear: both;
   display: none;
-  background: @white;
+  background: var(--rx-white);
   padding: 10px;
-  border-left: 2px solid @blue-700;
-  border-right: 2px solid @blue-700;
-  border-bottom: 2px solid @blue-700;
+  border-color: var(--rx-blue-700);
+  border-style: solid;
+  border-width: 0 2px 2px;
 
   &.active {
     display: block;

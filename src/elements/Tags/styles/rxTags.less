@@ -18,7 +18,7 @@ rx-tags {
 }
 
 .rx-tags {
-  background-color: @white;
+  background-color: var(--rx-white);
   border: 1px solid @rxTags-border-color;
 
   &:hover {
@@ -37,18 +37,18 @@ rx-tags {
     line-height: @rxTags-height;
     border-radius: @rxTags-height / 2;
     vertical-align: top;
-    background-color: @gray-300;
+    background-color: var(--rx-gray-300);
     &:hover {
       cursor: default;
     }
 
     &:focus {
-      background-color: @blue-700;
+      background-color: var(--rx-blue-700);
       outline: none;
       .fa,
       .text,
       .category {
-        color: @white;
+        color: var(--rx-white);
       }
     }
 
@@ -59,30 +59,30 @@ rx-tags {
     .text {
       font-size: 12px;
       margin: 0 7px 0 10px;
-      color: @gray-800;
+      color: var(--rx-gray-800);
     }
 
     .category {
       font-size: 10px;
       margin-right: 20px;
-      color: @gray-800;
+      color: var(--rx-gray-800);
     }
 
     .fa-tag {
       margin-left: @rxTags-height / 2;
-      color: @gray-600;
+      color: var(--rx-gray-600);
     }
 
     .fa-times {
       margin-right: @rxTags-height / 2;
-      color: @gray-600;
+      color: var(--rx-gray-600);
       &:hover {
         cursor: pointer;
-        color: @gray-800;
+        color: var(--rx-gray-800);
       }
     }
   }
   .tag:focus .fa-times:hover {
-    color: @white;
+    color: var(--rx-white);
   }
 }
