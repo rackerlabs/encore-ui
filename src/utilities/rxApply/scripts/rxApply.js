@@ -1,8 +1,7 @@
 (function () {
     angular
         .module('encore.ui.utilities')
-        .filter('rxApply', rxApplyFilter)
-        .filter('Apply', ApplyFilter);
+        .filter('rxApply', rxApplyFilter);
 
     /**
      * @ngdoc filter
@@ -24,23 +23,4 @@
             return filter.applyTo(list);
         };
     }//rxApplyFilter
-
-    /**
-     * @deprecated
-     * Use rxApply instead. This filter will be removed in a future release of EncoreUI.
-     * @ngdoc filter
-     * @name utilities.filter:Apply
-     * @requires utilities.filter:rxApply
-     */
-    function ApplyFilter (suppressDeprecationWarnings) {
-        return function (list, filter) {
-            if (!suppressDeprecationWarnings) {
-                console.warn(
-                    'DEPRECATED: Apply - Please use rxApply. ' +
-                    'Apply will be removed in a future release of EncoreUI.'
-                );
-            }
-            return rxApplyFilter()(list, filter);
-        };
-    }//ApplyFilter
 })();

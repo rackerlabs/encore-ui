@@ -4,7 +4,7 @@
     "description": "Manages user session",
     "api": "service:rxSession",
     "keywords": [
-        "Session",
-        "rxAuth"
+        "authorization",
+        "permission"
     ]
 }

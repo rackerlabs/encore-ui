@@ -51,21 +51,4 @@ angular.module('encore.ui.utilities')
     return {
         buildErrorMsg: buildErrorMsg
     };
-})
-
-/**
- * @deprecated
- * Please use rxErrorFormatter instead. This item will be removed in a future release of EncoreUI.
- * @ngdoc service
- * @name utilities.service:ErrorFormatter
- * @requires utilities.service:rxErrorFormatter
- */
-.service('ErrorFormatter', function (rxErrorFormatter, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: ErrorFormatter - Please use rxErrorFormatter. ' +
-            'ErrorFormatter will be removed in a future release of EncoreUI.'
-        );
-    }
-    return rxErrorFormatter;
 });

@@ -1,8 +1,7 @@
 (function () {
     angular
         .module('encore.ui.utilities')
-        .filter('rxTitleize', rxTitleizeFilter)
-        .filter('titleize', titleizeFilter);
+        .filter('rxTitleize', rxTitleizeFilter);
 
     /**
      * @ngdoc filter
@@ -12,7 +11,7 @@
      *
      * Credit where it's due: https://github.com/epeli/underscore.string/blob/master/titleize.js
      *
-     * @param {String} inputString The string to convert
+     * @param {String} inputString - The string to convert
      * @returns {String} The titleized version of the string
      *
      * @example
@@ -33,25 +32,6 @@
                 .replace(/(?:^|\s)\S/g, function (character) {
                     return character.toUpperCase();
                 });
-        };
-    };
-
-    /**
-     * @deprecated
-     * Please use rxTitleize instead. This filter will be removed in a future release of EncoreUI.'
-     * @ngdoc filter
-     * @name utilities.filter:titleize
-     * @requires utilities.filter:rxTitleize
-     */
-    function titleizeFilter (suppressDeprecationWarnings) {
-        return function (inputString) {
-            if (!suppressDeprecationWarnings) {
-                console.warn(
-                    'DEPRECATED: titleize - Please use rxTitleize. ' +
-                    'titleize will be removed in a future release of EncoreUI.'
-                );
-            }
-            return rxTitleizeFilter()(inputString);
         };
     };
 })();

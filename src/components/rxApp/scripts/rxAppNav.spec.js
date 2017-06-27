@@ -16,8 +16,6 @@ describe('encore.ui.rxApp', function () {
             module('templates/rxAppNav.html');
             module('templates/rxAppNavItem.html');
 
-            module({ suppressDeprecationWarnings: true });
-
             // Inject in angular constructs
             inject(function ($rootScope, $compile) {
                 scope = $rootScope.$new();

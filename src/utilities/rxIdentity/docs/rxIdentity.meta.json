@@ -4,8 +4,6 @@
     "description": "Provides authentication logic",
     "api": "service:rxIdentity",
     "keywords": [
-        "Identity",
-        "rxAuth",
-        "Auth"
+        "authorization"
     ]
 }

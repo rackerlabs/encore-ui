@@ -45,7 +45,6 @@ describe('encore.ui.rxApp', function () {
                 module('encore.ui.rxApp');
                 module('encore.ui.utilities');
                 module('encore.ui.elements');
-                module({ suppressDeprecationWarnings: true });
 
                 // load templates
                 module('templates/rxApp.html');
@@ -58,9 +57,6 @@ describe('encore.ui.rxApp', function () {
                 module(function ($provide) {
                     $provide.value('rxNotify', mockNotify);
                 });
-
-                //test for suppressing warnings
-                module({ suppressDeprecationWarnings: true });
 
                 // Inject in angular constructs
                 inject(function ($rootScope, $compile, encoreRoutes, $httpBackend, routesCdnPath, rxLocalStorage,
@@ -227,7 +223,6 @@ describe('encore.ui.rxApp', function () {
                 module('encore.ui.rxApp');
                 module('encore.ui.utilities');
                 module('encore.ui.elements');
-                module({ suppressDeprecationWarnings: true });
                 module(function ($provide) {
                     $provide.value('rxEnvironment', mockEnvironment);
                     $provide.value('routesCdnPath', mockCdnPath);
@@ -284,7 +279,6 @@ describe('encore.ui.rxApp', function () {
                 // load module
                 module('encore.ui.rxApp');
                 module('encore.ui.utilities');
-                module({ suppressDeprecationWarnings: true });
 
                 // load templates
                 module('templates/rxApp.html');
@@ -394,7 +388,6 @@ describe('encore.ui.rxApp', function () {
                 // load module
                 module('encore.ui.utilities');
                 module('encore.ui.elements');
-                module({ suppressDeprecationWarnings: true });
 
                 // load templates
                 module('templates/rxApp.html');
@@ -485,7 +478,6 @@ describe('encore.ui.rxApp', function () {
                 module('encore.ui.rxApp');
                 module('encore.ui.utilities');
                 module('encore.ui.elements');
-                module({ suppressDeprecationWarnings: true });
 
                 // load templates
                 module('templates/rxApp.html');
@@ -556,7 +548,6 @@ describe('encore.ui.rxApp', function () {
                 // load module
                 module('encore.ui.utilities');
                 module('encore.ui.elements');
-                module({ suppressDeprecationWarnings: true });
 
                 // load templates
                 module('templates/rxApp.html');

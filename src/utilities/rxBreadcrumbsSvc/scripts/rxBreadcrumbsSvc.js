@@ -7,13 +7,7 @@ angular.module('encore.ui.utilities')
  * `rxBreadcrumbsSvc` provides various methods to manipulate breadcrumbs.
  *
  */
-.factory('rxBreadcrumbsSvc', function (suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: rxBreadcrumbsSvc will be removed in a future release of EncoreUI.'
-        );
-    }
-
+.factory('rxBreadcrumbsSvc', function () {
     // default will always be home
     var breadcrumbs = [{
         path: '/',

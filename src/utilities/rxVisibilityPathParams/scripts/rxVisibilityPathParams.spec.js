@@ -5,9 +5,6 @@ describe('utilities:rxVisibilityPathParams', function () {
             module('ngRoute');
 
             module('encore.ui.utilities');
-
-            module({ suppressDeprecationWarnings: true });
-
         });
 
         it('should let me set location', function () {
