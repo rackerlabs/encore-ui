@@ -8,7 +8,7 @@
 /* TODO: (deprecated) remove with last of components */
 .module-description {
   border: 1px solid #aaaaaa;
-  background: @white;
+  background: var(--rx-gray-0);
   padding: 10px;
   margin-bottom: 2em;
 
@@ -23,7 +23,7 @@
 
   h1 {
     font-size: 1.6em;
-    border-bottom: 1px solid @gray-950;
+    border-bottom: 1px solid var(--rx-gray-950);
     margin-top: 1.2em;
   }
 
@@ -147,7 +147,7 @@ p {
   border-style: solid;
   border-width: 9px 2px 2px 2px;
   padding: 0 10px 10px;
-  background: @white;
+  background: var(--rx-gray-0);
   width: 600px;
   margin: 25px 0;
   img {
@@ -159,21 +159,21 @@ p {
     font-weight: 600;
   }
   &.do {
-    border-color: @green-500;
+    border-color: var(--rx-green-500);
     h4 {
-      color: @green-700;
+      color: var(--rx-green-700);
     }
   }
   &.exception {
-    border-color: @orange-500;
+    border-color: var(--rx-orange-500);
     h4 {
-      color: @orange-700;
+      color: var(--rx-orange-700);
     }
   }
   &.avoid {
-    border-color: @red-500;
+    border-color: var(--rx-red-500);
     h4 {
-      color: @red-700;
+      color: var(--rx-red-700);
     }
   }
 }
