@@ -63,10 +63,7 @@ var notification = function (rootElement) {
          */
         getText: {
             value: function () {
-                return rootElement.getText().then(function (text) {
-                    // Remove any lingering '× ' characters.
-                    return text.split('\n')[0].trim();
-                });
+                return this.rootElement.$('.notification-text').getText();
             }
         },
 
