@@ -84,7 +84,6 @@ angular.module('encore.ui.utilities')
  * with overlapping environments, and could potentially generate the wrong URL.
  *
  * ## A Warning About `rxEnvironment.get().name` ##
- * ## DEPRECATED: `rxEnvironment.get()` will be removed in a future release of EncoreUI ##
  * You might find older Encore code that uses `rxEnvironment.get().name` to get
  * the name of the current environment. This pattern should be avoided,
  * specifically because of the overlapping environment issue discussed above.
@@ -100,7 +99,7 @@ angular.module('encore.ui.utilities')
  * </pre>
  *
  */
-.service('rxEnvironment', function ($location, $rootScope, $log, suppressDeprecationWarnings) {
+.service('rxEnvironment', function ($location, $rootScope, $log) {
     /*
      * This array defines different environments to check against.
      * It is prefilled with 'Encore' based environments
@@ -186,19 +185,17 @@ angular.module('encore.ui.utilities')
         return _.includes(href, pattern);
     };
 
-    /*
-     * Retrieves current environment
-     * @public
-     * @param {String=} [href=$location.absUrl()] The path to check the environment on.
-     * @returns {Object} The current environment (if found), else 'localhost' environment.
-     */
-    this.get = function (href) {
-        if (!suppressDeprecationWarnings) {
-            console.warn (
-                'DEPRECATED: rxEnvironment.get() will be removed in a future release of EncoreUI'
-            );
-        }
+    /* ====================================================================== *\
+      DO NOT USE rxEnvironment.get()!
 
+      This function should be avoided due to overlapping environment
+      issues mentioned in the documentation.
+
+      Any use of this function will be AT YOUR OWN RISK.
+
+      Please read the documentation for other means of checking your environment.
+    \* ====================================================================== */
+    this.get = function (href) {
         // default to current location if href not provided
         href = href || $location.absUrl();
 
@@ -286,20 +283,4 @@ angular.module('encore.ui.utilities')
      * @public
      */
     this.isUnifiedProd = makeEnvCheck('unified-prod');
-})
-/**
- * @deprecated
- * Please use rxEnvironment instead. This item will be removed in a future release of EncoreUI.
- * @ngdoc service
- * @name utilities.service:Environment
- * @requires utilities.service:rxEnvironment
- */
-.service('Environment', function (rxEnvironment, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: Environment - Please use rxEnvironment. ' +
-            'Environment will be removed in a future release of EncoreUI.'
-        );
-    }
-    return rxEnvironment;
 });
