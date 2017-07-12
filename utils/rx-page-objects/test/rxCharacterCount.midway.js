@@ -26,11 +26,4 @@ describe('rxCharacterCount', function () {
     describe('initial value', encore.exercise.rxCharacterCount({
         instance: encore.rxCharacterCount.initialize($('.demo-initial-value'))
     }));
-
-    describe('with highlighting', encore.exercise.rxCharacterCount({
-        instance: encore.rxCharacterCount.initialize($('.demo-highlighting')),
-        maxCharacters: 10,
-        highlight: true
-    }));
-
 });
