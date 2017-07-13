@@ -14,16 +14,16 @@
   flex-direction: row;
 
   .rx-app-content {
-    background-color: @gray-50;
+    background-color: var(--rx-gray-50);
     flex: 1 1 0;
   }
 
   .rx-app-menu {
     flex: 0 0 @appMenuWidth;
-    color: @white;
+    color: var(--rx-gray-0);
     font-size: 15px;
     font-weight: 300;
-    background: @gray-975;
+    background: var(--rx-gray-975);
     line-height: @app-line-height;
     padding-bottom: 10em;
     position: relative;
@@ -36,11 +36,11 @@
   }
 
   .site-branding {
-    border-top: 1px solid @blue-700;
-    border-bottom: 1px solid @blue-700;
+    border-top: 1px solid var(--rx-blue-700);
+    border-bottom: 1px solid var(--rx-blue-700);
     padding: 5px 20px;
     overflow: hidden;
-    background: @blue-900;
+    background: var(--rx-blue-900);
     position: relative;
 
     .site-title {
@@ -52,12 +52,12 @@
       margin-top: 1px;
 
       .site-option {
-        color: @blue-100;
+        color: var(--rx-blue-100);
         display: inline-block;
         margin-left: 1em;
         &:hover,
         &:focus {
-          color: @white;
+          color: var(--rx-gray-0);
         }
       }
     }
@@ -69,9 +69,9 @@
       bottom: 0;
       right: 0;
       width: 2em;
-      border-left: 1px solid darken(@blue-900, 10%);
+      border-left: 1px solid var(--rx-gray-900);
       &:hover {
-        background: lighten(@blue-900, 10%);
+        background: var(--rx-blue-700);
       }
     }
 
@@ -84,7 +84,7 @@
       left: 0;
 
       &::before {
-        color: @blue-100;
+        color: var(--rx-blue-100);
         content: "\00bb";
       }
 
@@ -93,7 +93,7 @@
       }
 
       &:hover &::before {
-        color: @white;
+        color: var(--rx-gray-0);
       }
     }
   }
@@ -185,7 +185,7 @@
           background: @preprod-active-menu-background-color;
         }
         .item-content {
-          border-bottom: 1px solid @black;
+          border-bottom: 1px solid var(--rx-gray-1000);
         }
       }
 
@@ -208,10 +208,11 @@
     }
 
     .nav-section-all {
-      background: @green-700;
-      border-top: 1px solid @green-500;
+      background: var(--rx-green-700);
+      border-top: 1px solid var(--rx-green-500);
     }
 
+    // deprecated and not meant to be used
     .nav-section-highlight {
       background: @blue-500;
       border-top: 1px solid lighten(@blue-500, 10%);
@@ -233,20 +234,20 @@
 
     // common nav styles (inactive nav, no children)
     .item-link {
-      background: @gray-975;
-      border-top: 1px solid @gray-950;
-      border-bottom: 1px solid @black;
+      background: var(--rx-gray-975);
+      border-top: 1px solid var(--rx-gray-950);
+      border-bottom: 1px solid var(--rx-gray-1000);
       padding: 10px 4em 10px 15px;
       display: block;
-      color: @white;
+      color: var(--rx-gray-0);
       text-decoration: none;
       transition: background @navTransitionDuration;
       position: relative;
       &:hover,
       &:focus {
-        background: @gray-950;
-        border-top: 1px solid @gray-900;
-        border-bottom: 1px solid @black;
+        background: var(--rx-gray-950);
+        border-top: 1px solid var(--rx-gray-900);
+        border-bottom: 1px solid var(--rx-gray-1000);
       }
       &:before,
       &:after {
@@ -269,10 +270,10 @@
     // active nav, no children (blue bg, arrow right)
     &.active:not(.has-children) > .item-link {
       border-color: transparent;
-      background: @blue-700;
+      background: var(--rx-blue-700);
       &:after {
         right: -6px;
-        border-left-color: @blue-700;
+        border-left-color: var(--rx-blue-700);
       }
     }
 
@@ -289,7 +290,7 @@
 
     // active nav, w/children (double arrow up, gray bg)
     &.active.has-children > .item-link {
-      border-top-color: @gray-900;
+      border-top-color: var(--rx-gray-900);
       border-bottom-width: 0;
       // used to show BG of arrow (because :after is rotated)
       &:before {
@@ -297,7 +298,7 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background: @gray-950;
+        background: var(--rx-gray-950);
       }
       &:after {
         // flip arrow around
@@ -305,12 +306,12 @@
         transform: rotate(90deg) scaleX(-1);
       }
       .item-content {
-        border-bottom: 1px solid @black;
+        border-bottom: 1px solid var(--rx-gray-1000);
       }
     }
 
     .item-content {
-      background: @gray-950;
+      background: var(--rx-gray-950);
       padding: 10px;
     }
 
@@ -320,7 +321,7 @@
 
     .item-children {
       padding: 10px;
-      background: @gray-900;
+      background: var(--rx-gray-900);
     }
 
     .child-header {
@@ -330,13 +331,13 @@
     .current-search {
       text-transform: uppercase;
       font-weight: bold;
-      color: @gray-600;
+      color: var(--rx-gray-600);
       font-size: 10px;
       display: block;
     }
 
     .current-result {
-      color: @gray-400;
+      color: var(--rx-gray-400);
       font-size: 18px;
     }
 
@@ -379,28 +380,28 @@
 
   .rx-app-nav-level-2 {
     .item-link {
-      background: @gray-800;
-      border-top-color: @gray-700;
-      border-bottom-color: @gray-900;
+      background: var(--rx-gray-800);
+      border-top-color: var(--rx-gray-700);
+      border-bottom-color: var(--rx-gray-900);
       font-size: 13px;
 
       &:hover,
       &:focus {
-        background: @gray-900;
-        border-top: 1px solid @gray-700;
-        border-bottom: 1px solid @gray-900;
+        background: var(--rx-gray-900);
+        border-top: 1px solid var(--rx-gray-700);
+        border-bottom: 1px solid var(--rx-gray-900);
       }
     }
     .active:not(.has-children) > .item-link {
       margin-right: -10px;
     }
     .active.has-children > .item-link {
-      background: @gray-975;
+      background: var(--rx-gray-975);
       border-color: transparent;
     }
 
     .item-content {
-      background: @gray-975;
+      background: var(--rx-gray-975);
       padding: 0 0 4px 4px;
     }
 
@@ -410,19 +411,19 @@
   }
 
   .rx-app-nav-level-3 .item-link {
-    background: @gray-950;
+    background: var(--rx-gray-950);
     border-color: transparent;
     padding: 5px 15px;
 
     &:hover,
     &:focus {
-      background: @gray-900;
+      background: var(--rx-gray-900);
       border-color: transparent;
     }
   }
   .rx-app-nav-level-3 .rx-app-nav-item {
     &:first-child {
-      border-top: 3px solid @gray-950;
+      border-top: 3px solid var(--rx-gray-950);
     }
     .item-link:after {
       border-top-width: 1em;
@@ -433,7 +434,7 @@
   .rx-app-search {
     position: relative;
     font-size: 14px;
-    color: @gray-500;
+    color: var(--rx-gray-500);
 
     fieldset {
       position: relative;
@@ -457,7 +458,7 @@
 
     .search-input {
       box-sizing: border-box;
-      background: @gray-900;
+      background: var(--rx-gray-900);
       border: 0;
       width: 100%;
       padding: 9px;
@@ -466,7 +467,7 @@
     }
 
     .search-input.ng-invalid:focus {
-      outline-color: @red-700;
+      outline-color: var(--rx-red-700);
     }
 
     .search-action {
@@ -490,8 +491,8 @@
     bottom: 0;
     left: 0;
     width: @appMenuWidth;
-    background: @gray-950;
-    border-top: 1px solid @gray-900;
+    background: var(--rx-gray-950);
+    border-top: 1px solid var(--rx-gray-900);
     line-height: 3em;
     padding-bottom: 1px;
     font-size: 0.8em;
@@ -500,7 +501,7 @@
     .rx-feedback .modal-link {
       background: url("images/icon-feedback.png") no-repeat 20px calc(~"50% + 1px");
       vertical-align: middle;
-      color: @orange-500;
+      color: var(--rx-orange-500);
       padding: 0 21px 0 41px;
       float: right;
     }
@@ -565,6 +566,6 @@
     padding: 1px 2px;
     border-radius: 2px;
     top: 9px;
-    color: @blue-900;
+    color: var(--rx-blue-900);
   }
 }
