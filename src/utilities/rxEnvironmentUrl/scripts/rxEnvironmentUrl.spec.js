@@ -1,4 +1,4 @@
-describe('DEPRECATED: rxEnvironmentUrl', function () {
+describe('rxEnvironmentUrl', function () {
     var urlFilter, envSvc;
 
     beforeEach(function () {
