@@ -5,6 +5,10 @@ describe('elements:CharacterCount', function () {
     var maxCharsTemplate = '<textarea ng-model="comment" rx-character-count max-characters="50"></textarea>';
     var boundaryTemplate = '<textarea ng-model="comment" rx-character-count max-characters="20" low-boundary="5">' +
                            '</textarea>';
+    var ngTrimTemplate = '<textarea ng-model="trimComment" rx-character-count max-characters="50" ' +
+                         'ng-trim="true"></textarea>';
+    var ngTrimFalseTemplate = '<textarea ng-model="trimComment" rx-character-count max-characters="50" ' +
+                              'ng-trim="false"></textarea>';
 
     beforeEach(function () {
         // load module
@@ -15,6 +19,7 @@ describe('elements:CharacterCount', function () {
             $rootScope = _$rootScope_;
             originalScope = $rootScope.$new();
             originalScope.comment = '';
+            originalScope.trimComment = '  Hello  ';
             originalScope.initComment = 'I have an initial value';
             originalScope.showTextArea = true;
             originalScope.hideTextArea = true;
@@ -169,6 +174,28 @@ describe('elements:CharacterCount', function () {
             originalScope.$apply();
             expect(el.hasClass('ng-hide'), 'textarea should be visible').to.be.false;
             expect(characterCount.hasClass('ng-hide'), 'character countdown should be visible').to.be.false;
+        });
+    });
+
+    describe('"ng-trim" set to true', function () {
+        beforeEach(function () {
+            el = helpers.createDirective(ngTrimTemplate, compile, originalScope);
+            scope = el.scope();
+        });
+
+        it('should count the trimmed length', function () {
+            expect(scope.remaining).to.equal(45);
+        });
+    });
+
+    describe('"ng-trim" set to false', function () {
+        beforeEach(function () {
+            el = helpers.createDirective(ngTrimFalseTemplate, compile, originalScope);
+            scope = el.scope();
+        });
+
+        it('should count the full length', function () {
+            expect(scope.remaining).to.equal(41);
         });
     });
 });

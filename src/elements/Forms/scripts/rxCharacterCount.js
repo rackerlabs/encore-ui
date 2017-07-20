@@ -111,10 +111,19 @@ angular.module('encore.ui.elements')
                     if (typeof newValue !== 'string') {
                         return;
                     }
+                    // $evalAsync will execute the code inside of it, during the
+                    // same `$digest` that triggered the `$watch`, if we were to
+                    // use `$applyAsync` the execution would happen at a later
+                    // stage. The reason for changing scope variables within the
+                    // `$evalAsync` is to ensure that the UI gets rendered with
+                    // the proper value, and is not delayed by waiting for
+                    // `$digest` dirty checks. For more information, please
+                    // refer to https://www.bennadel.com/blog/2751-scope-applyasync-vs-scope-evalasync-in-angularjs-1-3.htm
                     scope.$evalAsync(function () {
                         if (!attrs.ngTrim || attrs.ngTrim !== 'false') {
                             newValue = newValue.trim();
                         }
+
                         scope.remaining = maxCharacters - newValue.length;
                         scope.nearLimit = scope.remaining >= 0 && scope.remaining < lowBoundary;
                         scope.overLimit = scope.remaining < 0;
