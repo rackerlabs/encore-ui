@@ -11,7 +11,6 @@ var _ = require('lodash');
  * @param {Number} [options.nearLimit=10] - The number of remaining characters needed to trigger the "near-limit" class.
  * @param {Boolean} [options.ignoreInsignificantWhitespace=false] - Whether or not the textbox ignores leading and
  * trailing whitespace when calculating the remaining character count.
- * @param {Boolean} [options.highlight=false] - Determines if text over the limit should be highlighted.
  * @example
  * describe('default exercises', encore.exercise.rxCharacterCount({
  *     instance: myPage.submission // select one of many widgets from your page objects
@@ -28,8 +27,7 @@ exports.rxCharacterCount = function (options) {
     options = _.defaults(options, {
         maxCharacters: 254,
         nearLimit: 10,
-        ignoreInsignificantWhitespace: true,
-        highlight: false
+        ignoreInsignificantWhitespace: true
     });
 
     var belowNearLimitLength = options.maxCharacters - options.nearLimit;
@@ -165,6 +163,7 @@ exports.rxCharacterCount = function (options) {
                 component.comment = whitespace;
             });
 
+
             if (options.ignoreInsignificantWhitespace) {
                 it('should count the trimmed length', function () {
                     expect(component.remaining).to.eventually.equal(options.maxCharacters - trimmedLength);
@@ -176,37 +175,8 @@ exports.rxCharacterCount = function (options) {
             }
         });
 
-        if (options.highlight) {
-            describe('highlighting', function () {
-
-                it('should not show any highlights on an empty text box', function () {
-                    // A space is used because the `input` event is not fired by clear() or sendKeys('')
-                    component.comment = ' ';
-                    expect(component.overLimitText).to.eventually.equal('');
-                });
-
-                it('should not highlight any characters when ' + options.maxCharacters + ' characters are entered',
-                    function () {
-                        component.comment = 'f'.repeat(options.maxCharacters);
-                        expect(component.overLimitText).to.eventually.equal('');
-                    }
-                );
-
-                it('should highlight a single characters when ' + overLimit + ' characters are entered', function () {
-                    component.comment = 'g'.repeat(overLimit);
-                    expect(component.overLimitText).to.eventually.equal('g');
-                });
-
-                it('should clear the over-limit text highlighting when the text is reduced', function () {
-                    component.comment = 'h';
-                    expect(component.overLimitText).to.eventually.equal('');
-                });
-            });
-        }
-
         after(function () {
             component.comment = '';
         });
-
     };
 };

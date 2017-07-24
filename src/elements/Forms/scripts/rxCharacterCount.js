@@ -53,20 +53,8 @@ angular.module('encore.ui.elements')
  * advantage of it, please ensure you've extensively tested that it performs
  * correctly for your uses.
  *
- * ### Highlighting ###
- * Characters that are over the limit will be highlighted in red if the
- * `highlight="true"` attribute is on the directive's element. Because this
- * functionality is currently unstable, it has been left off by default. Please
- * test your use case heavily before shipping with this feature enabled.
- *
- * Known failure cases:
- * * Content that causes a scrollbar in the textarea
- * * Initial text (coming from the model) that is over the limit
- *
  * @param {Number=} [low-boundary=10] How far from the maximum to enter a warning state
  * @param {Number=} [max-characters=254] The maximum number of characters allowed
- * @param {Boolean=} [highlight=false] Whether or not characters over the limit are highlighted
- *
  * @example
  * <pre>
  * <textarea ng-model="model" rx-character-count></textarea>
@@ -76,10 +64,6 @@ angular.module('encore.ui.elements')
     var counterStart = '<div class="character-countdown" ';
     var counterEnd =   'ng-class="{ \'near-limit\': nearLimit, \'over-limit\': overLimit }"' +
                   '>{{ remaining }}</div>';
-
-    var backgroundStart = '<div class="input-highlighting" ';
-    var backgroundEnd = '><span>{{ underLimitText }}</span>' +
-                     '<span class="over-limit-text">{{ overLimitText }}</span></div>';
 
     var extraDirectives = function (attrs) {
         var extra = '';
@@ -96,17 +80,13 @@ angular.module('encore.ui.elements')
         return counterStart + extraDirectives(attrs) + counterEnd;
     };
 
-    var buildBackground = function (attrs) {
-        return backgroundStart + extraDirectives(attrs) + backgroundEnd;
-    };
-
     return {
         restrict: 'A',
         require: 'ngModel',
         // scope:true ensures that our remaining/nearLimit/overLimit scope variables
         // only live within this directive
         scope: true,
-        link: function (scope, element, attrs, ngModelCtrl) {
+        link: function (scope, element, attrs) {
             // Wrap the textarea so that an element containing a copy of the text
             // can be layered directly behind it.
             var wrapper = angular.element('<div class="counted-input-wrapper" />');
@@ -126,49 +106,31 @@ angular.module('encore.ui.elements')
             // This gets called whenever the ng-model for this element
             // changes, i.e. when someone enters new text into the textarea
             scope.$watch(
-                function () { return ngModelCtrl.$modelValue; },
+                function () { return element[0].value; },
                 function (newValue) {
                     if (typeof newValue !== 'string') {
                         return;
                     }
-                    scope.remaining = maxCharacters - newValue.length;
-                    scope.nearLimit = scope.remaining >= 0 && scope.remaining < lowBoundary;
-                    scope.overLimit = scope.remaining < 0;
+                    // $evalAsync will execute the code inside of it, during the
+                    // same `$digest` that triggered the `$watch`, if we were to
+                    // use `$applyAsync` the execution would happen at a later
+                    // stage. The reason for changing scope variables within the
+                    // `$evalAsync` is to ensure that the UI gets rendered with
+                    // the proper value, and is not delayed by waiting for
+                    // `$digest` dirty checks. For more information, please
+                    // refer to https://www.bennadel.com/blog/2751-scope-applyasync-vs-scope-evalasync-in-angularjs-1-3.htm
+                    scope.$evalAsync(function () {
+                        if (!attrs.ngTrim || attrs.ngTrim !== 'false') {
+                            newValue = newValue.trim();
+                        }
+
+                        scope.remaining = maxCharacters - newValue.length;
+                        scope.nearLimit = scope.remaining >= 0 && scope.remaining < lowBoundary;
+                        scope.overLimit = scope.remaining < 0;
+                    });
                 });
-
-            function countSpaces (str, options) {
-                options || (options = {});
-                return str.search(options.fromEnd ? /\s*$/ : /\S/);
-            }
-
-            // Since the input value is trimmed before writing to the model,
-            // an input event is attached to the element to handle the highlighting,
-            // which needs the pre- and post-trimmed string.
-            function writeLimitText () {
-                var val = element.val();
-                var cutoff = maxCharacters;
-                var end = val.length;
-
-                if (!attrs.ngTrim || attrs.ngTrim !== 'false') {
-                    cutoff += countSpaces(val);
-                    end = countSpaces(val, { fromEnd: true });
-                }
-
-                scope.underLimitText = val.slice(0, cutoff);
-                scope.overLimitText = val.slice(cutoff, end);
-                scope.$apply();
-            }
-
-            if (attrs.highlight === 'true') {
-                $compile(buildBackground(attrs))(scope, function (clone) {
-                    wrapper.prepend(clone);
-                });
-
-                element.on('input', writeLimitText);
-            }
 
             scope.$on('$destroy', function () {
-                element.off('input');
                 $timeout(function () {
                     // When the element containing the rx-character-count is removed, we have to
                     // ensure we also remove the `wrapper`, which we created. This has to happen
