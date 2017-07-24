@@ -84,8 +84,6 @@ describe('elements:rxAccountInfo', function () {
             module('templates/rxAccountInfo.html');
             module('templates/rxAccountInfoBanner.html');
 
-            module({ suppressDeprecationWarnings: true });
-
             // Inject in angular constructs
             inject(function ($location, $rootScope, $compile, $q, Encore, SupportAccount,
                     rxNotify, Teams, encoreRoutes) {

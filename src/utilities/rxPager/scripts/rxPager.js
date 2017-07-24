@@ -1,8 +1,7 @@
 (function () {
     angular
         .module('encore.ui.utilities')
-        .filter('rxPager', rxPagerFilter)
-        .filter('Page', PageFilter);
+        .filter('rxPager', rxPagerFilter);
 
     /**
      * @ngdoc filter
@@ -45,23 +44,4 @@
             return displayPages;
         };
     }//rxPagerFilter
-
-    /**
-     * @deprecated
-     * Use rxPager instead. This filter will be removed in a future release of EncoreUI.
-     * @ngdoc filter
-     * @name utilities.filter:Page
-     * @requires utilities.filter:rxPager
-     */
-    function PageFilter (suppressDeprecationWarnings) {
-        return function (pager) {
-            if (!suppressDeprecationWarnings) {
-                console.warn(
-                    'DEPRECATED: Page - Please use rxPager. ' +
-                    'Page will be removed in a future release of EncoreUI.'
-                );
-            }
-            return rxPagerFilter()(pager);
-        };
-    }//PageFilter
 })();

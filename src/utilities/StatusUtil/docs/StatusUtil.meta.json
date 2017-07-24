@@ -1,7 +1,0 @@
-{
-    "displayName": "StatusUtil",
-    "stability": "deprecated",
-    "description": "Manipulates required references to $scope input for proper notification functionality.",
-    "api": "service:StatusUtil",
-    "keywords": []
-}

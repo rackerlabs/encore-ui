@@ -4,7 +4,6 @@ describe('service:rxEnvironment', function () {
     beforeEach(function () {
         // load module
         module('encore.ui.utilities');
-        module({ suppressDeprecationWarnings: true });
 
         // Inject in angular constructs
         inject(function ($location, $rootScope, rxEnvironment, $log) {
@@ -18,15 +17,6 @@ describe('service:rxEnvironment', function () {
 
     afterEach(function () {
         location.absUrl.restore();
-    });
-
-    it('should warn and return first environment if no environment found', function () {
-        location.absUrl.returns('http://nonsense');
-
-        sinon.spy(log, 'warn');
-
-        expect(envSvc.get().name).to.equal('local');
-        expect(log.warn).to.be.calledOnce;
     });
 
     it('should get current environment based on location passed in', function () {
@@ -111,26 +101,6 @@ describe('service:rxEnvironment', function () {
         expect(envSvc.isLocal(), 'test for local when environment is unified').to.be.false;
     });
 
-    it('should allow defining a new environment', function () {
-        // test w/ simple string
-        envSvc.add({
-            name: 'custom',
-            pattern: '//custom',
-            url: 'custom'
-        });
-        location.absUrl.returns('http://custom');
-        expect(envSvc.get().name).to.equal('custom');
-
-        // test w/ regexp (matches http://craziness.*.com/)
-        envSvc.add({
-            name: 'crazy',
-            pattern: /\/\/craziness\..*\.com\//,
-            url: 'crazy'
-        });
-        location.absUrl.returns('http://craziness.anything.yeah.com/some/path');
-        expect(envSvc.get().name).to.equal('crazy');
-    });
-
     it('should throw error on bad environment', function () {
         sinon.spy(log, 'error');
         // left off some values
@@ -139,15 +109,5 @@ describe('service:rxEnvironment', function () {
         });
 
         expect(log.error).to.be.calledOnce;
-    });
-
-    it('should allow you to completely overwrite defined environments', function () {
-        envSvc.setAll([{
-            name: 'custom',
-            pattern: /./,
-            url: 'mycustomurl'
-        }]);
-
-        expect(envSvc.get().name).to.equal('custom');
     });
 });

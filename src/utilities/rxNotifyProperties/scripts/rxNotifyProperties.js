@@ -68,21 +68,4 @@ angular.module('encore.ui.utilities')
     };
 
     return rxNotifyProperties;
-})
-
-/**
- * @deprecated
- * Please use rxNotifyProperties instead. This item will be removed in a future release of EncoreUI.
- * @ngdoc service
- * @name utilities.service:NotifyProperties
- * @requires utilities.service:rxNotifyProperties
- */
-.service('NotifyProperties', function (rxNotifyProperties, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: NotifyProperties - Please use rxNotifyProperties. ' +
-            'NotifyProperties will be removed in a future release of EncoreUI.'
-        );
-    }
-    return rxNotifyProperties;
 });

@@ -268,22 +268,4 @@ angular.module('encore.ui.utilities')
     }
 
     return rxPageTracker;
-})
-
-/**
- * @deprecated
- * Please use rxPageTracker instead. This item will be removed in a future release of EncoreUI.
- * @ngdoc service
- * @name utilities.service:PageTracking
- * @requires utilities.service:rxPageTracker
- */
-.service('PageTracking', function (rxPageTracker, suppressDeprecationWarnings) {
-    if (!suppressDeprecationWarnings) {
-        console.warn(
-            'DEPRECATED: PageTracking - Please use rxPageTracker ' +
-            'PageTracking will be removed in a future release of EncoreUI.'
-        );
-    }
-    return rxPageTracker;
 });
-
