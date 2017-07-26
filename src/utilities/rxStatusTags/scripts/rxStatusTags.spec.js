@@ -1,7 +1,6 @@
 describe('utilities:rxstatusTags', function () {
     describe('rxStatusTags', function () {
         var rxstatusTags;
-
         beforeEach(function () {
             // Initialize a fake module to get at its config block
             // This is the main purpose of this whole `describe` block,

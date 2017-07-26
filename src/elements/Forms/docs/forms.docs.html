@@ -171,10 +171,10 @@
         <select rx-select
           id="selValidEnabled"
           ng-model="validEnabled">
-          <option value="1">First</option>
-          <option value="2">Second</option>
-          <option value="3">Third</option>
-          <option value="4">Fourth</option>
+          <option ng-value="1">First</option>
+          <option ng-value="2">Second</option>
+          <option ng-value="3">Third</option>
+          <option ng-value="4">Fourth</option>
         </select>
       </td>
       <!-- Valid Ng-Disabled -->
@@ -205,10 +205,10 @@
           id="selInvalidEnabled"
           always-invalid
           ng-model="invalidEnabled">
-          <option value="1">First</option>
-          <option value="2">Second</option>
-          <option value="3">Third</option>
-          <option value="4">Fourth</option>
+          <option ng-value="1">First</option>
+          <option ng-value="2">Second</option>
+          <option ng-value="3">Third</option>
+          <option ng-value="4">Fourth</option>
         </select>
       </td>
       <!-- Invalid Ng-Disabled -->
@@ -644,7 +644,7 @@
           <input
             rx-radio
             id="radValidEnabledOne"
-            value="1"
+            ng-value="1"
             ng-model="validEnabled"/>
           <label for="radValidEnabledOne">Selected</label>
         </p>
@@ -652,7 +652,7 @@
           <input
             rx-radio
             id="radValidEnabledTwo"
-            value="2"
+            ng-value="2"
             ng-model="validEnabled"/>
           <label for="radValidEnabledTwo">Unselected</label>
         </p>
@@ -664,7 +664,7 @@
           <input
             rx-radio
             id="radValidNgDisabledOne"
-            value="1"
+            ng-value="1"
             ng-disabled="true"
             ng-model="validNgDisabled"/>
           <label for="radValidNgDisabledOne">Selected</label>
@@ -673,7 +673,7 @@
           <input
             rx-radio
             id="radValidNgDisabledTwo"
-            value="2"
+            ng-value="2"
             ng-disabled="true"
             ng-model="validNgDisabled"/>
           <label for="radValidNgDisabledTwo">Unselected</label>
@@ -686,7 +686,7 @@
           <input
             rx-radio
             id="radValidDisabledOne"
-            value="1"
+            ng-value="1"
             disabled
             ng-model="validDisabled"/>
           <label for="radValidDisabledOne">Selected</label>
@@ -695,7 +695,7 @@
           <input
             rx-radio
             id="radValidDisabledTwo"
-            value="2"
+            ng-value="2"
             disabled
             ng-model="validDisabled"/>
           <label for="radValidDisabledTwo">Unselected</label>
@@ -711,7 +711,7 @@
           <input
             rx-radio
             id="radInvalidEnabledOne"
-            value="1"
+            ng-value="1"
             ng-model="invalidEnabled"
             always-invalid/>
           <label for="radInvalidEnabledOne">Selected</label>
@@ -720,7 +720,7 @@
           <input
             rx-radio
             id="radInvalidEnabledTwo"
-            value="2"
+            ng-value="2"
             ng-model="invalidEnabled"
             always-invalid/>
           <label for="radInvalidEnabledTwo">Unselected</label>
@@ -733,7 +733,7 @@
           <input
             rx-radio
             id="radInvalidNgDisabledOne"
-            value="1"
+            ng-value="1"
             ng-disabled="true"
             ng-model="invalidNgDisabled"
             always-invalid/>
@@ -743,7 +743,7 @@
           <input
             rx-radio
             id="radInvalidNgDisabledTwo"
-            value="2"
+            ng-value="2"
             ng-disabled="true"
             ng-model="invalidNgDisabled"
             always-invalid/>
@@ -757,7 +757,7 @@
           <input
             rx-radio
             id="radInvalidDisabledOne"
-            value="1"
+            ng-value="1"
             disabled
             ng-model="invalidDisabled"
             always-invalid/>
@@ -767,7 +767,7 @@
           <input
             rx-radio
             id="radInvalidDisabledTwo"
-            value="2"
+            ng-value="2"
             disabled
             ng-model="invalidDisabled"
             always-invalid/>

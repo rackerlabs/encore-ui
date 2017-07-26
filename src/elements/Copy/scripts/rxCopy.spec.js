@@ -8,6 +8,7 @@ describe('elements:Copy', function () {
         module('encore.ui.elements');
         module('encore.ui.utilities');
         module('templates/rxCopy.html');
+        module('templates/rxTooltip-html-popup.html');
 
         inject(function ($rootScope, _$compile_, _rxCopyUtil_) {
             $scope = $rootScope.$new();

@@ -1,11 +1,11 @@
 {
     "displayName": "Tooltips",
     "stability": "stable",
-    "description": "provides styles to raw HTML elements and custom directive templates",
+    "description": "Provides styles to raw HTML elements and custom directive templates",
     "keywords": [
       "message",
       "popover",
       "popup",
-      "tooltip"
+      "rxTooltip"
     ]
 }

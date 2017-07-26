@@ -105,7 +105,6 @@
  * * {@link rxApp.directive:rxTicketSearch rxTicketSearch}
  */
 angular.module('encore.ui.rxApp', [
-    'cfp.hotkeys',
     'encore.ui.utilities',
     'ngRoute',
     'ngSanitize'

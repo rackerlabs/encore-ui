@@ -30,7 +30,10 @@ describe('elements:rxAccountInfo', function () {
                 }
             ];
 
-            angular.module('testApp', function () {})
+            angular.module('testApp', [])
+                .config(function ($qProvider) {
+                    $qProvider.errorOnUnhandledRejections(false);
+                })
                 .factory('Encore', function () {
                     return {
                         getAccount: function () {

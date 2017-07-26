@@ -4,11 +4,11 @@ function genericRouteController (breadcrumbs) {
             breadcrumbs = [{
                 name: '',
                 path: ''
-            }]
+            }];
         }
 
         rxBreadcrumbsSvc.set(breadcrumbs);
-    }
+    };
 }
 
 angular.module('demoApp', ['encore.ui', 'ngRoute'])

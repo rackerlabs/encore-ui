@@ -1,8 +1,8 @@
 <div class="rx-example">
   <section class="demo-wrapper" ng-include="markupUrl"></section>
 
-  <tabset class="source-tabset">
-    <tab heading="Markup">
+  <rx-tabset class="source-tabset">
+    <rx-tab heading="Markup">
       <div class="source-code-wrapper" ng-class="{ expanded: isExpanded('markup') }">
         <pre><code class="line-numbers language-markup">{{ example.markup }}</code></pre>
       </div>
@@ -14,9 +14,9 @@
         <i class="fa fa-fw fa-compress"></i>
         {{ isExpanded('markup') ? 'Collapse' : 'Expand' }} Snippet
       </a>
-    </tab>
+    </rx-tab>
 
-    <tab ng-if="example.javascript" heading="JavaScript">
+    <rx-tab ng-if="example.javascript" heading="JavaScript">
       <div class="source-code-wrapper" ng-class="{ expanded: isExpanded('javascript') }">
         <pre><code class="line-numbers language-clike">{{ example.javascript }}</code></pre>
       </div>
@@ -28,9 +28,9 @@
         <i class="fa fa-fw fa-compress"></i>
         {{ isExpanded('javascript') ? 'Collapse' : 'Expand' }} Snippet
       </a>
-    </tab>
+    </rx-tab>
 
-    <tab ng-if="example.less" heading="Less">
+    <rx-tab ng-if="example.less" heading="Less">
       <div class="source-code-wrapper" ng-class="{ expanded: isExpanded('less') }">
         <pre><code class="line-numbers language-css">{{ example.less }}</code></pre>
       </div>
@@ -42,6 +42,6 @@
         <i class="fa fa-fw fa-compress"></i>
         {{ isExpanded('less') ? 'Collapse' : 'Expand' }} Snippet
       </a>
-    </tab>
-  </tabset>
+    </rx-tab>
+  </rx-tabset>
 </div>

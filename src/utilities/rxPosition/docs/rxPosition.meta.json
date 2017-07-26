@@ -1,0 +1,10 @@
+{
+    "displayName": "$rxPosition",
+    "stability": "stable",
+    "description": "Utility for various positioned elements",
+    "api": "service:$rxPosition",
+    "keywords": [
+      "rxTooltip",
+      "tooltip"
+    ]
+}

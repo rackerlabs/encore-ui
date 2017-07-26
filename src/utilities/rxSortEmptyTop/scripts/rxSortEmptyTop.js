@@ -28,7 +28,7 @@ angular.module('encore.ui.utilities')
  * </pre>
  * Will sort as [{ name: { firstName: 'Adam' } }, {}]
  */
-.filter('rxSortEmptyTop', ['$filter', '$parse', function ($filter, $parse) {
+.filter('rxSortEmptyTop', function ($filter, $parse) {
     return function (array, key, reverse) {
 
         var predicateGetter = $parse(key);
@@ -39,4 +39,4 @@ angular.module('encore.ui.utilities')
 
         return $filter('orderBy')(array, sortFn, reverse);
     };
-}]);
+});

@@ -1,5 +1,5 @@
 describe('rxMultiSelect', function () {
-    var scope, compile, createDirective;
+    var scope, compile, createDirective, timeout;
     var transcludedTemplate = '<rx-multi-select ng-model="types">' +
                               '<rx-select-option value="A">Type A</rx-select-option>' +
                               '<rx-select-option value="B">Type B</rx-select-option>' +
@@ -15,9 +15,10 @@ describe('rxMultiSelect', function () {
         module('templates/rxMultiSelect.html');
         module('templates/rxSelectOption.html');
 
-        inject(function ($rootScope, $compile) {
+        inject(function ($rootScope, $compile, $timeout) {
             scope = $rootScope.$new();
             compile = $compile;
+            timeout = $timeout;
         });
 
         scope.options = ['A', 'B', 'C', 'D', 'E'];
@@ -31,6 +32,7 @@ describe('rxMultiSelect', function () {
         scope.types = _.without(scope.options, 'E');
         var el = createDirective(optionsTemplate);
         var isolateScope = el.isolateScope();
+        timeout.flush();
         expect(isolateScope.preview).to.equal('All except E');
     });
 
@@ -153,6 +155,7 @@ describe('rxMultiSelect', function () {
                 });
 
                 it('is set to "None" when no options are selected', function () {
+                    timeout.flush();
                     expect(isolateScope.preview).to.equal('None');
                 });
 
@@ -160,6 +163,7 @@ describe('rxMultiSelect', function () {
                     var label = el[0].querySelector('rx-select-option[value="A"]').textContent.trim();
                     ctrl.select('A');
                     scope.$digest();
+                    timeout.flush();
                     expect(isolateScope.preview).to.equal(label);
                 });
 
@@ -170,12 +174,14 @@ describe('rxMultiSelect', function () {
                     ctrl.select('C');
                     ctrl.select('D');
                     scope.$digest();
+                    timeout.flush();
                     expect(isolateScope.preview).to.equal('All except ' + label);
                 });
 
                 it('is set to "All" when all options are selected', function () {
                     ctrl.select('all');
                     scope.$digest();
+                    timeout.flush();
                     expect(isolateScope.preview).to.equal('All Selected');
                 });
 
@@ -183,16 +189,19 @@ describe('rxMultiSelect', function () {
                     ctrl.select('A');
                     ctrl.select('B');
                     scope.$digest();
+                    timeout.flush();
                     expect(isolateScope.preview).to.equal('2 Selected');
 
                     ctrl.select('C');
                     scope.$digest();
+                    timeout.flush();
                     expect(isolateScope.preview).to.equal('3 Selected');
                 });
 
                 it('rerenders when the model is changed outside the controller', function () {
                     var label = el[0].querySelector('rx-select-option[value="A"]').textContent.trim();
                     scope.types = ['A'];
+                    timeout.flush();
                     scope.$digest();
                     expect(isolateScope.preview).to.equal(label);
                 });

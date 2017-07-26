@@ -2,11 +2,10 @@
     "displayName": "Typeahead",
     "stability": "stable",
     "description": "",
-    "api": "directive:typeahead",
+    "api": "directive:rxTypeahead",
     "keywords": [
       "auto",
       "fill",
-      "predict",
-      "typeahead"
+      "predict"
     ]
 }

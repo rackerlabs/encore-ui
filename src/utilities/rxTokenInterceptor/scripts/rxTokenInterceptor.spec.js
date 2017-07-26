@@ -6,7 +6,7 @@ describe('provider:rxTokenInterceptor', function () {
         module('encore.ui.utilities');
 
         // Initialize a fake module to get at its config block
-        angular.module('testApp', function () {})
+        angular.module('testApp', [])
             .config(function (rxTokenInterceptorProvider) {
                 rxTokenInterceptorProvider.exclusionList.push('abcd.com');
             });

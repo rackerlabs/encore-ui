@@ -1,9 +1,10 @@
 {
     "displayName": "Tabs",
     "stability": "stable",
-    "description": "Styling for ngBootstrap Tabs plugin",
-    "hasApi": false,
+    "description": "Element for displaying tabbed content",
+    "api": "directive:rxTabset",
     "keywords": [
-        "tabs"
+        "rxTab",
+        "rxTabset"
     ]
 }
