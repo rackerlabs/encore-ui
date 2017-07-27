@@ -1,20 +1,25 @@
-function genericRouteController (title) {
-    title = title || '';
+function genericRouteController (breadcrumbs) {
+    return function (rxBreadcrumbsSvc) {
+        if (breadcrumbs === undefined) {
+            breadcrumbs = [{
+                name: '',
+                path: ''
+            }]
+        }
 
-    return function (rxPageTitle) {
-        rxPageTitle.setTitle(title);
+        rxBreadcrumbsSvc.set(breadcrumbs);
     }
 }//genericRouteController
 
 angular.module('demoApp', ['encore.ui', 'ngRoute'])
-.config(function ($routeProvider) {
+.config(function ($routeProvider, rxStatusTagsProvider) {
     $routeProvider
         .when('/', {
             redirectTo: '/overview'
         })
         .when('/overview', {
             templateUrl: 'templates/overview.html',
-            controller: genericRouteController('Overview')
+            controller: genericRouteController()
         })
 
         /* Layout */
@@ -22,27 +27,39 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
         /* Style Pages */
         .when('/styles/color', {
             templateUrl: 'templates/styles/color.html',
-            controller: genericRouteController('Color')
+            controller: genericRouteController([
+                { name: 'Color' }
+            ])
         })
         .when('/styles/formatting', {
             templateUrl: 'templates/styles/formatting.html',
-            controller: genericRouteController('Date/Time Formatting')
+            controller: genericRouteController([
+                { name: 'Date/Time Formatting' }
+            ])
         })
         .when('/styles/layout/detail', {
             templateUrl: 'templates/styles/layouts/detail-page.html',
-            controller: genericRouteController('Layout 1: Detail Page')
+            controller: genericRouteController([
+                { name: 'Layout 1: Detail Page' }
+            ])
         })
         .when('/styles/layout/data-table', {
             templateUrl: 'templates/styles/layouts/data-table-page.html',
-            controller: genericRouteController('Layout 2: Data Table')
+            controller: genericRouteController([
+                { name: 'Layout 2: Data Table' }
+            ])
         })
         .when('/styles/layout/form', {
             templateUrl: 'templates/styles/layouts/form-page.html',
-            controller: genericRouteController('Layout 3: Form Page')
+            controller: genericRouteController([
+                { name: 'Layout 3: Form Page' }
+            ])
         })
         .when('/styles/typography', {
             templateUrl: 'templates/styles/typography.html',
-            controller: genericRouteController('Typography')
+            controller: genericRouteController([
+                { name: 'Typography' }
+            ])
         })
 
         /* Module Pages */
@@ -88,6 +105,9 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
             controller: 'listElementsController',
             controllerAs: 'vm'
         })
+        .when('/elements/deprecated/FlexboxGrid', {
+            templateUrl: 'templates/deprecated/FlexboxGrid.html'
+        })
         .when('/elements/:element', {
             templateUrl: 'templates/modules/showModule.html',
             controller: 'showModuleController',
@@ -121,16 +141,27 @@ angular.module('demoApp', ['encore.ui', 'ngRoute'])
         })
         .otherwise({
             templateUrl: 'templates/404.html',
-            controller: genericRouteController('Not Found')
+            controller: genericRouteController([
+                { name: 'Not Found' }
+            ])
         });
+
+    // Define a custom status tag for use in the rxBreadcrumbs demo
+    rxStatusTagsProvider.addStatus({
+        key: 'demo',
+        class: 'alpha-status',
+        text: 'Demo Tag'
+    });
 })
-.run(function ($rootScope, $anchorScroll, rxEnvironment, rxPageTitle, $timeout) {
+.run(function ($rootScope, $anchorScroll, rxEnvironment, rxPageTitle, rxBreadcrumbsSvc, $timeout) {
     var baseGithubUrl = '//rackerlabs.github.io/encore-ui/';
     rxEnvironment.add({
         name: 'ghPages',
         pattern: /\/\/rackerlabs.github.io/,
         url: baseGithubUrl + '{{path}}'
     });
+
+    rxBreadcrumbsSvc.setHome('#/overview', 'Overview');
 
     rxPageTitle.setSuffix(' - EncoreUI');
 

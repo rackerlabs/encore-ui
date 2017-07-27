@@ -72,6 +72,10 @@
             {
                 linkText: 'Utilities',
                 children: linksForModuleCategory('utilities')
+            },
+            {
+                linkText: 'Components',
+                children: linksForModuleCategory('components')
             }
         ];
 

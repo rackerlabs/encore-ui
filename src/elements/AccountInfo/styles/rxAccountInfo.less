@@ -25,58 +25,56 @@
 /*
  * rxAccountInfoBanner
  */
-.rx-page {
-  .account-info-banner {
-    clear: both;
-    background: @white;
-    width: 100%;
-    border-top: 1px solid;
-    border-color: @gray-500;
-  }
+.account-info-banner {
+  clear: both;
+  background: @white;
+  width: 100%;
+  border-top: 1px solid;
+  border-color: @gray-500;
+}
 
-  ul.account-info-text {
-    padding: 5px 50px 5px 12px;
-    overflow: hidden;
-    li {
-      float: left;
-      padding-right: 40px;
-      .label {
-        color: @gray-700;
-        font-size: 9px;
-      }
-      .account-data {
-        font-size: 18px;
-        font-weight: 300;
+ul.account-info-text {
+  padding: 5px 50px 5px 12px;
+  overflow: hidden;
+  li {
+    float: left;
+    padding-right: 40px;
+    .label {
+      color: @gray-700;
+      font-size: 9px;
+    }
+    .account-data {
+      font-size: 18px;
+      font-weight: 300;
 
-        .rxSelect {
-          width: 140px;
-          font-size: @rxAccountInfo-font-size;
-        }
-      }
-      .msg-warn {
-        color: @red-700;
-      }
-      .msg-info {
-        color: @orange-700;
+      .rxSelect {
+        width: 140px;
+        font-size: @rxAccountInfo-font-size;
       }
     }
-    li.badges {
-      float: right;
-      padding: 0;
-      .account-info-badge {
-        .tooltip {
-          width: 150px;
-        }
-        img {
-          width: 35px;
-          float: left;
-          margin: 5px 2px;
-        }
+    .msg-warn {
+      color: @red-700;
+    }
+    .msg-info {
+      color: @orange-700;
+    }
+  }
+  li.badges {
+    float: right;
+    padding: 0;
+    .account-info-badge {
+      .tooltip {
+        width: 150px;
+      }
+      img {
+        width: 35px;
+        float: left;
+        margin: 5px 2px;
       }
     }
   }
+}
 
-  ul.account-info-badges {
-    overflow: hidden;
-  }
+ul.account-info-badges {
+  overflow: hidden;
 }

@@ -3,5 +3,16 @@
     "stability": "deprecated",
     "description": "",
     "isLegacy": true,
-    "keywords": []
+    "keywords": [
+      "rxAccountSearch",
+      "rxAccountUsers",
+      "rxAppNav",
+      "rxAppNavItem",
+      "rxAppSearch",
+      "rxAtlasSearch",
+      "rxBillingSearch",
+      "rxPage",
+      "rxStatusTag",
+      "rxTicketSearch"
+    ]
 }

@@ -93,31 +93,5 @@ module.exports = {
             'jsdoc:rxPageObjects',
             'copy:rxPageObjectsDocs'
         ]
-    },
-    // Saved from 4.x
-    tscRxPageObjects: {
-        files: [
-            'utils/rx-page-objects/README.md',
-            'utils/rx-page-objects/typedoc.js',
-            'utils/rx-page-objects/tsconfig.json',
-            'utils/rx-page-objects/index.ts',
-            'utils/rx-page-objects/src/*.ts',
-            '!utils/rx-page-objects/src/*.d.ts'
-        ],
-        tasks: [
-            'shell:tscRxPageObjects',
-            'shell:docRxPageObjects',
-            'copy:rxPageObjectsDocs'
-        ]
-    },
-    // Saved from 4.x
-    tscRxPageObjectsTests: {
-        files: [
-            'utils/rx-page-objects/tsconfig-test.json',
-            'utils/rx-page-objects/test/*.ts'
-        ],
-        tasks: [
-            'shell:tscRxPageObjectsTests'
-        ]
     }
 };

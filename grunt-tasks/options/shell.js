@@ -14,38 +14,8 @@ module.exports = function (grunt) {
             }
         },
 
-        // Saved from 4.x
-        'tslint-test': {
-            command: 'npm run tslint-test',
-            options: {
-                stdout: true
-            }
-        },
-
-        // Saved from 4.x
-        docRxPageObjects: {
-            command: 'node_modules/.bin/typedoc',
-            options: {
-                stdout: true,
-                execOptions: {
-                    cwd: 'utils/rx-page-objects'
-                }
-            }
-        },
-
         tscRxPageObjects: {
             command: 'node_modules/.bin/tsc',
-            options: {
-                stdout: true,
-                execOptions: {
-                    cwd: 'utils/rx-page-objects'
-                }
-            }
-        },
-
-        // Saved from 4.x
-        tscRxPageObjectsTests: {
-            command: 'node_modules/.bin/tsc -p tsconfig-test.json',
             options: {
                 stdout: true,
                 execOptions: {
