@@ -14,6 +14,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // Saved from 4.x
         'tslint-test': {
             command: 'npm run tslint-test',
             options: {
@@ -21,6 +22,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // Saved from 4.x
         docRxPageObjects: {
             command: 'node_modules/.bin/typedoc',
             options: {
@@ -41,6 +43,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // Saved from 4.x
         tscRxPageObjectsTests: {
             command: 'node_modules/.bin/tsc -p tsconfig-test.json',
             options: {

@@ -1,0 +1,42 @@
+<div ng-controller="rxAppCtrl">
+  <h3>Standard rxApp</h3>
+  <rx-app id="standard-rxApp">
+    <rx-page title="'Standard Page Title'">
+      <p class="clear">This is my page content</p>
+      <button ng-click="changeRoutes()" class="button">Change Routes</button>
+    </rx-page>
+  </rx-app>
+
+  <h3>Customized rxApp (collapsible)</h3>
+  <rx-app collapsible-nav="true" site-title="My App" id="custom-rxApp" menu="customMenu" new-instance="true" hide-feedback="true">
+    <rx-page
+      unsafe-html-title="'Customized Page <a href=&quot;http://rackspace.com&quot;>Title</a>'"
+      subtitle="subtitle"
+      status="alpha"
+      account-number="12345">
+
+      <p class="clear">Click a link in the menu to see the active state change</p>
+      <p>Click the toggle to hide the menu</p>
+      <button ng-click="changeSubtitle()" class="changeSubtitle button">Change Subtitle</button>
+    </rx-page>
+  </rx-app>
+
+  <h3>Embedded rxApp</h3>
+  <p>
+    rxApp is smart enough to detect if it is loaded in an iframe and will hide
+    the left nav.
+  </p>
+  <iframe id="embedded-app" ng-src="{{embedUrl}}"></iframe>
+</div>
+
+<!--
+You'll likely want to implement your HTML in your index.html file as:
+<div ng-app="sampleApp">
+    <rx-app ng-view></rx-app>
+</div>
+
+And the template for each view/page will be something like:
+<rx-page title="'Example Page'">
+    Example content
+</rx-page>
+-->

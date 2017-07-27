@@ -21,9 +21,9 @@ describe('rxSortEmptyTop', function () {
     var dataRowsSortedDescending = [
         { id: '5', image: { name: 'Ubuntu 12.04 LTS' }},
         { id: '4', image: { name: 'Cent OS' }},
-        { id: '1', image: {}},
+        { id: '3', image: { name: undefined }},
         { id: '2', image: { name: null }},
-        { id: '3', image: { name: undefined }}
+        { id: '1', image: {}}
     ];
 
     beforeEach(function () {
@@ -47,7 +47,7 @@ describe('rxSortEmptyTop', function () {
     });
 
     it('should return data in the same order when the predicate does not exist', function () {
-        expect(sortEmptyTop(dataRows, 'not_a_field', reverse)).to.deep.eq(dataRows);
+        expect(sortEmptyTop(dataRows, 'not_a_field', reverse)).to.deep.eq(dataRows.reverse());
         expect(sortEmptyTop(dataRows, 'not_a_field', !reverse)).to.deep.eq(dataRows);
     });
 });

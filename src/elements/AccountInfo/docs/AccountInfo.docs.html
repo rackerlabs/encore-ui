@@ -1,0 +1,47 @@
+<h3><rx-permalink>Account Info Demonstrating <code>rxPage</code> Usage </rx-permalink></h3>
+<p>
+  This element is used to draw an account info box at the top of each page,
+  directly underneath the breadcrumbs.
+</p>
+<p>
+  When <code>account-number="..."</code> is passed to <code>&lt;rx-page&gt;</code>, the account info
+  banner will automatically be drawn underneath the breadcrumbs, as shown here.
+</p>
+<rx-example name="accountInfo.rxPage"></rx-example>
+
+<p>
+  The rest of the examples just show the affect of different conditions on the account info banner, rather than
+  showing an entire <code>rxApp</code> sample again.
+</p>
+
+<h3><rx-permalink>Simple Account Info Implementation</rx-permalink></h3>
+<rx-example class="demo-simple-account" name="accountInfo.simple"></rx-example>
+
+<h3><rx-permalink>Deliquent Account</rx-permalink></h3>
+<p>Note the changed styling on "Account Status".<p>
+<rx-example class="delinquent-account" name="accountInfo.deliquent"></rx-example>
+
+<h3><rx-permalink>Account Info Implementation with Team Badges</rx-permalink></h3>
+<rx-example class="unverified-account" name="accountInfo.withTeamBadges"></rx-example>
+
+<h3><rx-permalink>Can't Load Badges</rx-permalink></h3>
+<rx-example name="accountInfo.errorBadges"></rx-example>
+
+<h3><rx-permalink>Can't Load Team Badges</rx-permalink></h3>
+<rx-example name="accountInfo.errorTeamBadges"></rx-example>
+
+<h3><rx-permalink>Can't Load Account Name</rx-permalink></h3>
+<rx-example name="accountInfo.unknownAccount"></rx-example>
+
+<h3><rx-permalink>Deprecated Account Format</rx-permalink></h3>
+<p>
+  The Account Info box is intended to appear as a banner directly beneath a page's breadcrumbs, and
+  <code>rxPage</code> has been augmented to support this. In the past though, we supported a different
+  format for the Account Info, which you would explicitly place wherever on the page you liked.
+</p>
+<p>
+  This old format is still available. Simply use <code>rx-account-info</code> as above, but leave out the
+  <code>account-info-banner='true'</code> attribute. This style is considered deprecated, and should not be
+  used for new work.
+</p>
+<rx-example name="accountInfo.deprecated"></rx-example>

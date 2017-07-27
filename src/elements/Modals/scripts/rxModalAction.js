@@ -70,11 +70,11 @@ angular.module('encore.ui.elements')
  * If the expression evaluates truthy, then the link for opening the modal will
  * be disabled.
  * @param {String=} [controller='rxModalCtrl']
- * Identifies the controller name to use for modal functionality. At minimum, 
- * the controller should implement `submit()` and `cancel()` for use by the modal 
- * footer. Use this attribute if you need advanced behavior of the modal. 
+ * Identifies the controller name to use for modal functionality. At minimum,
+ * the controller should implement `submit()` and `cancel()` for use by the modal
+ * footer. Use this attribute if you need advanced behavior of the modal.
  * Currently used in wizard-like modals and multi-view modals.
- * 
+ *
  * @example
  * <pre>
  * <rx-modal-action
@@ -86,7 +86,7 @@ angular.module('encore.ui.elements')
  * </rx-modal-action>
  * </pre>
  */
-.directive('rxModalAction', function ($uibModal) {
+.directive('rxModalAction', function (rxModal) {
     var createModal = function (config, scope) {
         config = _.defaults(config, {
             templateUrl: config.templateUrl,
@@ -96,7 +96,7 @@ angular.module('encore.ui.elements')
 
         config.windowClass = 'rxModal';
 
-        var modal = $uibModal.open(config);
+        var modal = rxModal.open(config);
 
         return modal;
     };

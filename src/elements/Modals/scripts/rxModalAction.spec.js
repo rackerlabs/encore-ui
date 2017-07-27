@@ -42,7 +42,7 @@ describe('rxModalAction', function () {
 
         // Provide any mocks needed
         module(function ($provide) {
-            $provide.value('$uibModal', modalApi);
+            $provide.value('rxModal', modalApi);
         });
 
         // Inject in angular constructs

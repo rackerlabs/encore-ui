@@ -1,0 +1,24 @@
+<div class="rx-app-search">
+    <form name="search" role="search" ng-submit="fetchAccounts(model)">
+        <fieldset>
+            <input type="text" ng-attr-placeholder="Search by {{ placeholder }}" ng-model="model" class="form-item search-input" ng-required>
+            <button type="submit" class="search-action" ng-disabled="!search.$valid"><span class="visually-hidden">Search</span></button>
+        </fieldset>
+        <fieldset>
+            <ul>
+                <li class="search-option">
+                    <label for="transaction">
+                        <input id="transaction" type="radio" value="bsl" ng-model="searchType" />
+                        Transaction/Auth ID
+                    </label>
+                </li>
+                <li class="search-option">
+                    <label for="account">
+                        <input id="account" type="radio" value="cloud" ng-model="searchType" />
+                        Account/Contact Info
+                    </label>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+</div>

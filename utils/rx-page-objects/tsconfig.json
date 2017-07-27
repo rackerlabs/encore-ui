@@ -1,25 +1,17 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es2015",
         "moduleResolution": "node",
         "sourceMap": false,
-        "declaration": true,
+        "declaration": false,
         "removeComments": false,
         "noImplicitAny": false,
-        "experimentalDecorators": true,
-        "outDir": ".",
-        "rootDir": ".",
-        "types": [
-            "node",
-            "mocha",
-            "lodash",
-            "chai-as-promised"
-        ]
+        "outDir": "."
     },
-    "exclude": [],
-    "include": [
-        "index.ts",
-        "src/*.ts"
+    "files": [
+        "src/rxComponent.ts",
+        "src/rxDatePicker.page.ts",
+        "src/rxDatePicker.exercise.ts"
     ]
 }

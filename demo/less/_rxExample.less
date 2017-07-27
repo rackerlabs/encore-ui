@@ -1,9 +1,9 @@
 rx-example {
   display: block;
   margin-top: 2em;
-  border: 1px solid @gray-300;
+  border: 1px solid var(--rx-gray-300);
   padding: 15px;
-  background-color: @white;
+  background-color: var(--rx-gray-0);
 
   h1,
   h2,
@@ -48,20 +48,20 @@ rx-example {
 
       a {
         background: transparent;
-        color: @gray-700;
+        color: var(--rx-gray-700);
         padding: 4px 10px;
         border-bottom: 3px solid transparent;
 
         &:hover:not(.active),
         &:focus:not(.active) {
-          color: @blue-700;
+          color: var(--rx-blue-700);
         }
       }
 
       .active a {
         background: transparent;
-        color: @blue-700;
-        border-bottom-color: @blue-700;
+        color: var(--rx-blue-700);
+        border-bottom-color: var(--rx-blue-700);
       }
     }
 
@@ -73,7 +73,7 @@ rx-example {
         padding: 0;
 
         .source-code-wrapper {
-          border: 1px solid @blue-700;
+          border: 1px solid var(--rx-blue-700);
         }
 
         .toggle-expand {

@@ -84,6 +84,17 @@ module.exports = {
             'build'
         ]
     },
+    rxPageObjects: {
+        files: [
+            'utils/rx-page-objects/src/*.js',
+            'utils/rx-page-objects/doc/README.md'
+        ],
+        tasks: [
+            'jsdoc:rxPageObjects',
+            'copy:rxPageObjectsDocs'
+        ]
+    },
+    // Saved from 4.x
     tscRxPageObjects: {
         files: [
             'utils/rx-page-objects/README.md',
@@ -99,6 +110,7 @@ module.exports = {
             'copy:rxPageObjectsDocs'
         ]
     },
+    // Saved from 4.x
     tscRxPageObjectsTests: {
         files: [
             'utils/rx-page-objects/tsconfig-test.json',

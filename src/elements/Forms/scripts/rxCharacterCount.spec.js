@@ -5,6 +5,10 @@ describe('elements:CharacterCount', function () {
     var maxCharsTemplate = '<textarea ng-model="comment" rx-character-count max-characters="50"></textarea>';
     var boundaryTemplate = '<textarea ng-model="comment" rx-character-count max-characters="20" low-boundary="5">' +
                            '</textarea>';
+    var ngTrimTemplate = '<textarea ng-model="trimComment" rx-character-count max-characters="50" ' +
+                         'ng-trim="true"></textarea>';
+    var ngTrimFalseTemplate = '<textarea ng-model="trimComment" rx-character-count max-characters="50" ' +
+                              'ng-trim="false"></textarea>';
 
     beforeEach(function () {
         // load module
@@ -15,6 +19,7 @@ describe('elements:CharacterCount', function () {
             $rootScope = _$rootScope_;
             originalScope = $rootScope.$new();
             originalScope.comment = '';
+            originalScope.trimComment = '  Hello  ';
             originalScope.initComment = 'I have an initial value';
             originalScope.showTextArea = true;
             originalScope.hideTextArea = true;
@@ -140,7 +145,7 @@ describe('elements:CharacterCount', function () {
             $timeout.flush();
             expect(parentDiv.is(':empty')).to.be.true;
         });
-        
+
         it('should remove the character count if the element is removed manually', function () {
             parentDiv = helpers.createDirective(ngIfTemplate, compile, originalScope);
             el = parentDiv.find('textarea');
@@ -172,80 +177,25 @@ describe('elements:CharacterCount', function () {
         });
     });
 
-    describe('character highlighting', function () {
-
-        function getHighlightingTemplate (trim) {
-            return '<textarea ng-model="comment" rx-character-count max-characters="50" ' +
-                   'highlight="true" ng-trim="' + trim + '"></textarea>';
-        }
-
-        describe('with ngTrim', function ()  {
-
-            beforeEach(function () {
-                el = helpers.createDirective(getHighlightingTemplate(true), compile, originalScope);
-                scope = el.scope();
-            });
-
-            it('should not count leading spaces when spliting text on the limit', function () {
-                var str = '     123456789012345678901234567890123456789012345';
-
-                // Pass in 50 characters, should not be below limit
-                changeText(el, str);
-                expect(scope.underLimitText).to.equal(str);
-                expect(scope.overLimitText).to.equal('');
-
-                // Pass in 55 characters, should be below limit, but not over
-                changeText(el, str + '67890');
-                expect(scope.underLimitText).to.equal(str + '67890');
-                expect(scope.overLimitText).to.equal('');
-
-                // Pass in 56 characters, should be over limit, but not below
-                changeText(el, str + '678901');
-                expect(scope.underLimitText).to.equal(str + '67890');
-                expect(scope.overLimitText).to.equal('1');
-            });
-
-            it('should not include trailing whitespace over the limit', function () {
-                // Pass in 55 characters, including 4 trailing spaces
-                var str = '12345678901234567890123456789012345678901234567890';
-                changeText(el, str + '1    ');
-                expect(scope.underLimitText).to.equal(str);
-                expect(scope.overLimitText).to.equal('1');
-            });
-
+    describe('"ng-trim" set to true', function () {
+        beforeEach(function () {
+            el = helpers.createDirective(ngTrimTemplate, compile, originalScope);
+            scope = el.scope();
         });
 
-        describe('without ngTrim', function () {
-
-            beforeEach(function () {
-                el = helpers.createDirective(getHighlightingTemplate(false), compile, originalScope);
-                scope = el.scope();
-            });
-
-            it('should count leading spaces when spliting text on the limit', function () {
-                var str = '     123456789012345678901234567890123456789012345';
-
-                // Pass in 50 characters, should be below limit, but not over
-                changeText(el, str);
-                expect(scope.underLimitText).to.equal(str);
-                expect(scope.overLimitText).to.equal('');
-
-                // Pass in 51 characters, should be over limit, but not below
-                changeText(el, str + '6');
-                expect(scope.underLimitText).to.equal(str);
-                expect(scope.overLimitText).to.equal('6');
-            });
-
-            it('should include trailing whitespace over the limit', function () {
-                // Pass in 55 characters, including 4 trailing spaces
-                var str = '12345678901234567890123456789012345678901234567890';
-                changeText(el, str + '1    ');
-                expect(scope.underLimitText).to.equal(str);
-                expect(scope.overLimitText).to.equal('1    ');
-            });
-
+        it('should count the trimmed length', function () {
+            expect(scope.remaining).to.equal(45);
         });
-
     });
 
+    describe('"ng-trim" set to false', function () {
+        beforeEach(function () {
+            el = helpers.createDirective(ngTrimFalseTemplate, compile, originalScope);
+            scope = el.scope();
+        });
+
+        it('should count the full length', function () {
+            expect(scope.remaining).to.equal(41);
+        });
+    });
 });
