@@ -30,6 +30,6 @@
     "protractor-console-plugin": "^0.1.1",
     "tslint": "^4.5.1",
     "typedoc": "^0.5.9",
-    "typescript": "^2.1.5"
+    "typescript": "2.3.x"
   }
 }
