@@ -1,14 +1,9 @@
-///<reference path="../typings/globals/selenium-webdriver/index.d.ts"/>
-///<reference path="../typings/globals/node/index.d.ts"/>
-///<reference path="../typings/globals/lodash/index.d.ts"/>
-///<reference path="../typings/globals/moment-node/index.d.ts"/>
-
 'use strict';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import {ElementFinder, ElementArrayFinder} from 'protractor';
-import {$$, browser, by, protractor} from 'protractor/globals';
+import {$$, browser, by, protractor} from 'protractor';
 import {rxComponentElement, AccessorPromiseString, Promise} from './rxComponent';
 
 let rxSelect = require('./rxSelect.page').rxSelect;

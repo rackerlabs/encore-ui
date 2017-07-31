@@ -1,9 +1,7 @@
-///<reference path="../typings/globals/node/index.d.ts"/>
-
 'use strict';
 
-import {browser} from 'protractor/globals';
-import {ElementFinder} from 'protractor';
+import {promise} from 'selenium-webdriver'
+import {browser, ElementFinder} from 'protractor';
 
 export class rxComponentElement extends ElementFinder {
     constructor(rootElement: ElementFinder) {
@@ -14,5 +12,5 @@ export class rxComponentElement extends ElementFinder {
 // TODO - this is not the best place for a generic exported type like this.
 // but it works well for now, seeing as how many components will need both
 // generic reusable exported types, as well as rxComponentElement
-export type AccessorPromiseString = string | webdriver.promise.Promise<string>;
-export type Promise<T> = webdriver.promise.Promise<T>; // alias to aid in typing
+export type AccessorPromiseString = string | promise.Promise<string>;
+export type Promise<T> = promise.Promise<T>; // alias to aid in typing

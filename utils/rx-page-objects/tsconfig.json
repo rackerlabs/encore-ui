@@ -7,7 +7,7 @@
         "declaration": false,
         "removeComments": false,
         "noImplicitAny": false,
-        "outDir": "."
+        "outDir": "src"
     },
     "files": [
         "src/rxComponent.ts",

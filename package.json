@@ -22,7 +22,7 @@
     "normalize.css": "^3.0.2"
   },
   "devDependencies": {
-    "astrolabe": "0.3.6",
+    "astrolabe": "^0.3.6",
     "chai": "1.10.0",
     "chai-as-promised": "4.1.1",
     "connect-livereload": "0.5.2",
@@ -47,7 +47,7 @@
     "grunt-gh-pages": "0.9.1",
     "grunt-html2js": "0.2.9",
     "grunt-jsdoc": "1.1.0",
-    "grunt-karma": "0.10.1",
+    "grunt-karma": "^2.0.0",
     "grunt-karma-coveralls": "2.5.3",
     "grunt-lib-phantomjs": "0.6.0",
     "grunt-ng-annotate": "0.10.0",
@@ -55,7 +55,7 @@
     "grunt-shell": "1.1.1",
     "grunt-text-replace": "0.4.0",
     "grunt-wiredep": "2.0.0",
-    "karma": "0.12.31",
+    "karma": "^1.7.0",
     "karma-chai": "0.1.0",
     "karma-chai-plugins": "0.2.4",
     "karma-chrome-launcher": "0.1",
@@ -69,6 +69,7 @@
     "lodash": "2.4.1",
     "marked": "0.3.3",
     "mocha": "2.1.0",
-    "moment": "2.13.0"
+    "moment": "2.13.0",
+    "requirejs": "^2.3.4"
   }
 }

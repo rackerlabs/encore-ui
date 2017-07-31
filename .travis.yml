@@ -1,9 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-  - "5.1.1" # same as .node-version
+  - "8.2.1" # same as .node-version
 addons:
-  firefox: "41.0"
+  firefox: "54.0"
 dist: precise
 before_install:
 - node ./utils/quitIfFork.js
