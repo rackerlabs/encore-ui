@@ -16,7 +16,7 @@ before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - grunt connect:keepalive &
-- nohup bash -c "./utils/rx-page-objects/node_modules/.bin/webdriver-manager start 2>&1 &"
+- nohup bash -c "./utils/rx-page-objects/node_modules/.bin/webdriver-manager start &>/dev/null &"
 - sleep 5 # wait for selenium server to actually come up
 script:
 - npm run eslint-dev
