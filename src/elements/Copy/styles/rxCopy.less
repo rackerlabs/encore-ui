@@ -115,16 +115,25 @@ table {
     // TODO: this should become the default for 3.0.0 tables
     table-layout: fixed;
 
-    rx-copy {
-      #rxCopy.compact();
+    & > thead,
+    & > tbody,
+    & > tfoot {
+      & > tr {
+        & > td,
+        & > th {
+          & > rx-copy {
+            #rxCopy.compact();
 
-      .rxCopy__action {
-        visibility: hidden;
-      }
+            .rxCopy__action {
+              visibility: hidden;
+            }
 
-      &:hover {
-        .rxCopy__action {
-          visibility: visible;
+            &:hover {
+              .rxCopy__action {
+                visibility: visible;
+              }
+            }
+          }
         }
       }
     }
