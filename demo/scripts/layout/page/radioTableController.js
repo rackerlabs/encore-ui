@@ -1,6 +1,5 @@
 angular.module('demoApp')
 .controller('radioTableCtrl', function ($scope) {
-    
     $scope.radioTableData = [
         {
             'id': 'option1_id',

@@ -1,0 +1,18 @@
+{
+    "displayName": "rxApp",
+    "stability": "deprecated",
+    "description": "",
+    "isLegacy": true,
+    "keywords": [
+      "rxAccountSearch",
+      "rxAccountUsers",
+      "rxAppNav",
+      "rxAppNavItem",
+      "rxAppSearch",
+      "rxAtlasSearch",
+      "rxBillingSearch",
+      "rxPage",
+      "rxStatusTag",
+      "rxTicketSearch"
+    ]
+}

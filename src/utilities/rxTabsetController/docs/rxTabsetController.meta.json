@@ -1,0 +1,7 @@
+{
+    "displayName": "rxTabsetController",
+    "stability": "stable",
+    "description": "Controller used for the Tabs element.",
+    "api": "controller:rxTabsetController",
+    "keywords": []
+}

@@ -30,21 +30,21 @@
   <div ng-if="!module.isLegacy" rx-compile="module.docs.html" class="module-demo"></div>
 
   <!-- TODO: REMOVE! -->
-  <tabset class="clearfix clear" ng-if="module.isLegacy && (module.docs.html || module.docs.js)">
-    <tab heading="Demo">
+  <rx-tabset class="clearfix clear" ng-if="module.isLegacy && (module.docs.html || module.docs.js)">
+    <rx-tab heading="Demo">
       <div rx-compile="module.docs.html" class="module-demo"></div>
-    </tab>
+    </rx-tab>
 
-    <tab heading="Markup" ng-if="module.docs.html">
+    <rx-tab heading="Markup" ng-if="module.docs.html">
       <rx-prism language="markup">{{ module.docs.html }}</rx-prism>
-    </tab>
+    </rx-tab>
 
-    <tab heading="JavaScript" ng-if="module.docs.js">
+    <rx-tab heading="JavaScript" ng-if="module.docs.js">
       <rx-prism language="clike">{{ module.docs.js }}</rx-prism>
-    </tab>
+    </rx-tab>
 
-    <tab heading="Less" ng-if="module.docs.less">
+    <rx-tab heading="Less" ng-if="module.docs.less">
       <rx-prism language="css">{{ module.docs.less }}</rx-prism>
-    </tab>
-  </tabset>
+    </rx-tab>
+  </rx-tabset>
 </div>

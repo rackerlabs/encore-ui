@@ -20,7 +20,7 @@ angular.module('encore.ui.elements')
  * @param {String} value The value of the option. If no transcluded content is provided,
  *                       the value will also be used as the option's text.
  */
-.directive('rxSelectOption', function (rxDOMHelper) {
+.directive('rxSelectOption', function () {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxSelectOption.html',
@@ -30,8 +30,11 @@ angular.module('encore.ui.elements')
         },
         require: '^^rxMultiSelect',
         link: function (scope, element, attrs, selectCtrl) {
-            scope.transclusion = rxDOMHelper.find(element, '[ng-transclude] > *').length > 0;
-
+            // Previous implementation accessed the DOM and was always returning false after the upgrade to 1.6.
+            // By simply checking the scope's $parent we can avoid accessing the DOM and achieve the same result.
+            // If the $parent has options the options list will be created by an ngRepeat,
+            // otherwise it will be transcluded
+            scope.transclusion = _.isEmpty(scope.$parent.options);
             scope.toggle = function (isSelected) {
                 if (isSelected) {
                     selectCtrl.unselect(scope.value);

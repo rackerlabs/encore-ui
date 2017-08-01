@@ -7,7 +7,8 @@
           <input type="text"
             id="typeahead"
             ng-model="selected2"
-            typeahead="state for state in states | filter:$viewValue:allowEmpty" />
+            rx-typeahead-min-length="0"
+            rx-typeahead="state for state in states | filter:$viewValue:allowEmpty" />
         </rx-input>
       </rx-field-content>
     </rx-field>

@@ -15,6 +15,7 @@
         "browser": false,
         "by": false,
         "console": false,
+        "chai": false,
         "demoPage": true,
         "describe": false,
         "element": false,

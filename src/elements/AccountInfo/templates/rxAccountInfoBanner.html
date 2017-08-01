@@ -1,0 +1,49 @@
+<div class="account-info-banner">
+  <ul class="account-info-text">
+    <li>
+      <div class="label">Account Name:</div>
+      <div class="account-data">
+        <a href="{{ accountPageUrl }}" target="_blank">
+          {{ accountName || 'N/A' }}
+        </a>
+      </div>
+    </li>
+    <li>
+      <div class="label">Account #:</div>
+      <div class="account-data">
+        <a href="{{ accountPageUrl }}" target="_blank">
+          {{ accountNumber }}
+        </a>
+      </div>
+    </li>
+    <li>
+      <div class="label">Account Status:</div>
+      <div class="account-data {{ statusClass }} account-status">
+        {{ accountStatus || 'N/A' }}
+      </div>
+    </li>
+    <li>
+      <div class="label">Access Policy:</div>
+      <div class="account-data">{{ accountAccessPolicy || 'N/A' }}</div>
+    </li>
+     <li>
+      <div class="label">Collection Status:</div>
+      <div class="account-data">{{ accountCollectionsStatus || 'N/A' }}</div>
+    </li>
+    <li ng-if="showCurrentUser">
+      <div class="label">Current User:</div>
+      <div class="account-data">
+        <rx-account-users></rx-account-users>
+      </div>
+    </li>
+    <li class="badges" ng-repeat="badge in badges">
+      <div class="account-info-badge">
+        <img ng-src="{{badge.url}}"
+          data-name="{{badge.name}}"
+          data-description="{{badge.description}}"
+          uib-tooltip-html="tooltipHtml(badge)"
+          tooltip-placement="bottom" />
+      </div>
+    </li>
+  </ul>
+</div>

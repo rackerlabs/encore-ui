@@ -13,6 +13,7 @@ angular.module('encore.ui.utilities')
  *
  * * name: The "friendly" name of your environment, like "local", "preprod", etc.
  * * pattern: A string or RegEx that the current path is matched against
+ * * url: The URL pattern used to build URLs when using rxEnvironmentUrl
  *
  * As an example, if we didn't already have a `'preprod'` environment, we could
  * add it as follows:
@@ -76,6 +77,26 @@ angular.module('encore.ui.utilities')
  *
  * When you want to check if you're in one of the custom environments, you can
  * use `envCheck()`, i.e.: `rxEnvironment.envCheck('ghPages')`
+ *
+ * ## A Warning About rxEnvironmentUrl ##
+ * `rxEnvironmentUrl` can be used for building full URLs, based on the current
+ * environment. For now, you should consider it as deprecated. It has problems
+ * with overlapping environments, and could potentially generate the wrong URL.
+ *
+ * ## A Warning About `rxEnvironment.get().name` ##
+ * You might find older Encore code that uses `rxEnvironment.get().name` to get
+ * the name of the current environment. This pattern should be avoided,
+ * specifically because of the overlapping environment issue discussed above.
+ * If you call `rxEnvironment.get().name`, it will just return the first matching
+ * environment in the list of environments, even if we're overlapping and have
+ * multiple environments. Instead, check explicitly with
+ * `rxEnvironment.isLocal()`, `rxEnvironment.isPreProd()`, etc., or
+ * use `rxEnvironment.envCheck('local')`
+ *
+ * @example
+ * <pre>
+ * rxEnvironment.get() // return environment object that matches current location
+ * </pre>
  *
  */
 .service('rxEnvironment', function ($location, $rootScope, $log) {
@@ -162,6 +183,33 @@ angular.module('encore.ui.utilities')
         }
 
         return _.includes(href, pattern);
+    };
+
+    /* ====================================================================== *\
+      DO NOT USE rxEnvironment.get()!
+
+      This function should be avoided due to overlapping environment
+      issues mentioned in the documentation.
+
+      Any use of this function will be AT YOUR OWN RISK.
+
+      Please read the documentation for other means of checking your environment.
+    \* ====================================================================== */
+    this.get = function (href) {
+        // default to current location if href not provided
+        href = href || $location.absUrl();
+
+        var currentEnvironment = _.find(environments, function (environment) {
+            return environmentPatternMatch(href, environment.pattern);
+        });
+
+        if (_.isUndefined(currentEnvironment)) {
+            $log.warn('No environments match URL: ' + $location.absUrl());
+            // set to default/first environment to avoid errors
+            currentEnvironment = environments[0];
+        }
+
+        return currentEnvironment;
     };
 
     /*

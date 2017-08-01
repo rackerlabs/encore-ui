@@ -11,7 +11,7 @@
      *
      * Credit where it's due: https://github.com/epeli/underscore.string/blob/master/titleize.js
      *
-     * @param {String} inputString The string to convert
+     * @param {String} inputString - The string to convert
      * @returns {String} The titleized version of the string
      *
      * @example

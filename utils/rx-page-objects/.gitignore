@@ -1,11 +1,13 @@
 doc/*
+!doc/jsdoc-custom.css
+!doc/layout.tmpl
+!doc/README.md
 node_modules/
 typings/
-*.d.ts
 
 # these are typescript now
 # eventually, all src/*.page.js files
 # can be ignored with a glob.
-src/*.js
-test/*.js
-index.js
+src/rxComponent.js
+src/rxDatePicker.page.js
+src/rxDatePicker.exercise.js

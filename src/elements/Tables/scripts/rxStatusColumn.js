@@ -22,7 +22,7 @@ angular.module('encore.ui.elements')
  * internally you will be receiving a number of different statuses from your
  * APIs, and will need to map them to these six statuses.
  *
- * The example in the Tables [demo](../#/elements/Tables#status-column) shows
+ * The example in the [demo](../#/elements/Tables#status-column) shows
  * a typical use of this directive, such as:
  *
  * <pre>

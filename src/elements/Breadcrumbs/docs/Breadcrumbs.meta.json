@@ -1,0 +1,12 @@
+{
+    "displayName": "Breadcrumbs",
+    "stability": "deprecated",
+    "description": "Displays navigation breadcrumbs on a page",
+    "api": "directive:rxBreadcrumbs",
+    "keywords": [
+        "breadcrumbs",
+        "navigation",
+        "menu",
+        "rxBreadcrumbs"
+    ]
+}
