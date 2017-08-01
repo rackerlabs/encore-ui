@@ -27,122 +27,236 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var protractor_1 = require("protractor");
-var rxComponent_1 = require("./rxComponent");
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+var Page = require('astrolabe').Page;
+
+var rxModalAction = require('./rxModalAction.page').rxModalAction;
+
 /**
- * @description class to handle
+ * @description Clicking an action menu item will trigger this function.
+ * By default, it returns the page object outlined below.
+ * @namespace rxActionMenu.action
  */
-var rxAction = (function (_super) {
-    __extends(rxAction, _super);
-    function rxAction() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    rxAction.prototype.click = function () {
-        return this.$('.modal-link').click();
-    };
-    return rxAction;
-}(rxComponent_1.rxComponentElement));
-__decorate([
-    rxComponent_1.OverrideWebdriver
-], rxAction.prototype, "click", null);
-exports.rxAction = rxAction;
+var action = function (actionElement) {
+
+    return Page.create({
+
+        /**
+         * @instance
+         * @memberof rxActionMenu.action
+         * @type {ElementFinder}
+         * @description The root element of the action menu item.
+         */
+        rootElement: {
+            get: function () {
+                return actionElement;
+            }
+        },
+
+        /**
+         * @function
+         * @instance
+         * @memberof rxActionMenu.action
+         * @description Returns a modal object to manipulate later, with given `customFunctionality`.
+         * See {@link rxModalAction.initialize} for more information about what `customFunctionality` means here.
+         * Using a modal object is the default action since many instances of the action menu serve to launch
+         * modals. If you're not using rxActionMenu to launch modals, over-ride this entire section
+         * when calling &lt;a href="#encore.module_rxActionMenu.initialize">rxActionMenu.initialize&lt;/a>,
+         * where you can pass in a custom `actionConstructorFn`.
+         * @param {Object} customFunctionality - Custom functionality of the modal, should you use one.
+         * @returns {rxModalAction} A modal that gets opened by clicking the action menu item.
+         */
+        openModal: {
+            value: function (customFunctionality) {
+                actionElement.$('.modal-link').click();
+                return rxModalAction.initialize(customFunctionality);
+            }
+        },
+
+        /**
+         * @instance
+         * @function
+         * @description The trimmed text of the action menu item.
+         * @memberof rxActionMenu.action
+         * @returns {Promise&lt;String>}
+         */
+        getText: {
+            value: function () {
+                return actionElement.getText();
+            }
+        }
+
+    });
+};
+
 /**
  * @description Functions for querying actions in an action menu, and launching those actions.
- * @class
+ * @namespace
  */
-var rxActionMenu = (function (_super) {
-    __extends(rxActionMenu, _super);
-    function rxActionMenu() {
-        var _this = _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-        /**
-         * @description This selector will grab any top-level child elements under `.actions-area`, one level deep.
-         * Since action menus allow for free-form html entry, there is no guarantee that any
-         * particular structure will appear inside the action menu. However, we can be sure
-         * that they'll use the `.actions-area` class to style it, and inside of it will be some
-         * sort of element list. This exposes a hook into the html for matching text or counting nodes.
-         */
-        _this.cssFirstAny = '.actions-area > *';
-        return _this;
-    }
-    Object.defineProperty(rxActionMenu.prototype, "icoCog", {
+var rxActionMenu = {
+
+    icoCog: {
         get: function () {
-            return this.$('.fa-cog');
-        },
-        enumerable: true,
-        configurable: true
-    });
+            return this.rootElement.$('.fa-cog');
+        }
+    },
+
     /**
-     * @description Whether or not the action cog is showing its underlying menu.
+     * @description This selector will grab any top-level child elements under `.actions-area`, one level deep.
+     * Since action menus allow for free-form html entry, there is no guarantee that any
+     * particular structure will appear inside the action menu. However, we can be sure
+     * that they'll use the `.actions-area` class to style it, and inside of it will be some
+     * sort of element list. This exposes a hook into the html for matching text or counting nodes.
+     * @private
      */
-    rxActionMenu.prototype.isExpanded = function () {
-        return this.$('.action-list:not(.ng-hide)').isPresent();
-    };
+    cssFirstAny: {
+        get: function () {
+            return '.actions-area > *';
+        }
+    },
+
+    /**
+     * @function
+     * @instance
+     * @description Whether or not the action menu is present on the DOM.
+     * @return {Promise&lt;Boolean>}
+     */
+    isPresent: {
+        value: function () {
+            return this.rootElement.isPresent();
+        }
+    },
+
+    /**
+     * @function
+     * @instance
+     * @description Whether or not the action cog is showing its underlying menu.
+     * @returns {Promise&lt;Boolean>}
+     */
+    isExpanded: {
+        value: function () {
+            return this.rootElement.$('.action-list').getAttribute('class').then(function (className) {
+                return className.indexOf('ng-hide') === -1;
+            });
+        }
+    },
+
     /**
      * @description Clicks the action cog to expand the action menu, unless it's already open.
+     * @function
+     * @instance
      */
-    rxActionMenu.prototype.expand = function () {
-        var _this = this;
-        this.isExpanded().then(function (expanded) {
-            if (!expanded) {
-                _this.icoCog.click();
-            }
-        });
-    };
+    expand: {
+        value: function () {
+            var page = this;
+            return this.isExpanded().then(function (expanded) {
+                if (!expanded) {
+                    page.icoCog.click();
+                }
+            });
+        }
+    },
+
     /**
      * @description Clicks the action cog to collapse the action menu, unless it's already closed.
+     * @function
+     * @instance
      */
-    rxActionMenu.prototype.collapse = function () {
-        var _this = this;
-        this.isExpanded().then(function (expanded) {
-            if (expanded) {
-                _this.icoCog.click();
-            }
-        });
-    };
+    collapse: {
+        value: function () {
+            var page = this;
+            return this.isExpanded().then(function (expanded) {
+                if (expanded) {
+                    page.icoCog.click();
+                }
+            });
+        }
+    },
+
     /**
      * @description Whether or not the action menu has an item matching the text `actionName`.
      * Will expand the action menu to determine if the action is available.
+     * @function
+     * @instance
+     * @param {String} actionName - The name of the action menu item to check for existence.
+     * @returns {Promise&lt;Boolean>}
      */
-    rxActionMenu.prototype.hasAction = function (actionName) {
-        this.expand();
-        return this.action(actionName).isDisplayed().then(function (displayed) { return displayed; }, function () { return false; });
-    };
+    hasAction: {
+        value: function (actionName) {
+            this.expand();
+            var actionElement = this.rootElement.element(by.cssContainingText(this.cssFirstAny, actionName));
+            return actionElement.isPresent().then(function (present) {
+                return present ? actionElement.isDisplayed() : present;
+            });
+        }
+    },
+
     /**
-     * @description Returns an action's element.
+     * @instance
+     * @function
+     * @description Defaults to returning an {@link rxActionMenu.action} object if none was specified at
+     * initialization. See {@link rxActionMenu.initialize} for more details about passing in a custom action item
+     * function.
+     * @param {String} actionName - Name of the action item to return an {@link rxActionMenu.action.action} object for.
+     * @returns {ElementFinder}
      */
-    rxActionMenu.prototype.action = function (actionName) {
-        this.expand();
-        return new rxAction(this.element(protractor_1.by.cssContainingText(this.cssFirstAny, actionName)));
-    };
+    action: {
+        value: function (actionName) {
+            this.expand();
+            var actionElement = this.rootElement.element(by.cssContainingText(this.cssFirstAny, actionName));
+            return this.actionConstructorFn(actionElement);
+        }
+    },
+
     /**
      * @description The number of action items present in the action menu.
      * Does not expand the action menu to determine the count of menu items.
+     * @function
+     * @instance
+     * @returns {Promise&lt;Number>}
      */
-    rxActionMenu.prototype.actionCount = function () {
-        return this.$$(this.cssFirstAny).count();
-    };
-    return rxActionMenu;
-}(rxComponent_1.rxComponentElement));
-exports.rxActionMenu = rxActionMenu;
-;
+    actionCount: {
+        value: function () {
+            return this.rootElement.$$(this.cssFirstAny).count();
+        }
+    }
+
+};
+
+exports.rxActionMenu = {
+
+    /**
+     * @function
+     * @memberOf rxActionMenu
+     * @description Passing in an `actionConstructorFn` will default to calling that for any
+     * calls made to `rxActionMenu.action('Action Name')`. If it's not defined, it defaults to a function
+     * that creates a page object represented by {@link rxActionMenu.action}.
+     * Most times you'll want to use the default option.
+     * @param {ElementFinder} rxActionMenuElement - ElementFinder to be transformed into an {@link rxActionMenu} object
+     * @param {Function} [actionConstructorFn={@link rxActionMenu.action}] -
+     * Function to invoke on calling {@link rxActionMenu#action}.
+     * @returns {rxActionMenu} Page object representing the rxActionMenu object.
+     */
+    initialize: function (rxActionMenuElement, actionConstructorFn) {
+        rxActionMenu.rootElement = {
+            get: function () {
+                return rxActionMenuElement;
+            }
+        };
+
+        rxActionMenu.actionConstructorFn = {
+            get: function () {
+                if (_.isFunction(actionConstructorFn)) {
+                    return actionConstructorFn;
+                }
+                return action;
+            }
+        };
+
+        return Page.create(rxActionMenu);
+    }
+
+};
 </code></pre>
         </article>
     </section>
@@ -153,13 +267,13 @@ exports.rxActionMenu = rxActionMenu;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

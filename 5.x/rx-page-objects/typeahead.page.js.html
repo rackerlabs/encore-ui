@@ -27,40 +27,53 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var rxComponent_1 = require("./rxComponent");
-var Typeahead = (function (_super) {
-    __extends(Typeahead, _super);
-    function Typeahead() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(Typeahead.prototype, "eleMenu", {
+            <pre class="prettyprint source linenums"><code>var Page = require('astrolabe').Page;
+
+var typeahead = {
+    eleMenu: {
         get: function () {
-            return this.parent.parent.$('.dropdown-menu');
-        },
-        enumerable: true,
-        configurable: true
-    });
+            return this.rootElement.element(by.xpath('../..')).$('.dropdown-menu');
+        }
+    },
+
+    isDisplayed: {
+        value: function () {
+            return this.rootElement.isDisplayed();
+        }
+    },
+
     /**
-     * Whether or not the menu is open.
+       @memberof typeahead
+       @function
+       @returns {boolean} - Whether or not the menu is visible.
      */
-    Typeahead.prototype.isOpen = function () {
-        return this.eleMenu.isDisplayed();
-    };
-    return Typeahead;
-}(rxComponent_1.rxComponentElement));
-exports.Typeahead = Typeahead;
+    isOpen: {
+        value: function () {
+            return this.eleMenu.isDisplayed();
+        }
+    },
+
+    /**
+       Focus the input
+       @memberof typeahead
+       @function
+       @returns {undefined}
+     */
+    focus: {
+        value: function () {
+            this.rootElement.click();
+        }
+    }
+};
+
+exports.typeahead = {
+    initialize: function (typeaheadElement) {
+        typeahead.rootElement = {
+            get: function () { return typeaheadElement; }
+        };
+        return Page.create(typeahead);
+    }
+};
 </code></pre>
         </article>
     </section>
@@ -71,13 +84,13 @@ exports.Typeahead = Typeahead;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

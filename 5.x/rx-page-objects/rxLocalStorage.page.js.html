@@ -27,34 +27,40 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var protractor_1 = require("protractor");
-/* tslint:disable no-shadowed-variable */
+            <pre class="prettyprint source linenums"><code>var Page = require('astrolabe').Page;
+
 /**
  * @namespace
  */
-var rxLocalStorage;
-(function (rxLocalStorage) {
+var rxLocalStorage = {
+
     /**
+     * @function
      * @description Add a new item to local storage. All parameters are
      * passed through `JSON.stringify()` before being set.
+     * @param {String} key - The key to store the item under inside of local storage.
+     * @param {String} value - The value to associate with the given `key` under local storage.
      * @example
      * it('should set a key in local storage', function () {
      *   encore.rxLocalStorage.setItem('key', 'value');
      *   expect(encore.rxLocalStorage.getItem('key')).to.eventually.equal('value');
      * });
      */
-    function setItem(key, value) {
-        var command = function (key, value) {
-            localStorage.setItem(key, value);
-        };
-        protractor_1.browser.executeScript(command, key, JSON.stringify(value));
-    }
-    rxLocalStorage.setItem = setItem;
+    setItem: {
+        value: function (key, value) {
+            var command = function (key, value) {
+                localStorage.setItem(key, value);
+            };
+            browser.executeScript(command, key, JSON.stringify(value));
+        }
+    },
+
     /**
+     * @function
      * @description Retrieve a pre-existing value from local storage by `key`. If the item is not
      * found, `null` is returned instead.
+     * @param {String} key - The name to look up (and return its value) in local storage.
+     * @returns {*|null}
      * @example
      * it('should add the token when you click the button', function () {
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.false;
@@ -62,15 +68,19 @@ var rxLocalStorage;
      *     expect(encore.rxLocalStorage.getItem('key')).to.eventually.equal('value');
      * });
      */
-    function getItem(key) {
-        var command = function (key) {
-            return JSON.parse(localStorage.getItem(key));
-        };
-        return protractor_1.browser.executeScript(command, key);
-    }
-    rxLocalStorage.getItem = getItem;
+    getItem: {
+        value: function (key) {
+            var command = function (key) {
+                return JSON.parse(localStorage.getItem(key));
+            };
+            return browser.executeScript(command, key);
+        }
+    },
+
     /**
+     * @function
      * @description Remove an entry from local storage by `key`.
+     * @param {String} key - The key to look up in local storage (and then delete).
      * @example
      * it('should remove the token from local storage', function () {
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.true;
@@ -78,15 +88,20 @@ var rxLocalStorage;
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.false;
      * });
      */
-    function removeItem(key) {
-        var command = function (key) {
-            localStorage.removeItem(key);
-        };
-        protractor_1.browser.executeScript(command, key);
-    }
-    rxLocalStorage.removeItem = removeItem;
+    removeItem: {
+        value: function (key) {
+            var command = function (key) {
+                localStorage.removeItem(key);
+            };
+            browser.executeScript(command, key);
+        }
+    },
+
     /**
+     * @function
      * @description Whether or not the `key` provided has already been set in local storage.
+     * @param {String} key - The key to look up in local storage (and check if it is present).
+     * @returns {Boolean}
      * @example
      * it('should report if the key isPresent', function () {
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.false;
@@ -94,14 +109,18 @@ var rxLocalStorage;
      *     expect(encore.rxLocalStorage.isPresent('key')).to.eventually.be.true;
      * });
      */
-    function isPresent(key) {
-        var command = function (key) {
-            return localStorage.getItem(key) !== null;
-        };
-        return protractor_1.browser.executeScript(command, key);
+    isPresent: {
+        value: function (key) {
+            var command = function (key) {
+                return localStorage.getItem(key) !== null;
+            };
+            return browser.executeScript(command, key);
+        }
     }
-    rxLocalStorage.isPresent = isPresent;
-})(rxLocalStorage = exports.rxLocalStorage || (exports.rxLocalStorage = {}));
+
+};
+
+exports.rxLocalStorage = Page.create(rxLocalStorage);
 </code></pre>
         </article>
     </section>
@@ -112,13 +131,13 @@ var rxLocalStorage;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

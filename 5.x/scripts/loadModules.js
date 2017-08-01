@@ -47,6 +47,92 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "rxApp",
+        "stability": "deprecated",
+        "description": "",
+        "isLegacy": true,
+        "keywords": [
+            "rxAccountSearch",
+            "rxAccountUsers",
+            "rxAppNav",
+            "rxAppNavItem",
+            "rxAppSearch",
+            "rxAtlasSearch",
+            "rxBillingSearch",
+            "rxPage",
+            "rxStatusTag",
+            "rxTicketSearch"
+        ],
+        "name": "rxApp",
+        "moduleName": "'encore.ui.rxApp'",
+        "category": "components",
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/components/rxApp/rxApp.module.js",
+            "src/components/rxApp/scripts/rxAccountSearch.js",
+            "src/components/rxApp/scripts/rxAccountUsers.js",
+            "src/components/rxApp/scripts/rxApp.js",
+            "src/components/rxApp/scripts/rxAppNav.js",
+            "src/components/rxApp/scripts/rxAppNavItem.js",
+            "src/components/rxApp/scripts/rxAppSearch.js",
+            "src/components/rxApp/scripts/rxAtlasSearch.js",
+            "src/components/rxApp/scripts/rxBillingSearch.js",
+            "src/components/rxApp/scripts/rxPage.js",
+            "src/components/rxApp/scripts/rxStatusTag.js",
+            "src/components/rxApp/scripts/rxTicketSearch.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [
+            "templates/rxApp/templates/rxAccountSearch.html",
+            "templates/rxApp/templates/rxAccountUsers.html",
+            "templates/rxApp/templates/rxApp.html",
+            "templates/rxApp/templates/rxAppNav.html",
+            "templates/rxApp/templates/rxAppNavItem.html",
+            "templates/rxApp/templates/rxAppSearch.html",
+            "templates/rxApp/templates/rxBillingSearch.html",
+            "templates/rxApp/templates/rxPage.html"
+        ],
+        "docs": {
+            "md": "<p>This component is responsible for creating the HTML necessary for a common Encore layout. It builds out the main navigation, plus breadcrumbs and page titles.</p>\n",
+            "js": "angular.module('demoApp')\n.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxSession) {\n    rxSession.getUserId = function () {\n        return 'bert3000';\n    };\n\n    $scope.subtitle = 'With a subtitle';\n\n    $scope.changeSubtitle = function () {\n        $scope.subtitle = 'With a new subtitle at ' + Date.now();\n    };\n\n    rxVisibility.addMethod(\n        'isUserDefined',\n        function () {\n            return !_.isEmpty($rootScope.user);\n        }\n    );\n\n    $scope.changeRoutes = function () {\n        var newRoute = {\n            linkText: 'Updated Route',\n            childVisibility: 'true',\n            children: [\n                {\n                    linkText: 'New child route'\n                }\n            ]\n        };\n\n        encoreRoutes.setRouteByKey('accountLvlTools', newRoute);\n    };\n\n    // Fake navigation\n    var customApp = document.getElementById('custom-rxApp');\n    customApp.addEventListener('click', function (ev) {\n        var target = ev.target;\n\n        if (target.className.indexOf('item-link') > -1) {\n            // prevent the default jump to top\n            ev.preventDefault();\n\n            var href = target.getAttribute('href');\n\n            // update angular location (if href has a value)\n            if (!_.isEmpty(href)) {\n                // we need to prevent the window from scrolling (the demo does this)\n                // so we get the current scrollTop position\n                // and set it after the demo page has run '$routeChangeSuccess'\n                var currentScollTop = document.body.scrollTop;\n\n                $location.hash(href);\n\n                $rootScope.$apply();\n\n                $window.scrollTo(0, currentScollTop);\n            }\n        }\n    });\n\n    var searchDirective = [\n        'rx-app-search placeholder=\"Enter User\"',\n        'model=\"$root.user\"',\n        'pattern=\"/^([0-9a-zA-Z._ -]{2,})$/\"'\n    ].join(' ');\n\n    $scope.customMenu = [{\n        title: 'Example Menu',\n        children: [\n            {\n                href: 'Lvl1-1',\n                linkText: '1st Order Item'\n            },\n            {\n                linkText: '1st Order Item (w/o href) w/ Children',\n                childVisibility: [ 'isUserDefined' ],\n                childHeader: '<strong class=\"current-search\">Current User:</strong>' +\n                             '<span class=\"current-result\">{{$root.user}}</span>',\n                directive: searchDirective,\n                children: [\n                    {\n                        href: 'Lvl1-2-Lvl2-1',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [{\n                            href: 'Lvl1-2-Lvl2-1-Lvl3-1',\n                            linkText: '3rd Order Item'\n                        }]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-2',\n                        linkText: '2nd Order Item w/ Children',\n                        children: [\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-1',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-2',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-3',\n                                linkText: '3rd Order Item'\n                            },\n                            {\n                                href: 'Lvl1-2-Lvl2-2-Lvl3-4',\n                                linkText: '3rd Order Item'\n                            }\n                        ]\n                    },\n                    {\n                        href: 'Lvl1-2-Lvl2-3',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            },\n            {\n                href: 'Lvl1-3',\n                linkText: '1st Order Item w/ Children',\n                children: [\n                    {\n                        href: 'Lvl1-3-Lvl2-1',\n                        linkText: '2nd Order Item'\n                    }\n                ]\n            }\n        ]\n    }];\n\n    // Load docs homepage ('Overview')\n    // NOTE: Trailing forward slash is not an accident.\n    // This is required to get Firefox to load the iframe.\n    //\n    // The resulting url should have double forward slashes `//`.\n    $scope.embedUrl = $location.absUrl().split('#')[0] + '/';\n});\n",
+            "html": "<div ng-controller=\"rxAppCtrl\">\n  <h3>Standard rxApp</h3>\n  <rx-app id=\"standard-rxApp\">\n    <rx-page title=\"'Standard Page Title'\">\n      <p class=\"clear\">This is my page content</p>\n      <button ng-click=\"changeRoutes()\" class=\"button\">Change Routes</button>\n    </rx-page>\n  </rx-app>\n\n  <h3>Customized rxApp (collapsible)</h3>\n  <rx-app collapsible-nav=\"true\" site-title=\"My App\" id=\"custom-rxApp\" menu=\"customMenu\" new-instance=\"true\" hide-feedback=\"true\">\n    <rx-page\n      unsafe-html-title=\"'Customized Page <a href=&quot;http://rackspace.com&quot;>Title</a>'\"\n      subtitle=\"subtitle\"\n      status=\"alpha\"\n      account-number=\"12345\">\n\n      <p class=\"clear\">Click a link in the menu to see the active state change</p>\n      <p>Click the toggle to hide the menu</p>\n      <button ng-click=\"changeSubtitle()\" class=\"changeSubtitle button\">Change Subtitle</button>\n    </rx-page>\n  </rx-app>\n</div>\n\n<!--\nYou'll likely want to implement your HTML in your index.html file as:\n<div ng-app=\"sampleApp\">\n    <rx-app ng-view></rx-app>\n</div>\n\nAnd the template for each view/page will be something like:\n<rx-page title=\"'Example Page'\">\n    Example content\n</rx-page>\n-->\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "Account Info",
+        "stability": "deprecated",
+        "description": "Responsible for drawing an account info box.",
+        "api": "directive:rxAccountInfo",
+        "keywords": [
+            "account",
+            "info",
+            "information",
+            "rxAccountInfo"
+        ],
+        "name": "AccountInfo",
+        "moduleName": "'encore.ui.elements'",
+        "category": "elements",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/elements/AccountInfo/scripts/rxAccountInfo.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [
+            "templates/AccountInfo/templates/rxAccountInfo.html",
+            "templates/AccountInfo/templates/rxAccountInfoBanner.html"
+        ],
+        "docs": {
+            "md": "",
+            "js": "// Note that these factories are only present for the purposes of this demo. In a real application,\n// SupportAccount, Teams, AccountStatusGroup, and Encore will have to be provided from elsewhere,\n// outside of encore-ui. Specifically, we implement them in encore-ui-svcs.\n\nangular.module('demoApp')\n.value('Badges',\n       [{\n           url: 'http://mirrors.creativecommons.org/presskit/icons/cc.large.png',\n           description: 'Enables the free distribution of an otherwise copyrighted work.',\n           name: 'Creative Commons'\n       }, {\n           url: 'http://mirrors.creativecommons.org/presskit/icons/by.large.png',\n           description: ['You must give appropriate credit, provide a link to the',\n                         'license, and indicate if changes were made.'].join(' '),\n           name: 'Attribution'\n       }, {\n           url: 'http://mirrors.creativecommons.org/presskit/icons/nc.large.png',\n           description: 'You may not use the material for commercial purposes.',\n           name: 'Non-Commercial'\n       }, {\n           url: 'http://mirrors.creativecommons.org/presskit/icons/zero.large.png',\n           description: 'Waives as many rights as legally possible, worldwide.',\n           name: 'Public Domain'\n       }]\n)\n.value('TeamBadges',\n       [{\n           url: 'http://mirrors.creativecommons.org/presskit/icons/share.large.png',\n           description: ['Licensees may distribute derivative works only under a license',\n                         'identical to the license that governs the original work.'].join(' '),\n           name: 'ShareAlike'\n       }, {\n           url: 'http://mirrors.creativecommons.org/presskit/icons/nd.large.png',\n           description: ['Licensees may copy, distribute, display and perform only verbatim',\n                         'copies of the work, not derivative works based on it.'].join(' '),\n           name: 'No-Derivs'\n       }]\n)\n.factory('SupportAccount', function ($q, Badges) {\n    return {\n        getBadges: function (config, success, failure) {\n            var deferred = $q.defer();\n\n            if (config.accountNumber === '6789') {\n                deferred.reject();\n            } else {\n                deferred.resolve(Badges);\n            }\n\n            deferred.promise.then(success, failure);\n\n            return deferred.promise;\n        }\n    };\n})\n.factory('Teams', function ($q, TeamBadges) {\n    return {\n        badges: function (config) {\n            var deferred = $q.defer();\n\n            if (config.id === '9876') {\n                deferred.reject();\n            } else {\n                deferred.resolve(TeamBadges);\n            }\n\n            deferred.$promise = deferred.promise;\n\n            return deferred;\n        }\n    };\n})\n.factory('Encore', function ($q) {\n    return {\n        getAccount: function (config, success, failure) {\n            var deferred = $q.defer();\n\n            if (config.id === '9876') {\n                deferred.reject();\n            } else if (config.id === '5623') {\n                deferred.resolve({ name: 'DelinquentAccount', status: 'Delinquent', accessPolicy: 'Full' });\n            } else if (config.id === '3265') {\n                deferred.resolve({ name: 'UnverifiedAccount', status: 'Unverified', accessPolicy: 'Full' });\n            } else {\n                deferred.resolve({\n                    name: 'Mosso',\n                    status: 'Active',\n                    accessPolicy: 'Full',\n                    collectionsStatus: 'CURRENT'\n                });\n            }\n\n            deferred.promise.then(success, failure);\n\n            return deferred.promise;\n        }\n    };\n})\n.factory('AccountStatusGroup', function () {\n    var warning = ['suspended', 'delinquent'];\n    var info = ['unverified', 'pending approval', 'approval denied', 'teststatus', 'terminated'];\n\n    return function (statusText) {\n        var lower = statusText.toLowerCase();\n        if (_.includes(warning, lower)) {\n            return 'warning';\n        } else if (_.includes(info, lower)) {\n            return 'info';\n        }\n        return '';\n    };\n});\n",
+            "html": "<h3><rx-permalink>Account Info Demonstrating <code>rxPage</code> Usage </rx-permalink></h3>\n<p>\n  This element is used to draw an account info box at the top of each page,\n  directly underneath the breadcrumbs.\n</p>\n<p>\n  When <code>account-number=\"...\"</code> is passed to <code>&lt;rx-page&gt;</code>, the account info\n  banner will automatically be drawn underneath the breadcrumbs, as shown here.\n</p>\n<rx-example name=\"accountInfo.rxPage\"></rx-example>\n\n<p>\n  The rest of the examples just show the affect of different conditions on the account info banner, rather than\n  showing an entire <code>rxApp</code> sample again.\n</p>\n\n<h3><rx-permalink>Simple Account Info Implementation</rx-permalink></h3>\n<rx-example class=\"demo-simple-account\" name=\"accountInfo.simple\"></rx-example>\n\n<h3><rx-permalink>Deliquent Account</rx-permalink></h3>\n<p>Note the changed styling on \"Account Status\".<p>\n<rx-example class=\"delinquent-account\" name=\"accountInfo.deliquent\"></rx-example>\n\n<h3><rx-permalink>Account Info Implementation with Team Badges</rx-permalink></h3>\n<rx-example class=\"unverified-account\" name=\"accountInfo.withTeamBadges\"></rx-example>\n\n<h3><rx-permalink>Can't Load Badges</rx-permalink></h3>\n<rx-example name=\"accountInfo.errorBadges\"></rx-example>\n\n<h3><rx-permalink>Can't Load Team Badges</rx-permalink></h3>\n<rx-example name=\"accountInfo.errorTeamBadges\"></rx-example>\n\n<h3><rx-permalink>Can't Load Account Name</rx-permalink></h3>\n<rx-example name=\"accountInfo.unknownAccount\"></rx-example>\n\n<h3><rx-permalink>Deprecated Account Format</rx-permalink></h3>\n<p>\n  The Account Info box is intended to appear as a banner directly beneath a page's breadcrumbs, and\n  <code>rxPage</code> has been augmented to support this. In the past though, we supported a different\n  format for the Account Info, which you would explicitly place wherever on the page you liked.\n</p>\n<p>\n  This old format is still available. Simply use <code>rx-account-info</code> as above, but leave out the\n  <code>account-info-banner='true'</code> attribute. This style is considered deprecated, and should not be\n  used for new work.\n</p>\n<rx-example name=\"accountInfo.deprecated\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "Action Menu",
         "stability": "stable",
         "description": "Display configurable action menu",
@@ -75,6 +161,37 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('actionMenuSimpleCtrl', function ($scope, rxNotify) {\n    $scope.add = function () {\n        rxNotify.add('Added!', {\n            type: 'success',\n            repeat: false,\n            timeout: 3\n        });\n    };\n\n    $scope.remove = function () {\n        rxNotify.add('Deleted!', {\n            type: 'error',\n            repeat: false,\n            timeout: 3\n        });\n    };\n});\n",
             "html": "<p>A component to create a configurable action menu.</p>\n<h3 id=\"typical-usage\">Typical Usage</h3>\n<p>The cog in the first row is dismissable by clicking anywhere, but the second\n  cog can only be dismissed by clicking on the cog itself.\n</p>\n\n<rx-example name=\"ActionMenu.simple\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "Breadcrumbs",
+        "stability": "deprecated",
+        "description": "Displays navigation breadcrumbs on a page",
+        "api": "directive:rxBreadcrumbs",
+        "keywords": [
+            "breadcrumbs",
+            "navigation",
+            "menu",
+            "rxBreadcrumbs"
+        ],
+        "name": "Breadcrumbs",
+        "moduleName": "'encore.ui.elements'",
+        "category": "elements",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/elements/Breadcrumbs/scripts/rxBreadcrumbs.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [
+            "templates/Breadcrumbs/templates/rxBreadcrumbs.html"
+        ],
+        "docs": {
+            "md": "",
+            "js": "angular.module('demoApp')\n.controller('breadcrumbsSimpleCtrl', function ($scope, rxBreadcrumbsSvc) {\n    rxBreadcrumbsSvc.set([{\n        path: '#/elements',\n        name: 'Elements',\n    }, {\n        name: '<strong>All Elements</strong>',\n        status: 'demo'\n    }]);\n});\n",
+            "html": "<p>\n  Displays navigation breadcrumbs on a page.\n</p>\n\n<rx-example class=\"site-breadcrumbs\" name=\"Breadcrumbs.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -164,7 +281,7 @@ angular.module('demoApp')
         "docs": {
             "md": "",
             "js": "angular.module('demoApp')\n.controller('copyAdvancedCtrl', function ($scope) {\n    $scope.loremIpsum = [\n        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit',\n        'amet elit ut metus semper tempor ac vitae nunc. Fusce cursus odio',\n        'eget maximus vulputate. Nullam hendrerit enim vitae augue vulputate,',\n        'eu consequat tellus imperdiet. Duis magna dolor, scelerisque non',\n        'magna ac, bibendum interdum turpis. Phasellus placerat placerat',\n        'nunc, in sodales neque. Proin at urna quis tellus congue feugiat.',\n        'Praesent dictum porttitor tristique. In tincidunt dignissim ultricies.',\n        'Maecenas in turpis a odio dictum molestie.'\n    ].join(' ');\n});\n\nangular.module('demoApp')\n.controller('copySimpleCtrl', function ($scope) {\n    $scope.shortValue = 'This is a short sentence.';\n\n    $scope.loremIpsum = [\n        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit',\n        'amet elit ut metus semper tempor ac vitae nunc. Fusce cursus odio',\n        'eget maximus vulputate. Nullam hendrerit enim vitae augue vulputate,',\n        'eu consequat tellus imperdiet. Duis magna dolor, scelerisque non',\n        'magna ac, bibendum interdum turpis. Phasellus placerat placerat',\n        'nunc, in sodales neque. Proin at urna quis tellus congue feugiat.',\n        'Praesent dictum porttitor tristique. In tincidunt dignissim ultricies.',\n        'Maecenas in turpis a odio dictum molestie.'\n    ].join(' ');\n});\n\nangular.module('demoApp')\n.controller('copyTableCtrl', function ($scope) {\n    $scope.loremIpsum = [\n        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit',\n        'amet elit ut metus semper tempor ac vitae nunc. Fusce cursus odio',\n        'eget maximus vulputate. Nullam hendrerit enim vitae augue vulputate,',\n        'eu consequat tellus imperdiet. Duis magna dolor, scelerisque non',\n        'magna ac, bibendum interdum turpis. Phasellus placerat placerat',\n        'nunc, in sodales neque. Proin at urna quis tellus congue feugiat.',\n        'Praesent dictum porttitor tristique. In tincidunt dignissim ultricies.',\n        'Maecenas in turpis a odio dictum molestie.'\n    ].join(' ');\n});\n",
-            "html": "<rx-notification type=\"warning\">\n  Chrome 43+ and Firefox 41+ are required to take advantage of full functionality.\n  <br />\n  <em>Other browsers and older versions may have degraded or broken functionality.</em>\n</rx-notification>\n\n<rx-notification type=\"info\">\n  This Element is designed to copy <em>plain text</em> and will not preserve any HTML formatting.\n</rx-notification>\n\n<p>\n  Element to aid in copying plain text to the system clipboard.\n</p>\n\n<h3><rx-permalink>Simple Usage</rx-permalink></h3>\n<rx-example name=\"copy.simple\"></rx-example>\n\n\n<h3><rx-permalink>Advanced Usage</rx-permalink></h3>\n<p>\n  You can use the <code>compact</code> property along with the optional\n  <code>.bordered</code> CSS class to apply advanced styling to the Copy\n  Element.\n</p>\n<rx-example name=\"copy.advanced\"></rx-example>\n\n\n<h4><rx-permalink>Table Usage</rx-permalink></h4>\n<ul class=\"list\">\n  <li>\n    Use the <code>.rxCopyTable</code> CSS class on your table to use the Copy\n    Element within table cells. Without this, your table may grow wider than\n    expected.\n  </li>\n  <li>\n    <strong>NOTE:</strong> The <code>.rxCopyTable</code> will apply a fixed\n    table layout to your table, so there is a high liklihood that you will\n    see a change to your column widths after it is applied.\n  </li>\n</ul>\n<rx-example name=\"copy.tables\"></rx-example>\n\n<h4>Test Clipboard</h4>\n<div rx-form>\n  <rx-form-section controlled-width>\n    <rx-field>\n      <rx-field-content>\n        <rx-input>\n          <textarea rows=\"10\" id=\"test-textarea\"></textarea>\n        </rx-input>\n      </rx-field-content>\n    </rx-field>\n  </rx-form-section>\n</div>\n\n<section class=\"rxCopy-visual-regression\" layout=\"column\" layout-padding>\n  <h4>rxCopy Visual Styles</h4>\n  <section>\n    <div>\n      <h5>Short Text</h5>\n      <rx-copy>Fully Visible</rx-copy>\n    </div>\n    <div>\n      <h5>Long Text (Compact)</h5>\n      <rx-copy compact>Compact without borders, yada yada yada</rx-copy>\n    </div>\n    <div>\n      <h5>Long Text (Compact, Bordered)</h5>\n      <rx-copy compact class=\"bordered\">\n        Compact with borders, yada yada yada hiss boom bah\n      </rx-copy>\n    </div>\n  </section>\n\n  <h5>Basic Table</h5>\n  <section>\n    <table>\n      <colgroup>\n        <col width=\"200\"/>\n        <col />\n      </colgroup>\n      <thead>\n        <tr>\n          <th>Too Large for Cell</th>\n          <th>Fully Visible</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>\n            <rx-copy>\n              Too large for cell width, this should wrap across multiple lines.\n            </rx-copy>\n          </td>\n          <td>\n            <rx-copy>Fully Visible</rx-copy>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </section>\n\n  <h5>Using <code>.rxCopyTable</code></h5>\n  <section>\n    <table class=\"rxCopyTable\">\n      <colgroup>\n        <col width=\"200\"/>\n        <col />\n      </colgroup>\n      <thead>\n        <tr>\n          <th>Too Large for Cell</th>\n          <th>Fully Visible</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>\n            <rx-copy>\n              Too large for cell width, this should overflow.\n            </rx-copy>\n          </td>\n          <td>\n            <rx-copy>Fully Visible</rx-copy>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </section>\n</section>\n",
+            "html": "<rx-notification type=\"warning\">\n  Chrome 43+ and Firefox 41+ are required to take advantage of full functionality.\n  <br />\n  <em>Other browsers and older versions may have degraded or broken functionality.</em>\n</rx-notification>\n\n<rx-notification type=\"info\">\n  This Element is designed to copy <em>plain text</em> and will not preserve any HTML formatting.\n</rx-notification>\n\n<p>\n  Element to aid in copying plain text to the system clipboard.\n</p>\n\n<h3><rx-permalink>Simple Usage</rx-permalink></h3>\n<rx-example name=\"copy.simple\"></rx-example>\n\n\n<h3><rx-permalink>Advanced Usage</rx-permalink></h3>\n<p>\n  You can use the <code>compact</code> property along with the optional\n  <code>.bordered</code> CSS class to apply advanced styling to the Copy\n  Element.\n</p>\n<rx-example name=\"copy.advanced\"></rx-example>\n\n\n<h4><rx-permalink>Table Usage</rx-permalink></h4>\n<ul class=\"list\">\n  <li>\n    Use the <code>.rxCopyTable</code> CSS class on your table to use the Copy\n    Element within table cells. Without this, your table may grow wider than\n    expected.\n  </li>\n  <li>\n    <strong>NOTE:</strong> The <code>.rxCopyTable</code> will apply a fixed\n    table layout to your table, so there is a high liklihood that you will\n    see a change to your column widths after it is applied.\n  </li>\n  <li>\n    By default, an rxCopy element will be hidden if it is an immediate child of\n    an <code>.rxCopyTable</code> cell.\n  </li>\n</ul>\n<rx-example name=\"copy.tables\"></rx-example>\n\n<h4>Test Clipboard</h4>\n<div rx-form>\n  <rx-form-section controlled-width>\n    <rx-field>\n      <rx-field-content>\n        <rx-input>\n          <textarea rows=\"10\" id=\"test-textarea\"></textarea>\n        </rx-input>\n      </rx-field-content>\n    </rx-field>\n  </rx-form-section>\n</div>\n\n<section class=\"rxCopy-visual-regression\" layout=\"column\" layout-padding>\n  <h4>rxCopy Visual Styles</h4>\n  <section>\n    <div>\n      <h5>Short Text</h5>\n      <rx-copy>Fully Visible</rx-copy>\n    </div>\n    <div>\n      <h5>Long Text (Compact)</h5>\n      <rx-copy compact>Compact without borders, yada yada yada</rx-copy>\n    </div>\n    <div>\n      <h5>Long Text (Compact, Bordered)</h5>\n      <rx-copy compact class=\"bordered\">\n        Compact with borders, yada yada yada hiss boom bah\n      </rx-copy>\n    </div>\n  </section>\n\n  <h5>Basic Table</h5>\n  <section>\n    <table>\n      <colgroup>\n        <col width=\"200\"/>\n        <col />\n      </colgroup>\n      <thead>\n        <tr>\n          <th>Too Large for Cell</th>\n          <th>Fully Visible</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>\n            <rx-copy>\n              Too large for cell width, this should wrap across multiple lines.\n            </rx-copy>\n          </td>\n          <td>\n            <rx-copy>Fully Visible</rx-copy>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </section>\n\n  <h5>Using <code>.rxCopyTable</code></h5>\n  <section>\n    <table class=\"rxCopyTable\">\n      <colgroup>\n        <col width=\"200\"/>\n        <col />\n      </colgroup>\n      <thead>\n        <tr>\n          <th>Too Large for Cell</th>\n          <th>Fully Visible</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>\n            <rx-copy>\n              Too large for cell width, this should overflow.\n            </rx-copy>\n          </td>\n          <td>\n            <rx-copy>Fully Visible</rx-copy>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </section>\n</section>\n",
             "less": ""
         }
     },
@@ -326,7 +443,7 @@ angular.module('demoApp')
         "docs": {
             "md": "",
             "js": "angular.module('demoApp')\n.controller('characterCountDocsCtrl', function ($scope) {\n    $scope.data = {\n        comment1: '',\n        comment2: '',\n        comment3: '',\n        comment4: '',\n        comment5: 'I have an initial value',\n        comment6: ''\n    };\n});\n\nangular.module('demoApp')\n.controller('checkboxDocsCtrl', function ($scope) {\n    $scope.chkValidEnabledOne = true;\n    $scope.chkValidEnabledTwo = false;\n    $scope.chkValidDisabledOne = true;\n    $scope.chkValidDisabledTwo = false;\n    $scope.chkValidNgDisabledOne = true;\n    $scope.chkValidNgDisabledTwo = false;\n\n    $scope.chkInvalidEnabledOne = true;\n    $scope.chkInvalidEnabledTwo = false;\n    $scope.chkInvalidDisabledOne = true;\n    $scope.chkInvalidDisabledTwo = false;\n    $scope.chkInvalidNgDisabledOne = true;\n    $scope.chkInvalidNgDisabledTwo = false;\n});\n\nangular.module('demoApp')\n.controller('datePickerDocsCtrl', function ($scope) {\n    $scope.enabledValid = '2015-12-15';\n    $scope.disabledValid = '2015-12-15';\n\n    $scope.enabledInvalid = '2015-12-15';\n    $scope.disabledInvalid = '2015-12-15';\n});\n\nangular.module('demoApp')\n.controller('multiSelectDocsCtrl', function ($scope) {\n    $scope.classification = [];\n});\n\nangular.module('demoApp')\n.controller('radioDocsCtrl', function ($scope) {\n    $scope.validEnabled = 1;\n    $scope.validDisabled = 1;\n    $scope.validNgDisabled = 1;\n\n    $scope.invalidEnabled = 1;\n    $scope.invalidDisabled = 1;\n    $scope.invalidNgDisabled = 1;\n\n    $scope.plainHtmlRadio = 'isChecked';\n});\n\nangular.module('demoApp')\n.controller('selectDocsCtrl', function ($scope) {\n    $scope.validEnabled = 3;\n    $scope.validNgDisabled = 'na';\n    $scope.validDisabled = 'na';\n\n    $scope.invalidEnabled = 4;\n    $scope.invalidNgDisabled = 'na';\n    $scope.invalidDisabled = 'na';\n\n    $scope.htmlSelectAlternativeValue = 'second';\n});\n\nangular.module('demoApp')\n.controller('timePickerDocsCtrl', function ($scope) {\n    $scope.enabledValid = '06:00-06:00';\n    $scope.disabledValid = '20:00+08:00';\n\n    $scope.enabledInvalid = '17:45+05:00';\n    $scope.disabledInvalid = '05:15+00:00';\n});\n\nangular.module('demoApp')\n.controller('checkboxShowHideCtrl', function ($scope) {\n    $scope.amSure = false;\n    $scope.amReallySure = false;\n\n    $scope.$watch('amSure', function (newVal) {\n        if (newVal === false) {\n            $scope.amReallySure = false;\n        }\n    });\n});\n\nangular.module('demoApp')\n.controller('datePickerEmptyCtrl', function ($scope) {\n    $scope.emptyDate = '';\n\n    $scope.undefinedDate = undefined;\n});\n\nangular.module('demoApp')\n.controller('datePickerSimpleCtrl', function ($scope) {\n    $scope.dateModel = moment(new Date()).format('YYYY-MM-DD');\n});\n\nangular.module('demoApp')\n.controller('formAdvancedControlsDemoCtrl', function ($scope) {\n    $scope.radChoice = 'default';\n    $scope.inputEnabled = false;\n});\n\nangular.module('demoApp')\n.controller('formsAutoSaveExampleController', function ($scope, rxAutoSave) {\n    $scope.forms = { autosave: '' };\n    rxAutoSave($scope, 'forms');\n});\n\nangular.module('demoApp')\n.controller('formsDisabledExamplesCtrl', function ($scope) {\n    $scope.txtDisabled = 'Disabled Text Input';\n    $scope.selDisabled = 'disabled';\n    $scope.radDisabled = 1;\n    $scope.chkDisabledOne = true;\n    $scope.chkDisabledTwo = false;\n    $scope.togDisabledOn = true;\n    $scope.togDisabledOff = false;\n    $scope.txtAreaDisabled = 'Disabled Textarea';\n});\n\nangular.module('demoApp')\n.controller('formDropDownDemoCtrl', function ($scope) {\n    /* ========== DATA ========== */\n    $scope.volumeTypes = [\n        {\n            'value': 'SATA',\n            'label': 'SATA'\n        },\n        {\n            'value': 'SSD',\n            'label': 'SSD'\n        },\n        {\n            'value': 'CD',\n            'label': 'CD'\n        },\n        {\n            'value': 'DVD',\n            'label': 'DVD'\n        },\n        {\n            'value': 'BLURAY',\n            'label': 'BLURAY'\n        },\n        {\n            'value': 'TAPE',\n            'label': 'TAPE'\n        },\n        {\n            'value': 'FLOPPY',\n            'label': 'FLOPPY'\n        },\n        {\n            'value': 'LASERDISC',\n            'label': 'LASERDISC'\n        },\n        {\n            'value': 'JAZDRIVE',\n            'label': 'JAZDRIVE'\n        },\n        {\n            'value': 'PUNCHCARDS',\n            'label': 'PUNCHCARDS'\n        },\n        {\n            'value': 'RNA',\n            'label': 'RNA'\n        }\n    ];\n\n    $scope.services = [\n        {\n            'value': 'good',\n            'label': 'Good Service'\n        },\n        {\n            'value': 'cheap',\n            'label': 'Cheap Service'\n        },\n        {\n            'value': 'fast',\n            'label': 'Fast Service'\n        },\n        {\n            'value': 'custom',\n            'label': 'Custom Service'\n        }\n    ];\n    // select the first type by default\n    $scope.volumeType = _.head($scope.volumeTypes).value;\n    $scope.selectedServices = [];\n});\n\nangular.module('demoApp')\n.controller('formInputGroupsDemoCtrl', function ($scope) {\n    /* ========== DATA ========== */\n    $scope.beatles = [\n        'Paul McCartney',\n        'John Lennon',\n        'Ringo Starr',\n        'George Harrison'\n    ];\n\n    $scope.nevers = [\n        'Give you up',\n        'Let you down',\n        'Run around',\n        'Desert you',\n        'Make you cry',\n        'Say goodbye',\n        'Tell a lie',\n        'Hurt you'\n    ];\n\n    $scope.favoriteBeatle = 'all';\n    $scope.settings = {\n        first: true,\n        second: false,\n        third: true,\n        fourth: false\n    };\n\n});\n\nangular.module('demoApp')\n.controller('formIntermediateControlsDemoCtrl', function ($scope) {\n    $scope.userEmail = '';\n    $scope.isNameRequired = true;\n    $scope.volumeName = '';\n})\n.directive('foocheck', function () {\n    return {\n        require: 'ngModel',\n        link: function (scope, elm, attrs, ctrl) {\n            ctrl.$validators.foocheck = function (modelValue, viewValue) {\n                var value = modelValue || viewValue;\n                return _.includes(value, 'foo');\n            }\n        }\n    };\n});\n\nangular.module('demoApp')\n.controller('formsManualSaveExampleController', function ($scope, $timeout, rxNotify) {\n    $scope.saving = false;\n    $scope.save = function () {\n        $scope.saving = true;\n        rxNotify.clear('page');\n        $timeout(function () {\n            $scope.saving = false;\n            $scope.lastSaved = Date.now();\n            rxNotify.add('Data successfully saved!', {\n                type: 'success'\n            });\n        }, 1000);\n    };\n});\n\nangular.module('demoApp')\n.controller('formsInvalidExamplesCtrl', function ($scope) {\n    $scope.txtInvalid = 'Invalid text input';\n    $scope.selInvalid = 'invalid';\n    $scope.radInvalid = 1;\n    $scope.chkInvalidOne = true;\n    $scope.chkInvalidTwo = false;\n    $scope.togInvalidOn = true;\n    $scope.togInvalidOff = false;\n    $scope.txtAreaInvalid = 'Invalid Value';\n});\n\nangular.module('demoApp')\n.controller('multiSelectSimpleCtrl', function ($scope) {\n    $scope.classification = [];\n});\n\nangular.module('demoApp')\n.controller('radioDestroyCtrl', function ($scope) {\n    $scope.radCreateDestroy = 'destroyed';\n});\n\nangular.module('demoApp')\n.controller('searchBoxCustomCtrl', function ($scope) {\n    $scope.filterPlaceholder = 'Filter by any...';\n});\n\nangular.module('demoApp')\n.controller('selectDestroyCtrl', function ($scope) {\n    $scope.radCreateDestroy = 'destroyed';\n});\n\nangular.module('demoApp')\n.controller('timePickerSimpleCtrl', function ($scope) {\n    $scope.emptyValue = '';\n    $scope.predefinedValue = '22:10-10:00';\n});\n\nangular.module('demoApp')\n.controller('toggleSwitchAsyncCtrl', function ($scope, $timeout, rxNotify) {\n    $scope.toggle3 = true;\n    $scope.toggle5 = true;\n\n    $scope.attemptChange = function () {\n        $scope.loading = true;\n        rxNotify.clear('page');\n        rxNotify.add('Saving...', {\n            loading: true\n        });\n\n        // Simulate an API request\n        $timeout(function () {\n            $scope.loading = false;\n            rxNotify.clear('page');\n            rxNotify.add('Change saved', {\n                type: 'success'\n            });\n        }, 1000);\n    };\n\n    $scope.attemptFailedChange = function (value) {\n        $scope.loading5 = true;\n        rxNotify.clear('page');\n        rxNotify.add('Attempting to activate...', {\n            loading: true\n        });\n\n        // Simulate a failed API request\n        $timeout(function () {\n            $scope.loading5 = false;\n            rxNotify.clear('page');\n            rxNotify.add('Asynchronous operation failed', {\n                type: 'error',\n            });\n\n            // Reset toggle switch to original value to simulate failed async operation\n            $scope.toggle5 = !value;\n        }, 1000);\n    };\n});\n",
-            "html": "<h2 class=\"clear\"><rx-permalink>Directives</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Many of the rxForm directives are designed for layout\n    and positioning. However, there are some that are for stylistic\n    purposes.\n  </li>\n</ul>\n\n<h3><rx-permalink>Label</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    An HTML label is used for accessibility.\n  </li>\n  <li>\n    You should use the <code>&lt;label for=\"formControlId\"&gt;</code>\n    format when defining your HTML labels.\n    <ul>\n      <li>\n        The <code>for</code> attribute connects the label to an\n        appropriate form control. When the label is clicked, wherever it\n        is placed in the DOM, it will focus or activate its\n        corresponding form control.\n      </li>\n    </ul>\n  </li>\n  <li>\n    Inline HTML label elements should only be used with radios,\n    checkboxes, and toggle switches.\n    <ul>\n      <li>\n        Place the label\n        <strong>immediately after the form control</strong>.\n        <ul>\n          <li>\n            This enables you to style the label based on the state\n            of the control.\n          </li>\n          <li>\n            See <a href=\"#/elements/Forms#checkboxes\">checkboxes</a>,\n            <a href=\"#/elements/Forms#radios\">Radio</a>,\n            and <a href=\"#/elements/Forms\">rxForm</a> for markup\n            examples.\n          </li>\n        </ul>\n      </li>\n    </ul>\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap the control within a label element.\n    </strong>\n    <ul>\n      <li>\n        CSS does not have proper selectors to style label text based\n        on control state\n      </li>\n    </ul>\n  </li>\n  <li>\n    You should place an HTML label around text in an appropriate\n    rxFieldName element.\n  </li>\n</ul>\n\n<h3><rx-permalink>Inputs</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    rxFieldName is a descriptive design element for a particular\n    form field.\n  </li>\n  <li>\n    In contrast to its predecessor (rxFormItem), rxField and children\n    provides you the flexibility to create form field inputs that make\n    use of one or more controls.\n    <ul>\n      <li>See \"Advanced Controls\" in\n        <a href=\"#/elements/Forms\">rxForm</a> demo for examples.\n      </li>\n    </ul>\n  </li>\n</ul>\n\n<h3><rx-permalink>Error Messages</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Inline Error messages should make use of the\n    <a href=\"ngdocs/index.html#/api/rxForm.directive:rxInlineError\">\n      rxInlineError\n    </a> directive.\n  </li>\n  <li>\n    This directive is styled with bold and red text. It is not\n    constrained by DOM hierarchy, so you may place it wherever it is\n    necessary.\n  </li>\n</ul>\n\n<h3><rx-permalink>Help Text</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Help text should make use of the\n    <a href=\"ngdocs/index.html#/api/elements.directive:rxHelpText\">\n      rxHelpText\n    </a> directive.\n  </li>\n  <li>\n    This directive is styled in a slightly smaller, italicized font and\n    is not constrained by DOM hierarchy, so you can place it wherever it\n    is necessary.\n  </li>\n</ul>\n\n<h3><rx-permalink>Buttons</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Reference the <a href=\"#/elements/Links\">links</a> and\n    <a href=\"#/elements/Buttons\">buttons</a> elements and the\n    <a href=\"#/layout/page/form\">Form Page</a> layout for details about how\n    to style and color buttons.\n    <ul>\n      <li>\n        Submit buttons should use the green <code>.submit</code> class unless\n        you are performing a destructive action, in which case, you should use\n        the <code>.negative</code> class.\n      </li>\n    </ul>\n  </li>\n  <li>\n    If you need to use a button in your form field for auxiliary purposes,\n    use the default blue.\n  </li>\n</ul>\n\n<h3>\n  <rx-permalink>Selects</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxSelect/\">View API</a>\n</h3>\n\n<ul class=\"list\">\n  <li>For single item selection, use the rxSelect directive.</li>\n  <li>For multi-item selection, use the rxMultiSelect directive.</li>\n</ul>\n\n<h3>With Validation</h3>\n<rx-example name=\"select.simple\"></rx-example>\n\n<h3>Show/Hide Select</h3>\n<rx-example name=\"select.showHide\"></rx-example>\n\n<h3>Destroy Select</h3>\n<p>Support for <code>$destroy</code> events.</p>\n<rx-example name=\"select.destroy\"></rx-example>\n\n<h3>Select States</h3>\n<table ng-controller=\"selectDocsCtrl\">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Enabled</th>\n      <th>Disabled (ng-disabled)</th>\n      <th>Disabled (disabled)</th>\n    </tr>\n  </thead>\n  <tbody>\n    <!-- Valid -->\n    <tr>\n      <th>Valid</th>\n      <!-- Valid Enabled -->\n      <td>\n        <select rx-select\n          id=\"selValidEnabled\"\n          ng-model=\"validEnabled\">\n          <option value=\"1\">First</option>\n          <option value=\"2\">Second</option>\n          <option value=\"3\">Third</option>\n          <option value=\"4\">Fourth</option>\n        </select>\n      </td>\n      <!-- Valid Ng-Disabled -->\n      <td>\n        <select rx-select\n          id=\"selValidNgDisabled\"\n          ng-model=\"validNgDisabled\"\n          ng-disabled=\"true\">\n          <option value=\"na\">Disabled by 'ng-disabled' attribute</option>\n        </select>\n      </td>\n      <!-- Valid Disabled -->\n      <td>\n        <select rx-select\n          id=\"selValidDisabled\"\n          disabled\n          ng-model=\"validDisabled\">\n          <option value=\"na\">Disabled by 'disabled' attribute</option>\n        </select>\n      </td>\n    </tr>\n    <!-- Invalid -->\n    <tr>\n      <th>Invalid</th>\n      <!-- Invalid Enabled -->\n      <td>\n        <select rx-select\n          id=\"selInvalidEnabled\"\n          always-invalid\n          ng-model=\"invalidEnabled\">\n          <option value=\"1\">First</option>\n          <option value=\"2\">Second</option>\n          <option value=\"3\">Third</option>\n          <option value=\"4\">Fourth</option>\n        </select>\n      </td>\n      <!-- Invalid Ng-Disabled -->\n      <td>\n        <select rx-select\n          id=\"selInvalidNgDisabled\"\n          always-invalid\n          ng-model=\"invalidNgDisabled\"\n          ng-disabled=\"true\">\n          <option value=\"na\">Disabled by 'ng-disabled' attribute</option>\n        </select>\n      </td>\n      <!-- Invalid Disabled -->\n      <td>\n        <select rx-select\n          id=\"selInvalidDisabled\"\n          disabled\n          always-invalid\n          ng-model=\"invalidDisabled\">\n          <option value=\"na\">Disabled by 'disabled' attribute</option>\n        </select>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<rx-debug>\n  <h3>Plain HTML Select Boxes (for comparison)</h3>\n  <p>\n    <select id=\"plainSelNormal\" ng-required=\"true\">\n      <option value=\"\">Plain HTML Select Option</option>\n      <option value=\"first\">First Option</option>\n      <option value=\"second\">Second Option</option>\n      <option value=\"third\">Third Option</option>\n      <option value=\"fourth\">Fourth Option</option>\n    </select>\n  </p>\n  <p>\n    <select id=\"plainSelDisabled\" disabled>\n      <option value=\"\">Disabled HTML Select Option</option>\n      <option value=\"first\">First Option</option>\n      <option value=\"second\">Second Option</option>\n      <option value=\"third\">Third Option</option>\n      <option value=\"fourth\">Fourth Option</option>\n    </select>\n  </p>\n  <p ng-controller=\"selectDocsCtrl\">\n    <select id=\"plainSelSecondSelected\"\n      ng-model=\"htmlSelectAlternativeValue\">\n      <option value=\"\">Starts on Second Option</option>\n      <option value=\"first\">First Option</option>\n      <option value=\"second\">Non Default Starting Option</option>\n      <option value=\"third\">Third Option</option>\n      <option value=\"fourth\">Fourth Option</option>\n    </select>\n  </p>\n  <p>\n    <select id=\"plainSelShowSelect\"\n      ng-model=\"plainHtmlSelect\">\n      <option value=\"hide\">Hide Next Select Box</option>\n      <option value=\"show\">Show Next Select Box</option>\n    </select>\n    <select id=\"plainSelRemoveable\"\n      value=\"hidden\"\n      ng-if=\"plainHtmlSelect !== 'hide'\">\n      <option value=\"\">Is Present</option>\n    </select>\n  </p>\n</rx-debug>\n\n<!-- BEGIN: multiselect -->\n<h3>\n  <rx-permalink>MultiSelect</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxMultiSelect/\">\n    View API\n  </a>\n  <!-- (NOTE) stability: 'READY' -->\n</h3>\n\n<h4>MultiSelect Input</h4>\n<rx-example name=\"multiSelect.simple\"></rx-example>\n\n<h4>MultiSelect States</h4>\n<p>\n  Below you'll find examples of how <code>rxMultiSelect</code> will appear in different states.\n</p>\n<div ng-controller=\"multiSelectDocsCtrl\">\n  <table>\n    <thead>\n      <tr>\n        <th></th>\n        <th>Enabled</th>\n        <th>Disabled</th>\n      </tr>\n    </thead>\n    <tbody>\n      <!-- Valid States -->\n      <tr>\n        <th>Valid</th>\n        <!-- Valid Enabled -->\n        <td>\n          <rx-multi-select\n            id=\"msValidEnabled\"\n            ng-model=\"validEnabled\">\n\n            <rx-select-option value=\"A\">Type A</rx-select-option>\n            <rx-select-option value=\"B\">Type B</rx-select-option>\n            <rx-select-option value=\"C\">Type C</rx-select-option>\n            <rx-select-option value=\"D\">Type D</rx-select-option>\n          </rx-multi-select>\n        </td>\n        <!-- Valid Disabled -->\n        <td>\n          <rx-multi-select\n            id=\"msValidDisabled\"\n            ng-model=\"validDisabled\"\n            ng-disabled=\"true\">\n\n            <rx-select-option value=\"Not allowed\">Not Allowed</rx-select-option>\n          </rx-multi-select>\n        </td>\n      </tr>\n      <!-- Invalid States -->\n      <tr>\n        <th>Invalid</th>\n        <!-- Invalid Enabled -->\n        <td>\n          <rx-multi-select\n            id=\"msInvalidEnabled\"\n            ng-model=\"invalidEnabled\"\n            always-invalid>\n\n            <rx-select-option value=\"A\">Type A</rx-select-option>\n            <rx-select-option value=\"B\">Type B</rx-select-option>\n            <rx-select-option value=\"C\">Type C</rx-select-option>\n            <rx-select-option value=\"D\">Type D</rx-select-option>\n          </rx-multi-select>\n        </td>\n\n        <!-- Invalid Disabled -->\n        <td>\n          <rx-multi-select\n            id=\"msInvalidDisabled\"\n            ng-model=\"invalidDisabled\"\n            always-invalid\n            ng-disabled=\"true\">\n\n            <rx-select-option value=\"Not allowed\">Not Allowed</rx-select-option>\n          </rx-multi-select>\n        </td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n<!-- END: multiselect -->\n\n<!-- BEGIN: checkboxes -->\n<h3>\n  <rx-permalink>Checkboxes</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxCheckbox/\">View API</a>\n  <!-- (NOTE) stability: 'READY' -->\n</h3>\n<ul class=\"list\">\n  <li>Use the rxCheckbox directive for checkbox controls.</li>\n  <li>\n    If you intend to use a label element, place it <strong>immediately\n    after the rxCheckbox</strong> to style the label when the control\n    is disabled.\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap rxCheckbox in a label element.\n    </strong>\n  </li>\n</ul>\n\n<h4>Show/Hide Input</h4>\n<rx-example name=\"checkbox.showHide\"></rx-example>\n\n<h4>Destroy Input</h4>\n<p>Support for <code>$destroy</code> events.</p>\n<rx-example name=\"checkbox.destroy\"></rx-example>\n\n<h4>Checkbox States</h3>\n<table ng-controller=\"checkboxDocsCtrl\">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Enabled</th>\n      <th>Disabled (ng-disabled)</th>\n      <th>Disabled (disabled)</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n      <!-- Valid Enabled-->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidEnabledOne\"\n                 ng-model=\"chkValidEnabledOne\" />\n          <label for=\"chkValidEnabled\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidEnabledTwo\"\n                 ng-model=\"chkValidEnabledTwo\" />\n          <label for=\"chkValidEnabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Valid NG-Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidNgDisabledOne\"\n                 ng-disabled=\"true\"\n                 ng-model=\"chkValidNgDisabledOne\" />\n          <label for=\"chkValidNgDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidNgDisabledTwo\"\n                 ng-disabled=\"true\"\n                 ng-model=\"chkValidNgDisabledTwo\" />\n          <label for=\"chkValidNgDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Valid Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidDisabledOne\"\n                 disabled\n                 ng-model=\"chkValidDisabledOne\" />\n          <label for=\"chkValidDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidDisabledTwo\"\n                 disabled\n                 ng-model=\"chkValidDisabledTwo\" />\n          <label for=\"chkValidDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n      <!-- Invalid Enabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidEnabledOne\"\n                 ng-model=\"chkInvalidEnabledOne\"\n                 always-invalid />\n          <label for=\"chkInvalidEnabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidEnabledTwo\"\n                 ng-model=\"chkInvalidEnabledTwo\"\n                 always-invalid />\n          <label for=\"chkInvalidEnabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Invalid NG-Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidNgDisabledOne\"\n                 ng-model=\"chkInvalidNgDisabledOne\"\n                 ng-disabled=\"true\"\n                 always-invalid />\n          <label for=\"chkInvalidNgDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidNgDisabledTwo\"\n                 ng-model=\"chkInvalidNgDisabledTwo\"\n                 ng-disabled=\"true\"\n                 always-invalid />\n          <label for=\"chkInvalidNgDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Invalid Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidDisabledOne\"\n                 ng-model=\"chkInvalidDisabledOne\"\n                 disabled\n                 always-invalid />\n          <label for=\"chkInvalidDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidDisabledTwo\"\n                 ng-model=\"chkInvalidDisabledTwo\"\n                 disabled\n                 always-invalid />\n          <label for=\"chkInvalidDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<rx-debug>\n  <h3>Plain HTML Checkboxes (for comparison)</h3>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainHtmlNormal\"\n           ng-required=\"true\" />\n    <label for=\"plainHtmlNormal\">A plain checkbox</label>\n  </p>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainHtmlDisabled\"\n           disabled />\n    <label for=\"plainHtmlDisabled\">A plain checkbox (disabled)</label>\n  </p>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainHtmlChecked\"\n           checked />\n    <label for=\"plainHtmlChecked\">A plain checkbox (checked)</label>\n  </p>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainChkRemoveCheckbox\"\n           ng-model=\"plainChkIsRemoved\" />\n    <label for=\"plainChkRemoveCheckbox\">Remove Following Checkbox:</label>\n\n    <input type=\"checkbox\"\n           checked\n           id=\"plainChkRemoveable\"\n           ng-if=\"!plainChkIsRemoved\" />\n  </p>\n</rx-debug>\n<!-- END: checkboxes -->\n\n<!-- BEGIN: Toggle Switches -->\n<h3>\n  <rx-permalink>Toggle Switches</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxToggleSwitch/\">View API</a>\n</h3>\n<ul class=\"list\">\n  <li>You can use the rxToggleSwitch directive for toggle switch controls.</li>\n  <li>\n    If you intend to use a label element, place it <strong> immediately\n    after the rxToggleSwitch</strong> to style the label when the\n    control is disabled.\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap rxToggleSwitch in a label element.\n    </strong>\n  </li>\n  <li>\n    <strong class=\"msg-info\">NOTE:</strong>\n    An rxToggleSwitch does not toggle when clicking its label. However,\n    CSS styles are still applied if the control is disabled within an\n    rxForm.\n  </li>\n  <li>\n    For consistency, and future compatibility, assume that rxToggleSwitch\n    and label works as expected.\n  </li>\n</ul>\n\n<h3>Simple Toggle Switch</h3>\n<rx-example name=\"toggleSwitch.simple\"></rx-example>\n\n<h3>Custom Toggle Values</h3>\n<rx-example name=\"toggleSwitch.custom\"></rx-example>\n\n<h3>Toggling Asynchronous Functionality</h3>\n<rx-example name=\"toggleSwitch.async\"></rx-example>\n\n<h3>Disabled Toggle Switch</h3>\n<rx-example name=\"toggleSwitch.disabled\"></rx-example>\n<!-- END: Toggle Switches -->\n\n<!-- BEGIN: radio -->\n<h3>\n  <rx-permalink>Radios</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxRadio/\">View API</a>\n</h3>\n<ul class=\"list\">\n  <li>Use the rxRadio directive for radio controls.</li>\n  <li>\n    If you intend to use a label element, place it <strong>immediately\n    after the rxRadio</strong> so that CSS rules may style the label when\n    the control is disabled.\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap rxRadio in a label element.\n    </strong>\n  </li>\n</ul>\n\n<rx-example name=\"forms.radios\"></rx-example>\n\n<h4>Show/Hide Input</h4>\n<rx-example name=\"radio.showHide\"></rx-example>\n\n<h4>Destroy Input</h4>\n<p>Support for <code>$destroy</code> events.</p>\n<rx-example name=\"radio.destroy\"></rx-example>\n\n<h4>Radio States</h3>\n<table ng-controller=\"radioDocsCtrl\">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Enabled</th>\n      <th>Disabled (ng-disable)</th>\n      <th>Disabled (disabled)</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n\n      <!-- Valid Enabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidEnabledOne\"\n            value=\"1\"\n            ng-model=\"validEnabled\"/>\n          <label for=\"radValidEnabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidEnabledTwo\"\n            value=\"2\"\n            ng-model=\"validEnabled\"/>\n          <label for=\"radValidEnabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Valid NG-Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidNgDisabledOne\"\n            value=\"1\"\n            ng-disabled=\"true\"\n            ng-model=\"validNgDisabled\"/>\n          <label for=\"radValidNgDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidNgDisabledTwo\"\n            value=\"2\"\n            ng-disabled=\"true\"\n            ng-model=\"validNgDisabled\"/>\n          <label for=\"radValidNgDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Valid Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidDisabledOne\"\n            value=\"1\"\n            disabled\n            ng-model=\"validDisabled\"/>\n          <label for=\"radValidDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidDisabledTwo\"\n            value=\"2\"\n            disabled\n            ng-model=\"validDisabled\"/>\n          <label for=\"radValidDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n\n      <!-- Invalid Enabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidEnabledOne\"\n            value=\"1\"\n            ng-model=\"invalidEnabled\"\n            always-invalid/>\n          <label for=\"radInvalidEnabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidEnabledTwo\"\n            value=\"2\"\n            ng-model=\"invalidEnabled\"\n            always-invalid/>\n          <label for=\"radInvalidEnabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Invalid NG-Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidNgDisabledOne\"\n            value=\"1\"\n            ng-disabled=\"true\"\n            ng-model=\"invalidNgDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidNgDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidNgDisabledTwo\"\n            value=\"2\"\n            ng-disabled=\"true\"\n            ng-model=\"invalidNgDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidNgDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Invalid Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidDisabledOne\"\n            value=\"1\"\n            disabled\n            ng-model=\"invalidDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidDisabledTwo\"\n            value=\"2\"\n            disabled\n            ng-model=\"invalidDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<rx-debug>\n  <h3>Plain HTML Radios (for comparison)</h3>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadNormal\"\n      ng-model=\"plainHtmlRadio\"\n      value=\"plain\"\n      ng-required=\"true\"/>\n    <label for=\"plainRadNormal\">A plain radio</label>\n  </p>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadDisabled\"\n      value=\"disabled\"\n      ng-model=\"plainHtmlRadio\"\n      disabled/>\n    <label for=\"plainRadDisabled\">A plain radio (disabled)</label>\n  </p>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadChecked\"\n      value=\"isChecked\"\n      ng-model=\"plainHtmlRadio\"/>\n    <label for=\"plainRadChecked\">A plain radio (checked)</label>\n  </p>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadRemoveRadio\"\n      value=\"shows\"\n      ng-model=\"plainHtmlRadio\"/>\n    <label for=\"plainRadRemoveRadio\">Add Following Radio:</label>\n\n    <input\n      type=\"radio\"\n      id=\"plainRadRemoveable\"\n      value=\"hidden\"\n      ng-if=\"plainHtmlRadio === 'shows'\"/>\n  </p>\n</rx-debug>\n<!-- END: radio -->\n\n<!-- BEGIN: rxCharacterCount -->\n<h3>\n  <rx-permalink>Using a Character Counter</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxCharacterCount/\">View API</a>\n  <!-- (NOTE) stability: 'experimental' -->\n</h3>\n<ul class=\"list\">\n  <li>\n    Character counters provide color feedback to the user in addition to\n    numeric feedback. As a user approaches the character limit, the\n    numeric value turns from gray to yellow, then yellow to red.\n  </li>\n  <li>\n    The character counter is already styled and has the correct width\n    needed to be positioned next to a textarea. If you need to change the\n    textarea width, a custom wrapper class and textarea width can be set.\n  </li>\n  <li>\n    If you intend to use a counter on text inputs, instead of the more\n    commonly used text area, be aware the framework does not support\n    these fields. You may experience unexpected results. Make sure to\n    test your code.\n  </li>\n  <li>\n    Please see the example below for implementing a character counter on a\n    textarea or text input field.\n  </li>\n  <li>\n    For more options regarding rxCharacterCount functionality, see API docs.\n  </li>\n</ul>\n\n<rx-example name=\"characterCount.simple\"></rx-example>\n\n<rx-debug>\n  <div ng-controller=\"characterCountDocsCtrl\">\n    <h4>Character Count: Default Values</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment1\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        class=\"demo-default-char-count-values\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Custom <code>max-characters=\"25\"</code></h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment2\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        max-characters=\"25\"\n        class=\"demo-custom-max-characters\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Custom <code>low-boundary=\"250\"</code></h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment3\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        low-boundary=\"250\"\n        class=\"demo-custom-low-boundary\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Count leading and trailing spaces</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment4\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        ng-trim=\"false\"\n        class=\"demo-custom-do-not-trim\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Accounts for initial values</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment5\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        class=\"demo-initial-value\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: With highlighting</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment6\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        highlight=\"true\"\n        max-characters=\"10\"\n        class=\"demo-highlighting\">\n      </textarea>\n    </div>\n  </div>\n</rx-debug>\n<!-- END: rxCharacterCount -->\n\n<h3><rx-permalink>Disabled State</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    When an input is disabled, styles are automatically applied to\n    gray out the field with a \"not-allowed\" pointer style.\n  </li>\n  <li>\n    When label rules (seen above) are applied correctly to a radio,\n    checkbox, or toggle switch, the label will also be styled.\n  </li>\n</ul>\n<rx-example name=\"forms.disabled\"></rx-example>\n\n<!-- BEGIN: rxDatePicker -->\n<h3>\n  <rx-permalink>Date Picker</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxDatePicker/\">View API</a>\n  <!-- (NOTE) stability: 'PROTOTYPE' -->\n</h3>\n<rx-notification type=\"info\">\n  <p>\n    This element is designed to be used in conjunction with other picker\n    elements to compose a valid ISO 8601 DateTime string in the format of\n    <code>YYYY-MM-DDTHH:mmZ</code>.\n  </p>\n</rx-notification>\n\n<ul class=\"list\">\n  <li>\n    This element will generate a <strong>String</strong> in the format of\n    <code>YYYY-MM-DD</code> to be used as the date portion of the ISO 8601\n    standard DateTime string mentioned above.\n  </li>\n  <li>\n    This element will never generate anything other than a String.\n  </li>\n</ul>\n\n<h4>Simple Example</h4>\n<p>\n  Sometimes, a form may need to prepopulate a value for Date Picker. The\n  example below shows how the element behaves when its model is defaulted\n  to today's date.  When a different date is selected, a gray circle around\n  the current date provides additional context to users as they find their\n  selection in the date picker.\n</p>\n<rx-example name=\"datePicker.simple\"></rx-example>\n\n<h4>Behavior with Empty Model</h4>\n<p>\n  A typical use case is to use rxDatePicker without a default value set. The\n  example below shows how it will behave if you have a blank (empty string) or\n  undefined value for your model.\n</p>\n<rx-example name=\"datePicker.empty\"></rx-example>\n\n<h4>Date Picker States</h4>\n<p>\n  Below you'll find examples of how <code>Date Picker</code> will appear in\n  different states.\n</p>\n<table ng-controller=\"datePickerDocsCtrl\">\n  <thead>\n    <th></th>\n    <th>Enabled</th>\n    <th>Disabled</th>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n      <td>\n        <rx-date-picker\n          id=\"dpEnabledValid\"\n          ng-model=\"enabledValid\">\n        </rx-date-picker>\n      </td>\n      <td>\n        <rx-date-picker\n          id=\"dpDisabledValid\"\n          ng-disabled=\"true\"\n          ng-model=\"disabledValid\">\n        </rx-date-picker>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n      <td>\n        <rx-date-picker\n          id=\"dpEnabledInvalid\"\n          always-invalid\n          ng-model=\"enabledInvalid\">\n        </rx-date-picker>\n      </td>\n      <td>\n        <rx-date-picker\n          id=\"dpDisabledInvalid\"\n          ng-disabled=\"true\"\n          always-invalid\n          ng-model=\"disabledInvalid\">\n        </rx-date-picker>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<!-- END: rxDatePicker -->\n\n<!-- BEGIN: rxTimePicker -->\n<h3>\n  <rx-permalink>Time Picker</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxTimePicker/\">View API</a>\n  <!-- (NOTE) stability: 'PROTOTYPE' -->\n</h3>\n<rx-notification type=\"info\">\n  <p>\n    This element is designed to be used in conjunction with other picker\n    elements to compose a valid ISO 8601 DateTime string in the format of\n    <code>YYYY-MM-DDTHH:mmZ</code>.\n  </p>\n</rx-notification>\n\n<ul class=\"list\">\n  <li>\n    This element will generate a <strong>String</strong> in the format of\n    <code>HH:mmZ</code> to be used as the time portion of the ISO 8601\n    standard DateTime string mentioned above.\n    <ul>\n      <li><code>HH</code> is the 24-hour format from 00 to 23</li>\n      <li><code>mm</code> is the minutes from 00 to 59</li>\n      <li><code>Z</code> is the UTC offset that matches <code>[-+]\\d{2}:\\d{2}</code></li>\n    </ul>\n  </li>\n  <li>\n    This element will never generate anything other than a String.\n  </li>\n</ul>\n\n<h4>Simple Example</h4>\n<rx-example name=\"timePicker.simple\"></rx-example>\n\n<h4>Time Picker States</h4>\n<p>\n  Below you'll find examples of how <code>Time Picker</code> will appear in\n  different states.\n</p>\n<table ng-controller=\"timePickerDocsCtrl\">\n  <thead>\n    <th></th>\n    <th>Enabled</th>\n    <th>Disabled</th>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n      <td>\n        <rx-time-picker\n          id=\"tpEnabledValid\"\n          ng-disabled=\"false\"\n          ng-model=\"enabledValid\">\n        </rx-time-picker>\n      </td>\n      <td>\n        <rx-time-picker\n          id=\"tpDisabledValid\"\n          ng-disabled=\"true\"\n          ng-model=\"disabledValid\">\n        </rx-time-picker>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n      <td>\n        <rx-time-picker\n          id=\"tpEnabledInvalid\"\n          always-invalid\n          ng-disabled=\"false\"\n          ng-model=\"enabledInvalid\">\n        </rx-time-picker>\n      </td>\n      <td>\n        <rx-time-picker\n          id=\"tpDisabledInvalid\"\n          ng-disabled=\"true\"\n          always-invalid\n          ng-model=\"disabledInvalid\">\n        </rx-time-picker>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<!-- END: rxTimePicker -->\n\n<h3><rx-permalink>Simple Controls</rx-permalink></h3>\n\n<h4><rx-permalink>Text Inputs</rx-permalink></h4>\n<p>\n  Three <code>rx-field</code> elements each consume between 250px and 1/3 of the width.\n</p>\n<rx-example name=\"forms.simple\"></rx-example>\n\n<h4><rx-permalink>Text Area</rx-permalink></h4>\n<ul class=\"list\">\n  <li>\n    Please see the example below for implementing a textarea input.\n  </li>\n  <li>\n    <code>rows</code> attribute can used to set the default number of rows in textarea,\n    if input limit exceeds it will apply auto-scroll feature.\n  </li>\n  <li>\n    One <code>rx-field</code> element consumes the full width.\n  </li>\n</ul>\n<rx-example name=\"forms.textarea\"></rx-example>\n\n<h3><rx-permalink>Intermediate Controls</rx-permalink></h3>\n<p>\n  Two <code>rx-field</code> elements each consume between 250px and 1/2 of the width.\n</p>\n<rx-example name=\"forms.intermediatecontrols\"></rx-example>\n\n<h4><rx-permalink>Drop-Down Selection</rx-permalink></h4>\n<p>\n  For drop-down selections, two options are available: a drop-down\n  that only permits a single selection, or a drop-down that allows\n  the user to make multiple selections.\n</p>\n<rx-example name=\"forms.dropdown\"></rx-example>\n\n<h4><rx-permalink>Input Groups</rx-permalink></h4>\n<rx-example name=\"forms.inputgroups\"></rx-example>\n\n<h3><rx-permalink>Advanced Controls</rx-permalink></h3>\n<rx-example name=\"forms.advancedcontrols\"></rx-example>\n\n<h4><rx-permalink>Advanced Text Area</rx-permalink></h4>\n<p>\n  Text areas can utilize multiple features simultaneously. In the following\n  example, the text area is a required field, has a character counter\n  applied, and shows help text.\n</p>\n<rx-example name=\"forms.advancedtextarea\"></rx-example>\n\n<h3><rx-permalink>Form Actions</rx-permalink></h3>\n<p>\n  At the end of each form, the user should be presented with a cancel button and a submit button. The\n  submit button should appear on the left, the cancel button to the right.\n  Submit button text should be as specific as possible to reinforce for the user\n  what change they are about to make. For example, \"Update Server\" is better than a general \"Submit\".\n</p>\n<rx-example name=\"forms.formactions\"></rx-example>\n\n<h2><rx-permalink>Saving Form Data</rx-permalink></h2>\n\n<h3><rx-permalink>Saving In-Progress Form State</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Saving a form state can help with user experience. You can use rxAutoSave\n    to activate this feature.\n  </li>\n  <li>\n    rxAutoSave interacts exclusively with your model layer. Your UI/template\n    code will be unaware that its state is being saved.\n  </li>\n  <li>\n    See <a href=\"#/utilities/rxAutoSave\">rxAutoSave</a> for further details.\n  </li>\n</ul>\n<rx-example name=\"forms.autoSave\"></rx-example>\n\n<h3><rx-permalink>Manual Form Saving</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    If you require form data to be completed before submitting, or require\n    interactive form experiences, a conditional save button and notification\n    is used.\n  </li>\n  <li>\n    The notification should only be shown after a change has been made to the\n    form, not on page load.\n  </li>\n  <li>\n    The subtitle of the page should indicate when the form was last saved and\n    contain the save button.\n  </li>\n</ul>\n<rx-example name=\"forms.manualSave\"></rx-example>\n\n<h3>\n  <rx-permalink>Search Box</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxSearchBox/\">View API</a>\n</h3>\n<p>The rxSearchBox directive provides functionality around creating a search input box.</p>\n\n<h3>Simple Search Box</h3>\n<rx-example name=\"searchBox.simple\"></rx-example>\n\n<h3>Custom Placeholder</h3>\n<p>\n  You can use the <code>rx-placeholder</code> attribute to customize the placeholder text.\n</p>\n<rx-example name=\"searchBox.custom\"></rx-example>\n\n<h3>Disabled Search Box</h3>\n<rx-example name=\"searchBox.disabled\"></rx-example>\n\n<h2><rx-permalink>Design Patterns within Encore</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Forms can be used on their own page. You can see this in Encore when\n    you create a new object such as a Cloud Server or a Database under\n    Encore Cloud.\n  </li>\n  <li>\n    Forms are also used within modals. You can see this when modifying\n    content that requires form fields such as actions performed on a Cloud\n    Server instance.\n  </li>\n  <li>\n    You can use <a href=\"#/layout/wells\">Wells</a> to create additional\n    context for the form.\n  </li>\n</ul>\n\n<h2><rx-permalink>UI Roadmap / Possible Future-work</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Fleshing out a design pattern for edit states.\n    <ul>\n      <li>\n        Up until now, the editing of content has been relegated to using\n        modals to edit individual line items. As a result, different\n        products have handled the concept of an edit state differently.\n      </li>\n      <li>\n        There should be conformity for this, but we have not designed a\n        user pattern yet.\n      </li>\n    </ul>\n  </li>\n</ul>\n",
+            "html": "<h2 class=\"clear\"><rx-permalink>Directives</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Many of the rxForm directives are designed for layout\n    and positioning. However, there are some that are for stylistic\n    purposes.\n  </li>\n</ul>\n\n<h3><rx-permalink>Label</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    An HTML label is used for accessibility.\n  </li>\n  <li>\n    You should use the <code>&lt;label for=\"formControlId\"&gt;</code>\n    format when defining your HTML labels.\n    <ul>\n      <li>\n        The <code>for</code> attribute connects the label to an\n        appropriate form control. When the label is clicked, wherever it\n        is placed in the DOM, it will focus or activate its\n        corresponding form control.\n      </li>\n    </ul>\n  </li>\n  <li>\n    Inline HTML label elements should only be used with radios,\n    checkboxes, and toggle switches.\n    <ul>\n      <li>\n        Place the label\n        <strong>immediately after the form control</strong>.\n        <ul>\n          <li>\n            This enables you to style the label based on the state\n            of the control.\n          </li>\n          <li>\n            See <a href=\"#/elements/Forms#checkboxes\">checkboxes</a>,\n            <a href=\"#/elements/Forms#radios\">Radio</a>,\n            and <a href=\"#/elements/Forms\">rxForm</a> for markup\n            examples.\n          </li>\n        </ul>\n      </li>\n    </ul>\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap the control within a label element.\n    </strong>\n    <ul>\n      <li>\n        CSS does not have proper selectors to style label text based\n        on control state\n      </li>\n    </ul>\n  </li>\n  <li>\n    You should place an HTML label around text in an appropriate\n    rxFieldName element.\n  </li>\n</ul>\n\n<h3><rx-permalink>Inputs</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    rxFieldName is a descriptive design element for a particular\n    form field.\n  </li>\n  <li>\n    In contrast to its predecessor (rxFormItem), rxField and children\n    provides you the flexibility to create form field inputs that make\n    use of one or more controls.\n    <ul>\n      <li>See \"Advanced Controls\" in\n        <a href=\"#/elements/Forms\">rxForm</a> demo for examples.\n      </li>\n    </ul>\n  </li>\n</ul>\n\n<h3><rx-permalink>Error Messages</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Inline Error messages should make use of the\n    <a href=\"ngdocs/index.html#/api/elements.directive:rxInlineError\">\n      rxInlineError\n    </a> directive.\n  </li>\n  <li>\n    This directive is styled with bold and red text. It is not\n    constrained by DOM hierarchy, so you may place it wherever it is\n    necessary.\n  </li>\n</ul>\n\n<h3><rx-permalink>Help Text</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Help text should make use of the\n    <a href=\"ngdocs/index.html#/api/elements.directive:rxHelpText\">\n      rxHelpText\n    </a> directive.\n  </li>\n  <li>\n    This directive is styled in a slightly smaller, italicized font and\n    is not constrained by DOM hierarchy, so you can place it wherever it\n    is necessary.\n  </li>\n</ul>\n\n<h3><rx-permalink>Buttons</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Reference the <a href=\"#/elements/Links\">links</a> and\n    <a href=\"#/elements/Buttons\">buttons</a> elements and the\n    <a href=\"#/layout/page/form\">Form Page</a> layout for details about how\n    to style and color buttons.\n    <ul>\n      <li>\n        Submit buttons should use the green <code>.submit</code> class unless\n        you are performing a destructive action, in which case, you should use\n        the <code>.negative</code> class.\n      </li>\n    </ul>\n  </li>\n  <li>\n    If you need to use a button in your form field for auxiliary purposes,\n    use the default blue.\n  </li>\n</ul>\n\n<h3>\n  <rx-permalink>Selects</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxSelect/\">View API</a>\n</h3>\n\n<ul class=\"list\">\n  <li>For single item selection, use the rxSelect directive.</li>\n  <li>For multi-item selection, use the rxMultiSelect directive.</li>\n</ul>\n\n<h3>With Validation</h3>\n<rx-example name=\"select.simple\"></rx-example>\n\n<h3>Show/Hide Select</h3>\n<rx-example name=\"select.showHide\"></rx-example>\n\n<h3>Destroy Select</h3>\n<p>Support for <code>$destroy</code> events.</p>\n<rx-example name=\"select.destroy\"></rx-example>\n\n<h3>Select States</h3>\n<table ng-controller=\"selectDocsCtrl\">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Enabled</th>\n      <th>Disabled (ng-disabled)</th>\n      <th>Disabled (disabled)</th>\n    </tr>\n  </thead>\n  <tbody>\n    <!-- Valid -->\n    <tr>\n      <th>Valid</th>\n      <!-- Valid Enabled -->\n      <td>\n        <select rx-select\n          id=\"selValidEnabled\"\n          ng-model=\"validEnabled\">\n          <option ng-value=\"1\">First</option>\n          <option ng-value=\"2\">Second</option>\n          <option ng-value=\"3\">Third</option>\n          <option ng-value=\"4\">Fourth</option>\n        </select>\n      </td>\n      <!-- Valid Ng-Disabled -->\n      <td>\n        <select rx-select\n          id=\"selValidNgDisabled\"\n          ng-model=\"validNgDisabled\"\n          ng-disabled=\"true\">\n          <option value=\"na\">Disabled by 'ng-disabled' attribute</option>\n        </select>\n      </td>\n      <!-- Valid Disabled -->\n      <td>\n        <select rx-select\n          id=\"selValidDisabled\"\n          disabled\n          ng-model=\"validDisabled\">\n          <option value=\"na\">Disabled by 'disabled' attribute</option>\n        </select>\n      </td>\n    </tr>\n    <!-- Invalid -->\n    <tr>\n      <th>Invalid</th>\n      <!-- Invalid Enabled -->\n      <td>\n        <select rx-select\n          id=\"selInvalidEnabled\"\n          always-invalid\n          ng-model=\"invalidEnabled\">\n          <option ng-value=\"1\">First</option>\n          <option ng-value=\"2\">Second</option>\n          <option ng-value=\"3\">Third</option>\n          <option ng-value=\"4\">Fourth</option>\n        </select>\n      </td>\n      <!-- Invalid Ng-Disabled -->\n      <td>\n        <select rx-select\n          id=\"selInvalidNgDisabled\"\n          always-invalid\n          ng-model=\"invalidNgDisabled\"\n          ng-disabled=\"true\">\n          <option value=\"na\">Disabled by 'ng-disabled' attribute</option>\n        </select>\n      </td>\n      <!-- Invalid Disabled -->\n      <td>\n        <select rx-select\n          id=\"selInvalidDisabled\"\n          disabled\n          always-invalid\n          ng-model=\"invalidDisabled\">\n          <option value=\"na\">Disabled by 'disabled' attribute</option>\n        </select>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<rx-debug>\n  <h3>Plain HTML Select Boxes (for comparison)</h3>\n  <p>\n    <select id=\"plainSelNormal\" ng-required=\"true\">\n      <option value=\"\">Plain HTML Select Option</option>\n      <option value=\"first\">First Option</option>\n      <option value=\"second\">Second Option</option>\n      <option value=\"third\">Third Option</option>\n      <option value=\"fourth\">Fourth Option</option>\n    </select>\n  </p>\n  <p>\n    <select id=\"plainSelDisabled\" disabled>\n      <option value=\"\">Disabled HTML Select Option</option>\n      <option value=\"first\">First Option</option>\n      <option value=\"second\">Second Option</option>\n      <option value=\"third\">Third Option</option>\n      <option value=\"fourth\">Fourth Option</option>\n    </select>\n  </p>\n  <p ng-controller=\"selectDocsCtrl\">\n    <select id=\"plainSelSecondSelected\"\n      ng-model=\"htmlSelectAlternativeValue\">\n      <option value=\"\">Starts on Second Option</option>\n      <option value=\"first\">First Option</option>\n      <option value=\"second\">Non Default Starting Option</option>\n      <option value=\"third\">Third Option</option>\n      <option value=\"fourth\">Fourth Option</option>\n    </select>\n  </p>\n  <p>\n    <select id=\"plainSelShowSelect\"\n      ng-model=\"plainHtmlSelect\">\n      <option value=\"hide\">Hide Next Select Box</option>\n      <option value=\"show\">Show Next Select Box</option>\n    </select>\n    <select id=\"plainSelRemoveable\"\n      value=\"hidden\"\n      ng-if=\"plainHtmlSelect !== 'hide'\">\n      <option value=\"\">Is Present</option>\n    </select>\n  </p>\n</rx-debug>\n\n<!-- BEGIN: multiselect -->\n<h3>\n  <rx-permalink>MultiSelect</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxMultiSelect/\">\n    View API\n  </a>\n  <!-- (NOTE) stability: 'READY' -->\n</h3>\n\n<h4>MultiSelect Input</h4>\n<rx-example name=\"multiSelect.simple\"></rx-example>\n\n<h4>MultiSelect States</h4>\n<p>\n  Below you'll find examples of how <code>rxMultiSelect</code> will appear in different states.\n</p>\n<div ng-controller=\"multiSelectDocsCtrl\">\n  <table>\n    <thead>\n      <tr>\n        <th></th>\n        <th>Enabled</th>\n        <th>Disabled</th>\n      </tr>\n    </thead>\n    <tbody>\n      <!-- Valid States -->\n      <tr>\n        <th>Valid</th>\n        <!-- Valid Enabled -->\n        <td>\n          <rx-multi-select\n            id=\"msValidEnabled\"\n            ng-model=\"validEnabled\">\n\n            <rx-select-option value=\"A\">Type A</rx-select-option>\n            <rx-select-option value=\"B\">Type B</rx-select-option>\n            <rx-select-option value=\"C\">Type C</rx-select-option>\n            <rx-select-option value=\"D\">Type D</rx-select-option>\n          </rx-multi-select>\n        </td>\n        <!-- Valid Disabled -->\n        <td>\n          <rx-multi-select\n            id=\"msValidDisabled\"\n            ng-model=\"validDisabled\"\n            ng-disabled=\"true\">\n\n            <rx-select-option value=\"Not allowed\">Not Allowed</rx-select-option>\n          </rx-multi-select>\n        </td>\n      </tr>\n      <!-- Invalid States -->\n      <tr>\n        <th>Invalid</th>\n        <!-- Invalid Enabled -->\n        <td>\n          <rx-multi-select\n            id=\"msInvalidEnabled\"\n            ng-model=\"invalidEnabled\"\n            always-invalid>\n\n            <rx-select-option value=\"A\">Type A</rx-select-option>\n            <rx-select-option value=\"B\">Type B</rx-select-option>\n            <rx-select-option value=\"C\">Type C</rx-select-option>\n            <rx-select-option value=\"D\">Type D</rx-select-option>\n          </rx-multi-select>\n        </td>\n\n        <!-- Invalid Disabled -->\n        <td>\n          <rx-multi-select\n            id=\"msInvalidDisabled\"\n            ng-model=\"invalidDisabled\"\n            always-invalid\n            ng-disabled=\"true\">\n\n            <rx-select-option value=\"Not allowed\">Not Allowed</rx-select-option>\n          </rx-multi-select>\n        </td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n<!-- END: multiselect -->\n\n<!-- BEGIN: checkboxes -->\n<h3>\n  <rx-permalink>Checkboxes</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxCheckbox/\">View API</a>\n  <!-- (NOTE) stability: 'READY' -->\n</h3>\n<ul class=\"list\">\n  <li>Use the rxCheckbox directive for checkbox controls.</li>\n  <li>\n    If you intend to use a label element, place it <strong>immediately\n    after the rxCheckbox</strong> to style the label when the control\n    is disabled.\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap rxCheckbox in a label element.\n    </strong>\n  </li>\n</ul>\n\n<h4>Show/Hide Input</h4>\n<rx-example name=\"checkbox.showHide\"></rx-example>\n\n<h4>Destroy Input</h4>\n<p>Support for <code>$destroy</code> events.</p>\n<rx-example name=\"checkbox.destroy\"></rx-example>\n\n<h4>Checkbox States</h3>\n<table ng-controller=\"checkboxDocsCtrl\">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Enabled</th>\n      <th>Disabled (ng-disabled)</th>\n      <th>Disabled (disabled)</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n      <!-- Valid Enabled-->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidEnabledOne\"\n                 ng-model=\"chkValidEnabledOne\" />\n          <label for=\"chkValidEnabled\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidEnabledTwo\"\n                 ng-model=\"chkValidEnabledTwo\" />\n          <label for=\"chkValidEnabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Valid NG-Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidNgDisabledOne\"\n                 ng-disabled=\"true\"\n                 ng-model=\"chkValidNgDisabledOne\" />\n          <label for=\"chkValidNgDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidNgDisabledTwo\"\n                 ng-disabled=\"true\"\n                 ng-model=\"chkValidNgDisabledTwo\" />\n          <label for=\"chkValidNgDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Valid Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidDisabledOne\"\n                 disabled\n                 ng-model=\"chkValidDisabledOne\" />\n          <label for=\"chkValidDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkValidDisabledTwo\"\n                 disabled\n                 ng-model=\"chkValidDisabledTwo\" />\n          <label for=\"chkValidDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n      <!-- Invalid Enabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidEnabledOne\"\n                 ng-model=\"chkInvalidEnabledOne\"\n                 always-invalid />\n          <label for=\"chkInvalidEnabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidEnabledTwo\"\n                 ng-model=\"chkInvalidEnabledTwo\"\n                 always-invalid />\n          <label for=\"chkInvalidEnabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Invalid NG-Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidNgDisabledOne\"\n                 ng-model=\"chkInvalidNgDisabledOne\"\n                 ng-disabled=\"true\"\n                 always-invalid />\n          <label for=\"chkInvalidNgDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidNgDisabledTwo\"\n                 ng-model=\"chkInvalidNgDisabledTwo\"\n                 ng-disabled=\"true\"\n                 always-invalid />\n          <label for=\"chkInvalidNgDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n\n      <!-- Invalid Disabled -->\n      <td>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidDisabledOne\"\n                 ng-model=\"chkInvalidDisabledOne\"\n                 disabled\n                 always-invalid />\n          <label for=\"chkInvalidDisabledOne\">Checked</label>\n        </p>\n        <p>\n          <input rx-checkbox\n                 id=\"chkInvalidDisabledTwo\"\n                 ng-model=\"chkInvalidDisabledTwo\"\n                 disabled\n                 always-invalid />\n          <label for=\"chkInvalidDisabledTwo\">Unchecked</label>\n        </p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<rx-debug>\n  <h3>Plain HTML Checkboxes (for comparison)</h3>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainHtmlNormal\"\n           ng-required=\"true\" />\n    <label for=\"plainHtmlNormal\">A plain checkbox</label>\n  </p>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainHtmlDisabled\"\n           disabled />\n    <label for=\"plainHtmlDisabled\">A plain checkbox (disabled)</label>\n  </p>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainHtmlChecked\"\n           checked />\n    <label for=\"plainHtmlChecked\">A plain checkbox (checked)</label>\n  </p>\n  <p>\n    <input type=\"checkbox\"\n           id=\"plainChkRemoveCheckbox\"\n           ng-model=\"plainChkIsRemoved\" />\n    <label for=\"plainChkRemoveCheckbox\">Remove Following Checkbox:</label>\n\n    <input type=\"checkbox\"\n           checked\n           id=\"plainChkRemoveable\"\n           ng-if=\"!plainChkIsRemoved\" />\n  </p>\n</rx-debug>\n<!-- END: checkboxes -->\n\n<!-- BEGIN: Toggle Switches -->\n<h3>\n  <rx-permalink>Toggle Switches</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxToggleSwitch/\">View API</a>\n</h3>\n<ul class=\"list\">\n  <li>You can use the rxToggleSwitch directive for toggle switch controls.</li>\n  <li>\n    If you intend to use a label element, place it <strong> immediately\n    after the rxToggleSwitch</strong> to style the label when the\n    control is disabled.\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap rxToggleSwitch in a label element.\n    </strong>\n  </li>\n  <li>\n    <strong class=\"msg-info\">NOTE:</strong>\n    An rxToggleSwitch does not toggle when clicking its label. However,\n    CSS styles are still applied if the control is disabled within an\n    rxForm.\n  </li>\n  <li>\n    For consistency, and future compatibility, assume that rxToggleSwitch\n    and label works as expected.\n  </li>\n</ul>\n\n<h3>Simple Toggle Switch</h3>\n<rx-example name=\"toggleSwitch.simple\"></rx-example>\n\n<h3>Custom Toggle Values</h3>\n<rx-example name=\"toggleSwitch.custom\"></rx-example>\n\n<h3>Toggling Asynchronous Functionality</h3>\n<rx-example name=\"toggleSwitch.async\"></rx-example>\n\n<h3>Disabled Toggle Switch</h3>\n<rx-example name=\"toggleSwitch.disabled\"></rx-example>\n<!-- END: Toggle Switches -->\n\n<!-- BEGIN: radio -->\n<h3>\n  <rx-permalink>Radios</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxRadio/\">View API</a>\n</h3>\n<ul class=\"list\">\n  <li>Use the rxRadio directive for radio controls.</li>\n  <li>\n    If you intend to use a label element, place it <strong>immediately\n    after the rxRadio</strong> so that CSS rules may style the label when\n    the control is disabled.\n  </li>\n  <li>\n    <strong class=\"msg-warn\">\n      DO NOT wrap rxRadio in a label element.\n    </strong>\n  </li>\n</ul>\n\n<rx-example name=\"forms.radios\"></rx-example>\n\n<h4>Show/Hide Input</h4>\n<rx-example name=\"radio.showHide\"></rx-example>\n\n<h4>Destroy Input</h4>\n<p>Support for <code>$destroy</code> events.</p>\n<rx-example name=\"radio.destroy\"></rx-example>\n\n<h4>Radio States</h3>\n<table ng-controller=\"radioDocsCtrl\">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Enabled</th>\n      <th>Disabled (ng-disable)</th>\n      <th>Disabled (disabled)</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n\n      <!-- Valid Enabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidEnabledOne\"\n            ng-value=\"1\"\n            ng-model=\"validEnabled\"/>\n          <label for=\"radValidEnabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidEnabledTwo\"\n            ng-value=\"2\"\n            ng-model=\"validEnabled\"/>\n          <label for=\"radValidEnabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Valid NG-Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidNgDisabledOne\"\n            ng-value=\"1\"\n            ng-disabled=\"true\"\n            ng-model=\"validNgDisabled\"/>\n          <label for=\"radValidNgDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidNgDisabledTwo\"\n            ng-value=\"2\"\n            ng-disabled=\"true\"\n            ng-model=\"validNgDisabled\"/>\n          <label for=\"radValidNgDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Valid Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidDisabledOne\"\n            ng-value=\"1\"\n            disabled\n            ng-model=\"validDisabled\"/>\n          <label for=\"radValidDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radValidDisabledTwo\"\n            ng-value=\"2\"\n            disabled\n            ng-model=\"validDisabled\"/>\n          <label for=\"radValidDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n\n      <!-- Invalid Enabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidEnabledOne\"\n            ng-value=\"1\"\n            ng-model=\"invalidEnabled\"\n            always-invalid/>\n          <label for=\"radInvalidEnabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidEnabledTwo\"\n            ng-value=\"2\"\n            ng-model=\"invalidEnabled\"\n            always-invalid/>\n          <label for=\"radInvalidEnabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Invalid NG-Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidNgDisabledOne\"\n            ng-value=\"1\"\n            ng-disabled=\"true\"\n            ng-model=\"invalidNgDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidNgDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidNgDisabledTwo\"\n            ng-value=\"2\"\n            ng-disabled=\"true\"\n            ng-model=\"invalidNgDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidNgDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n\n      <!-- Invalid Disabled -->\n      <td>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidDisabledOne\"\n            ng-value=\"1\"\n            disabled\n            ng-model=\"invalidDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidDisabledOne\">Selected</label>\n        </p>\n        <p>\n          <input\n            rx-radio\n            id=\"radInvalidDisabledTwo\"\n            ng-value=\"2\"\n            disabled\n            ng-model=\"invalidDisabled\"\n            always-invalid/>\n          <label for=\"radInvalidDisabledTwo\">Unselected</label>\n        </p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<rx-debug>\n  <h3>Plain HTML Radios (for comparison)</h3>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadNormal\"\n      ng-model=\"plainHtmlRadio\"\n      value=\"plain\"\n      ng-required=\"true\"/>\n    <label for=\"plainRadNormal\">A plain radio</label>\n  </p>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadDisabled\"\n      value=\"disabled\"\n      ng-model=\"plainHtmlRadio\"\n      disabled/>\n    <label for=\"plainRadDisabled\">A plain radio (disabled)</label>\n  </p>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadChecked\"\n      value=\"isChecked\"\n      ng-model=\"plainHtmlRadio\"/>\n    <label for=\"plainRadChecked\">A plain radio (checked)</label>\n  </p>\n  <p>\n    <input\n      type=\"radio\"\n      id=\"plainRadRemoveRadio\"\n      value=\"shows\"\n      ng-model=\"plainHtmlRadio\"/>\n    <label for=\"plainRadRemoveRadio\">Add Following Radio:</label>\n\n    <input\n      type=\"radio\"\n      id=\"plainRadRemoveable\"\n      value=\"hidden\"\n      ng-if=\"plainHtmlRadio === 'shows'\"/>\n  </p>\n</rx-debug>\n<!-- END: radio -->\n\n<!-- BEGIN: rxCharacterCount -->\n<h3>\n  <rx-permalink>Using a Character Counter</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxCharacterCount/\">View API</a>\n  <!-- (NOTE) stability: 'experimental' -->\n</h3>\n<ul class=\"list\">\n  <li>\n    Character counters provide color feedback to the user in addition to\n    numeric feedback. As a user approaches the character limit, the\n    numeric value turns from gray to yellow, then yellow to red.\n  </li>\n  <li>\n    The character counter is already styled and has the correct width\n    needed to be positioned next to a textarea. If you need to change the\n    textarea width, a custom wrapper class and textarea width can be set.\n  </li>\n  <li>\n    If you intend to use a counter on text inputs, instead of the more\n    commonly used text area, be aware the framework does not support\n    these fields. You may experience unexpected results. Make sure to\n    test your code.\n  </li>\n  <li>\n    Please see the example below for implementing a character counter on a\n    textarea or text input field.\n  </li>\n  <li>\n    For more options regarding rxCharacterCount functionality, see API docs.\n  </li>\n</ul>\n\n<rx-example name=\"characterCount.simple\"></rx-example>\n\n<rx-debug>\n  <div ng-controller=\"characterCountDocsCtrl\">\n    <h4>Character Count: Default Values</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment1\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        class=\"demo-default-char-count-values\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Custom <code>max-characters=\"25\"</code></h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment2\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        max-characters=\"25\"\n        class=\"demo-custom-max-characters\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Custom <code>low-boundary=\"250\"</code></h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment3\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        low-boundary=\"250\"\n        class=\"demo-custom-low-boundary\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Count leading and trailing spaces</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment4\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        ng-trim=\"false\"\n        class=\"demo-custom-do-not-trim\">\n      </textarea>\n    </div>\n\n    <h4>Character Count: Accounts for initial values</h4>\n    <div>\n      <textarea\n        ng-model=\"data.comment5\"\n        ng-model-options=\"{ debounce: 100 }\"\n        rows=\"10\" cols=\"50\"\n        rx-character-count\n        class=\"demo-initial-value\">\n      </textarea>\n    </div>\n  </div>\n</rx-debug>\n<!-- END: rxCharacterCount -->\n\n<h3><rx-permalink>Disabled State</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    When an input is disabled, styles are automatically applied to\n    gray out the field with a \"not-allowed\" pointer style.\n  </li>\n  <li>\n    When label rules (seen above) are applied correctly to a radio,\n    checkbox, or toggle switch, the label will also be styled.\n  </li>\n</ul>\n<rx-example name=\"forms.disabled\"></rx-example>\n\n<!-- BEGIN: rxDatePicker -->\n<h3>\n  <rx-permalink>Date Picker</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxDatePicker/\">View API</a>\n  <!-- (NOTE) stability: 'PROTOTYPE' -->\n</h3>\n<rx-notification type=\"info\">\n  This element is designed to be used in conjunction with other picker\n  elements to compose a valid ISO 8601 DateTime string in the format of\n  <code>YYYY-MM-DDTHH:mmZ</code>.\n</rx-notification>\n\n<ul class=\"list\">\n  <li>\n    This element will generate a <strong>String</strong> in the format of\n    <code>YYYY-MM-DD</code> to be used as the date portion of the ISO 8601\n    standard DateTime string mentioned above.\n  </li>\n  <li>\n    This element will never generate anything other than a String.\n  </li>\n</ul>\n\n<h4>Simple Example</h4>\n<p>\n  Sometimes, a form may need to prepopulate a value for Date Picker. The\n  example below shows how the element behaves when its model is defaulted\n  to today's date.  When a different date is selected, a gray circle around\n  the current date provides additional context to users as they find their\n  selection in the date picker.\n</p>\n<rx-example name=\"datePicker.simple\"></rx-example>\n\n<h4>Behavior with Empty Model</h4>\n<p>\n  A typical use case is to use rxDatePicker without a default value set. The\n  example below shows how it will behave if you have a blank (empty string) or\n  undefined value for your model.\n</p>\n<rx-example name=\"datePicker.empty\"></rx-example>\n\n<h4>Date Picker States</h4>\n<p>\n  Below you'll find examples of how <code>Date Picker</code> will appear in\n  different states.\n</p>\n<table ng-controller=\"datePickerDocsCtrl\">\n  <thead>\n    <th></th>\n    <th>Enabled</th>\n    <th>Disabled</th>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n      <td>\n        <rx-date-picker\n          id=\"dpEnabledValid\"\n          ng-model=\"enabledValid\">\n        </rx-date-picker>\n      </td>\n      <td>\n        <rx-date-picker\n          id=\"dpDisabledValid\"\n          ng-disabled=\"true\"\n          ng-model=\"disabledValid\">\n        </rx-date-picker>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n      <td>\n        <rx-date-picker\n          id=\"dpEnabledInvalid\"\n          always-invalid\n          ng-model=\"enabledInvalid\">\n        </rx-date-picker>\n      </td>\n      <td>\n        <rx-date-picker\n          id=\"dpDisabledInvalid\"\n          ng-disabled=\"true\"\n          always-invalid\n          ng-model=\"disabledInvalid\">\n        </rx-date-picker>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<!-- END: rxDatePicker -->\n\n<!-- BEGIN: rxTimePicker -->\n<h3>\n  <rx-permalink>Time Picker</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxTimePicker/\">View API</a>\n  <!-- (NOTE) stability: 'PROTOTYPE' -->\n</h3>\n<rx-notification type=\"info\">\n  This element is designed to be used in conjunction with other picker\n  elements to compose a valid ISO 8601 DateTime string in the format of\n  <code>YYYY-MM-DDTHH:mmZ</code>.\n</rx-notification>\n\n<ul class=\"list\">\n  <li>\n    This element will generate a <strong>String</strong> in the format of\n    <code>HH:mmZ</code> to be used as the time portion of the ISO 8601\n    standard DateTime string mentioned above.\n    <ul>\n      <li><code>HH</code> is the 24-hour format from 00 to 23</li>\n      <li><code>mm</code> is the minutes from 00 to 59</li>\n      <li><code>Z</code> is the UTC offset that matches <code>[-+]\\d{2}:\\d{2}</code></li>\n    </ul>\n  </li>\n  <li>\n    This element will never generate anything other than a String.\n  </li>\n</ul>\n\n<h4>Simple Example</h4>\n<rx-example name=\"timePicker.simple\"></rx-example>\n\n<h4>Time Picker States</h4>\n<p>\n  Below you'll find examples of how <code>Time Picker</code> will appear in\n  different states.\n</p>\n<table ng-controller=\"timePickerDocsCtrl\">\n  <thead>\n    <th></th>\n    <th>Enabled</th>\n    <th>Disabled</th>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Valid</th>\n      <td>\n        <rx-time-picker\n          id=\"tpEnabledValid\"\n          ng-disabled=\"false\"\n          ng-model=\"enabledValid\">\n        </rx-time-picker>\n      </td>\n      <td>\n        <rx-time-picker\n          id=\"tpDisabledValid\"\n          ng-disabled=\"true\"\n          ng-model=\"disabledValid\">\n        </rx-time-picker>\n      </td>\n    </tr>\n    <tr>\n      <th>Invalid</th>\n      <td>\n        <rx-time-picker\n          id=\"tpEnabledInvalid\"\n          always-invalid\n          ng-disabled=\"false\"\n          ng-model=\"enabledInvalid\">\n        </rx-time-picker>\n      </td>\n      <td>\n        <rx-time-picker\n          id=\"tpDisabledInvalid\"\n          ng-disabled=\"true\"\n          always-invalid\n          ng-model=\"disabledInvalid\">\n        </rx-time-picker>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<!-- END: rxTimePicker -->\n\n<h3><rx-permalink>Simple Controls</rx-permalink></h3>\n\n<h4><rx-permalink>Text Inputs</rx-permalink></h4>\n<p>\n  Three <code>rx-field</code> elements each consume between 250px and 1/3 of the width.\n</p>\n<rx-example name=\"forms.simple\"></rx-example>\n\n<h4><rx-permalink>Text Area</rx-permalink></h4>\n<ul class=\"list\">\n  <li>\n    Please see the example below for implementing a textarea input.\n  </li>\n  <li>\n    <code>rows</code> attribute can used to set the default number of rows in textarea,\n    if input limit exceeds it will apply auto-scroll feature.\n  </li>\n  <li>\n    One <code>rx-field</code> element consumes the full width.\n  </li>\n</ul>\n<rx-example name=\"forms.textarea\"></rx-example>\n\n<h3><rx-permalink>Intermediate Controls</rx-permalink></h3>\n<p>\n  Two <code>rx-field</code> elements each consume between 250px and 1/2 of the width.\n</p>\n<rx-example name=\"forms.intermediatecontrols\"></rx-example>\n\n<h4><rx-permalink>Drop-Down Selection</rx-permalink></h4>\n<p>\n  For drop-down selections, two options are available: a drop-down\n  that only permits a single selection, or a drop-down that allows\n  the user to make multiple selections.\n</p>\n<rx-example name=\"forms.dropdown\"></rx-example>\n\n<h4><rx-permalink>Input Groups</rx-permalink></h4>\n<rx-example name=\"forms.inputgroups\"></rx-example>\n\n<h3><rx-permalink>Advanced Controls</rx-permalink></h3>\n<rx-example name=\"forms.advancedcontrols\"></rx-example>\n\n<h4><rx-permalink>Advanced Text Area</rx-permalink></h4>\n<p>\n  Text areas can utilize multiple features simultaneously. In the following\n  example, the text area is a required field, has a character counter\n  applied, and shows help text.\n</p>\n<rx-example name=\"forms.advancedtextarea\"></rx-example>\n\n<h3><rx-permalink>Form Actions</rx-permalink></h3>\n<p>\n  At the end of each form, the user should be presented with a cancel button and a submit button. The\n  submit button should appear on the left, the cancel button to the right.\n  Submit button text should be as specific as possible to reinforce for the user\n  what change they are about to make. For example, \"Update Server\" is better than a general \"Submit\".\n</p>\n<rx-example name=\"forms.formactions\"></rx-example>\n\n<h2><rx-permalink>Saving Form Data</rx-permalink></h2>\n\n<h3><rx-permalink>Saving In-Progress Form State</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    Saving a form state can help with user experience. You can use rxAutoSave\n    to activate this feature.\n  </li>\n  <li>\n    rxAutoSave interacts exclusively with your model layer. Your UI/template\n    code will be unaware that its state is being saved.\n  </li>\n  <li>\n    See <a href=\"#/utilities/rxAutoSave\">rxAutoSave</a> for further details.\n  </li>\n</ul>\n<rx-example name=\"forms.autoSave\"></rx-example>\n\n<h3><rx-permalink>Manual Form Saving</rx-permalink></h3>\n<ul class=\"list\">\n  <li>\n    If you require form data to be completed before submitting, or require\n    interactive form experiences, a conditional save button and notification\n    is used.\n  </li>\n  <li>\n    The notification should only be shown after a change has been made to the\n    form, not on page load.\n  </li>\n  <li>\n    The subtitle of the page should indicate when the form was last saved and\n    contain the save button.\n  </li>\n</ul>\n<rx-example name=\"forms.manualSave\"></rx-example>\n\n<h3>\n  <rx-permalink>Search Box</rx-permalink>\n  <a class=\"button xs inline\" href=\"ngdocs/index.html#/api/elements.directive:rxSearchBox/\">View API</a>\n</h3>\n<p>The rxSearchBox directive provides functionality around creating a search input box.</p>\n\n<h3>Simple Search Box</h3>\n<rx-example name=\"searchBox.simple\"></rx-example>\n\n<h3>Custom Placeholder</h3>\n<p>\n  You can use the <code>rx-placeholder</code> attribute to customize the placeholder text.\n</p>\n<rx-example name=\"searchBox.custom\"></rx-example>\n\n<h3>Disabled Search Box</h3>\n<rx-example name=\"searchBox.disabled\"></rx-example>\n\n<h2><rx-permalink>Design Patterns within Encore</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Forms can be used on their own page. You can see this in Encore when\n    you create a new object such as a Cloud Server or a Database under\n    Encore Cloud.\n  </li>\n  <li>\n    Forms are also used within modals. You can see this when modifying\n    content that requires form fields such as actions performed on a Cloud\n    Server instance.\n  </li>\n  <li>\n    You can use <a href=\"#/layout/wells\">Wells</a> to create additional\n    context for the form.\n  </li>\n</ul>\n\n<h2><rx-permalink>UI Roadmap / Possible Future-work</rx-permalink></h2>\n<ul class=\"list\">\n  <li>\n    Fleshing out a design pattern for edit states.\n    <ul>\n      <li>\n        Up until now, the editing of content has been relegated to using\n        modals to edit individual line items. As a result, different\n        products have handled the concept of an edit state differently.\n      </li>\n      <li>\n        There should be conformity for this, but we have not designed a\n        user pattern yet.\n      </li>\n    </ul>\n  </li>\n</ul>\n",
             "less": ""
         }
     },
@@ -470,14 +587,18 @@ angular.module('demoApp')
         "isCategory": false,
         "srcFiles": [
             "src/elements/Modals/scripts/rxModalAction.js",
+            "src/elements/Modals/scripts/rxModalBackdrop.js",
             "src/elements/Modals/scripts/rxModalFooter.js",
-            "src/elements/Modals/scripts/rxModalForm.js"
+            "src/elements/Modals/scripts/rxModalForm.js",
+            "src/elements/Modals/scripts/rxModalWindow.js"
         ],
         "tplFiles": [],
         "tplJsFiles": [
             "templates/Modals/templates/rxModalAction.html",
             "templates/Modals/templates/rxModalActionForm.html",
-            "templates/Modals/templates/rxModalFooters.html"
+            "templates/Modals/templates/rxModalBackdrop.html",
+            "templates/Modals/templates/rxModalFooters.html",
+            "templates/Modals/templates/rxModalWindow.html"
         ],
         "docs": {
             "md": "",
@@ -670,23 +791,33 @@ angular.module('demoApp')
     {
         "displayName": "Tabs",
         "stability": "stable",
-        "description": "Styling for ngBootstrap Tabs plugin",
-        "hasApi": false,
+        "description": "Element for displaying tabbed content",
+        "api": "directive:rxTabset",
         "keywords": [
-            "tabs"
+            "rxTab",
+            "rxTabset"
         ],
         "name": "Tabs",
         "moduleName": "'encore.ui.elements'",
         "category": "elements",
         "isLegacy": false,
+        "hasApi": true,
         "isCategory": false,
-        "srcFiles": [],
+        "srcFiles": [
+            "src/elements/Tabs/scripts/rxTab.js",
+            "src/elements/Tabs/scripts/rxTabContentTransclude.js",
+            "src/elements/Tabs/scripts/rxTabHeadingTransclude.js",
+            "src/elements/Tabs/scripts/rxTabset.js"
+        ],
         "tplFiles": [],
-        "tplJsFiles": [],
+        "tplJsFiles": [
+            "templates/Tabs/templates/rxTab.html",
+            "templates/Tabs/templates/rxTabset.html"
+        ],
         "docs": {
             "md": "",
             "js": "",
-            "html": "<p>\n  This component provides styles and a demo for the\n  <a href=\"http://angular-ui.github.io/bootstrap/#/tabs\">the Angular-UI Bootstrap Tabs plugin</a>,\n  which is included as a dependency for EncoreUI. Usage is the exact same as\n  demoed on the Angular-UI Bootstrap documentation.\n</p>\n\n<h3>Disclaimer</h3>\n<ul class=\"list\">\n  <li>Only the default horizontal tabs are supported by these styles.</li>\n  <li>\n    <code>vertical</code>, <code>pills</code>, and <code>justified</code>\n    tabs are currently unsupported.\n  </li>\n</ul>\n\n<rx-example name=\"tabs.simple\"></rx-example>\n\n<div class=\"example-case do\">\n  <h4>DO</h4>\n  <ul class=\"list\">\n    <li>\n      Do use tabs for complex forms that use option tables. Tabs are a good way\n      to display \"either/or\" choices to the user.\n    </li>\n    <li>\n      Do use tabs to show closely related information cleanly.\n    </li>\n  </ul>\n  <br />\n\n  <tabset>\n    <tab>\n      <tab-heading>Rackspace Images (3)</tab-heading>\n      <table class=\"table-striped\">\n        <thead>\n          <tr>\n            <th>Name</th>\n            <th>Min Ram</th>\n            <th>Min Disk</th>\n            <th>Created On</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>Arch 2015.7</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>Debian 7 (Wheezy)</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>Ubuntu 14.04 LTS (Trusty Tahr)</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n        </tbody>\n      </table>\n    </tab>\n    <tab>\n      <tab-heading>Saved Images (3)</tab-heading>\n      <table class=\"table-striped\">\n        <thead>\n          <tr>\n            <th>Name</th>\n            <th>Min Ram</th>\n            <th>Min Disk</th>\n            <th>Created On</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>TestImageOne</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>Woof Meow</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>GoldenTicket</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n        </tbody>\n      </table>\n    </tab>\n  </tabset>\n</div>\n\n<div class=\"example-case avoid\">\n  <h4>DON'T</h4>\n  <ul class=\"list\">\n    <li>\n      Don't use non-standard tab patterns, like the accordion example below.\n    </li>\n    <li>\n      Don't use more than 5 tabs. If more than 5 tabs are required, then\n      consider whether tabs are the right pattern.\n    </li>\n    <li>\n      Don't use tabs with a total width of more than 500px. If the width is\n      more than 500px, consider shorter tab labels.\n    </li>\n    <li>\n      Don't use tabs as navigation with entire pages inside. Rather than putting\n      extensive or lengthy content in a tabbed area, create a new page with an\n      additional link in the left hand nav.\n    </li>\n  </ul>\n  <br />\n  <img src=\"images/tabs_avoid.png\" />\n</div>\n",
+            "html": "<h3>Disclaimer</h3>\n<ul class=\"list\">\n  <li>Only the default horizontal tabs are supported by these styles.</li>\n  <li>\n    <code>vertical</code>, <code>pills</code>, and <code>justified</code>\n    tabs are currently unsupported.\n  </li>\n</ul>\n\n<rx-example name=\"tabs.simple\"></rx-example>\n\n<div class=\"example-case do\">\n  <h4>DO</h4>\n  <ul class=\"list\">\n    <li>\n      Do use tabs for complex forms that use option tables. Tabs are a good way\n      to display \"either/or\" choices to the user.\n    </li>\n    <li>\n      Do use tabs to show closely related information cleanly.\n    </li>\n  </ul>\n  <br />\n\n  <rx-tabset>\n    <rx-tab>\n      <rx-tab-heading>Rackspace Images (3)</rx-tab-heading>\n      <table class=\"table-striped\">\n        <thead>\n          <tr>\n            <th>Name</th>\n            <th>Min Ram</th>\n            <th>Min Disk</th>\n            <th>Created On</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>Arch 2015.7</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>Debian 7 (Wheezy)</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>Ubuntu 14.04 LTS (Trusty Tahr)</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n        </tbody>\n      </table>\n    </rx-tab>\n    <rx-tab>\n      <rx-tab-heading>Saved Images (3)</rx-tab-heading>\n      <table class=\"table-striped\">\n        <thead>\n          <tr>\n            <th>Name</th>\n            <th>Min Ram</th>\n            <th>Min Disk</th>\n            <th>Created On</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>TestImageOne</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>Woof Meow</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n          <tr>\n            <td>GoldenTicket</td>\n            <td>512 MB</td>\n            <td>20 GB</td>\n            <td>Mar 2, 2016 @ 15:40 (UTC-0600)</td>\n          </tr>\n        </tbody>\n      </table>\n    </rx-tab>\n  </rx-tabset>\n</div>\n\n<div class=\"example-case avoid\">\n  <h4>DON'T</h4>\n  <ul class=\"list\">\n    <li>\n      Don't use non-standard tab patterns, like the accordion example below.\n    </li>\n    <li>\n      Don't use more than 5 tabs. If more than 5 tabs are required, then\n      consider whether tabs are the right pattern.\n    </li>\n    <li>\n      Don't use tabs with a total width of more than 500px. If the width is\n      more than 500px, consider shorter tab labels.\n    </li>\n    <li>\n      Don't use tabs as navigation with entire pages inside. Rather than putting\n      extensive or lengthy content in a tabbed area, create a new page with an\n      additional link in the left hand nav.\n    </li>\n  </ul>\n  <br />\n  <img src=\"images/tabs_avoid.png\" />\n</div>\n",
             "less": ""
         }
     },
@@ -724,12 +855,12 @@ angular.module('demoApp')
     {
         "displayName": "Tooltips",
         "stability": "stable",
-        "description": "provides styles to raw HTML elements and custom directive templates",
+        "description": "Provides styles to raw HTML elements and custom directive templates",
         "keywords": [
             "message",
             "popover",
             "popup",
-            "tooltip"
+            "rxTooltip"
         ],
         "name": "Tooltips",
         "moduleName": "'encore.ui.elements'",
@@ -737,12 +868,25 @@ angular.module('demoApp')
         "isLegacy": false,
         "hasApi": true,
         "isCategory": false,
-        "srcFiles": [],
+        "srcFiles": [
+            "src/elements/Tooltips/scripts/rxTooltip.js",
+            "src/elements/Tooltips/scripts/rxTooltipClasses.js",
+            "src/elements/Tooltips/scripts/rxTooltipHtml.js",
+            "src/elements/Tooltips/scripts/rxTooltipHtmlPopup.js",
+            "src/elements/Tooltips/scripts/rxTooltipPopup.js",
+            "src/elements/Tooltips/scripts/rxTooltipTemplate.js",
+            "src/elements/Tooltips/scripts/rxTooltipTemplatePopup.js",
+            "src/elements/Tooltips/scripts/rxTooltipTemplateTransclude.js"
+        ],
         "tplFiles": [],
-        "tplJsFiles": [],
+        "tplJsFiles": [
+            "templates/Tooltips/templates/rxTooltip-html-popup.html",
+            "templates/Tooltips/templates/rxTooltip-popup.html",
+            "templates/Tooltips/templates/rxTooltip-template-popup.html"
+        ],
         "docs": {
             "md": "",
-            "js": "angular.module('demoApp')\n.controller('tooltipsSimpleExampleCtrl', function ($scope) {\n    $scope.dynamicTooltip = 'I was defined in the controller!';\n    $scope.htmlTooltip = '<span class=\"tooltip-header\">A Tooltip Title</span><p>You can use HTML</p>';\n});\n",
+            "js": "angular.module('demoApp')\n.controller('tooltipsSimpleExampleCtrl', function ($scope) {\n    $scope.dynamicTooltip = 'I was defined in the controller!';\n    $scope.htmlTooltip = '<span class=\"rx-tooltip-header\">A Tooltip Title</span><p>You can use HTML</p>';\n});\n",
             "html": "<p>\n  The tooltips component provides styles to raw HTML elements and custom directive templates.\n</p>\n\n<rx-example name=\"tooltips.simple\"></rx-example>\n",
             "less": ""
         }
@@ -751,12 +895,11 @@ angular.module('demoApp')
         "displayName": "Typeahead",
         "stability": "stable",
         "description": "",
-        "api": "directive:typeahead",
+        "api": "directive:rxTypeahead",
         "keywords": [
             "auto",
             "fill",
-            "predict",
-            "typeahead"
+            "predict"
         ],
         "name": "Typeahead",
         "moduleName": "'encore.ui.elements'",
@@ -765,14 +908,17 @@ angular.module('demoApp')
         "hasApi": true,
         "isCategory": false,
         "srcFiles": [
-            "src/elements/Typeahead/scripts/typeahead.js"
+            "src/elements/Typeahead/scripts/rxTypeahead.js"
         ],
         "tplFiles": [],
-        "tplJsFiles": [],
+        "tplJsFiles": [
+            "templates/Typeahead/templates/rxTypeaheadMatch.html",
+            "templates/Typeahead/templates/rxTypeaheadPopup.html"
+        ],
         "docs": {
             "md": "",
             "js": "angular.module('demoApp')\n.controller('typeadheadShowOnFocusCtrl', function ($scope) {\n    $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',\n        'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas',\n        'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',\n        'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York',\n        'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Republic of Dawood',\n        'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',\n        'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];\n});\n\nangular.module('demoApp')\n.controller('typeaheadSimpleCtrl', function ($scope) {\n    $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',\n        'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas',\n        'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',\n        'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York',\n        'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Republic of Dawood',\n        'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',\n        'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];\n});\n",
-            "html": "<p>\n  This component provides styles and a demo for the Angular UI Bootstrap \n  <a href=\"http://angular-ui.github.io/bootstrap/versioned-docs/0.14.3/#/typeahead\">Typeahead</a>\n  directive (which is included as a dependency for EncoreUI).\n</p>\n\n<h3><rx-permalink>Standard Use</rx-permalink></h3>\n<rx-example name=\"typeahead.simple\"></rx-example>\n\n<h3><rx-permalink>Show List on Focus</rx-permalink></h3>\n<rx-example name=\"typeahead.showOnFocus\"></rx-example>\n",
+            "html": "<p>\n  This component provides styles and a demo for the rxTypeahead directive\n</p>\n\n<h3><rx-permalink>Standard Use</rx-permalink></h3>\n<rx-example name=\"typeahead.simple\"></rx-example>\n\n<h3><rx-permalink>Show List on Focus</rx-permalink></h3>\n<rx-example name=\"typeahead.showOnFocus\"></rx-example>\n",
             "less": ""
         }
     },
@@ -800,26 +946,26 @@ angular.module('demoApp')
         }
     },
     {
-        "displayName": "PaginatedItemsSummary",
-        "stability": "stable",
-        "description": "Provides a formatted string with the current range of items in total items.",
-        "api": "filter:PaginatedItemsSummary",
+        "displayName": "encoreRoutes",
+        "stability": "deprecated",
+        "description": "Allows apps to make updates to the navigation.",
+        "api": "service:encoreRoutes",
         "keywords": [],
-        "name": "PaginatedItemsSummary",
+        "name": "encoreRoutes",
         "moduleName": "'encore.ui.utilities'",
         "category": "utilities",
         "isLegacy": false,
         "hasApi": true,
         "isCategory": false,
         "srcFiles": [
-            "src/utilities/PaginatedItemsSummary/scripts/PaginatedItemsSummary.js"
+            "src/utilities/encoreRoutes/scripts/encoreRoutes.js"
         ],
         "tplFiles": [],
         "tplJsFiles": [],
         "docs": {
             "md": "",
             "js": "",
-            "html": "<p>\n  Provides a formatted string with the current range of items in total items, for example \"26-50 of 500 items\".\n</p>\n",
+            "html": "<p>\n  Allows apps to make updates to the navigation.\n</p>",
             "less": ""
         }
     },
@@ -850,6 +996,30 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "routesCdnPath",
+        "stability": "deprecated",
+        "description": "",
+        "api": "service:routesCdnPath",
+        "keywords": [],
+        "name": "routesCdnPath",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/routesCdnPath/scripts/routesCdnPath.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Provides the CDN locations from which to load the nav JSON.\n</p>",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxAge",
         "stability": "stable",
         "description": "Filters to parse dates",
@@ -870,6 +1040,30 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxAgeCtrl', function ($scope) {\n    var day = 1000 * 60 * 60 * 24;\n    $scope.ageHours = new Date((Date.now() - (day / 2.3))).toString();\n    $scope.ageDays = new Date((Date.now() - (day * 1.5))).toString();\n    $scope.ageMonths = new Date((Date.now() - (day * 40.2))).toString();\n    $scope.ageYears = new Date((Date.now() - (day * 380.1))).toString();\n});\n",
             "html": "<p>\n  <code>rxAge</code> provides several filters to parse dates.\n</p>\n\n<rx-example name=\"rxAge.demo\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxAppRoutes",
+        "stability": "deprecated",
+        "description": "Manage application routes and states of routes.",
+        "api": "service:rxAppRoutes",
+        "keywords": [],
+        "name": "rxAppRoutes",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxAppRoutes/scripts/rxAppRoutes.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Mmanages app routes and states of routes.\n</p>",
             "less": ""
         }
     },
@@ -948,6 +1142,30 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxAutoSaveSimpleCtrl', function ($scope, $timeout, $q, rxNotify, rxAutoSave) {\n    $scope.formData = {\n        checkbox: false,\n        name: '',\n        description: '',\n        sensitive: ''\n    };\n\n    var autosave = rxAutoSave($scope, 'formData', {\n        exclude: ['sensitive'],\n        ttl: 86400000\n    });\n\n    $scope.status = {\n        loading: false,\n        disable: false,\n        deferredLoading: false,\n        deferredDisable: false\n    };\n\n    var clearMsg = [\n        'rxAutoSave data has been cleared!',\n        'Navigate away and return, and the form will not be auto-populated'\n    ].join(' ');\n\n    // Clear with an explicit autosave.clear() call\n    $scope.clearStorage = function () {\n        $scope.status.loading = true;\n        $timeout(function () {\n            $scope.status.loading = false;\n            autosave.clear();\n            rxNotify.add(clearMsg, { type: 'success' });\n        }, 1000);\n    };\n\n    // Clear by resolving the associated promise\n    $scope.deferredClear = function () {\n        var deferred = $q.defer();\n\n        autosave.clearOnSuccess(deferred.promise);\n        $scope.status.deferredLoading = true;\n\n        $timeout(function () {\n            $scope.status.deferredLoading = false;\n            deferred.resolve();\n            rxNotify.add(clearMsg, { type: 'success' });\n        }, 1000);\n    };\n});\n",
             "html": "<p>\n  Provides a way to store values in a form for later use.\n</p>\n<h3>Form with automatically saved state</h3>\n<p>\n  Try entering some data into this form, and then navigating away to a different page. When you return here,\n  the form data will automatically be populated with what you had previously entered.\n</p>\n<p>\n  Once you've tried that, you can clear the stored data with either of the \"Clear\" buttons below. Clicking those\n  will <em>not</em> erase the form, but will erase the rxAutoSave stored data. If you navigate away after clicking\n  one of the buttons, and then return here, the form will not be auto-populated, because rxAutoSave will have no data for it!\n</p>\n\n<p>\n  Finally, we have set a Time-To-Live of 24 hours for this form, and explicitly told it not to save the \"Sensitive data\" field\n  into storage. If you enter data here, and come back &gt;24 hours later, the form will not be auto-populated, as the data will\n  have expired.\n</p>\n\n<rx-example name=\"rxAutoSave.simple\"></rx-example>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxBreadcrumbsSvc",
+        "stability": "deprecated",
+        "description": "",
+        "api": "service:rxBreadcrumbsSvc",
+        "keywords": [],
+        "name": "rxBreadcrumbsSvc",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxBreadcrumbsSvc/scripts/rxBreadcrumbsSvc.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Angular service that provides various methods to manipulate breadcrumbs.\n</p>\n",
             "less": ""
         }
     },
@@ -1184,6 +1402,30 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "$rxDebounce",
+        "stability": "stable",
+        "description": "Utilities for rxTypeahead element",
+        "api": "service:$rxDebounce",
+        "keywords": [],
+        "name": "rxDebounce",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxDebounce/scripts/rxDebounce.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxDevicePaths",
         "stability": "stable",
         "description": "Device Paths configuration",
@@ -1280,6 +1522,30 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  Checks if current environment matches target environment.\n</p>\n\n<rx-example name=\"rxEnvironmentMatch.simple\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxEnvironmentUrl",
+        "stability": "deprecated",
+        "description": "Builds a URL based on current environment.",
+        "api": "filter:rxEnvironmentUrl",
+        "keywords": [],
+        "name": "rxEnvironmentUrl",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxEnvironmentUrl/scripts/rxEnvironmentUrl.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Builds a URL based on current environment.\n</p>\n\n<rx-example name=\"rxEnvironmentUrl.simple\"></rx-example>\n",
             "less": ""
         }
     },
@@ -1444,9 +1710,7 @@ angular.module('demoApp')
         "description": "Provides authentication logic",
         "api": "service:rxIdentity",
         "keywords": [
-            "Identity",
-            "rxAuth",
-            "Auth"
+            "authorization"
         ],
         "name": "rxIdentity",
         "moduleName": "'encore.ui.utilities'",
@@ -1515,6 +1779,35 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxLocalStorageSimpleCtrl', function ($scope, $window, rxLocalStorage) {\n    $scope.setSideKick = function () {\n        rxLocalStorage.setObject('joker', { name: 'Harley Quinn' });\n    };\n\n    $scope.getSideKick = function () {\n        var sidekick = rxLocalStorage.getObject('joker');\n        $window.alert(sidekick.name);\n    };\n});\n",
             "html": "<p>\n  Simple wrapper for interacting with local storage in the browser.\n</p>\n<h3>Simple Example</h3>\n<p>Select <code>Store Answer</code>, then <code>Answer?</code> to first store the answer in the \n   browser's <code>localStorage</code> object and later retrieve the stored content.\n</p>\n\n<rx-example name=\"rxLocalStorage.simple\"></rx-example>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxModal",
+        "stability": "stable",
+        "description": "",
+        "api": "service:rxModal",
+        "keywords": [],
+        "name": "rxModal",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxModal/scripts/rxModal.js",
+            "src/utilities/rxModal/scripts/rxModalAnimationClass.js",
+            "src/utilities/rxModal/scripts/rxModalStack.js",
+            "src/utilities/rxModal/scripts/rxModalTransclude.js",
+            "src/utilities/rxModal/scripts/rxMultiMap.js",
+            "src/utilities/rxModal/scripts/rxStackedMap.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Utilities for the <a href=\"#/elements/Modals\">Modals</a> element.\n</p>\n",
             "less": ""
         }
     },
@@ -1791,6 +2084,7 @@ angular.module('demoApp')
         "hasApi": true,
         "isCategory": false,
         "srcFiles": [
+            "src/utilities/rxPaginate/scripts/PaginatedItemsSummary.js",
             "src/utilities/rxPaginate/scripts/rxPaginate.js"
         ],
         "tplFiles": [],
@@ -1832,8 +2126,7 @@ angular.module('demoApp')
         "description": "",
         "api": "directive:rxPermission",
         "keywords": [
-            "permission",
-            "rxPermission"
+            "role"
         ],
         "name": "rxPermission",
         "moduleName": "'encore.ui.utilities'",
@@ -1852,6 +2145,33 @@ angular.module('demoApp')
             "md": "",
             "js": "angular.module('demoApp')\n.controller('rxPermissionSimpleCtrl', function ($scope, rxSession, rxNotify) {\n    rxNotify.add('Respect My Authority!!', {\n        stack: 'permission',\n        type: 'warning'\n    });\n\n    $scope.storeToken = function () {\n        rxSession.storeToken({\n            access: {\n                user: {\n                    roles: [{ name: 'test' }]\n                }\n            }\n        });\n    };\n\n    $scope.clearToken = function () {\n        rxSession.logout();\n    };\n});\n",
             "html": "<p>\n  The rxPermission utility directive provides functionality to perform checks\n  against existing user permissions.\n</p>\n\n<rx-example name=\"rxPermission.simple\"></rx-example>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "$rxPosition",
+        "stability": "stable",
+        "description": "Utility for various positioned elements",
+        "api": "service:$rxPosition",
+        "keywords": [
+            "rxTooltip",
+            "tooltip"
+        ],
+        "name": "rxPosition",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxPosition/scripts/rxPosition.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "",
             "less": ""
         }
     },
@@ -1959,8 +2279,8 @@ angular.module('demoApp')
         "description": "Manages user session",
         "api": "service:rxSession",
         "keywords": [
-            "Session",
-            "rxAuth"
+            "authorization",
+            "permission"
         ],
         "name": "rxSession",
         "moduleName": "'encore.ui.utilities'",
@@ -2128,6 +2448,54 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "rxStatusTags",
+        "stability": "deprecated",
+        "description": "Primarily used for applications to specify custom status tags.",
+        "api": "service:rxStatusTags",
+        "keywords": [],
+        "name": "rxStatusTags",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxStatusTags/scripts/rxStatusTags.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Primarily used for applications to specify custom status tags.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxTabsetController",
+        "stability": "stable",
+        "description": "Controller used for the Tabs element.",
+        "api": "controller:rxTabsetController",
+        "keywords": [],
+        "name": "rxTabsetController",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxTabsetController/scripts/rxTabsetController.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Controller used for <a href=\"#/elements/Tabs\">Tabs</a> element.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxTime",
         "stability": "stable",
         "description": "Filter to convert a date string to an accepted standard Time format",
@@ -2261,6 +2629,57 @@ angular.module('demoApp')
         }
     },
     {
+        "displayName": "$rxTooltip",
+        "stability": "stable",
+        "description": "Utility for rxTooltip element",
+        "api": "service:$rxTooltip",
+        "keywords": [],
+        "name": "rxTooltip",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxTooltip/scripts/rxTooltip.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxTypeahead",
+        "stability": "stable",
+        "description": "Utilities for the Typeahead element",
+        "hasApi": false,
+        "keywords": [],
+        "name": "rxTypeahead",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxTypeahead/scripts/rxTypeaheadController.js",
+            "src/utilities/rxTypeahead/scripts/rxTypeaheadHighlight.js",
+            "src/utilities/rxTypeahead/scripts/rxTypeaheadMatch.js",
+            "src/utilities/rxTypeahead/scripts/rxTypeaheadParser.js",
+            "src/utilities/rxTypeahead/scripts/rxTypeaheadPopup.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Utilities for the <a href=\"#/elements/Typeahead\">Typeahead</a> element.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
         "displayName": "rxUnauthorizedInterceptor",
         "stability": "stable",
         "description": "Redirects users to the login page, when user authentication fails during a system service request.",
@@ -2359,6 +2778,54 @@ angular.module('demoApp')
             "md": "",
             "js": "",
             "html": "<p>\n  List of known UTC Offset Values as found at\n  <a href=\"https://en.wikipedia.org/wiki/List_of_UTC_time_offsets\"\n    target=\"_blank\">\n    https://en.wikipedia.org/wiki/List_of_UTC_time_offsets\n  </a>.\n</p>\n",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxVisibility",
+        "stability": "deprecated",
+        "description": "Provides an interface for adding new visibility methods for nav menus.",
+        "api": "service:rxVisibility",
+        "keywords": [],
+        "name": "rxVisibility",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxVisibility/scripts/rxVisibility.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Provides an interface for adding new <code>visibility</code> methods for nav menus.\n</p>",
+            "less": ""
+        }
+    },
+    {
+        "displayName": "rxVisibilityPathParams",
+        "stability": "deprecated",
+        "description": "Returns an object with name and method params that can be passed to rxVisibility.addMethod().",
+        "api": "service:rxVisibilityPathParams",
+        "keywords": [],
+        "name": "rxVisibilityPathParams",
+        "moduleName": "'encore.ui.utilities'",
+        "category": "utilities",
+        "isLegacy": false,
+        "hasApi": true,
+        "isCategory": false,
+        "srcFiles": [
+            "src/utilities/rxVisibilityPathParams/scripts/rxVisibilityPathParams.js"
+        ],
+        "tplFiles": [],
+        "tplJsFiles": [],
+        "docs": {
+            "md": "",
+            "js": "",
+            "html": "<p>\n  Returns an object with name and method params that can be passed to <a href=\"#/utilities/rxVisibility\">rxVisibility</a>.\n</p>\n",
             "less": ""
         }
     },

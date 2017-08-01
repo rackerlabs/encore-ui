@@ -1,0 +1,19 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/utilities/rxVisibility/scripts/rxVisibility.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/6195e10/src/utilities/rxVisibility/scripts/rxVisibility.js#L19" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxVisibility</code>
+<div><span class="hint">service in module <code ng:non-bindable="">utilities</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="utilities-service-page utilities-service-rxvisibility-page"><p>Provides an interface for adding new <code>visibility</code> methods for nav menus.  Methods added via <code>addMethod</code> should
+have a <code>function (scope, args)</code> interface.</p>
+<p>When you do:
+<pre class="prettyprint linenums">
+visibility: [ "someMethodName", { foo: 1, bar: 2} ]
+</pre>
+in a nav menu definition, the (optional) object will be passed to your method as the
+second argument <code>args</code>, i.e.:
+<pre class="prettyprint linenums">
+function (scope, args) {}
+</pre>
+</div></div>
+</div>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/Tooltips/scripts/rxTooltipTemplateTransclude.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/Tooltips/scripts/rxTooltipTemplateTransclude.js</span></h1>
+    <h2>
+        Statements: <span class="metric">86.11% <small>(31 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">75% <small>(9 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">75% <small>(6 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">88.57% <small>(31 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Tooltips/scripts/</a> &#187; rxTooltipTemplateTransclude.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipTemplateTranclude
+ * @description
+ * Element for transcluding tooltips template.
+ */
+.directive('rxTooltipTemplateTransclude',
+    function ($animate, $sce, $compile, $templateRequest) {
+        return {
+            link: function (scope, elem, attrs) {
+                var origScope = scope.$eval(attrs.rxTooltipTemplateTranscludeScope);
+&nbsp;
+                var changeCounter = 0,
+                    currentScope,
+                    previousElement,
+                    currentElement;
+&nbsp;
+                var cleanupLastIncludeContent = function () {
+                    if (previousElement) {
+                        previousElement.remove();
+                        previousElement = null;
+                    }
+&nbsp;
+                    if (currentScope) {
+                        currentScope.$destroy();
+                        currentScope = null;
+                    }
+&nbsp;
+                    if (currentElement) {
+                        $animate.leave(currentElement).then(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                            previousElement = null;</span>
+                        });
+                        previousElement = currentElement;
+                        currentElement = null;
+                    }
+                };
+&nbsp;
+                scope.$watch($sce.parseAsResourceUrl(attrs.rxTooltipTemplateTransclude), function (src) {
+                    var thisChangeId = ++changeCounter;
+&nbsp;
+                    if (src) {
+                        //set the 2nd param to true to ignore the template request error so that the inner
+                        //contents and scope can be cleaned up.
+                        $templateRequest(src, true).then(function (response) {
+                            <span class="missing-if-branch" title="if path not taken" >I</span>if (thisChangeId !== changeCounter) { <span class="cstat-no" title="statement not covered" >return; </span>}
+                            var newScope = origScope.$new();
+                            var template = response;
+&nbsp;
+                            var clone = $compile(template)(newScope, function (clone) {
+                                cleanupLastIncludeContent();
+                                $animate.enter(clone, elem);
+                            });
+&nbsp;
+                            currentScope = newScope;
+                            currentElement = clone;
+&nbsp;
+                            currentScope.$emit('$includeContentLoaded', src);
+                        }, <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                            if (thisChangeId === changeCounter) {</span>
+<span class="cstat-no" title="statement not covered" >                                cleanupLastIncludeContent();</span>
+<span class="cstat-no" title="statement not covered" >                                scope.$emit('$includeContentError', src);</span>
+                            }
+                        });
+                        scope.$emit('$includeContentRequested', src);
+                    } else {
+                        cleanupLastIncludeContent();
+                    }
+                });
+                scope.$on('$destroy', cleanupLastIncludeContent);
+            }
+        };
+    });
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

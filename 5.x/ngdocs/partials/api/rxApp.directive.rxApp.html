@@ -1,0 +1,36 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/components/rxApp/scripts/rxApp.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/6195e10/src/components/rxApp/scripts/rxApp.js#L23" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxApp</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">rxApp</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Responsible for creating the HTML necessary for a common Encore layout.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-app
+       [site-title="{String}"]
+       [menu="{Array}"]
+       [collapsible-nav="{String}"]
+       [collapsed-nav="{String}"]
+       [new-instance="{Boolean}"]
+       [hide-feeback="{Boolean}"]
+       [logout-url="{String}"]&gt;
+&lt;/rx-app&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>siteTitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Title of site to use in upper right hand corner</p>
+</div></td></tr><tr><td>menu <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Menu items used for left-hand navigation</p>
+</div></td></tr><tr><td>collapsibleNav <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Set to &#39;true&#39; if the navigation menu should be collapsible</p>
+</div></td></tr><tr><td>collapsedNav <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Binding for the collapsed state of the menu.</p>
+</div></td></tr><tr><td>newInstance <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Whether the menu items should be a new instance of <code>rxAppRoutes</code></p>
+</div></td></tr><tr><td>hideFeeback <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>Whether to hide the &#39;feedback&#39; link</p>
+</div> <p><em>(default: false)</em></p></td></tr><tr><td>logoutUrl <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxapp-page"><p>URL to pass to rx-logout</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="rxapp-directive-page rxapp-directive-rxapp-page"><pre class="prettyprint linenums">
+&lt;rx-app site-title="Custom Title"&gt;&lt;/rx-app&gt;
+</pre>
+</div></div>
+</div>

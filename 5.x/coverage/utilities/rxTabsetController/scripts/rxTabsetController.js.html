@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxTabsetController/scripts/rxTabsetController.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxTabsetController/scripts/rxTabsetController.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(28 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(19 / 19)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(28 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxTabsetController/scripts/</a> &#187; rxTabsetController.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">160</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62</span>
+<span class="cline-any cline-yes">52</span>
+<span class="cline-any cline-yes">52</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">113</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">113</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">83</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">75</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">103</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">103</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">103</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc controller
+ * @name utilities.controller:rxTabsetController
+ * @description
+ * Controller for creating tabs.
+ */
+.controller('rxTabsetController', function ($scope) {
+    var ctrl = this,
+        tabs = ctrl.tabs = $scope.tabs = [];
+    var destroyed;
+&nbsp;
+    ctrl.select = function (selectedTab) {
+        angular.forEach(tabs, function (tab) {
+            if (tab.active &amp;&amp; tab !== selectedTab) {
+                tab.active = false;
+                tab.onDeselect();
+                selectedTab.selectCalled = false;
+            }
+        });
+        selectedTab.active = true;
+        // only call select if it has not already been called
+        if (!selectedTab.selectCalled) {
+            selectedTab.onSelect();
+            selectedTab.selectCalled = true;
+        }
+    };
+&nbsp;
+    ctrl.addTab = function (tab) {
+        tabs.push(tab);
+        // we can't run the select function on the first tab
+        // since that would select it twice
+        if (tabs.length === 1 &amp;&amp; tab.active !== false) {
+            tab.active = true;
+        } else if (tab.active) {
+            ctrl.select(tab);
+        } else {
+            tab.active = false;
+        }
+    };
+&nbsp;
+    ctrl.removeTab = function (tab) {
+        var index = tabs.indexOf(tab);
+        //Select a new tab if the tab to be removed is selected and not destroyed
+        if (tab.active &amp;&amp; tabs.length &gt; 1 &amp;&amp; !destroyed) {
+            //If this is the last tab, select the previous tab. else, the next tab.
+            var newActiveIndex = index === tabs.length - 1 ? index - 1 : index + 1;
+            ctrl.select(tabs[newActiveIndex]);
+        }
+        tabs.splice(index, 1);
+    };
+&nbsp;
+    $scope.$on('$destroy', function () {
+        destroyed = true;
+    });
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

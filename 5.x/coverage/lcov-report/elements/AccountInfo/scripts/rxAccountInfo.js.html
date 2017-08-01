@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/AccountInfo/scripts/rxAccountInfo.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/AccountInfo/scripts/rxAccountInfo.js</span></h1>
+    <h2>
+        Statements: <span class="metric">92.11% <small>(35 / 38)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">87.5% <small>(14 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">84.62% <small>(11 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">92.11% <small>(35 / 38)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/AccountInfo/scripts/</a> &#187; rxAccountInfo.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">19</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @deprecated This directive will be removed in a future release of EncoreUI.
+ * @ngdoc directive
+ * @name elements.directive:rxAccountInfo
+ * @restrict E
+ * @scope
+ * @requires $interpolate
+ * @description
+ * This element is used to draw an account info box at the top of each page,
+ * directly underneath the breadcrumbs. `rxPage` (through `rxApp`) integrates it
+ * directly into its template, and you activate it by passing `account-number="..."`
+ * to `&lt;rx-page&gt;`.
+ *
+ * While you could theoretically use this element elsewhere, its design and style
+ * were done with the intention of sitting underneath the breadcrumbs.
+ *
+ * When placed on a page that has `:user` in its route parameters, this element
+ * will also draw a drop-down user selector, to allow the Racker to change which
+ * user they're looking at for the given account. At this time, this user-selection
+ * is *only* available for products under Cloud. If you need it for additional products,
+ * please let us know.
+ *
+ * This directive requires that `SupportAccount`, `Encore`, `AccountStatusGroup`,
+ * and `Teams` services are available. These are not provided by this project,
+ * but are available in an internal Rackspace repository.
+ *
+ * There are two different styles of account info box supported. The "old" one, which appears
+ * wherever you want it to be, and a new one that is intended to be placed underneath the breadcrumbs.
+ * To use the new one, pass `account-info-banner="true"` to this directive
+ *
+ * @param {String} accountNumber The account number to load and retrieve data for
+ * @param {String=} teamId Team ID, used for loading team badges
+ * @param {String=} [notifyStack='page'] Notifications stack to put errors on.
+ * @param {String=} accountInfoBanner Set to "true" to use the new under-the-breadcrumbs style
+ */
+.directive('rxAccountInfo', function (Teams, SupportAccount, Encore, rxNotify, encoreRoutes,
+    AccountStatusGroup, $interpolate) {
+    return {
+        templateUrl: function (elem, attr) {
+            if (attr.accountInfoBanner === 'true') {
+                return 'templates/rxAccountInfoBanner.html';
+            }
+            return 'templates/rxAccountInfo.html';
+        },
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            accountNumber: '@',
+            teamId: '@',
+            notifyStack: '@'
+        },
+        link: function (scope) {
+            var notifyStack = scope.notifyStack || 'page';
+            scope.badges = [];
+            scope.tooltipHtml = <span class="fstat-no" title="function not covered" >function (badge) {</span>
+<span class="cstat-no" title="statement not covered" >                return ['&lt;span class="tooltip-header"&gt;', badge.name,</span>
+                        '&lt;/span&gt;&lt;p&gt;', badge.description, '&lt;/p&gt;'].join('');
+            };
+&nbsp;
+            // Currently, the only time we should show the `Current User` area is
+            // if the Racker is on the Cloud page
+            encoreRoutes.isActiveByKey('cloud').then(function (isCloud) {
+                scope.showCurrentUser = isCloud;
+            });
+&nbsp;
+            scope.accountPageUrl = $interpolate('/accounts/{{accountNumber}}')(scope);
+&nbsp;
+            SupportAccount.getBadges({ accountNumber: scope.accountNumber }, function (badges) {
+                scope.badges = scope.badges.concat(badges);
+            }, function () {
+                rxNotify.add('Error retrieving badges for this account', {
+                    type: 'error',
+                    stack: notifyStack
+                });
+            });
+&nbsp;
+            var fetchTeamBadges = function (teamId) {
+                Teams.badges({ id: teamId }).$promise.then(function (badges) {
+                    scope.badges = scope.badges.concat(badges);
+                }, function () {
+                    rxNotify.add('Error retrieving badges for this team', {
+                        type: 'error',
+                        stack: notifyStack
+                    });
+                });
+            };
+&nbsp;
+            if (!_.isEmpty(scope.teamId) &amp;&amp; (_.isNumber(_.parseInt(scope.teamId)))) {
+                fetchTeamBadges(scope.teamId);
+            }
+&nbsp;
+            Encore.getAccount({ id: scope.accountNumber }, function (account) {
+                // Only attempt if no teamId is passed to directive
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (_.isEmpty(scope.teamId)) {
+                    var primaryTeam = _.find(account.teams, <span class="fstat-no" title="function not covered" >function (team) {</span>
+<span class="cstat-no" title="statement not covered" >                        return _.includes(team.flags, 'primary');</span>
+                    });
+&nbsp;
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (primaryTeam) {
+<span class="cstat-no" title="statement not covered" >                        fetchTeamBadges(primaryTeam.id);</span>
+                    }
+                }
+&nbsp;
+                scope.accountName = account.name;
+                scope.accountStatus = account.status;
+                scope.accountAccessPolicy = account.accessPolicy;
+                scope.accountCollectionsStatus = account.collectionsStatus;
+                scope.statusClass = '';
+                var statusClass = AccountStatusGroup(account.status);
+                if (statusClass === 'warning') {
+                    scope.statusClass = 'msg-warn';
+                } else if (statusClass === 'info') {
+                    scope.statusClass = 'msg-info';
+                }
+            }, function () {
+                rxNotify.add('Error retrieving account name', {
+                    type: 'error',
+                    stack: notifyStack
+                });
+            });
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

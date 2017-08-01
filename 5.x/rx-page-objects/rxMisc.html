@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: rxMisc</title>
+    <title>JSDoc: Namespace: rxMisc</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -18,7 +18,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: rxMisc</h1>
+    <h1 class="page-title">Namespace: rxMisc</h1>
 
     
 
@@ -39,24 +39,7 @@
     
         
 
-    
-
-    <h4 class="name" id="rxMisc"><span class="type-signature"></span>new rxMisc<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 <dl class="details">
@@ -100,20 +83,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -123,12 +93,1926 @@
 
     
 
-     
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".nullValueMatches"><span class="type-signature">(static) </span>nullValueMatches<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>A list of common strings that appear in the UI that represent <code>null</code> to a page object.
+Add to this list yourself or create a new one in this namespace for your application.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
 
     
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.nullValueMatches will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line146">line 146</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var userPage {
+    get emailPreferences() { return element(by.model('email.preferences')).getText(); }
+};
+
+it('should return null for the user email preferences', function () {
+    encore.rxMisc.nullValueMatches.push('Unregistered'); // this is permanent for the test run
+    // this element's inner text is "Unregistered", triggering a `null` response
+    expect(userPage.emailPreferences).to.eventually.be.null;
+});</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".scrollPosition"><span class="type-signature">(static) </span>scrollPosition<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>The current scroll location, given as an <em>immediate</em> object (not a promise of an object)
+with members <code>x</code>/<code>y</code>, which are coordinates that <em>are</em> returned as promises.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Promise.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The number of pixels from the left edge of the current scroll location.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Promise.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The number of pixels from the upper edge of the current scroll location.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.scrollPosition will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line324">line 324</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY">https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY</a></li>
+        
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollX">https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollX</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>it('should scroll down a bit', function () {
+    expect(encore.rxMisc.scrollPosition.x).to.eventually.equal(0);
+    expect(encore.rxMisc.scrollPosition.y).to.eventually.equal(0);
+    encore.rxMisc.scrollToElement($('.footer'));
+    expect(encore.rxMisc.scrollPosition.x).to.eventually.equal(0);
+    expect(encore.rxMisc.scrollPosition.y).to.eventually.equal(841);
+});</code></pre>
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".compareXLocations"><span class="type-signature">(static) </span>compareXLocations<span class="signature">(e1, e2)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Whether or not <code>e1</code> and <code>e2</code> have the same X coordinates.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+|
+
+<span class="param-type">ElementArrayFinder</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>First element to compare X locations against.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>e2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+|
+
+<span class="param-type">ElementArrayFinder</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Second element to compare X locations against.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.compareXLocations will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line375">line 375</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var listOfThings = $$('ol li'); // left-justified list
+expect(listOfThings.count()).to.eventually.equal(2);
+var firstThing = listOfThings.get(0);
+var lastThing = listOfThings.get(1);
+expect(encore.rxMisc.compareXLocations(firstThing, lastThing)).to.eventually.be.true;</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".compareYLocations"><span class="type-signature">(static) </span>compareYLocations<span class="signature">(e1, e2)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Whether or not <code>e1</code> and <code>e2</code> have the same Y coordinates.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+|
+
+<span class="param-type">ElementArrayFinder</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>First element to compare Y locations against.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>e2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+|
+
+<span class="param-type">ElementArrayFinder</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Second element to compare Y locations against.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.compareYLocations will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line354">line 354</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var rowOfThings = $$('ul li'); // inline-style row list
+expect(listOfThings.count()).to.eventually.equal(2);
+var firstThing = listOfThings.get(0);
+var lastThing = listOfThings.get(1);
+expect(encore.rxMisc.compareYLocations(firstThing, lastThing)).to.eventually.be.true;</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".currencyToPennies"><span class="type-signature">(static) </span>currencyToPennies<span class="signature">(currencyStringOrArray)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p><strong>Note: This function does not return a promise. It returns a direct value.</strong>
+Transform <code>currencyStringOrArray</code> (USD) to an integer representing pennies or an array of integers representing
+pennies. Built to reverse Angular's 'currency' filter. Do not pass in fractions of a penny because it will be
+rounded with Math.round() which doesn't use bankers' rounding for negative numbers.
+NOTE: AngularJS representation of negative currency changes in
+<a href="https://code.angularjs.org/1.4.4/docs/api/ng/filter/currency">AngularJS v1.4.4</a></p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>currencyStringOrArray</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Raw text or an array of raw texts as output by Angular's
+<code>currency</code> filter.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.currencyToPennies will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>expect(encore.rxMisc.currencyToPennies('$0.01')).to.equal(1);
+expect(encore.rxMisc.currencyToPennies('$100 CAN')).to.equal(10000);
+expect(encore.rxMisc.currencyToPennies('($100 AUS)')).to.equal(-10000);
+expect(encore.rxMisc.currencyToPennies('$1.10')).to.equal(110);
+expect(encore.rxMisc.currencyToPennies(['$0.01', '($100 AUS)', '$150.14'])).to.eql([1, -10000, 15014]);</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".negate"><span class="type-signature">(static) </span>negate<span class="signature">(value)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Utility function to negate a value in a <code>.then</code> callback using shorthand.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The value to toggle. Runs the <code>!</code> operator on the value.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.negate will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line124">line 124</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Whatever happens when you run <code>!value</code> on <code>value</code>. Use with caution!</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var myPage = {
+    someComponent: {
+        isOpen: function () {
+            return $('.opened-component').isPresent();
+        },
+
+        isClosed: function () {
+            return this.isOpen().then(encore.rxMisc.negate);
+        }
+    }
+};</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".newDate"><span class="type-signature">(static) </span>newDate<span class="signature">(dateText)</span><span class="type-signature"> &rarr; {Date}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p><strong>Note: This function does not return a promise. It returns a direct value.</strong>
+A convenience function to pass to <code>.then</code> when a date is needed from text.
+If there is any manipulation of the text needed to render a valid date in
+javascript, then you shouldn't use this function. If that is the case, see the link to the
+Encore-UI styleguide listed in the &quot;See&quot; addendum below. There should be no need to manipulate
+a date's text to create a valid date object if you are following the styleguide.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dateText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Text that represents the date object in the UI.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.newDate will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line98">line 98</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="http://rackerlabs.github.io/encore-ui/#/styles/formatting">http://rackerlabs.github.io/encore-ui/#/styles/formatting</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// instead of doing this
+startDate: {
+    get: function () {
+        return element(by.binding('startDate')).getText().then(function (text) {
+            return new Date(text);
+        });
+    }
+},
+
+// use this instead
+endDate: {
+    get: function () {
+        return element(by.binding('endDate')).getText().then(encore.rxMisc.newDate);
+    }
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".scrollToElement"><span class="type-signature">(static) </span>scrollToElement<span class="signature">(elem, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Accepts an ElementFinder, or an ElementArrayFinder, which can have several locations.
+Should the list of elements be stacked vertically (say, in a list of table rows),
+the element with the smallest Y coordinate will be scrolled to.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+|
+
+<span class="param-type">ElementArrayFinder</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>An element, or a list of elements to scroll to.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>The options for scrolling to the element.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elementTargetPoint</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'top'
+                
+                </td>
+            
+
+            <td class="description last"><p>Which point in the element to position when scrolling to it.</p>
+<ul>
+<li><strong>top</strong> : targets the top of the element</li>
+<li><strong>middle</strong> : targets the middle of the element</li>
+<li><strong>bottom</strong> : targets the bottom of the element</li>
+</ul></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>positionOnScreen</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'top'
+                
+                </td>
+            
+
+            <td class="description last"><p>Where to place the point in the element on the screen when scrolling to it.</p>
+<ul>
+<li><strong>top</strong>: position the element target point at the top of the screen</li>
+<li><strong>middle</strong> : position the element target point in the middle of the screen</li>
+<li><strong>bottom</strong> : position the element target point at the bottom of the screen</li>
+</ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line263">line 263</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var tablePage = {
+    get tblRows() {
+        return element.all(by.repeater('row in rows'));
+    },
+
+    isLoading: function () {
+        return $('.infinite-scrolling.loading');
+    },
+
+    triggerLoad: function () {
+        // will attempt to put the top of the last row in the middle of the screen
+        encore.rxMisc.scrollToElement(this.tblRows.get(-1), { positionOnScreen: 'middle' });
+    }
+};
+
+it('should scroll to the bottom of the table and load more stuff', function () {
+   browser.ignoreSynchronization = true;
+   tablePage.triggerLoad();
+   expect(tablePage.isLoading()).to.eventually.equal(true);
+   browser.ignoreSynchronization = false;
+});</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".slowClick"><span class="type-signature">(static) </span>slowClick<span class="signature">(elem)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Equivalent to <code>browser.actions().mouseDown(elem).mouseUp().perform();</code>.
+This function should be used when dealing with odd or unusual behavior while interacting with click events
+that don't seem to work right. Either the element does not appear to respond to a normal <code>.click()</code> call, or
+the element is responding to more than one click event. This typically happens more often in Firefox than
+in other browsers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Element to &quot;slow click&quot;.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>it('should click the crazy custom HTML thing that looks like a button but isn\'t', function () {
+    var crazyButton = $('.button-wrapper[id="userId_"' + browser.params.userId + '"]');
+    crazyButton.click(); // didn't work!
+    expect(encore.rxNotify.all.isPresent('You will be redirected', 'success')).to.eventually.be.false;
+    encore.rxMisc.slowClick(crazyButton);
+    expect(encore.rxNotify.all.isPresent('You will be redirected', 'success')).to.eventually.be.true;
+});</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".unless"><span class="type-signature">(static) </span>unless<span class="signature">(elem, innerFn<span class="signature-attributes">opt</span>, fallbackReturnValue<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>If the <code>elem</code> is found, invoke <code>innerFn</code> on the resulting element.
+If there is no element found (or displayed), return <code>null</code>.
+If the element is found and displayed, but the text matches something in <a href="rxMisc.html#.nullValueMatches">rxMisc.nullValueMatches</a>,
+then it is considered invalid, and by default, <code>null</code> is returned. You can specify a final argument,
+<code>fallbackReturnValue</code>, which will over ride the default <code>null</code> response into something else you'd prefer.
+This is useful when applications feature use of <code>ng-if</code> to control various messages to the user.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>elem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ElementFinder</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The ElementFinder that may or may not be present, or displayed, or valid.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>innerFn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    getText()
+                
+                </td>
+            
+
+            <td class="description last"><p>Function to call on the element should it be present, displayed, and valid.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fallbackReturnValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last"><p>Returned if the ElementFinder is not present, or not displayed, or invalid.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>rxMisc.unless will be removed in a future release of rxPageObjects.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rxMisc.page.js.html">rxMisc.page.js</a>, <a href="rxMisc.page.js.html#line191">line 191</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// given this html
+&lt;span class="accent-text">
+  &lt;span ng-if="balance.currentBalance">
+    {{balance.currentBalance | currency }} {{balance.currency}}
+  &lt;/span>
+  &lt;span ng-if="!balance.currentBalance">
+    N/A
+  &lt;/span>
+&lt;/span>
+
+// this would be your page object
+var balancePage = Page.create({
+    balance: {
+        get: function () {
+            var balanceElement = element(by.binding('currentBalance'));
+            // will return `null` if "N/A". Otherwise, will transform to Number.
+            return encore.rxMisc.unless(balanceElement, function (elem) {
+                return elem.getText().then(encore.rxMisc.currencyToPennies);
+            });
+        }
+    }
+});
+
+// this would be in your protractor.conf.js file
+onPrepare: function () {
+    encore.rxMisc.nullValueMatches.push('N/A');
+}</code></pre>
+
+
+
+        
     
 
     
@@ -144,13 +2028,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

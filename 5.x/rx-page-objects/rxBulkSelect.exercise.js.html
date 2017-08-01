@@ -27,112 +27,137 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var chai_1 = require("chai");
-var _ = require("lodash");
-var protractor_1 = require("protractor");
-var rxModalAction_page_1 = require("./rxModalAction.page");
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+var rxBulkSelect = require('./rxBulkSelect.page').rxBulkSelect;
+
 /**
+ * @function
  * @description rxBulkSelect exercises.
+ * @exports exercise/rxBulkSelect
+ * @returns {function} A function to be passed to mocha's `describe`.
+ * @param {Object} [options] - Test options. Used to build valid tests.
+ * @param {rxBulkSelect} [options.instance={@link rxBulkSelect.initialize}] - Component to exercise.
+ * @param {string[]} [options.batchActions=[]] - List of batch actions to exercise, will not run exercises if empty.
+ * @param {number} [options.count=10] - Number of items in the table.
  * @example
  * describe('default exercises', encore.exercise.rxBulkSelect({
  *     instance: myPage.bulkSelect, // select one of many widgets from your page objects
  *     batchActions: ['Create', 'Read', 'Update', 'Delete']
  * }));
  */
-function rxBulkSelect(options) {
+exports.rxBulkSelect = function (options) {
+    if (options === undefined) {
+        options = {};
+    }
+
     options = _.defaults(options, {
-        batchActions: [],
+        instance: rxBulkSelect.initialize(),
         count: 10,
+        batchActions: []
     });
+
     return function () {
         var component;
+
         before(function () {
             component = options.instance;
         });
+
         it('has no selected rows, a hidden message, and a disabled batch actions link', function () {
-            chai_1.expect(component.anySelected()).to.eventually.be.false;
-            chai_1.expect(component.bulkMessage).to.eventually.be.null;
-            chai_1.expect(component.isEnabled()).to.eventually.be.false;
+            expect(component.anySelected()).to.eventually.be.false;
+            expect(component.bulkMessage).to.eventually.be.null;
+            expect(component.isEnabled()).to.eventually.be.false;
         });
+
         it('shows the message and enables the batch actions link when a row is selected', function () {
             component.row(0).select();
-            chai_1.expect(component.bulkMessage).to.eventually.match(/^1 \w+ is selected.$/);
-            chai_1.expect(component.isEnabled()).to.eventually.be.true;
+            expect(component.bulkMessage).to.eventually.match(/^1 \w+ is selected.$/);
+            expect(component.isEnabled()).to.eventually.be.true;
         });
+
         it('updates the message as rows are selected', function () {
             component.selectByIndex([1, 2]);
-            chai_1.expect(component.bulkMessage).to.eventually.match(/^3 \w+s are selected.$/);
+            expect(component.bulkMessage).to.eventually.match(/^3 \w+s are selected.$/);
         });
+
         it('hides the message and disables the batch actions link when all rows are deselected', function () {
             component.deselectByIndex([0, 1, 2]);
-            chai_1.expect(component.bulkMessage).to.eventually.be.null;
-            chai_1.expect(component.isEnabled()).to.eventually.be.false;
+            expect(component.bulkMessage).to.eventually.be.null;
+            expect(component.isEnabled()).to.eventually.be.false;
         });
+
         it('selects all rows via the header checkbox', function () {
             var selExp = new RegExp('^' + options.count + ' \\w+s are selected.$');
+
             component.selectAllCheckbox.select();
-            chai_1.expect(component.tblSelectedRows.count()).to.eventually.eql(options.count);
-            chai_1.expect(component.bulkMessage).to.eventually.match(selExp);
-            chai_1.expect(component.isEnabled()).to.eventually.be.true;
+            expect(component.allSelected()).to.eventually.be.true;
+            expect(component.bulkMessage).to.eventually.match(selExp);
+            expect(component.isEnabled()).to.eventually.be.true;
         });
+
         it('clears the selection via the header checkbox', function () {
             component.selectAllCheckbox.deselect();
-            chai_1.expect(component.anySelected()).to.eventually.be.false;
-            chai_1.expect(component.bulkMessage).to.eventually.be.null;
-            chai_1.expect(component.isEnabled()).to.eventually.be.false;
+            expect(component.anySelected()).to.eventually.be.false;
+            expect(component.bulkMessage).to.eventually.be.null;
+            expect(component.isEnabled()).to.eventually.be.false;
         });
+
         it('selects all rows via the button in the message', function () {
             var selExp = new RegExp('^' + options.count + ' \\w+s are selected.$');
+
             component.row(0).select();
             component.selectAll();
-            chai_1.expect(component.tblSelectedRows.count()).to.eventually.eql(options.count);
-            chai_1.expect(component.selectAllCheckbox.isSelected()).to.eventually.be.true;
-            chai_1.expect(component.bulkMessage).to.eventually.match(selExp);
-            chai_1.expect(component.isEnabled()).to.eventually.be.true;
+            expect(component.allSelected()).to.eventually.be.true;
+            expect(component.selectAllCheckbox.isSelected()).to.eventually.be.true;
+            expect(component.bulkMessage).to.eventually.match(selExp);
+            expect(component.isEnabled()).to.eventually.be.true;
         });
+
         it('clears the selection via the button in the message', function () {
             component.clearSelections();
-            chai_1.expect(component.anySelected()).to.eventually.be.false;
-            chai_1.expect(component.selectAllCheckbox.isSelected()).to.eventually.be.false;
-            chai_1.expect(component.bulkMessage).to.eventually.be.null;
-            chai_1.expect(component.isEnabled()).to.eventually.be.false;
+            expect(component.anySelected()).to.eventually.be.false;
+            expect(component.selectAllCheckbox.isSelected()).to.eventually.be.false;
+            expect(component.bulkMessage).to.eventually.be.null;
+            expect(component.isEnabled()).to.eventually.be.false;
         });
+
         if (options.batchActions.length > 0) {
             it('should have a batch actions menu', function () {
-                chai_1.expect(component.batchActions.isPresent()).to.eventually.be.true;
+                expect(component.batchActions.isPresent()).to.eventually.be.true;
             });
+
             it('should disable the batch actions menu when no items selected', function () {
-                chai_1.expect(component.batchActions.isEnabled()).to.eventually.be.false;
+                expect(component.batchActions.isEnabled()).to.eventually.be.false;
             });
+
             it('should enable the batch actions menu when an item is selected', function () {
                 component.row(0).select();
-                chai_1.expect(component.batchActions.isEnabled()).to.eventually.be.true;
+                expect(component.batchActions.isEnabled()).to.eventually.be.true;
             });
+
             it('should expand the batch action menu when clicked', function () {
                 component.batchActions.expand();
-                chai_1.expect(component.batchActions.isExpanded()).to.eventually.be.true;
+                expect(component.batchActions.isExpanded()).to.eventually.be.true;
             });
+
             it('should have the correct number of batch actions', function () {
-                chai_1.expect(component.batchActions.actionCount()).to.eventually.eql(options.batchActions.length);
+                expect(component.batchActions.actionCount()).to.eventually.eql(options.batchActions.length);
             });
+
             _.each(options.batchActions, function (action) {
-                it("should have the batch action \"" + action + "\"", function () {
-                    chai_1.expect(component.batchActions.hasAction(action)).to.eventually.be.true;
+                it('should have the batch action "' + action + '"', function () {
+                    expect(component.batchActions.hasAction(action)).to.eventually.be.true;
                 });
-                it("should be able to open the modal for batch action \"" + action + "\"", function () {
-                    var modal = new rxModalAction_page_1.rxModalAction(protractor_1.$('.modal'));
-                    component.batchActions.action(action).click();
-                    chai_1.expect(modal.isDisplayed()).to.eventually.be.true;
+
+                it('should be able to open the modal for batch action "' + action + '"', function () {
+                    var modal = component.batchActions.action(action).openModal();
+                    expect(modal.isDisplayed()).to.eventually.be.true;
                     modal.close();
                 });
             });
         }
     };
-}
-exports.rxBulkSelect = rxBulkSelect;
-;
+};
 </code></pre>
         </article>
     </section>
@@ -143,13 +168,13 @@ exports.rxBulkSelect = rxBulkSelect;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

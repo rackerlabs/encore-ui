@@ -1,0 +1,114 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/components/rxApp/scripts/rxPage.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/6195e10/src/components/rxApp/scripts/rxPage.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxPage</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">rxApp</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="rxapp-directive-page rxapp-directive-rxpage-page"><p>Responsible for creating the HTML necessary for a page (including breadcrumbs
+and page title) You can pass in a <code>title</code> attribute or an <code>unsafeHtmlTitle</code>
+attribute, but not both. Use the former if your title is a plain string, use
+the latter if your title contains embedded HTML tags AND you trust the source
+of this title. Arbitrary javascript can be executed, so ensure you trust your
+source.</p>
+<p>The document title will be set to either <code>title</code> or a stripped version of
+<code>unsafeHtmlTitle</code>, depending on which you provide.</p>
+<p>You&#39;ll likely want to use the <a href="#/api/rxApp.directive:rxPage">rxPage</a> directive
+inside your template view. For example, inside a &#39;myView.html&#39; file:</p>
+<pre class="prettyprint linenums">
+&lt;rx-page title="'Example Page'"&gt;
+   Here is my content
+&lt;/rx-page&gt;
+</pre>
+<p><code>rx-page</code> is used to create a common wrapper for specific page views. It
+automatically adds the breadcrumbs and page title/subtitle (if specified),
+along with the correct styling.</p>
+<p>Both the <code>title</code> and <code>subtitle</code> attributes accept an Angular expression,
+which can be a string (shown in the previous example) or a scope property.
+This string/property can accept other expressions, enabling you to build
+custom titles. The demo has an example of this usage.</p>
+<p>If you wish to use arbitrary HTML in your title, you can use the
+<code>unsafe-html-title</code> attribute instead of <code>title</code>. This is considered &quot;unsafe&quot;
+because it is capable of executing arbitrary Javascript, so you must ensure
+that you trust the source of the title. The &quot;Customized Page Title&quot; in the
+demo shows the use of HTML tags.</p>
+<p>In either case (<code>title</code> or <code>unsafe-html-title</code>), the document title
+(i.e. visible in the browser tab) will be set to your chosen title. If you
+use <code>unsafe-html-title</code>, all HTML tags will be stripped before setting the
+document title.</p>
+<h5 id="description_account-info-below-breadcrumbs">Account Info below Breadcrumbs</h5>
+<p><code>rxPage</code> integrates with the <a href="#/api/elements.directive:rxAccountInfo">rxAccountInfo</a>
+component, to draw the Account Info box directly underneath the
+<code>rxBreadcrumbs</code>. This is opt-in. By default, it will not appear. To enable it,
+pass the <code>account-number=&quot;...&quot;</code> attribute to <code>&lt;rx-page&gt;</code> in your template, i.e</p>
+<pre class="prettyprint linenums">
+&lt;rx-page account-number="{{ accountNumber }}"&gt;
+</pre>
+<p>As noted in <a href="#/api/elements.directive:rxAccountInfo">rxAccountInfo</a>, this
+directive requires that <code>SupportAccount</code>, <code>Encore</code> and <code>Teams</code> services are
+available to the Angular Dependency Injection system. These are <em>not</em>
+provided by EncoreUI, but are available in an internal Rackspace repository.</p>
+<h5 id="description_status-tags">Status tags</h5>
+<p>A final attribute that <code>rx-page</code> accepts is <code>status</code>. This takes a string,
+and has the effect of drawing a status &quot;tag&quot; beside the page title.
+The &quot;Customized rxApp&quot; demo shows the use of this with the <code>&quot;alpha&quot;</code> tag.</p>
+<p>The framework currently provides <code>&quot;alpha&quot;</code> and <code>&quot;beta&quot;</code> tags, but any product
+can specify their own custom tags using the <code>rxStatusTagsProvider</code>. It
+currently has one method, <code>addStatus</code>, which takes an unique <code>key</code> for the
+new tag, the <code>class</code> it should use in the HTML, and the <code>text</code> that will be
+drawn. All custom tags are drawn inside of a <code>&lt;span&gt;</code>, essentially as:</p>
+<pre class="prettyprint linenums">
+&lt;span class="status-tag {{ class }}"&gt;{{ text }}&lt;/span&gt;
+</pre>
+<p>To use this, do the following in your application&#39;s <code>.config()</code> method:</p>
+<pre class="prettyprint linenums">
+rxStatusTagsProvider.addStatus({
+    key: 'gamma',
+    class: 'alpha-status',
+    text: 'Hello World!'
+});
+</pre>
+<p>This will create a new status tag called <code>&quot;gamma&quot;</code>, which you can pass to
+<code>rx-page</code> as:</p>
+<pre class="prettyprint linenums">
+&lt;rx-page title="'Some Title'" status="gamma"&gt;
+</pre>
+<p>And the title will appear with a <code>Hello World!</code> tag beside it, styled the
+same way as our <code>&quot;alpha&quot;</code> status tag is styled. You can also define your own
+CSS style in your application and use those instead, passing it as the <code>class</code>
+value to <code>addStatus()</code>.</p>
+<p>All the tags are accessible inside of <a href="#/api/elements.directive:rxBreadcrumbs">rxBreadcrumbs</a>
+as well. Any breadcrumb that was created with <code>useStatusTag: true</code> will
+automatically receive the same status tag as you passed to <code>&lt;rx-page&gt;</code>.</p>
+<h5 id="description_page-actions">.page-actions</h5>
+<p>A <code>page-actions</code> class is provided by rx-app to easily add custom page actions
+to the top right of a page. For example:</p>
+<pre class="prettyprint linenums">
+&lt;rx-page title="'Servers Overview'"&gt;
+   &lt;div class="page-actions"&gt;
+       &lt;a href="/create" class="link-action msg-action"&gt;Create New Server&lt;/a&gt;
+   &lt;/div&gt;
+   &lt;img src="http://cdn.memegenerator.net/instances/500x/48669250.jpg"
+        alt="Look at all these servers there are so many" /&gt;
+&lt;/rx-page&gt;
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-page
+       title="{String}"
+       unsafe-html-title="{String}"
+       [subtitle="{String}"]&gt;
+&lt;/rx-page&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>title</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxpage-page"><p>Title of page</p>
+</div></td></tr><tr><td>unsafeHtmlTitle</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxpage-page"><p>Title for the page, with embedded HTML tags</p>
+</div></td></tr><tr><td>subtitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxpage-page"><p>Subtitle of page</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="rxapp-directive-page rxapp-directive-rxpage-page"><pre class="prettyprint linenums">
+&lt;rx-page title="'Page Title'"&gt;&lt;/rx-page&gt;
+</pre>
+</div></div>
+</div>

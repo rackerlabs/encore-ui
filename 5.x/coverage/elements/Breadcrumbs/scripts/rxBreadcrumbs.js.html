@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for elements/Breadcrumbs/scripts/rxBreadcrumbs.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">elements/Breadcrumbs/scripts/rxBreadcrumbs.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Breadcrumbs/scripts/</a> &#187; rxBreadcrumbs.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.elements')
+/**
+ * @deprecated This directive will be removed in a future release of EncoreUI.
+ * @ngdoc directive
+ * @name elements.directive:rxBreadcrumbs
+ * @restrict E
+ * @scope
+ * @description
+ * Responsible for drawing the breadcrumbs for a page.
+ *
+ *
+ * By default, the first breadcrumb will always have an URL of `'/'` and a name of `'Home'`. This can be changed
+ * with the `rxBreadcrumbsSvc.setHome` method (see {@link utilities.service:rxBreadcrumbsSvc rxBreadcrumbsSvc}).
+ *
+ * @param {String=} status
+ * The tag to apply to any breadcrumbs with usePageStatusTag:true
+ *
+ * This leverages the tags defined in {@link rxApp} to display status tags directly inside of breadcrumbs.
+ * For a given breadcrumb, `status` will take precedence over `usePageStatusTag`, i.e. it will use a tag defined in
+ * `status` instead of checking for and using a tag for the page.
+ *
+ * @param {Boolean=} [usePageStatusTag=false]
+ * If you set it to `true`,
+ * then the breadcrumb will use whatever status tag was passed to page, i.e.:
+ * &lt;pre&gt;
+ * &lt;rx-page status="alpha"&gt;
+ * &lt;/pre&gt;
+ * This will cause any breadcrumb marked with `usePageStatusTag` on this page to receive the `"alpha"` status tag.
+ *
+ * @example
+ * &lt;pre&gt;
+ * &lt;rx-app site-title="Custom Title"&gt;&lt;/rx-app&gt;
+ * &lt;/pre&gt;
+ */
+.directive('rxBreadcrumbs', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'templates/rxBreadcrumbs.html',
+        controller: function ($scope, rxBreadcrumbsSvc) {
+            $scope.breadcrumbs = rxBreadcrumbsSvc;
+        },
+        scope: {
+            status: '@'
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

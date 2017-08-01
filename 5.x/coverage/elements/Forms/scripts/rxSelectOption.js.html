@@ -15,10 +15,10 @@
 <div class="header medium">
     <h1>Code coverage report for <span class="entity">elements/Forms/scripts/rxSelectOption.js</span></h1>
     <h2>
-        Statements: <span class="metric">69.23% <small>(9 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">76.92% <small>(10 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">66.67% <small>(4 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">69.23% <small>(9 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">83.33% <small>(5 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">76.92% <small>(10 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Forms/scripts/</a> &#187; rxSelectOption.js</div>
@@ -82,7 +82,10 @@
 55
 56
 57
-58</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+58
+59
+60
+61</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -105,7 +108,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -115,26 +122,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">198</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">198</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">198</span>
-<span class="cline-any cline-yes">1021</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">284</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">198</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">198</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198</span>
+<span class="cline-any cline-yes">1594</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">316</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198</span>
+<span class="cline-any cline-yes">198</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,7 +167,7 @@
  * @param {String} value The value of the option. If no transcluded content is provided,
  *                       the value will also be used as the option's text.
  */
-.directive('rxSelectOption', function (rxDOMHelper) {
+.directive('rxSelectOption', function () {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxSelectOption.html',
@@ -171,8 +177,11 @@
         },
         require: '^^rxMultiSelect',
         link: function (scope, element, attrs, selectCtrl) {
-            scope.transclusion = rxDOMHelper.find(element, '[ng-transclude] &gt; *').length &gt; 0;
-&nbsp;
+            // Previous implementation accessed the DOM and was always returning false after the upgrade to 1.6.
+            // By simply checking the scope's $parent we can avoid accessing the DOM and achieve the same result.
+            // If the $parent has options the options list will be created by an ngRepeat,
+            // otherwise it will be transcluded
+            scope.transclusion = _.isEmpty(scope.$parent.options);
             scope.toggle = <span class="fstat-no" title="function not covered" >function (isSelected) {</span>
 <span class="cstat-no" title="statement not covered" >                if (isSelected) {</span>
 <span class="cstat-no" title="statement not covered" >                    selectCtrl.unselect(scope.value);</span>
@@ -190,8 +199,8 @@
 &nbsp;
             selectCtrl.addOption(scope.value);
 &nbsp;
-            scope.$on('$destroy', <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >                selectCtrl.removeOption(scope.value);</span>
+            scope.$on('$destroy', function () {
+                selectCtrl.removeOption(scope.value);
             });
         }
     };
@@ -201,7 +210,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

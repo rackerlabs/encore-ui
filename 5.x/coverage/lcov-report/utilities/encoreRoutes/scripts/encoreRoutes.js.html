@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/encoreRoutes/scripts/encoreRoutes.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/encoreRoutes/scripts/encoreRoutes.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(33 / 33)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(33 / 33)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/encoreRoutes/scripts/</a> &#187; encoreRoutes.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:encoreRoutes
+ * @description
+ * Creates a shared instance of `AppRoutes` that is used for the Encore App nav.
+ * This allows apps to make updates to the nav via `encoreRoutes`.
+ *
+ * @return {Object} Instance of rxAppRoutes with `fetchRoutes` method added
+ */
+.factory('encoreRoutes', function (rxAppRoutes, routesCdnPath, rxNotify, $q, $http,
+                                   rxVisibilityPathParams, rxVisibility, rxEnvironment,
+                                   rxLocalStorage) {
+    // We use rxVisibility in the nav menu at routesCdnPath, so ensure it's ready
+    // before loading from the CDN
+    rxVisibility.addVisibilityObj(rxVisibilityPathParams);
+&nbsp;
+    var encoreRoutes = new rxAppRoutes();
+&nbsp;
+    var setWarningMessage = function () {
+        rxNotify.add('There was a problem loading the navigation, so a cached version has been loaded for display.', {
+            type: 'warning'
+        });
+    };
+&nbsp;
+    var setFailureMessage = function () {
+        rxNotify.add('Error loading site navigation', {
+            type: 'error'
+        });
+    };
+&nbsp;
+    var url, suffix;
+    switch (true) {
+        case rxEnvironment.isUnifiedProd(): {
+            url = routesCdnPath.production;
+            suffix = 'prod';
+            break;
+        }
+        case rxEnvironment.isPreProd(): {
+            url = routesCdnPath.preprod;
+            suffix = 'preprod';
+            break;
+        }
+        case routesCdnPath.hasCustomURL: {
+            url = routesCdnPath.staging;
+            suffix = 'custom';
+            break;
+        }
+        default: {
+            url = routesCdnPath.staging;
+            suffix = 'staging';
+        }
+    }
+&nbsp;
+    encoreRoutes.fetchRoutes = function () {
+        var routesKey = 'encoreRoutes-' + suffix;
+        var cachedRoutes = rxLocalStorage.getObject(routesKey);
+&nbsp;
+        $http.get(url)
+            .then(function (response) {
+                var routes = response.data;
+                encoreRoutes.setAll(routes);
+                rxLocalStorage.setObject(routesKey, routes);
+            })
+            .catch(function () {
+                if (cachedRoutes) {
+                    encoreRoutes.setAll(cachedRoutes);
+                    setWarningMessage();
+                } else {
+                    setFailureMessage();
+                }
+            });
+&nbsp;
+        return cachedRoutes || [];
+    };
+&nbsp;
+    return encoreRoutes;
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

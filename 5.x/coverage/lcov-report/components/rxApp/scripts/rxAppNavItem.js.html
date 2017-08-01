@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/rxApp/scripts/rxAppNavItem.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">components/rxApp/scripts/rxAppNavItem.js</span></h1>
+    <h2>
+        Statements: <span class="metric">96.88% <small>(62 / 64)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">90.48% <small>(38 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(12 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">96.88% <small>(62 / 64)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">components/rxApp/scripts/</a> &#187; rxAppNavItem.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-yes">140</span>
+<span class="cline-any cline-yes">140</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">140</span>
+<span class="cline-any cline-yes">140</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-yes">26</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-yes">104</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3782</span>
+<span class="cline-any cline-yes">3296</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">486</span>
+<span class="cline-any cline-yes">116</span>
+<span class="cline-any cline-yes">116</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">370</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3738</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-yes">1075</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1075</span>
+<span class="cline-any cline-yes">654</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">421</span>
+<span class="cline-any cline-yes">421</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-yes">4390</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4390</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1808</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2582</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">508</span>
+<span class="cline-any cline-yes">508</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">508</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">508</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2582</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2582</span>
+<span class="cline-any cline-yes">1075</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2582</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">392</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-yes">42</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAppNavItem
+ * @restrict E
+ * @scope
+ * @description
+ * Creates a menu item. Recursively creates rx-app-nav if 'children' present.
+ * 'Item' must be avialable via scope
+ *
+ * @example
+ * &lt;pre&gt;
+ * &lt;rx-app-nav-item ng-repeat="item in items"&gt;&lt;/rx-app-nav-item&gt;
+ * &lt;/pre&gt;
+ */
+.directive('rxAppNavItem', function ($compile, $location, $route) {
+    var linker = function (scope, element) {
+        var injectContent = function (selector, content) {
+            var el = element[0].querySelector(selector);
+            el = angular.element(el);
+&nbsp;
+            $compile(content)(scope, function (compiledHtml) {
+                el.append(compiledHtml);
+            });
+        };
+&nbsp;
+        var directiveHtml = '&lt;directive&gt;&lt;/directive&gt;';
+        // add navDirective if defined
+        if (angular.isString(scope.item.directive)) {
+            // convert directive string to HTML
+            // e.g. my-directive -&gt; &lt;my-directive&gt;&lt;/my-directive&gt;
+            directiveHtml = directiveHtml.replace('directive', scope.item.directive);
+&nbsp;
+            injectContent('.item-directive', directiveHtml);
+        }
+&nbsp;
+        // increment nesting level for child items
+        var childLevel = scope.$parent.level + 1;
+        // safety check that child level is a number
+        if (isNaN(childLevel)) {
+            childLevel = 2;
+        }
+        // add children if present
+        // Note: this can't be added in the HTML due to angular recursion issues
+        var rxNavTemplate = '&lt;rx-app-nav items="item.children" level="' + childLevel + '"&gt;' +
+            '&lt;/rx-app-nav&gt;';
+        if (angular.isArray(scope.item.children)) {
+            injectContent('.item-children', rxNavTemplate);
+        }
+    };
+&nbsp;
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'templates/rxAppNavItem.html',
+        link: linker,
+        scope: {
+            item: '='
+        },
+        controller: function ($scope, $location, $injector, rxVisibility, rxSession, rxUrlUtils) {
+            /**
+             * @description Determines whether or not a nav item should have its href prefixed
+             * based on whether the `$injector` has a `NAV_ITEM_PREFIX` injectable
+             *
+             * _This is *NOT* meant for general consumption, this is strictly for the Origin Project_
+             * _This will eventually be deprecated and removed_
+             *
+             * @param {String=} url URL for the nav item's href
+             */
+            $scope.getUrl = function (url) {
+                // For URLs that have no URL definition, let's go ahead and return right away
+                // this avoids issues when we do have a prefix but really the nav item should not have
+                // any defined href, i.e. items that have subitems
+                if (_.isEmpty(url)) {
+                    return url;
+                }
+&nbsp;
+                // Check if we have a definition of NAV_ITEM_PREFIX, if so let's retrieve it and return the given URL
+                // appended to the prefix.  This allows applications like origin to prefix nav items, while not
+                // messing with nav items in the demo/documentation.
+                //
+                // _This is *NOT* meant for general consumption, this is strictly for the Origin Project_
+                // _This will eventually be deprecated and removed_
+                //
+&nbsp;
+                if ($injector.has('NAV_ITEM_PREFIX')) {
+                    var prefix = rxUrlUtils.parseUrl($injector.get('NAV_ITEM_PREFIX'));
+                    return prefix.protocol.concat('//').concat(prefix.host).concat(url);
+                } else {
+                    // Return as normal if no prefix
+                    return url;
+                }
+&nbsp;
+            };
+            /**
+             * @description Determines whether or not the links need to point to a target, this allows
+             * for origin and applications that show the nav to implement a target in which to have the links
+             * open in.
+             *
+             * If ever there was a need to point links to a different target than an application specific
+             * target, we could implement logic here to inspect the item and determine the target.
+             * (i.e. opening an external application in a new window)
+             */
+            $scope.getTarget = function () {
+                // Check if we have a definition of NAV_ITEM_TARGET, if so let's retrieve it and enable the target attr
+                // on the nav item.  This allows applications like origin to give a target to it's nav items, while not
+                // messing with nav items in the demo/documentation.
+                // We have to pass null in order for the `target` attribute to have no value, the reason for this
+                // is ngRoute will take an href with `target="_self"` and not use it's $location service
+                // allowing the browser to reload the angular application
+                return $injector.has('NAV_ITEM_TARGET') ? $injector.get('NAV_ITEM_TARGET') : null;
+            };
+            // provide `route` as a scope property so that links can tie into them
+            $scope.route = $route;
+&nbsp;
+            var roleCheck = function (roles) {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (_.isUndefined(roles)) {
+<span class="cstat-no" title="statement not covered" >                    return true;</span>
+                }
+&nbsp;
+                if (!_.isUndefined(roles.any)) {
+                    return rxSession.hasRole(roles.any);
+                }
+&nbsp;
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!_.isUndefined(roles.all)) {
+                    return rxSession.hasAllRoles(roles.all);
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            };
+&nbsp;
+            /**
+             * @description Determines whether or not a nav item should be displayed, based on `visibility`
+             * criteria and `roles` criteria
+             * @param {Object} visibility
+             * Can be an expression, a function, an array (using format below) to determine visibility
+             * @param {Object=} roles
+             * An object with a format { 'any': ['role1', 'role2'] } or { 'all': ['role1', 'role2'] }
+             */
+            $scope.isVisible = function (visibility, roles) {
+                var locals = {
+                    location: $location
+                };
+                if (_.isUndefined(visibility) &amp;&amp; _.isUndefined(roles)) {
+                    // no visibility or role criteria specified, so default to true
+                    return true;
+                }
+&nbsp;
+                if (_.isArray(visibility)) {
+                    // Expected format is
+                    // ["someMethodName", { param1: "abc", param2: "def" }]
+                    // The second element of the array is optional, used to pass extra
+                    // info to "someMethodName"
+                    var methodName = visibility[0];
+                    var configObj = visibility[1]; //optional
+&nbsp;
+                    _.merge(locals, configObj);
+&nbsp;
+                    // The string 'false' will evaluate to the "real" false
+                    // in $scope.$eval
+                    visibility = rxVisibility.getMethod(methodName) || <span class="branch-1 cbranch-no" title="branch not covered" >'false';</span>
+                }
+&nbsp;
+                // If `visibility` isn't defined, then default it to `true` (i.e. visible)
+                var visible = _.isUndefined(visibility) ? true : $scope.$eval(visibility, locals),
+                    hasRole = true;
+&nbsp;
+                // Only do a roleCheck() if `visible` is true. If we failed the visibility test,
+                // then we must ensure the nav item is not displayed, regardless of the roles
+                if (visible &amp;&amp; _.isObject(roles)) {
+                    hasRole = roleCheck(roles);
+                }
+&nbsp;
+                return visible &amp;&amp; hasRole;
+            };
+&nbsp;
+            $scope.toggleNav = function (ev, href) {
+                // if no href present, simply toggle active state
+                if (_.isEmpty(href)) {
+                    ev.preventDefault();
+                    $scope.item.active = !$scope.item.active;
+                }
+                // otherwise, let the default nav do it's thing
+            };
+&nbsp;
+            $scope.navigateToApp = function (ev, url) {
+                // We want to control what the click to the &lt;a&gt; tag does
+                // If it is Origin prevent the default click action
+                // otherwise handle the click as normal (implied by the lack of else block)
+                <span class="missing-if-branch" title="else path not taken" >E</span>if ($injector.has('oriLocationService')) {
+                    var oriLocationService = $injector.get('oriLocationService');
+                    var currentIframeUrl = oriLocationService.getCanvasURL();
+                    var finalUrl = $scope.getUrl(url);
+&nbsp;
+                    ev.preventDefault();
+                    // Only change the iFrame if the urls are different
+                    if (!_.isEmpty(finalUrl) &amp;&amp; currentIframeUrl !== finalUrl) {
+                        oriLocationService.setCanvasURL(finalUrl);
+                    }
+                }
+            };
+&nbsp;
+            $scope.navClickHandler = function (clickEvent, item) {
+                $scope.toggleNav(clickEvent, item.href);
+                $scope.navigateToApp(clickEvent, item.url);
+            }
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

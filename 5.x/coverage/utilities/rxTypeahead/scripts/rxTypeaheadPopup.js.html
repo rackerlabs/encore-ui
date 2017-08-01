@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxTypeahead/scripts/rxTypeaheadPopup.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxTypeahead/scripts/rxTypeaheadPopup.js</span></h1>
+    <h2>
+        Statements: <span class="metric">88.89% <small>(16 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">62.5% <small>(5 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">87.5% <small>(7 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">88.89% <small>(16 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxTypeahead/scripts/</a> &#187; rxTypeaheadPopup.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">85</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">90</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">90</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">90</span>
+<span class="cline-any cline-yes">1058</span>
+<span class="cline-any cline-yes">1058</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1058</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">90</span>
+<span class="cline-any cline-yes">372</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">90</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">90</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc directive
+ * @name utilities.directive:rxTypeaheadPopup
+ * @scope
+ * @description
+ * creates a popup used by the rxTypeahead directive
+ * @param {string[]} [matches]  values matching typeahead query
+ * @param {string} [query]  typeahead query made
+ * @param {string} [active]   currently selected choice
+ * @param {string} [position]   placement of typeahead results
+ * @param {boolean} [moveInProgress=false]  is typeahead results popup moving?
+ * @param {string} [select]    method to execute on completion
+ * @param {boolean} [assignIsOpen]  is assignment option open?
+ * @callback rxDebounce
+ */
+.directive('rxTypeaheadPopup', function ($rxDebounce) {
+    return {
+        scope: {
+            matches: '=',
+            query: '=',
+            active: '=',
+            position: '&amp;',
+            moveInProgress: '=',
+            select: '&amp;',
+            assignIsOpen: '&amp;',
+            rxDebounce: '&amp;'
+        },
+        replace: true,
+        templateUrl: function (element, attrs) {
+            return attrs.rxPopupTemplateUrl || 'templates/rxTypeaheadPopup.html';
+        },
+        link: function (scope, element, attrs) {
+            scope.templateUrl = attrs.rxTemplateUrl;
+&nbsp;
+            scope.isOpen = function () {
+                var isDropdownOpen = scope.matches.length &gt; 0;
+                scope.assignIsOpen({
+                    isOpen: isDropdownOpen
+                });
+                return isDropdownOpen;
+            };
+&nbsp;
+            scope.isActive = function (matchIdx) {
+                return scope.active === matchIdx;
+            };
+&nbsp;
+            scope.selectActive = function (matchIdx) {
+                scope.active = matchIdx;
+            };
+&nbsp;
+            scope.selectMatch = function (activeIdx, evt) {
+                var debounce = scope.rxDebounce();
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (angular.isNumber(debounce) || angular.isObject(debounce)) {
+<span class="cstat-no" title="statement not covered" >                    $rxDebounce(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                        scope.select({</span>
+                            activeIdx: activeIdx,
+                            evt: evt
+                        });
+                    }, angular.isNumber(debounce) ? debounce : debounce['default']);
+                } else {
+                    scope.select({
+                        activeIdx: activeIdx,
+                        evt: evt
+                    });
+                }
+            };
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

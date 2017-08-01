@@ -2,20 +2,36 @@
  * EncoreUI
  * https://github.com/rackerlabs/encore-ui
  *
- * Version: 5.0.0-0 - 2017-03-29
+ * Version: 5.0.0-0 - 2017-08-01
  * License: Apache-2.0
  */
 angular.module('encore.ui', [
-    'ui.bootstrap',
     'encore.ui.tpls',
     'ngMessages',
     'encore.ui.elements',
-    'encore.ui.utilities'
+    'encore.ui.utilities',
+    'encore.ui.rxApp'
 ])
+.config(["$locationProvider", function ($locationProvider) {
+    // Angular 1.6 changes the default value of the prefix to '!', this reverts to previous behavior
+    // https://github.com/angular/angular.js/commit/aa077e81129c740041438688dff2e8d20c3d7b52
+    $locationProvider.hashPrefix('');
+}]);
+
 angular.module('encore.ui.tpls', [
     'templates/feedbackForm.html',
+    'templates/rxAccountInfo.html',
+    'templates/rxAccountInfoBanner.html',
+    'templates/rxAccountSearch.html',
+    'templates/rxAccountUsers.html',
     'templates/rxActionMenu.html',
+    'templates/rxApp.html',
+    'templates/rxAppNav.html',
+    'templates/rxAppNavItem.html',
+    'templates/rxAppSearch.html',
     'templates/rxBatchActions.html',
+    'templates/rxBillingSearch.html',
+    'templates/rxBreadcrumbs.html',
     'templates/rxBulkSelectMessage.html',
     'templates/rxButton.html',
     'templates/rxCollapse.html',
@@ -28,10 +44,13 @@ angular.module('encore.ui.tpls', [
     'templates/rxMeta.html',
     'templates/rxModalAction.html',
     'templates/rxModalActionForm.html',
+    'templates/rxModalBackdrop.html',
     'templates/rxModalFooters.html',
+    'templates/rxModalWindow.html',
     'templates/rxMultiSelect.html',
     'templates/rxNotification.html',
     'templates/rxNotifications.html',
+    'templates/rxPage.html',
     'templates/rxPaginate.html',
     'templates/rxPermission.html',
     'templates/rxProgressbar.html',
@@ -40,10 +59,18 @@ angular.module('encore.ui.tpls', [
     'templates/rxSelectOption.html',
     'templates/rxSortableColumn.html',
     'templates/rxStatusColumn.html',
+    'templates/rxTab.html',
+    'templates/rxTabset.html',
     'templates/rxTags.html',
     'templates/rxTimePicker.html',
-    'templates/rxToggleSwitch.html'
+    'templates/rxToggleSwitch.html',
+    'templates/rxTooltip-html-popup.html',
+    'templates/rxTooltip-popup.html',
+    'templates/rxTooltip-template-popup.html',
+    'templates/rxTypeaheadMatch.html',
+    'templates/rxTypeaheadPopup.html'
 ]);
+
 // Currently this is the prefix we will use for all encore applications loaded in an iframe
 var prefix = 'apps.';
 // Let's get the hostname only (no port information)
@@ -67,36 +94,6 @@ if (domain !== 'localhost') {
 }
 
 /**
- * This file is meant to be a bandaid while we remove our dependency
- * on ngBootstrap.  ngBootstrap 0.14.3 throws all sorts of console
- * warnings for renamed directives.  Rather than having all apps update
- * their code to correct the ngBootstrap warnings and update again
- * when we remove those dependencies, we'll disable the warnings and
- * work on the replacements for ngBoostrap directives. This way apps
- * will only need to update once (to rx-prefixed directives).
- */
-
-// Components > typeahead
-angular.module('ui.bootstrap.typeahead')
-    .value('$typeaheadSuppressWarning', true);
-
-// Components > tooltips
-angular.module('ui.bootstrap.tooltip')
-    .value('$tooltipSuppressWarning', true);
-
-// Elements > Tabs
-angular.module('ui.bootstrap.tabs')
-    .value('$tabsSuppressWarning', true);
-
-// Elements > Progress Bars
-angular.module('ui.bootstrap.progressbar')
-    .value('$progressSuppressWarning', true);
-
-// Components > rxModalAction
-angular.module('ui.bootstrap.modal')
-    .value('$modalSuppressWarning', true);
-
-/**
  * @ngdoc overview
  * @name elements
  * @requires utilities
@@ -110,7 +107,6 @@ angular.module('encore.ui.elements', [
     'encore.ui.utilities',
     'ngSanitize',
     'ngAnimate',
-    'ui.bootstrap',
     'debounce'
 ])
 .run(["$compile", "$templateCache", function ($compile, $templateCache) {
@@ -138,6 +134,131 @@ angular.module('encore.ui.utilities', [
     'ngSanitize'
 ])
 .value('suppressDeprecationWarnings', false);
+
+angular.module('encore.ui.elements')
+/**
+ * @deprecated This directive will be removed in a future release of EncoreUI.
+ * @ngdoc directive
+ * @name elements.directive:rxAccountInfo
+ * @restrict E
+ * @scope
+ * @requires $interpolate
+ * @description
+ * This element is used to draw an account info box at the top of each page,
+ * directly underneath the breadcrumbs. `rxPage` (through `rxApp`) integrates it
+ * directly into its template, and you activate it by passing `account-number="..."`
+ * to `<rx-page>`.
+ *
+ * While you could theoretically use this element elsewhere, its design and style
+ * were done with the intention of sitting underneath the breadcrumbs.
+ *
+ * When placed on a page that has `:user` in its route parameters, this element
+ * will also draw a drop-down user selector, to allow the Racker to change which
+ * user they're looking at for the given account. At this time, this user-selection
+ * is *only* available for products under Cloud. If you need it for additional products,
+ * please let us know.
+ *
+ * This directive requires that `SupportAccount`, `Encore`, `AccountStatusGroup`,
+ * and `Teams` services are available. These are not provided by this project,
+ * but are available in an internal Rackspace repository.
+ *
+ * There are two different styles of account info box supported. The "old" one, which appears
+ * wherever you want it to be, and a new one that is intended to be placed underneath the breadcrumbs.
+ * To use the new one, pass `account-info-banner="true"` to this directive
+ *
+ * @param {String} accountNumber The account number to load and retrieve data for
+ * @param {String=} teamId Team ID, used for loading team badges
+ * @param {String=} [notifyStack='page'] Notifications stack to put errors on.
+ * @param {String=} accountInfoBanner Set to "true" to use the new under-the-breadcrumbs style
+ */
+.directive('rxAccountInfo', ["Teams", "SupportAccount", "Encore", "rxNotify", "encoreRoutes", "AccountStatusGroup", "$interpolate", function (Teams, SupportAccount, Encore, rxNotify, encoreRoutes,
+    AccountStatusGroup, $interpolate) {
+    return {
+        templateUrl: function (elem, attr) {
+            if (attr.accountInfoBanner === 'true') {
+                return 'templates/rxAccountInfoBanner.html';
+            }
+            return 'templates/rxAccountInfo.html';
+        },
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            accountNumber: '@',
+            teamId: '@',
+            notifyStack: '@'
+        },
+        link: function (scope) {
+            var notifyStack = scope.notifyStack || 'page';
+            scope.badges = [];
+            scope.tooltipHtml = function (badge) {
+                return ['<span class="tooltip-header">', badge.name,
+                        '</span><p>', badge.description, '</p>'].join('');
+            };
+
+            // Currently, the only time we should show the `Current User` area is
+            // if the Racker is on the Cloud page
+            encoreRoutes.isActiveByKey('cloud').then(function (isCloud) {
+                scope.showCurrentUser = isCloud;
+            });
+
+            scope.accountPageUrl = $interpolate('/accounts/{{accountNumber}}')(scope);
+
+            SupportAccount.getBadges({ accountNumber: scope.accountNumber }, function (badges) {
+                scope.badges = scope.badges.concat(badges);
+            }, function () {
+                rxNotify.add('Error retrieving badges for this account', {
+                    type: 'error',
+                    stack: notifyStack
+                });
+            });
+
+            var fetchTeamBadges = function (teamId) {
+                Teams.badges({ id: teamId }).$promise.then(function (badges) {
+                    scope.badges = scope.badges.concat(badges);
+                }, function () {
+                    rxNotify.add('Error retrieving badges for this team', {
+                        type: 'error',
+                        stack: notifyStack
+                    });
+                });
+            };
+
+            if (!_.isEmpty(scope.teamId) && (_.isNumber(_.parseInt(scope.teamId)))) {
+                fetchTeamBadges(scope.teamId);
+            }
+
+            Encore.getAccount({ id: scope.accountNumber }, function (account) {
+                // Only attempt if no teamId is passed to directive
+                if (_.isEmpty(scope.teamId)) {
+                    var primaryTeam = _.find(account.teams, function (team) {
+                        return _.includes(team.flags, 'primary');
+                    });
+
+                    if (primaryTeam) {
+                        fetchTeamBadges(primaryTeam.id);
+                    }
+                }
+
+                scope.accountName = account.name;
+                scope.accountStatus = account.status;
+                scope.accountAccessPolicy = account.accessPolicy;
+                scope.accountCollectionsStatus = account.collectionsStatus;
+                scope.statusClass = '';
+                var statusClass = AccountStatusGroup(account.status);
+                if (statusClass === 'warning') {
+                    scope.statusClass = 'msg-warn';
+                } else if (statusClass === 'info') {
+                    scope.statusClass = 'msg-info';
+                }
+            }, function () {
+                rxNotify.add('Error retrieving account name', {
+                    type: 'error',
+                    stack: notifyStack
+                });
+            });
+        }
+    };
+}]);
 
 angular.module('encore.ui.elements')
 /**
@@ -205,6 +326,53 @@ angular.module('encore.ui.elements')
         }
     };
 }]);
+
+angular.module('encore.ui.elements')
+/**
+ * @deprecated This directive will be removed in a future release of EncoreUI.
+ * @ngdoc directive
+ * @name elements.directive:rxBreadcrumbs
+ * @restrict E
+ * @scope
+ * @description
+ * Responsible for drawing the breadcrumbs for a page.
+ *
+ *
+ * By default, the first breadcrumb will always have an URL of `'/'` and a name of `'Home'`. This can be changed
+ * with the `rxBreadcrumbsSvc.setHome` method (see {@link utilities.service:rxBreadcrumbsSvc rxBreadcrumbsSvc}).
+ *
+ * @param {String=} status
+ * The tag to apply to any breadcrumbs with usePageStatusTag:true
+ *
+ * This leverages the tags defined in {@link rxApp} to display status tags directly inside of breadcrumbs.
+ * For a given breadcrumb, `status` will take precedence over `usePageStatusTag`, i.e. it will use a tag defined in
+ * `status` instead of checking for and using a tag for the page.
+ *
+ * @param {Boolean=} [usePageStatusTag=false]
+ * If you set it to `true`,
+ * then the breadcrumb will use whatever status tag was passed to page, i.e.:
+ * <pre>
+ * <rx-page status="alpha">
+ * </pre>
+ * This will cause any breadcrumb marked with `usePageStatusTag` on this page to receive the `"alpha"` status tag.
+ *
+ * @example
+ * <pre>
+ * <rx-app site-title="Custom Title"></rx-app>
+ * </pre>
+ */
+.directive('rxBreadcrumbs', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'templates/rxBreadcrumbs.html',
+        controller: ["$scope", "rxBreadcrumbsSvc", function ($scope, rxBreadcrumbsSvc) {
+            $scope.breadcrumbs = rxBreadcrumbsSvc;
+        }],
+        scope: {
+            status: '@'
+        }
+    };
+});
 
 angular.module('encore.ui.elements')
 /**
@@ -395,6 +563,85 @@ angular.module('encore.ui.elements')
         }
     };
 }]);//rxCopy
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:encoreRoutes
+ * @description
+ * Creates a shared instance of `AppRoutes` that is used for the Encore App nav.
+ * This allows apps to make updates to the nav via `encoreRoutes`.
+ *
+ * @return {Object} Instance of rxAppRoutes with `fetchRoutes` method added
+ */
+.factory('encoreRoutes', ["rxAppRoutes", "routesCdnPath", "rxNotify", "$q", "$http", "rxVisibilityPathParams", "rxVisibility", "rxEnvironment", "rxLocalStorage", function (rxAppRoutes, routesCdnPath, rxNotify, $q, $http,
+                                   rxVisibilityPathParams, rxVisibility, rxEnvironment,
+                                   rxLocalStorage) {
+    // We use rxVisibility in the nav menu at routesCdnPath, so ensure it's ready
+    // before loading from the CDN
+    rxVisibility.addVisibilityObj(rxVisibilityPathParams);
+
+    var encoreRoutes = new rxAppRoutes();
+
+    var setWarningMessage = function () {
+        rxNotify.add('There was a problem loading the navigation, so a cached version has been loaded for display.', {
+            type: 'warning'
+        });
+    };
+
+    var setFailureMessage = function () {
+        rxNotify.add('Error loading site navigation', {
+            type: 'error'
+        });
+    };
+
+    var url, suffix;
+    switch (true) {
+        case rxEnvironment.isUnifiedProd(): {
+            url = routesCdnPath.production;
+            suffix = 'prod';
+            break;
+        }
+        case rxEnvironment.isPreProd(): {
+            url = routesCdnPath.preprod;
+            suffix = 'preprod';
+            break;
+        }
+        case routesCdnPath.hasCustomURL: {
+            url = routesCdnPath.staging;
+            suffix = 'custom';
+            break;
+        }
+        default: {
+            url = routesCdnPath.staging;
+            suffix = 'staging';
+        }
+    }
+
+    encoreRoutes.fetchRoutes = function () {
+        var routesKey = 'encoreRoutes-' + suffix;
+        var cachedRoutes = rxLocalStorage.getObject(routesKey);
+
+        $http.get(url)
+            .then(function (response) {
+                var routes = response.data;
+                encoreRoutes.setAll(routes);
+                rxLocalStorage.setObject(routesKey, routes);
+            })
+            .catch(function () {
+                if (cachedRoutes) {
+                    encoreRoutes.setAll(cachedRoutes);
+                    setWarningMessage();
+                } else {
+                    setFailureMessage();
+                }
+            });
+
+        return cachedRoutes || [];
+    };
+
+    return encoreRoutes;
+}]);
 
 angular.module('encore.ui.elements')
 /**
@@ -662,20 +909,8 @@ angular.module('encore.ui.elements')
  * advantage of it, please ensure you've extensively tested that it performs
  * correctly for your uses.
  *
- * ### Highlighting ###
- * Characters that are over the limit will be highlighted in red if the
- * `highlight="true"` attribute is on the directive's element. Because this
- * functionality is currently unstable, it has been left off by default. Please
- * test your use case heavily before shipping with this feature enabled.
- *
- * Known failure cases:
- * * Content that causes a scrollbar in the textarea
- * * Initial text (coming from the model) that is over the limit
- *
  * @param {Number=} [low-boundary=10] How far from the maximum to enter a warning state
  * @param {Number=} [max-characters=254] The maximum number of characters allowed
- * @param {Boolean=} [highlight=false] Whether or not characters over the limit are highlighted
- *
  * @example
  * <pre>
  * <textarea ng-model="model" rx-character-count></textarea>
@@ -685,10 +920,6 @@ angular.module('encore.ui.elements')
     var counterStart = '<div class="character-countdown" ';
     var counterEnd =   'ng-class="{ \'near-limit\': nearLimit, \'over-limit\': overLimit }"' +
                   '>{{ remaining }}</div>';
-
-    var backgroundStart = '<div class="input-highlighting" ';
-    var backgroundEnd = '><span>{{ underLimitText }}</span>' +
-                     '<span class="over-limit-text">{{ overLimitText }}</span></div>';
 
     var extraDirectives = function (attrs) {
         var extra = '';
@@ -705,17 +936,13 @@ angular.module('encore.ui.elements')
         return counterStart + extraDirectives(attrs) + counterEnd;
     };
 
-    var buildBackground = function (attrs) {
-        return backgroundStart + extraDirectives(attrs) + backgroundEnd;
-    };
-
     return {
         restrict: 'A',
         require: 'ngModel',
         // scope:true ensures that our remaining/nearLimit/overLimit scope variables
         // only live within this directive
         scope: true,
-        link: function (scope, element, attrs, ngModelCtrl) {
+        link: function (scope, element, attrs) {
             // Wrap the textarea so that an element containing a copy of the text
             // can be layered directly behind it.
             var wrapper = angular.element('<div class="counted-input-wrapper" />');
@@ -735,49 +962,31 @@ angular.module('encore.ui.elements')
             // This gets called whenever the ng-model for this element
             // changes, i.e. when someone enters new text into the textarea
             scope.$watch(
-                function () { return ngModelCtrl.$modelValue; },
+                function () { return element[0].value; },
                 function (newValue) {
                     if (typeof newValue !== 'string') {
                         return;
                     }
-                    scope.remaining = maxCharacters - newValue.length;
-                    scope.nearLimit = scope.remaining >= 0 && scope.remaining < lowBoundary;
-                    scope.overLimit = scope.remaining < 0;
+                    // $evalAsync will execute the code inside of it, during the
+                    // same `$digest` that triggered the `$watch`, if we were to
+                    // use `$applyAsync` the execution would happen at a later
+                    // stage. The reason for changing scope variables within the
+                    // `$evalAsync` is to ensure that the UI gets rendered with
+                    // the proper value, and is not delayed by waiting for
+                    // `$digest` dirty checks. For more information, please
+                    // refer to https://www.bennadel.com/blog/2751-scope-applyasync-vs-scope-evalasync-in-angularjs-1-3.htm
+                    scope.$evalAsync(function () {
+                        if (!attrs.ngTrim || attrs.ngTrim !== 'false') {
+                            newValue = newValue.trim();
+                        }
+
+                        scope.remaining = maxCharacters - newValue.length;
+                        scope.nearLimit = scope.remaining >= 0 && scope.remaining < lowBoundary;
+                        scope.overLimit = scope.remaining < 0;
+                    });
                 });
-
-            function countSpaces (str, options) {
-                options || (options = {});
-                return str.search(options.fromEnd ? /\s*$/ : /\S/);
-            }
-
-            // Since the input value is trimmed before writing to the model,
-            // an input event is attached to the element to handle the highlighting,
-            // which needs the pre- and post-trimmed string.
-            function writeLimitText () {
-                var val = element.val();
-                var cutoff = maxCharacters;
-                var end = val.length;
-
-                if (!attrs.ngTrim || attrs.ngTrim !== 'false') {
-                    cutoff += countSpaces(val);
-                    end = countSpaces(val, { fromEnd: true });
-                }
-
-                scope.underLimitText = val.slice(0, cutoff);
-                scope.overLimitText = val.slice(cutoff, end);
-                scope.$apply();
-            }
-
-            if (attrs.highlight === 'true') {
-                $compile(buildBackground(attrs))(scope, function (clone) {
-                    wrapper.prepend(clone);
-                });
-
-                element.on('input', writeLimitText);
-            }
 
             scope.$on('$destroy', function () {
-                element.off('input');
                 $timeout(function () {
                     // When the element containing the rx-character-count is removed, we have to
                     // ensure we also remove the `wrapper`, which we created. This has to happen
@@ -1521,7 +1730,9 @@ angular.module('encore.ui.elements')
  */
 .directive('rxInlineError', function () {
     return {
-        restrict: 'E'
+        restrict: 'E',
+        transclude: true,
+        template: '<i class="fa fa-exclamation-circle"></i><span ng-transclude></span>'
     };
 });
 
@@ -1625,7 +1836,7 @@ angular.module('encore.ui.elements')
  * @param {String} ng-model The scope property that stores the value of the input
  * @param {Array=} options A list of the options for the dropdown
  */
-.directive('rxMultiSelect', ["$document", "rxDOMHelper", function ($document, rxDOMHelper) {
+.directive('rxMultiSelect', ["$document", "$timeout", "rxDOMHelper", function ($document, $timeout, rxDOMHelper) {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxMultiSelect.html',
@@ -1692,7 +1903,7 @@ angular.module('encore.ui.elements')
             var ngModelCtrl = controllers[1];
 
             ngModelCtrl.$render = function () {
-                scope.$evalAsync(function () {
+                $timeout(function () {
                     scope.preview = (function () {
                         function getLabel (option) {
                             var optionElement = rxDOMHelper.find(element, '[value="' + option + '"]');
@@ -2061,7 +2272,7 @@ angular.module('encore.ui.elements')
  * @param {String} value The value of the option. If no transcluded content is provided,
  *                       the value will also be used as the option's text.
  */
-.directive('rxSelectOption', ["rxDOMHelper", function (rxDOMHelper) {
+.directive('rxSelectOption', function () {
     return {
         restrict: 'E',
         templateUrl: 'templates/rxSelectOption.html',
@@ -2071,8 +2282,11 @@ angular.module('encore.ui.elements')
         },
         require: '^^rxMultiSelect',
         link: function (scope, element, attrs, selectCtrl) {
-            scope.transclusion = rxDOMHelper.find(element, '[ng-transclude] > *').length > 0;
-
+            // Previous implementation accessed the DOM and was always returning false after the upgrade to 1.6.
+            // By simply checking the scope's $parent we can avoid accessing the DOM and achieve the same result.
+            // If the $parent has options the options list will be created by an ngRepeat,
+            // otherwise it will be transcluded
+            scope.transclusion = _.isEmpty(scope.$parent.options);
             scope.toggle = function (isSelected) {
                 if (isSelected) {
                     selectCtrl.unselect(scope.value);
@@ -2095,7 +2309,7 @@ angular.module('encore.ui.elements')
             });
         }
     };
-}]);
+});
 
 angular.module('encore.ui.elements')
 /**
@@ -2604,6 +2818,11 @@ angular.module('encore.ui.elements')
  * @param {Expression=} [ngDisabled=false]
  * If the expression evaluates truthy, then the link for opening the modal will
  * be disabled.
+ * @param {String=} [controller='rxModalCtrl']
+ * Identifies the controller name to use for modal functionality. At minimum,
+ * the controller should implement `submit()` and `cancel()` for use by the modal
+ * footer. Use this attribute if you need advanced behavior of the modal.
+ * Currently used in wizard-like modals and multi-view modals.
  *
  * @example
  * <pre>
@@ -2616,7 +2835,7 @@ angular.module('encore.ui.elements')
  * </rx-modal-action>
  * </pre>
  */
-.directive('rxModalAction', ["$uibModal", function ($uibModal) {
+.directive('rxModalAction', ["rxModal", function (rxModal) {
     var createModal = function (config, scope) {
         config = _.defaults(config, {
             templateUrl: config.templateUrl,
@@ -2626,7 +2845,7 @@ angular.module('encore.ui.elements')
 
         config.windowClass = 'rxModal';
 
-        var modal = $uibModal.open(config);
+        var modal = rxModal.open(config);
 
         return modal;
     };
@@ -2694,6 +2913,57 @@ angular.module('encore.ui.elements')
             };
         }
     };
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxModalBackdrop
+ * @requires utilities.service:rxModalStack
+ * @description
+ * Element for modal backdrop
+ */
+.directive('rxModalBackdrop', ["$animate", "$injector", "rxModalStack", function ($animate, $injector, rxModalStack) {
+    var $animateCss = null;
+
+    if ($injector.has('$animateCss')) {
+        $animateCss = $injector.get('$animateCss');
+    }
+
+    return {
+        replace: true,
+        templateUrl: 'templates/rxModalBackdrop.html',
+        compile: function (tElement, tAttrs) {
+            tElement.addClass(tAttrs.backdropClass);
+            return linkFn;
+        }
+    };
+
+    function linkFn (scope, element, attrs) {
+        // Temporary fix for prefixing
+        element.addClass('modal-backdrop');
+
+        if (attrs.modalInClass) {
+            if ($animateCss) {
+                $animateCss(element, {
+                    addClass: attrs.modalInClass
+                }).start();
+            } else {
+                $animate.addClass(element, attrs.modalInClass);
+            }
+
+            scope.$on(rxModalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
+                var done = setIsAsync();
+                if ($animateCss) {
+                    $animateCss(element, {
+                        removeClass: attrs.modalInClass
+                    }).start().then(done);
+                } else {
+                    $animate.removeClass(element, attrs.modalInClass).then(done);
+                }
+            });
+        }
+    }
 }]);
 
 angular.module('encore.ui.elements')
@@ -2853,6 +3123,116 @@ angular.module('encore.ui.elements')
 angular.module('encore.ui.elements')
 /**
  * @ngdoc directive
+ * @name elements.directive:rxModalWindow
+ * @requires utilities.service:rxModalStack
+ * @description
+ * Element for modal window
+ */
+.directive('rxModalWindow', ["$q", "$animate", "$injector", "rxModalStack", function ($q, $animate, $injector, rxModalStack) {
+    var $animateCss = null;
+
+    if ($injector.has('$animateCss')) {
+        $animateCss = $injector.get('$animateCss');
+    }
+
+    return {
+        scope: {
+            index: '@'
+        },
+        replace: true,
+        transclude: true,
+        templateUrl: function (tElement, tAttrs) {
+            return tAttrs.templateUrl || 'templates/rxModalWindow.html';
+        },
+        link: function (scope, element, attrs) {
+            element.addClass(attrs.windowClass || '');
+            element.addClass(attrs.windowTopClass || '');
+            scope.size = attrs.size;
+
+            scope.close = function (evt) {
+                var modal = rxModalStack.getTop();
+                if (modal && modal.value.backdrop && modal.value.backdrop !== 'static' &&
+                    (evt.target === evt.currentTarget)) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    rxModalStack.dismiss(modal.key, 'backdrop click');
+                }
+            };
+
+            // moved from template to fix issue #2280
+            element.on('click', scope.close);
+
+            // This property is only added to the scope for the purpose of detecting when this directive is rendered.
+            // We can detect that by using this property in the template associated with this directive and then use
+            // {@link Attribute#$observe} on it. For more details please see {@link TableColumnResize}.
+            scope.$isRendered = true;
+
+            // Deferred object that will be resolved when this modal is render.
+            var modalRenderDeferObj = $q.defer();
+            // Observe function will be called on next digest cycle after compilation, ensuring that the DOM is ready.
+            // In order to use this way of finding whether DOM is ready, we need to observe a scope property used in
+            // modal's template.
+            attrs.$observe('modalRender', function (value) {
+                if (value == 'true') { // eslint-disable-line
+                    modalRenderDeferObj.resolve();
+                }
+            });
+
+            modalRenderDeferObj.promise.then(function () {
+                var animationPromise = null;
+
+                if (attrs.modalInClass) {
+                    if ($animateCss) {
+                        animationPromise = $animateCss(element, {
+                            addClass: attrs.modalInClass
+                        }).start();
+                    } else {
+                        animationPromise = $animate.addClass(element, attrs.modalInClass);
+                    }
+
+                    scope.$on(rxModalStack.NOW_CLOSING_EVENT, function (e, setIsAsync) {
+                        var done = setIsAsync();
+                        if ($animateCss) {
+                            $animateCss(element, {
+                                removeClass: attrs.modalInClass
+                            }).start().then(done);
+                        } else {
+                            $animate.removeClass(element, attrs.modalInClass).then(done);
+                        }
+                    });
+                }
+
+
+                $q.when(animationPromise).then(function () {
+                    var inputWithAutofocus = element[0].querySelector('[autofocus]');
+                    /**
+                     * Auto-focusing of a freshly-opened modal element causes any child elements
+                     * with the autofocus attribute to lose focus. This is an issue on touch
+                     * based devices which will show and then hide the onscreen keyboard.
+                     * Attempts to refocus the autofocus element via JavaScript will not reopen
+                     * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
+                     * the modal element if the modal does not contain an autofocus element.
+                     */
+                    if (inputWithAutofocus) {
+                        inputWithAutofocus.focus();
+                    } else {
+                        element[0].focus();
+                    }
+                });
+
+                // Notify {@link rxModalStack} that modal is rendered.
+                var modal = rxModalStack.getTop();
+                if (modal) {
+                    rxModalStack.modalRendered(modal.key);
+                }
+            });
+        }
+    };
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
  * @name elements.directive:rxNotification
  * @restrict E
  * @scope
@@ -2860,6 +3240,10 @@ angular.module('encore.ui.elements')
  * Display a static message with styling taken from `rx-notifications`.
  *
  * @param {String=} [type='info'] The type of notification (e.g. 'warning', 'error')
+ * @param {Expression=} dismissHook An expression to execute on dismiss of the
+ * notification.  If defined, a dismiss button will be rendered for the
+ * notification. Otherwise, no dismiss button will be rendered.  (Best if used
+ * in conjunction with the rxNotifications directive and the rxNotify service.)
  *
  * @example
  * <pre>
@@ -2869,7 +3253,9 @@ angular.module('encore.ui.elements')
 .directive('rxNotification', ["rxNotify", function (rxNotify) {
     return {
         scope: {
-            type: '@'
+            type: '@',
+            loading: '=',
+            dismissHook: '&'
         },
         transclude: true,
         restrict: 'E',
@@ -2878,31 +3264,17 @@ angular.module('encore.ui.elements')
             // Transclude returns a jqLite object of the content in the directive pre transclusion into the template.
             pre: function (scope, el, attrs, ctrl, transclude) {
                 if (!_.isEmpty(attrs.stack)) {
-                    /**
-                     * transclude().parent() - returns a jqLite instance of the parent (this directive as defined
-                     *                           in the template pre-rendering).
-                     * transclude().parent().html() - returns the inner HTML of the parent, as a string, as it was
-                     *                                  defined in the template pre-rendering (Text Only)
-                     * ----------------------------
-                     * el                           -> [<rx-notification stack="demo-stack" type="info">
-                     *                                  <div class="rx-notifications">...template...</div>
-                     *                                  </rx-notification>]
-                     *
-                     * transclude()                 -> [<span class="ng-scope">Hello, world in demo-stack stack!</span>]
-                     *
-                     * transclude().parent()        -> [<rx-notification stack="demo-stack" type="info">
-                     *                                  <span class="ng-scope">Hello, world in demo-stack stack!</span>
-                     *                                  </rx-notification>]
-                     *
-                     * transclude().parent().html() -> "<span class="ng-scope">Hello, world in demo-stack stack!</span>"
-                     **/
-                    var content = transclude().parent().html();
-                    rxNotify.add(content, {
-                        type: attrs.type,
-                        stack: attrs.stack
+                    transclude(function (clone) {
+                        rxNotify.add(clone.text(), {
+                            type: attrs.type,
+                            stack: attrs.stack
+                        });
                     });
                     el.remove();
                 }
+            },
+            post: function (scope, el, attrs) {
+                scope.isDismissable = !scope.loading && !angular.isUndefined(attrs.dismissHook);
             }
         }
     };
@@ -2956,35 +3328,6 @@ angular.module('encore.ui.elements')
     };
 }]);
 
-angular.module('encore.ui.utilities')
-/**
- * @ngdoc filter
- * @name utilities.filter:PaginatedItemsSummary
- * @requires $interpolate
- * @description
- * Given an active pager (i.e. the result of rxPageTracker.createInstance()),
- * return a string like "26-50 of 500", when on the second page of a list of
- * 500 items, where we are displaying 25 items per page
- *
- * @param {Object} pager The instance of the rxPageTracker service.
- *
- * @returns {String} The list of page numbers that will be displayed.
- */
-.filter('PaginatedItemsSummary', ["rxPaginateUtils", "$interpolate", function (rxPaginateUtils, $interpolate) {
-    return function (pager) {
-        var template = '{{first}}-{{last}} of {{total}}';
-        if (pager.showAll || pager.itemsPerPage > pager.total) {
-            template = '{{total}}';
-        }
-        var firstAndLast = rxPaginateUtils.firstAndLast(pager.currentPage(), pager.itemsPerPage, pager.total);
-        return $interpolate(template)({
-            first: firstAndLast.first + 1,
-            last: firstAndLast.last,
-            total: pager.total
-        });
-    };
-}]);
-
 angular.module('encore.ui.elements')
 /**
  * @ngdoc directive
@@ -3019,6 +3362,57 @@ angular.module('encore.ui.elements')
         }
     };
 }]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:routesCdnPath
+ * @description
+ * `routesCdnPath` is configured as a `.provider`. This is to allow users to override the URL used when in a
+ * local/staging environment.
+ *
+ * The main reason for that is to let people test local versions of
+ * [the encore-ui-nav JSON file](https://github.com/rackerlabs/encore-ui-nav/blob/staging/src/encoreNav.json)
+ * before submitting pull requests to that repository.
+ *
+ * For example, to point to a local `mynav.json` file, put the following into your `app.js`:
+ *
+ * <pre>
+ * .config(function (otherdependencies, ..., routesCdnPathProvider) {
+ *     // Other config stuff you need to do
+ *     routesCdnPathProvider.customURL = 'mynav.json';
+ * });
+ * </pre>
+ *
+ * The `mynav.json` file will likely have to live in your `app/` folder, depending
+ * on your configuration.
+ *
+ * If you do set `customURL` to a non `null` value, then `routesCdnPath.hasCustomURL`
+ * will automatically get set to `true`. `hasCustomURL` is intended only for the framework
+ * to use, but we are documenting it in case you find your own use case for it.
+ *
+ */
+.provider('routesCdnPath', function () {
+    this.customURL = null;
+
+    this.$get = function () {
+        var staging = this.customURL ||
+            'https://5593626d69acc4cdb66a-521ce2b7cdb9308893eabb7915d88c0c.ssl.cf1.rackcdn.com/encoreNav.json';
+
+        var production =
+            'https://d5b31243886503cdda55-92f888f8ef3e8464bcb65f52330fcbfb.ssl.cf1.rackcdn.com/encoreNav.json';
+
+        var preprod =
+            'https://b24ad15095637d2f91ee-ae6903de16cd565a74a9a50d287ad33f.ssl.cf1.rackcdn.com/encoreNav.json';
+
+        return {
+            production: production,
+            staging: staging,
+            preprod: preprod,
+            hasCustomURL: !_.isEmpty(this.customURL)
+        };
+    };
+});
 
 angular.module('encore.ui.utilities')
 /**
@@ -3143,6 +3537,1357 @@ angular.module('encore.ui.utilities')
     };
 });
 
+/**
+ * @ngdoc overview
+ * @name rxApp
+ * @description
+ * # rxApp Component
+ *
+ * This component is responsible for creating the HTML necessary for a common
+ * Encore layout. It builds out the main navigation, plus breadcrumbs and page
+ * titles.
+ *
+ * # Usage
+ *
+ * For apps that want to use the default Encore navigation, usage is pretty simple.
+ * In your index.html file, add the `rx-app` directive inside your app:
+ *
+ * <pre>
+ * <body ng-app="myApp">
+ *     <rx-app>
+ *         <ng-view></ng-view>
+ *     </rx-app>
+ * </body>
+ * </pre>
+ *
+ * By including `ng-view`, your view content will be added inside the directive.
+ * This makes setting up views for each page much simpler, since you don't have
+ * to include `rx-app` in each view.
+ *
+ * Inside your view, you'll likely want to use `rx-page` to wrap your content.
+ * See the `rx-page` docs for more information on this.
+ *
+ * # rxApp Navigation
+ *
+ * By default, the EncoreUI left-hand navigation is loaded at runtime from a
+ * separate resource. This source can be changed, and there are many options to
+ * control the navigation from an app level.
+ *
+ * ## Accessing route information
+ *
+ * Sometimes it's helpful to have the current route information available for
+ * menu items. For example, re-using the current params for path building.
+ *
+ * To help with this, $route is exposed on the scope of all menu items.
+ * [`$route` provides many details on the current view](http://goo.gl/IsIscD),
+ * including the ability to access the current controller and scope for the view.
+ *
+ * To see this in action, check out the 'childVisibility' property for
+ * Account-level Tool in `encoreNav`.
+ *
+ * ## Accessing properties on $rootScope
+ *
+ * If you have a property available on the `$rootScope` of your app that the
+ * menu data needs to access,
+ * [you can reference `$rootScope` via `$root`](http://goo.gl/8vHlsN).
+ * See the demo for an example of this.
+ *
+ * ## Dynamically updating the menu
+ *
+ * By default, rxApp will create the navigation menu based on the routes defined
+ * in the 'encoreNav' value. This menu is built using the {@link utilities.service:rxAppRoutes rxAppRoutes} service.
+ *
+ * To update a route, use the `setRouteByKey` function on the `rxAppRoutes` service:
+ *
+ * <pre>
+ * rxAppRoutes.setRouteByKey('myKey', {
+ *     linkText: 'myUpdatedRoute'
+ * });
+ * </pre>
+ *
+ * You would normally either set this in your app's `.run` function, or in a
+ * specific controller.
+ *
+ * ## Custom Menus
+ *
+ * If you'd like to create an entirely custom menu, you can pass that data in to
+ * the `rx-app` directive via the `menu` attribute. View the demo for an example
+ * of this.
+ *
+ * # Common Styling
+ *
+ * The rxApp common.less file defines many base CSS rules and classes for app use.
+ * Included in this is [normalize.css](http://necolas.github.io/normalize.css/).
+ * This helps create a consistent starting point for styles across all browsers.
+ *
+ * ## Fonts
+ *
+ * The EncoreUI default font is Roboto. This is used for all text on the page
+ * and is loaded via Google Fonts. Be sure your app includes the following line:
+ *
+ * <pre>
+ * <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,700,700italic"
+ *       rel="stylesheet" type="text/css" />
+ * </pre>
+ *
+ * ## Directives
+ * * {@link rxApp.directive:rxAccountSearch rxAccountSearch}
+ * * {@link rxApp.directive:rxAccountUsers rxAccountUsers}
+ * * {@link rxApp.directive:rxApp rxApp}
+ * * {@link rxApp.directive:rxAppNav rxAppNav}
+ * * {@link rxApp.directive:rxAppNavItem rxAppNavItem}
+ * * {@link rxApp.directive:rxAppSearch rxAppSearch}
+ * * {@link rxApp.directive:rxAtlasSearch rxAtlasSearch}
+ * * {@link rxApp.directive:rxBillingSearch rxBillingSearch}
+ * * {@link rxApp.directive:rxPage rxPage}
+ * * {@link rxApp.directive:rxStatusTag rxStatusTag}
+ * * {@link rxApp.directive:rxTicketSearch rxTicketSearch}
+ */
+angular.module('encore.ui.rxApp', [
+    'encore.ui.utilities',
+    'ngRoute',
+    'ngSanitize'
+]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAccountSearch
+ * @restrict E
+ * @description [TBD]
+ */
+.directive('rxAccountSearch', ["$window", "$injector", function ($window, $injector) {
+    return {
+        templateUrl: 'templates/rxAccountSearch.html',
+        restrict: 'E',
+        link: function (scope) {
+            scope.fetchAccount = function (searchValue) {
+                if (!_.isEmpty(searchValue)) {
+                    var path = '/search?term=' + searchValue;
+                    if ($injector.has('oriLocationService')) {
+                        $injector.get('oriLocationService').setCanvasURL(path);
+                    } else {
+                        $window.location = path;
+                    }
+                }
+            };
+        }
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAccountUsers
+ * @restrict E
+ * @description
+ * Provides the ability to switch between account users. This directive is specific to Rackspace
+ */
+.directive('rxAccountUsers', ["$location", "$route", "Encore", "$rootScope", "$injector", "encoreRoutes", function ($location, $route, Encore, $rootScope, $injector, encoreRoutes) {
+    return {
+        restrict: 'E',
+        templateUrl: 'templates/rxAccountUsers.html',
+        link: function (scope, element) {
+            var setUrl;
+
+            if ($injector.has('oriLocationService')) {
+                var oriLocationService = $injector.get('oriLocationService');
+                setUrl = _.bind(oriLocationService.setCanvasURL, oriLocationService);
+            } else {
+                setUrl = _.bind($location.url, $location);
+            }
+
+            scope.isCloudProduct = false;
+
+            var checkCloud = function () {
+                encoreRoutes.isActiveByKey('accountLvlTools').then(function (isAccounts) {
+                    if (isAccounts) {
+                        loadUsers();
+                        encoreRoutes.isActiveByKey('cloud').then(function (isCloud) {
+                            scope.isCloudProduct = isCloud;
+                        });
+                    } else {
+                        scope.isCloudProduct = false;
+                    }
+                });
+            };
+
+            // We use $route.current.params instead of $routeParams because
+            // the former is always available, while $routeParams only gets populated
+            // after the route has successfully resolved. See the Angular docs on $routeParams
+            // for more details.
+            function loadUsers () {
+                var success = function (account) {
+
+                    // Sort the list so admins are at the top of the array
+                    account.users = _.sortBy(account.users, 'admin');
+
+                    scope.users = account.users;
+
+                    scope.currentUser = $route.current.params.user;
+
+                    if (!scope.currentUser) {
+                        // We're not in Cloud, but instead in Billing, or Events, or
+                        // one of the other Accounts menu items that doesn't use a username as
+                        // part of the route params.
+                        // But we need the URLs for the Cloud items to be valid, so grab a
+                        // default username for this account, and rebuild the Cloud URLs with
+                        // it
+
+                        encoreRoutes.rebuildUrls({ user: account.users[0].username });
+                    }
+                };
+
+                var accountNumber = parseInt($route.current.params.accountNumber, 10);
+                if (accountNumber) {
+                    Encore.getAccountUsers({ id: accountNumber }, success);
+                }
+            }
+
+            checkCloud();
+
+            scope.switchUser = function (user) {
+                // TODO: Replace with updateParams in Angular 1.3
+                //$route.updateParams({ user: user });
+
+                // Update the :user route param
+                var params = $route.current.originalPath.split('/');
+                var userIndex = _.indexOf(params, ':user');
+
+                if (userIndex !== -1) {
+                    var path = $location.url().split('/');
+                    path[userIndex] = user;
+                    setUrl(path.join('/'));
+                }
+            };
+
+            var unregisterCheckCloud = $rootScope.$on('$routeChangeSuccess', checkCloud);
+
+            // We need to register a function to cleanup the watcher, this avoids multiple calls
+            //Ecore.getAccountUsers every time we load a page in cloud.
+            element.on('$destroy', function () {
+                unregisterCheckCloud();
+            });
+        }
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxApp
+ * @restrict E
+ * @scope
+ * @description
+ * Responsible for creating the HTML necessary for a common Encore layout.
+ *
+ * @param {String=} siteTitle Title of site to use in upper right hand corner
+ * @param {Array=} menu Menu items used for left-hand navigation
+ * @param {String=} collapsibleNav Set to 'true' if the navigation menu should be collapsible
+ * @param {String=} collapsedNav Binding for the collapsed state of the menu.
+ * @param {Boolean=} newInstance Whether the menu items should be a new instance of `rxAppRoutes`
+ * @param {Boolean=} [hideFeeback=false] Whether to hide the 'feedback' link
+ * @param {String=} logoutUrl URL to pass to rx-logout
+ *
+ * @example
+ * <pre>
+ * <rx-app site-title="Custom Title"></rx-app>
+ * </pre>
+ */
+.directive('rxApp', ["encoreRoutes", "rxAppRoutes", "rxEnvironment", "routesCdnPath", "rxSession", "$window", function (encoreRoutes, rxAppRoutes, rxEnvironment,
+                              routesCdnPath, rxSession, $window) {
+    return {
+        restrict: 'E',
+        transclude: true,
+        templateUrl: 'templates/rxApp.html',
+        scope: {
+            siteTitle: '@?',
+            menu: '=?',
+            collapsibleNav: '@',
+            collapsedNav: '=?',
+            newInstance: '@?',
+            hideFeedback: '@?',
+            logoutUrl: '@?'
+        },
+        link: function (scope) {
+            scope.userId = rxSession.getUserId();
+
+            scope.isPreProd = rxEnvironment.isPreProd();
+
+            scope.isLocalNav = routesCdnPath.hasCustomURL && (rxEnvironment.isLocal());
+
+            scope.isWarning = scope.isPreProd || scope.isLocalNav;
+
+            scope.isEmbedded = false;
+            try {
+                // Checks to see if we have access to the global scope of a DOM Window
+                // Element by attempting to set a property on it.  If we have no errors
+                // then this means that `document.domain` matches and we have no Cross
+                // Origin security constraints
+                $window.top['hasSameDomain'] = true;
+                scope.isEmbedded = $window.self !== $window.top;
+            } catch (e) {
+                scope.isEmbedded = false;
+            }
+
+            if (scope.isPreProd) {
+                scope.warningMessage =
+                    'You are using a pre-production environment that has real, live production data!';
+            } else if (scope.isLocalNav) {
+                scope.warningMessage =
+                    'You are using a local nav file. Remove it from your config before committing!';
+            }
+
+            // default hideFeedback to false
+            var appRoutes = scope.newInstance ? new rxAppRoutes() : encoreRoutes;
+
+            // we only want to set new menu data if a new instance of rxAppRoutes was created
+            // or if scope.menu was defined
+            if (scope.newInstance || scope.menu) {
+                appRoutes.setAll(scope.menu);
+            } else {
+                // if the default menu is needed, load it from the CDN
+                // a cached copy is assigned if available
+                scope.routes = appRoutes.fetchRoutes();
+            }
+
+            var setRoutes = function () {
+                appRoutes.getAll().then(function (routes) {
+                    scope.routes = routes;
+                });
+            };
+
+            scope.$evalAsync(setRoutes);
+            scope.$on('rxUpdateNavRoutes', setRoutes);
+
+            // default hideFeedback to false
+            scope.hideFeedback = scope.hideFeedback ? true : false;
+        }
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAppNav
+ * @restrict E
+ * @scope
+ * @description
+ * Creates a menu based on items passed in.
+ *
+ * # Navigation Menu JSON Structure
+ * EncoreUI applications, by default, load the navigation menu from JSON defined
+ * in the [encore-ui-nav project](https://github.com/rackerlabs/encore-ui-nav).
+ * You can specify that a different JSON file be used (see the demo below), but
+ * a certain structure is expected for the JSON.
+ *
+ * ## Outer structure/Sections
+ * The JSON consists of an array of objects, with each object representing a
+ * "section" in the nav. The two demos at the bottom of this page each only have
+ * one section, `"All Tools"` and `"Example Menu"`, respectively. As such, the
+ * JSON for each of them is an array with one object in it. The default EncoreUI
+ * nav menu only has one section `"All Tools"`, and individual products should
+ * not be expecting to add their own sections.
+ *
+ * The application that this documentation lives in has three sections, which you
+ * can see if you look at the current left nav menu.
+ * They are `EncoreUI`, `Design Styleguide` and `All Components`.
+ *
+ * ### `title` (required)
+ *
+ * Each section specified in this array is required to have a `title`
+ * attribute, i.e.
+ *
+ * <pre>
+ * navJSON = [
+ *     {
+ *         "title": "Section 1"
+ *     }, {
+ *         "title": "Section 2"
+ *     }
+ * ]
+ * </pre>
+ *
+ * ### `type` (optional)
+ * Each section can optionally have a `type` attribute. If present, a class with
+ * the value `nav-section-TYPE` will be applied in the nav, otherwise
+ * `nav-section-all` will be applied.
+ *
+ * <pre>
+ * navJSON = [
+ *     {
+ *         "title": "Section 1",
+ *         "type": "highlight"
+ *     }, {
+ *         "title": "Section 2"
+ *     }
+ * ]
+ * </pre>
+ *
+ * In this example, `Section 1` will have a `nav-section-highlight` class applied
+ * to it, while `Section 2` will receive the default `nav-section-all` class.
+ *
+ * The default Encore nav menu does not currently use the `type` property, and
+ * products being added to Encore should avoid it. This attribute is reserved
+ * for future use by the EncoreUI designers.
+ *
+ * ### `children` (optional)
+ *
+ * A section's `children` attribute details the first level of navigation items
+ * that live within the section. This is defined as an array of objects, where
+ * each object represents an "item" to be displayed in the nav (and the structure
+ * of the objects/items themselves will be defined in the Navigation Items
+ * section below). As an example, this could look like:
+ *
+ *<pre>
+ * navJSON = [
+ *     {
+ *         "title": "Section 1",
+ *         "type": "highlight",
+ *         "children": [
+ *             {
+ *                 "href": "/overview",
+ *                 "key": "overview",
+ *                 "linkText": "Overview"
+ *             }, {
+ *                 "href": "/about",
+ *                 "key": "about",
+ *                 "linkText": "About"
+ *             },
+ *         ]
+ *     }, {
+ *         "title": "Section 2",
+ *         "children": [
+ *             {
+ *                 "href": "/overview2",
+ *                 "linkText": "Section 2 Overview"
+ *             }
+ *         ]
+ *     }
+ * ]
+ * </pre>
+ *
+ * These `children` will be able to have further `children` nested inside them,
+ * accessible via an expand/collapse chevron, but it is important to note that
+ * the top level `children` in each section will _always_ be displayed.
+ *
+ * ## Navigation Items
+ * A Navigation Item is an object that exists in a `children` array, and
+ * represents a clickable item. These items have many optional attributes,
+ * and can themselves contain `children` attributes.
+ *
+ * Their only required attribute is `linkText`. The object will also need _one_
+ * of the `href` or `children` attributes, but these two should be mutually exclusive.
+ *
+ * ### `linkText` (required)
+ *
+ * The `linkText` attribute defines what text will be shown for the item in the
+ * nav menu. This was shown in the example above,
+ *
+ * <pre>
+ * {
+ *        "title": "Section 1",
+ *        "type": "highlight",
+ *        "children": [
+ *            {
+ *                 "href": "/overview",
+ *                 "key": "overview",
+ *                 "linkText": "Overview"
+ *           }, {
+ *                 "href": "/about",
+ *                 "key": "about",
+ *                 "linkText": "About"
+ *           },
+ *       ]
+ * }
+ * </pre>
+ *
+ * These items will be displayed in the nav with `Overview` and `About` text.
+ *
+ * ### `key` (required for top-level items)
+ * The `key` attribute is used to provide an unique identifier for individual
+ * navigation items. If you are introducing a new top-level item into the nav
+ * menu, then the `key` is required. It is optional for any nested items. There
+ * are two possible reasons you would want to provide this for nested items:
+ *
+ * 1. A nav item with a `key` will have the class `rx-app-key-{{ item.key }}`
+ * applied to it
+ * 2. `rxAppRoutes` exposes a few methods for working with the key, including
+ * `isActiveByKey()` and `setRouteByKey()`
+ *
+ * In general, you should not need to provide a `key` attribute for any nested
+ * children. We try to avoid custom styling inside the nav, so the automatic
+ * class application shouldn't be necessary. And the `rxAppRoutes` methods are
+ * _generally_ only used internally by EncoreUI.
+ *
+ *
+ * ### `href` (optional)
+ *
+ * The `href` attribute is used to assign a URL to the item, which will be
+ * navigated to when clicked. If the item has a `children` attribute, you
+ * normally would not include `href`, because you want the children to
+ * expand/collapse when this item is clicked, rather than navigating away to
+ * somewhere else.
+ *
+ * For Encore products within Rackspace, we keep the products on the same domain
+ * (encore.rackspace.com), but give each product its own top-level path, i.e.
+ * `encore.rackspace.com/foo`, `encore.rackspace.com/bar`. By doing this, the
+ * `href` values can simply be entered as `/foo` and `/bar`. And more importantly,
+ * `/foo` and `/bar` can be _completely separate Angular applications_. Both
+ * applications are available in the nav, but clicking on `/foo` will load a new
+ * Angular application, while clicking on `/bar` loads a brand new Angular
+ * application.
+ *
+ * This allows applications to be developed and deployed independently from each
+ * other. The nav is aware of all the applications, but they do not have to be
+ * aware of each other.
+ *
+ * An extra feature of `href` is that you can put variables into it, that will be
+ * interpolated with the current `$route.current.pathParams`. Thus, you can do
+ * something like:
+ *
+ * <pre>
+ * {
+ *      "title": "Section 1",
+ *     "type": "highlight",
+ *     "children": [
+ *         {
+ *             "href": "/overview",
+ *             "key": "overview",
+ *             "linkText": "Overview"
+ *         }, {
+ *             "href": "/about/{{foobar}}",
+ *             "key": "about",
+ *             "linkText": "About"
+ *         },
+ *         ]
+ * }
+ * </pre>
+ *
+ * If `foobar` is currently in `$route.current.pathParams`, then its value will
+ * automatically be inserted into the final URL.
+ *
+ *
+ * ### `children` (optional)
+ * If an item doesn't have an `href` attribute, it's probably because it has
+ * child items via the `children` attribute.
+ *
+ * <pre>
+ * {
+ *      "title": "Section 1",
+ *     "type": "highlight",
+ *     "children": [
+ *         {
+ *             "href": "/overview",
+ *             "key": "overview",
+ *             "linkText": "Overview"
+ *         }, {
+ *             "href": "/about",
+ *             "key": "about",
+ *             "linkText": "About"
+ *         }, {
+ *             "linkText": "People",
+ *             "children": [
+ *                 {
+ *                     "href": "/people/bob",
+ *                     "linkText": "Bob",
+ *                 }, {
+ *                     "href": "/people/sue",
+ *                     "linkText": "Sue"
+ *                 }
+ *
+ *             ]
+ *         }
+ *     ]
+ * }
+ * </pre>
+ *
+ * This example shows a new item `People`, which has no `href` of its own, but
+ * does have `children`, which contains two new items, each with their own unique `href`.
+ *
+ * By default, the `Bob` and `Sue` items will not be visible, and in the nav,
+ * `People` will automatically have a chevron attached. When clicked, it will
+ * expand to show the `children` items.
+ *
+ * As an aside, in this example, there will likely be one Angular application at
+ * `/people`, which is resonsible for routing `/people/bob` and `/people/sue`,
+ * while `/overview` and `/about` would probably be two different Angular
+ * applications.
+ *
+ *
+ * ### `visibility` and `childVisibility` (optional)
+ * The `visibility` attribute is used to control whether or not an individual nav
+ * item is visible to the user. If `visibility` is not specified, then by default
+ * the item is always visible. The `childVisibility` attribute takes all the same
+ * possible values as `visibility`, but is used to determine whether the items in
+ * `children` should be visible.
+ *
+ * `visibility` can take a few types of values. The original form used in EncoreUI
+ * was to pass an expression, filtering values with `rxEnvironmentMatch`, i.e.
+ *
+ * <pre>
+ * "visibility": "('unified-preprod' | rxEnvironmentMatch) || ('local' | rxEnvironmentMatch)",
+ * </pre>
+ *
+ * This expression would be evaluated, checking if the user is currently viewing
+ * the app in the `unified-preprod` environment or the `local` environment, and
+ * only display the item if one of those was true. (See {@link utilities.service:rxEnvironment rxEnvironment}
+ * for more details on environemnts). This was used to prevent items from being
+ * displayed in a production environment if they were only currently available in
+ * staging.
+ *
+ * *Note*: Using an expression for environment checking use has somewhat tailed off.
+ * We now have different JSON files for each environment, so checking the current
+ * environment is not necessary.
+ *
+ * Another technique for visibility is to use a predefined set of visibility
+ * functions that exist in the framework—`rxPathParams`, for example.
+ *
+ * To use these, you pass an array to `visibility`, with the first argument being
+ * the name of the function to use (as a string), and the second argument as an
+ * optional object describing the parameters to pass to the function.
+ *
+ * For instance, `rxPathParams` is used to check if a particular parameter is
+ * present in the current route. The syntax is as follows:
+ *
+ * <pre>
+ * "visibility": ["rxPathParams", { "param": "accountNumber" }],
+ * </pre>
+ *
+ * This means "only show this item if `accountNumber` is present in the current route.
+ *
+ * `rxPathParams` is typically used with `childVisibility`, not `visibility`. For
+ * instance, the `Account` section in Encore will by default show a search directive
+ * (discussed later), and none of its children are visible. After entering a search
+ * term, an account number is found, and inserted into the route. At that point,
+ * all of the children under `Account` will be visible, as they all require an
+ * `accountNumber` to correctly operate.
+ *
+ * ### `childHeader` (optional)
+ *
+ * The `childHeader` attribute is used to specify an HTML header to be placed
+ * above the `children` in an expanded area (and thus having a `childHeader`
+ * attribute requires having a `children` attribute).
+ *
+ * `childHeader` receives HTML content as a string, and uses
+ * {@link utilities.directive:rxCompile} to compile and insert the content above
+ * the `children` items. The compiled content will be linked against the current
+ * scope, allowing you to do things like:
+ *
+ * <pre>
+ * {
+ *     "title": "Section 1",
+ *     "type": "highlight",
+ *     "childHeader": "<strong>Current Account:</strong>#{{route.current.pathParams.accountNumber}}",
+ *     "children": [
+ *         {
+ *             "href": "/overview",
+ *             "key": "overview",
+ *             "linkText": "Overview"
+ *         }, {
+ *             "href": "/about",
+ *             "key": "about",
+ *             "linkText": "About"
+ *         }, {
+ *            "linkText": "People",
+ *            "children": [
+ *                 {
+ *                     "href": "/people/bob",
+ *                     "linkText": "Bob"
+ *                 }, {
+ *                     "href": "/people/sue",
+ *                     "linkText": "Sue"
+ *                 }
+ *             ]
+ *         }
+ *     ]
+ * }
+ * </pre>
+ *
+ * This example will pull the `accountNumber` from the `pathParams`, and insert
+ * `Current Account: 1234` above the children.
+ *
+ *
+ *
+ * ### `roles` (optional)
+ *
+ * *Note*: Support for `roles` requires at least version 1.19.0 of EncoreUI.
+ *
+ * In addition to the `visibility` criteria described above, you can also restrict
+ * which items are shown to a user based on the LDAP roles of that user. This is
+ * done via the `roles` attribute, which takes a single object as its value. This
+ * object can be used to specify that a user requires _all_ roles from a certain
+ * set, or _any_ role from a certain set, to see an item. For example:
+ *
+ * <pre>
+ * {
+ *     "title": "Section 1",
+ *     "type": "highlight",
+ *     "childHeader": "<strong>Current Account:</strong>#{{route.current.pathParams.accountNumber}}",
+ *     "children": [
+ *         {
+ *             "href": "/overview",
+ *             "key": "overview",
+ *             "linkText": "Overview"
+ *         }, {
+ *             "href": "/about",
+ *             "key": "about",
+ *             "linkText": "About"
+ *         }, {
+ *             "linkText": "People",
+ *             "children": [
+ *                 {
+ *                     "href": "/people/bob",
+ *                     "linkText": "Bob",
+ *                     "roles": { "all": ["role1", "role2"] }
+ *                 }, {
+ *                     "href": "/people/sue",
+ *                     "linkText": "Sue",
+ *                     "roles": { "any": ["role1", "role2", "role3"] }
+ *                 }
+ *
+ *             ]
+ *         }
+ *     ]
+ * }
+ * </pre>
+ *
+ * In this example, the `Bob` item can only be seen by users who have _both_ `role1`
+ * and `role2` in their LDAP roles, while the `Sue` item can only be seen by users
+ * who have _at least one_ of `role1`, `role2`, or `role3`. Please keep in mind that you
+ * [can't do real security in front-end JavaScript](https://goo.gl/wzuhxO).
+ * Do not rely on `roles` as a security feature. `roles` is purely to enhance user
+ * experience, to prevent them from seeing items that they won't have permissions
+ * to access anyway. All the data is still sent to the browser. A user who knows
+ * how to use the dev tools will be able to see the full list. LDAP role-based
+ * security must still happen on the server-side.
+ *
+ *
+ * ### `directive` (optional)
+ * The optional `directive` attribute receives the name of a directive in its
+ * dash-delimited format (i.e. uses `"rx-account-search"` instead of `"rxAccountSearch"`).
+ * If this directive is available, then the navigation menu will have that directive
+ * inserted and rendered directly under the `linkText` for the nav item.
+ *
+ * The most important line in the previous paragraph is `If this directive is
+ * available...`. Let's say we add a new `Support` item to the nav, where each
+ * of its children are supposed to render its own custom search directive:
+ *
+ * <pre>
+ * {
+ *     "linkText": "Support",
+ *     "children": [
+ *         {
+ *             "linkText": "People Support",
+ *             "directive": "people-search"
+ *         }, {
+ *             "linkText": "Machine Support",
+ *             "directive": "machine-search"
+ *         }
+ *     ]
+ * }
+ * </pre>
+ *
+ * The _intent_ is that when the user clicks on "Support", the menu will expand
+ * to show "People Support" and "Machine Support" child items, and each will
+ * contain a search box, defined by the `people-search` and `machine-search`
+ * directives, respectively.
+ *
+ * But where do those directives come from? `rxApp` provides some legacy
+ * directives that are available to the nav, including `rxAppSearch`,
+ * `rxAccountUsers`, etc. But `people-search` does not come from `rxApp`. And
+ * recall from the `href` section that the nav might be defining multiple
+ * different Angular applications. What if "Support" is defined in your
+ * application, ad that's where `people-search` comes from, but the user is
+ * currently in a different application? That different application won't have
+ * `people-search` defined anywhere, so when the user clicks on "Support", the
+ * directives won't be available.
+ *
+ * The solution to this is to ensure that these elements with directives _also_
+ * have an `href`, and those URLs belong to Angular applications that define those
+ * directives. i.e.
+ *
+ * <pre>
+ * {
+ *     "linkText": "Support",
+ *     "key": "support",
+ *     "children": [
+ *         {
+ *             "linkText": "People Support",
+ *             "directive": "people-search",
+ *             "href": "/support/people-support",
+ *         }, {
+ *             "linkText": "Machine Support",
+ *             "directive": "machine-search",
+ *             "href": "/support/machine-support",
+ *         }
+ *     ]
+ * }
+ * </pre>
+ *
+ * In fact, recall that we said all items _must_ have one of `href` or `children`,
+ * so the `href` is necessary anyway. But they key here is that by having an `href`,
+ * the browser will navigate to `/support/people-support` / `/support/machine-support`,
+ * which should be defined in Angular apps that have `people-search` and `machine-search`
+ * available as directives.
+ *
+ * With this configuration, clicking on `Support` will expand the `children`,
+ * and the user will see `People Support` and `Machine Support`, but they will
+ * not see the directives. But if they then click on one of `People Support` or
+ * `Machine Support`, then the `/support` Angular application will be loaded,
+ * the and the directives will become available.
+ *
+ * @param {Object} items Menu items to display. See encoreNav for object definition
+ * @param {String} level Level in heirarchy in page. Higher number is deeper nested
+ *
+ * @example
+ * <pre>
+ * <rx-app-nav level="1" items="menuItems"></rx-app-nav>
+ * </pre>
+ */
+.directive('rxAppNav', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'templates/rxAppNav.html',
+        scope: {
+            items: '=',
+            level: '='
+        }
+    };
+});
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAppNavItem
+ * @restrict E
+ * @scope
+ * @description
+ * Creates a menu item. Recursively creates rx-app-nav if 'children' present.
+ * 'Item' must be avialable via scope
+ *
+ * @example
+ * <pre>
+ * <rx-app-nav-item ng-repeat="item in items"></rx-app-nav-item>
+ * </pre>
+ */
+.directive('rxAppNavItem', ["$compile", "$location", "$route", function ($compile, $location, $route) {
+    var linker = function (scope, element) {
+        var injectContent = function (selector, content) {
+            var el = element[0].querySelector(selector);
+            el = angular.element(el);
+
+            $compile(content)(scope, function (compiledHtml) {
+                el.append(compiledHtml);
+            });
+        };
+
+        var directiveHtml = '<directive></directive>';
+        // add navDirective if defined
+        if (angular.isString(scope.item.directive)) {
+            // convert directive string to HTML
+            // e.g. my-directive -> <my-directive></my-directive>
+            directiveHtml = directiveHtml.replace('directive', scope.item.directive);
+
+            injectContent('.item-directive', directiveHtml);
+        }
+
+        // increment nesting level for child items
+        var childLevel = scope.$parent.level + 1;
+        // safety check that child level is a number
+        if (isNaN(childLevel)) {
+            childLevel = 2;
+        }
+        // add children if present
+        // Note: this can't be added in the HTML due to angular recursion issues
+        var rxNavTemplate = '<rx-app-nav items="item.children" level="' + childLevel + '">' +
+            '</rx-app-nav>';
+        if (angular.isArray(scope.item.children)) {
+            injectContent('.item-children', rxNavTemplate);
+        }
+    };
+
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'templates/rxAppNavItem.html',
+        link: linker,
+        scope: {
+            item: '='
+        },
+        controller: ["$scope", "$location", "$injector", "rxVisibility", "rxSession", "rxUrlUtils", function ($scope, $location, $injector, rxVisibility, rxSession, rxUrlUtils) {
+            /**
+             * @description Determines whether or not a nav item should have its href prefixed
+             * based on whether the `$injector` has a `NAV_ITEM_PREFIX` injectable
+             *
+             * _This is *NOT* meant for general consumption, this is strictly for the Origin Project_
+             * _This will eventually be deprecated and removed_
+             *
+             * @param {String=} url URL for the nav item's href
+             */
+            $scope.getUrl = function (url) {
+                // For URLs that have no URL definition, let's go ahead and return right away
+                // this avoids issues when we do have a prefix but really the nav item should not have
+                // any defined href, i.e. items that have subitems
+                if (_.isEmpty(url)) {
+                    return url;
+                }
+
+                // Check if we have a definition of NAV_ITEM_PREFIX, if so let's retrieve it and return the given URL
+                // appended to the prefix.  This allows applications like origin to prefix nav items, while not
+                // messing with nav items in the demo/documentation.
+                //
+                // _This is *NOT* meant for general consumption, this is strictly for the Origin Project_
+                // _This will eventually be deprecated and removed_
+                //
+
+                if ($injector.has('NAV_ITEM_PREFIX')) {
+                    var prefix = rxUrlUtils.parseUrl($injector.get('NAV_ITEM_PREFIX'));
+                    return prefix.protocol.concat('//').concat(prefix.host).concat(url);
+                } else {
+                    // Return as normal if no prefix
+                    return url;
+                }
+
+            };
+            /**
+             * @description Determines whether or not the links need to point to a target, this allows
+             * for origin and applications that show the nav to implement a target in which to have the links
+             * open in.
+             *
+             * If ever there was a need to point links to a different target than an application specific
+             * target, we could implement logic here to inspect the item and determine the target.
+             * (i.e. opening an external application in a new window)
+             */
+            $scope.getTarget = function () {
+                // Check if we have a definition of NAV_ITEM_TARGET, if so let's retrieve it and enable the target attr
+                // on the nav item.  This allows applications like origin to give a target to it's nav items, while not
+                // messing with nav items in the demo/documentation.
+                // We have to pass null in order for the `target` attribute to have no value, the reason for this
+                // is ngRoute will take an href with `target="_self"` and not use it's $location service
+                // allowing the browser to reload the angular application
+                return $injector.has('NAV_ITEM_TARGET') ? $injector.get('NAV_ITEM_TARGET') : null;
+            };
+            // provide `route` as a scope property so that links can tie into them
+            $scope.route = $route;
+
+            var roleCheck = function (roles) {
+                if (_.isUndefined(roles)) {
+                    return true;
+                }
+
+                if (!_.isUndefined(roles.any)) {
+                    return rxSession.hasRole(roles.any);
+                }
+
+                if (!_.isUndefined(roles.all)) {
+                    return rxSession.hasAllRoles(roles.all);
+                }
+
+                return false;
+            };
+
+            /**
+             * @description Determines whether or not a nav item should be displayed, based on `visibility`
+             * criteria and `roles` criteria
+             * @param {Object} visibility
+             * Can be an expression, a function, an array (using format below) to determine visibility
+             * @param {Object=} roles
+             * An object with a format { 'any': ['role1', 'role2'] } or { 'all': ['role1', 'role2'] }
+             */
+            $scope.isVisible = function (visibility, roles) {
+                var locals = {
+                    location: $location
+                };
+                if (_.isUndefined(visibility) && _.isUndefined(roles)) {
+                    // no visibility or role criteria specified, so default to true
+                    return true;
+                }
+
+                if (_.isArray(visibility)) {
+                    // Expected format is
+                    // ["someMethodName", { param1: "abc", param2: "def" }]
+                    // The second element of the array is optional, used to pass extra
+                    // info to "someMethodName"
+                    var methodName = visibility[0];
+                    var configObj = visibility[1]; //optional
+
+                    _.merge(locals, configObj);
+
+                    // The string 'false' will evaluate to the "real" false
+                    // in $scope.$eval
+                    visibility = rxVisibility.getMethod(methodName) || 'false';
+                }
+
+                // If `visibility` isn't defined, then default it to `true` (i.e. visible)
+                var visible = _.isUndefined(visibility) ? true : $scope.$eval(visibility, locals),
+                    hasRole = true;
+
+                // Only do a roleCheck() if `visible` is true. If we failed the visibility test,
+                // then we must ensure the nav item is not displayed, regardless of the roles
+                if (visible && _.isObject(roles)) {
+                    hasRole = roleCheck(roles);
+                }
+
+                return visible && hasRole;
+            };
+
+            $scope.toggleNav = function (ev, href) {
+                // if no href present, simply toggle active state
+                if (_.isEmpty(href)) {
+                    ev.preventDefault();
+                    $scope.item.active = !$scope.item.active;
+                }
+                // otherwise, let the default nav do it's thing
+            };
+
+            $scope.navigateToApp = function (ev, url) {
+                // We want to control what the click to the <a> tag does
+                // If it is Origin prevent the default click action
+                // otherwise handle the click as normal (implied by the lack of else block)
+                if ($injector.has('oriLocationService')) {
+                    var oriLocationService = $injector.get('oriLocationService');
+                    var currentIframeUrl = oriLocationService.getCanvasURL();
+                    var finalUrl = $scope.getUrl(url);
+
+                    ev.preventDefault();
+                    // Only change the iFrame if the urls are different
+                    if (!_.isEmpty(finalUrl) && currentIframeUrl !== finalUrl) {
+                        oriLocationService.setCanvasURL(finalUrl);
+                    }
+                }
+            };
+
+            $scope.navClickHandler = function (clickEvent, item) {
+                $scope.toggleNav(clickEvent, item.href);
+                $scope.navigateToApp(clickEvent, item.url);
+            }
+        }]
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAppSearch
+ * @restrict E
+ * @scope
+ * @description
+ * Creates a search input form for navigation
+ *
+ * @param {String=} placeholder Title of page
+ * @param {*=} model Model to tie input form to (via ng-model)
+ * @param {Function=} submit Function to run on submit (model is passed as only argument to function)
+ */
+.directive('rxAppSearch', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'templates/rxAppSearch.html',
+        scope: {
+            placeholder: '@?',
+            model: '=?',
+            submit: '=?',
+            pattern: '@?'
+        }
+    };
+});
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxAtlasSearch
+ * @restrict E
+ * @description
+ * Used to search accounts for Cloud Atlas
+ */
+.directive('rxAtlasSearch', ["$window", "$injector", function ($window, $injector) {
+    return {
+        template: '<rx-app-search placeholder="Search by username..." submit="searchAccounts"></rx-app-search>',
+        restrict: 'E',
+        link: function (scope) {
+            scope.searchAccounts = function (searchValue) {
+                if (!_.isEmpty(searchValue)) {
+                    var path = '/cloud/' + searchValue + '/servers/';
+                    if ($injector.has('oriLocationService')) {
+                        $injector.get('oriLocationService').setCanvasURL(path);
+                    } else {
+                        $window.location = path;
+                    }
+                }
+            };
+        }
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxBillingSearch
+ * @restrict E
+ * @description [TBD]
+ */
+.directive('rxBillingSearch', ["$location", "$window", "$injector", "encoreRoutes", function ($location, $window, $injector, encoreRoutes) {
+    return {
+        templateUrl: 'templates/rxBillingSearch.html',
+        restrict: 'E',
+        link: function (scope) {
+            scope.searchType = 'bsl';
+            scope.$watch('searchType', function () {
+                scope.placeholder = scope.searchType === 'bsl' ? 'Transaction or Auth ID' : 'Account or Contact Info';
+            });
+            scope.fetchAccounts = function (searchValue) {
+                if (!_.isEmpty(searchValue)) {
+                    // Assuming we are already in /billing, we should use $location to prevent a page refresh
+                    encoreRoutes.isActiveByKey('billing').then(function (isBilling) {
+                        var path = '/search?q=' + searchValue + '&type=' + scope.searchType;
+                        if ($injector.has('oriLocationService')) {
+                            $injector.get('oriLocationService').setCanvasURL('/billing' + path);
+                        } else if (isBilling) {
+                            $location.url(path);
+                        } else {
+                            $window.location = '/billing' + path;
+                        }
+                    });
+                }
+            };
+        }
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxPage
+ * @restrict E
+ * @scope
+ * @description
+ *
+ * Responsible for creating the HTML necessary for a page (including breadcrumbs
+ * and page title) You can pass in a `title` attribute or an `unsafeHtmlTitle`
+ * attribute, but not both. Use the former if your title is a plain string, use
+ * the latter if your title contains embedded HTML tags AND you trust the source
+ * of this title. Arbitrary javascript can be executed, so ensure you trust your
+ * source.
+ *
+ * The document title will be set to either `title` or a stripped version of
+ * `unsafeHtmlTitle`, depending on which you provide.
+ *
+ * You'll likely want to use the {@link rxApp.directive:rxPage rxPage} directive
+ * inside your template view. For example, inside a 'myView.html' file:
+ *
+ * <pre>
+ * <rx-page title="'Example Page'">
+ *    Here is my content
+ * </rx-page>
+ * </pre>
+ *
+ * `rx-page` is used to create a common wrapper for specific page views. It
+ * automatically adds the breadcrumbs and page title/subtitle (if specified),
+ * along with the correct styling.
+ *
+ * Both the `title` and `subtitle` attributes accept an Angular expression,
+ * which can be a string (shown in the previous example) or a scope property.
+ * This string/property can accept other expressions, enabling you to build
+ * custom titles. The demo has an example of this usage.
+ *
+ * If you wish to use arbitrary HTML in your title, you can use the
+ * `unsafe-html-title` attribute instead of `title`. This is considered "unsafe"
+ * because it is capable of executing arbitrary Javascript, so you must ensure
+ * that you trust the source of the title. The "Customized Page Title" in the
+ * demo shows the use of HTML tags.
+ *
+ * In either case (`title` or `unsafe-html-title`), the document title
+ * (i.e. visible in the browser tab) will be set to your chosen title. If you
+ * use `unsafe-html-title`, all HTML tags will be stripped before setting the
+ * document title.
+ *
+ * ### Account Info below Breadcrumbs
+ *
+ * `rxPage` integrates with the {@link elements.directive:rxAccountInfo rxAccountInfo}
+ * component, to draw the Account Info box directly underneath the
+ * `rxBreadcrumbs`. This is opt-in. By default, it will not appear. To enable it,
+ * pass the `account-number="..."` attribute to `<rx-page>` in your template, i.e
+ *
+ * <pre>
+ * <rx-page account-number="{{ accountNumber }}">
+ * </pre>
+ *
+ * As noted in {@link elements.directive:rxAccountInfo rxAccountInfo}, this
+ * directive requires that `SupportAccount`, `Encore` and `Teams` services are
+ * available to the Angular Dependency Injection system. These are *not*
+ * provided by EncoreUI, but are available in an internal Rackspace repository.
+ *
+ *
+ * ### Status tags
+ *
+ * A final attribute that `rx-page` accepts is `status`. This takes a string,
+ * and has the effect of drawing a status "tag" beside the page title.
+ * The "Customized rxApp" demo shows the use of this with the `"alpha"` tag.
+ *
+ * The framework currently provides `"alpha"` and `"beta"` tags, but any product
+ * can specify their own custom tags using the `rxStatusTagsProvider`. It
+ * currently has one method, `addStatus`, which takes an unique `key` for the
+ * new tag, the `class` it should use in the HTML, and the `text` that will be
+ * drawn. All custom tags are drawn inside of a `<span>`, essentially as:
+ *
+ * <pre>
+ * <span class="status-tag {{ class }}">{{ text }}</span>
+ * </pre>
+ *
+ * To use this, do the following in your application's `.config()` method:
+ *
+ * <pre>
+ * rxStatusTagsProvider.addStatus({
+ *     key: 'gamma',
+ *     class: 'alpha-status',
+ *     text: 'Hello World!'
+ * });
+ * </pre>
+ *
+ * This will create a new status tag called `"gamma"`, which you can pass to
+ * `rx-page` as:
+ *
+ * <pre>
+ * <rx-page title="'Some Title'" status="gamma">
+ * </pre>
+ *
+ * And the title will appear with a `Hello World!` tag beside it, styled the
+ * same way as our `"alpha"` status tag is styled. You can also define your own
+ * CSS style in your application and use those instead, passing it as the `class`
+ * value to `addStatus()`.
+ *
+ * All the tags are accessible inside of {@link elements.directive:rxBreadcrumbs rxBreadcrumbs}
+ * as well. Any breadcrumb that was created with `useStatusTag: true` will
+ * automatically receive the same status tag as you passed to `<rx-page>`.
+ *
+ * ### .page-actions
+ *
+ * A `page-actions` class is provided by rx-app to easily add custom page actions
+ * to the top right of a page. For example:
+ *
+ * <pre>
+ * <rx-page title="'Servers Overview'">
+ *    <div class="page-actions">
+ *        <a href="/create" class="link-action msg-action">Create New Server</a>
+ *    </div>
+ *    <img src="http://cdn.memegenerator.net/instances/500x/48669250.jpg"
+ *         alt="Look at all these servers there are so many" />
+ * </rx-page>
+ * </pre>
+ *
+ * @param {String} title Title of page
+ * @param {String} unsafeHtmlTitle Title for the page, with embedded HTML tags
+ * @param {String=} subtitle Subtitle of page
+ *
+ * @example
+ * <pre>
+ * <rx-page title="'Page Title'"></rx-page>
+ * </pre>
+ */
+.directive('rxPage', function () {
+    return {
+        restrict: 'E',
+        transclude: true,
+        templateUrl: 'templates/rxPage.html',
+        scope: {
+            title: '=',
+            unsafeHtmlTitle: '=',
+            subtitle: '=',
+            status: '@',
+            accountNumber: '@',
+            teamId: '@'
+        },
+        link: function (scope, element) {
+            // Remove the title attribute, as it will cause a popup to appear when hovering over page content
+            // @see https://github.com/rackerlabs/encore-ui/issues/251
+            element.removeAttr('title');
+
+            var pageDiv = element[0];
+            var pageBodyDiv = pageDiv.querySelector('.page-content');
+
+            // Move the specified attribute from rxPage div to page-body div
+            function moveLayoutAttrib (attr) {
+
+                // Only apply to attributes that start with 'layout'
+                if (!_.isString(attr.name) || !attr.name.match(/^layout/)) {
+                    return;
+                }
+
+                pageBodyDiv.setAttribute(attr.name, pageDiv.getAttribute(attr.name));
+                pageDiv.removeAttribute(attr.name);
+            }
+
+            // Relocate all layout attributes
+            var i = pageDiv.attributes.length;
+            while (i--) {
+                moveLayoutAttrib(pageDiv.attributes[i]);
+            }
+        },
+        controller: ["$scope", "rxPageTitle", function ($scope, rxPageTitle) {
+            $scope.$watch('title', function () {
+                rxPageTitle.setTitle($scope.title);
+            });
+
+            $scope.$watch('unsafeHtmlTitle', function () {
+                if (!_.isEmpty($scope.unsafeHtmlTitle)) {
+                    rxPageTitle.setTitleUnsafeStripHTML($scope.unsafeHtmlTitle);
+                }
+            });
+        }]
+    };
+});
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxStatusTag
+ * @restrict E
+ * @scope
+ * @description
+ * This is used to draw the Alpha/Beta/etc tags in page titles and in breadcrumbs. It's not
+ * intended as a public directive.
+ */
+.directive('rxStatusTag', ["rxStatusTags", function (rxStatusTags) {
+    return {
+        template: '<span ng-if="status && validKey" class="status-tag {{ class }}">{{ text }}</span>',
+        restrict: 'E',
+        scope: {
+            status: '@'
+        },
+        link: function (scope) {
+            scope.validKey = rxStatusTags.hasTag(scope.status);
+            if (scope.validKey) {
+                var config = rxStatusTags.getTag(scope.status);
+                scope.class = config.class;
+                scope.text = config.text;
+            }
+        }
+    };
+}]);
+
+angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxTicketSearch
+ * @restrict E
+ * @description
+ * Used to search tickets for Ticket Queues
+ */
+.directive('rxTicketSearch', function () {
+    return {
+        template: '<rx-app-search placeholder="Search for a Ticket..." submit="searchTickets"></rx-app-search>',
+        restrict: 'E',
+        link: function (scope) {
+            // TQTicketSelection.loadTicket.bind(TQTicketSelection)
+            scope.searchTickets = function () {
+                // TODO do something here
+            };
+        }
+    };
+});
+
 (function () {
     angular
         .module('encore.ui.utilities')
@@ -3169,6 +4914,180 @@ angular.module('encore.ui.utilities')
         };
     }//rxApplyFilter
 })();
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxAppRoutes
+ * @description
+ * Manages page routes, building urls and marking them as active on route change.
+ */
+.factory('rxAppRoutes', ["$rootScope", "$log", "rxUrlUtils", "$q", function ($rootScope, $log, rxUrlUtils, $q) {
+    var AppRoutes = function (routes) {
+        routes = routes || [];
+        // we need to get the current path on page load
+        var currentPathChunks = rxUrlUtils.getCurrentPathChunks();
+        var loadingDeferred = $q.defer();
+
+        // if the routes were already passed in, then we can immediately
+        // resolve the promise
+        if (routes.length > 0) {
+            loadingDeferred.resolve(routes);
+        }
+
+        var setDynamicProperties = function (routes, extraUrlContext) {
+            _.each(routes, function (route) {
+                // build out url for current route
+                route.url = rxUrlUtils.buildUrl(route.href, extraUrlContext);
+
+                // check if any children exist, if so, build their URLs as well
+                if (route.children) {
+                    route.children = setDynamicProperties(route.children, extraUrlContext);
+                }
+
+                // set active state (this needs to go after the recursion,
+                // so that the URL is built for all the children)
+                route.active = rxUrlUtils.isActive(route, currentPathChunks);
+            });
+
+            return routes;
+        };
+
+        var getRouteIndex = function (key, routes) {
+            var routeIndex;
+            var routeAlreadyFound = false;
+
+            _.forEach(routes, function (route, index) {
+                var foundThisTime = false;
+                if (route.key === key) {
+                    routeIndex = [index];
+                    foundThisTime = true;
+                } else if ('children' in route) {
+                    // if there are children in the route, we need to search through them as well
+                    var childIndex = getRouteIndex(key, route.children);
+                    if (childIndex) {
+                        routeIndex = [index].concat(childIndex);
+                        foundThisTime = true;
+                    }
+                }
+                if (foundThisTime) {
+                    if (routeAlreadyFound) {
+                        $log.warn('Duplicate routes found for key: ' + key);
+                    } else {
+                        routeAlreadyFound = true;
+                    }
+                }
+            });
+
+            return routeIndex;
+        };
+
+        var updateRouteByIndex = function (indexes, routeInfo, routes, level) {
+            var route = routes[indexes[0]];
+
+            if (level < indexes.length - 1) {
+                // if there's more than one index, we need to recurse down a level
+                route.children = updateRouteByIndex(indexes.slice(1), routeInfo, route.children, level + 1);
+            } else {
+                _.assign(route, routeInfo);
+            }
+
+            return routes;
+        };
+
+        // Get the route for a given index
+        var getRouteByIndex = function (indexes, subRoutes) {
+            var i, route,
+                depth = indexes.length;
+            for (i = 0; i < depth; i++) {
+                route = subRoutes[indexes[i]];
+                subRoutes = route.children;
+            }
+            return route;
+        };
+
+        $rootScope.$on('$locationChangeSuccess', function () {
+            // NOTE: currentPath MUST be updated before routes
+            currentPathChunks = rxUrlUtils.getCurrentPathChunks();
+
+            routes = setDynamicProperties(routes);
+        });
+
+        return {
+            /**
+             * Finds the indexes/path to a route. Will return last match if duplicate keys exist
+             * @see setRouteByKey for actual use
+             * @param  {String} key Route Key
+             * @example
+             *     var myRouteIndex = rxAppRoutes.getIndexByKey('myKey'); // [0, 2, 0]
+             * @return {Array|undefined} Array of indexes describing path to route (or undefined if not found)
+             */
+            getIndexByKey: function (key) {
+                return loadingDeferred.promise.then(function () {
+                    var routeIndex = getRouteIndex(key, routes);
+                    if (_.isUndefined(routeIndex)) {
+                        $log.debug('Could not find route by key: ', key);
+                        return $q.reject();
+                    }
+
+                    return routeIndex;
+                });
+            },
+
+            getRouteByKey: function (key) {
+                return this.getIndexByKey(key).then(function (index) {
+                    return getRouteByIndex(index, routes);
+                }, function () {
+                    return $q.reject();
+                });
+            },
+
+            isActiveByKey: function (key) {
+                return this.getRouteByKey(key).then(function (route) {
+                    return rxUrlUtils.isActive(route, rxUrlUtils.getCurrentPathChunks());
+                }, function () {
+                    return $q.reject();
+                });
+
+            },
+            /**
+             * functionality to update routes based on their key
+             * @param {String} key Route key used to identify it in navigation
+             * @param {Object} routeInfo Information used to overwrite original properties
+             * @return {Boolean} true if successfully updated, false if key not found
+             */
+            setRouteByKey: function (key, routeInfo) {
+                return this.getIndexByKey(key).then(function (routeIndex) {
+                    routes = updateRouteByIndex(routeIndex, routeInfo, routes, 0);
+
+                    // now that we've updated the route info, we need to reset the dynamic properties
+                    routes = setDynamicProperties(routes);
+
+                    return routeIndex;
+                }, function () {
+                    return $q.reject();
+                });
+            },
+            getAll: function () {
+                return loadingDeferred.promise.then(function () {
+                    return routes;
+                });
+            },
+            setAll: function (newRoutes) {
+                // let's not mess with the original object
+                var routesToBe = _.cloneDeep(newRoutes);
+
+                routes = setDynamicProperties(routesToBe);
+                loadingDeferred.resolve();
+            },
+            rebuildUrls: function (extraUrlContext) {
+                setDynamicProperties(routes, extraUrlContext);
+            }
+        };
+    };
+
+    return AppRoutes;
+}]);
 
 angular.module('encore.ui.utilities')
 /**
@@ -3844,6 +5763,84 @@ angular.module('encore.ui.utilities')
 
 angular.module('encore.ui.utilities')
 /**
+ * @deprecated This item will be removed in a future release of EncoreUI.
+ * @ngdoc service
+ * @name utilities.service:rxBreadcrumbsSvc
+ * @description
+ * `rxBreadcrumbsSvc` provides various methods to manipulate breadcrumbs.
+ *
+ */
+.factory('rxBreadcrumbsSvc', function () {
+    // default will always be home
+    var breadcrumbs = [{
+        path: '/',
+        name: 'Home'
+    }];
+    var breadcrumbsService = {};
+
+    breadcrumbsService.set = function (items) {
+        // reset to just homepage
+        breadcrumbs = breadcrumbs.splice(0, 1);
+        // add in new breadcrumbs
+        breadcrumbs = breadcrumbs.concat(items);
+    };
+
+    breadcrumbsService.getAll = function (titleStatus) {
+        // return a copy of the array (so it can't be modified)
+        var copy = breadcrumbs.slice(0);
+
+        // If a titleStatus tag was passed in for the page, check each of the
+        // breadcrumbs to see if they're asking for that tag
+        if (_.isString(titleStatus) && titleStatus) {
+            _.each(copy, function (breadcrumb) {
+                // only add the page status tag to the breadcrumb if it
+                // doesn't already have its own status tag defined
+                if (breadcrumb.usePageStatusTag && !breadcrumb.status) {
+                    breadcrumb.status = titleStatus;
+                }
+            });
+        }
+        return copy;
+    };
+
+    /**
+     * @ngdoc function
+     * @name rxBreadcrumbsSvc.setHome
+     * @methodOf utilities.service:rxBreadcrumbsSvc
+     * @description
+     * By default, the first breadcrumb will always have an URL of `'/'` and a name of `'Home'`.  This can be changed
+     * with the `rxBreadcrumbsSvc.setHome` method.
+     *
+     * It takes the *new path* as the `first argument`, and an *optional name* as the `second argument`. If you don't
+     * pass the `second argument`, it will reuse whatever name is already there (i.e. `'Home'`).
+     * The breadcrumb name can contain HTML (ie. `'<strong>Home</strong>'`).
+     *
+     * @param {String} path This is the relative path within app.
+     * @param {String=} name This will be the display name.
+     *
+     * @example
+     * <pre>
+     * breadcrumbsService.setHome = function (path, name) {
+     *   breadcrumbs[0] = {
+     *     path: path,
+     *     name: name || breadcrumbs[0].name
+     *   };
+     * };
+     * </pre>
+     *
+     */
+    breadcrumbsService.setHome = function (path, name) {
+        breadcrumbs[0] = {
+            path: path,
+            name: name || breadcrumbs[0].name
+        };
+    };
+
+    return breadcrumbsService;
+});
+
+angular.module('encore.ui.utilities')
+/**
  * @ngdoc controller
  * @name utilities.controller:rxBulkSelectController
  * @scope
@@ -4186,6 +6183,32 @@ angular.module('encore.ui.utilities')
     };
 }]);
 
+/* eslint-disable */
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:$rxDebounce
+ * @description
+ * Element for debounce animation
+ */
+.factory('$rxDebounce', ["$timeout", function($timeout) {
+    return function(callback, debounceTime) {
+        var timeoutPromise;
+
+        return function() {
+            var self = this;
+            var args = Array.prototype.slice.call(arguments);
+            if (timeoutPromise) {
+                $timeout.cancel(timeoutPromise);
+            }
+
+            timeoutPromise = $timeout(function() {
+                callback.apply(self, args);
+            }, debounceTime);
+        };
+    };
+}]);
+
 angular.module('encore.ui.utilities')
 /**
  * @ngdoc parameters
@@ -4374,6 +6397,7 @@ angular.module('encore.ui.utilities')
  *
  * * name: The "friendly" name of your environment, like "local", "preprod", etc.
  * * pattern: A string or RegEx that the current path is matched against
+ * * url: The URL pattern used to build URLs when using rxEnvironmentUrl
  *
  * As an example, if we didn't already have a `'preprod'` environment, we could
  * add it as follows:
@@ -4437,6 +6461,26 @@ angular.module('encore.ui.utilities')
  *
  * When you want to check if you're in one of the custom environments, you can
  * use `envCheck()`, i.e.: `rxEnvironment.envCheck('ghPages')`
+ *
+ * ## A Warning About rxEnvironmentUrl ##
+ * `rxEnvironmentUrl` can be used for building full URLs, based on the current
+ * environment. For now, you should consider it as deprecated. It has problems
+ * with overlapping environments, and could potentially generate the wrong URL.
+ *
+ * ## A Warning About `rxEnvironment.get().name` ##
+ * You might find older Encore code that uses `rxEnvironment.get().name` to get
+ * the name of the current environment. This pattern should be avoided,
+ * specifically because of the overlapping environment issue discussed above.
+ * If you call `rxEnvironment.get().name`, it will just return the first matching
+ * environment in the list of environments, even if we're overlapping and have
+ * multiple environments. Instead, check explicitly with
+ * `rxEnvironment.isLocal()`, `rxEnvironment.isPreProd()`, etc., or
+ * use `rxEnvironment.envCheck('local')`
+ *
+ * @example
+ * <pre>
+ * rxEnvironment.get() // return environment object that matches current location
+ * </pre>
  *
  */
 .service('rxEnvironment', ["$location", "$rootScope", "$log", function ($location, $rootScope, $log) {
@@ -4523,6 +6567,33 @@ angular.module('encore.ui.utilities')
         }
 
         return _.includes(href, pattern);
+    };
+
+    /* ====================================================================== *\
+      DO NOT USE rxEnvironment.get()!
+
+      This function should be avoided due to overlapping environment
+      issues mentioned in the documentation.
+
+      Any use of this function will be AT YOUR OWN RISK.
+
+      Please read the documentation for other means of checking your environment.
+    \* ====================================================================== */
+    this.get = function (href) {
+        // default to current location if href not provided
+        href = href || $location.absUrl();
+
+        var currentEnvironment = _.find(environments, function (environment) {
+            return environmentPatternMatch(href, environment.pattern);
+        });
+
+        if (_.isUndefined(currentEnvironment)) {
+            $log.warn('No environments match URL: ' + $location.absUrl());
+            // set to default/first environment to avoid errors
+            currentEnvironment = environments[0];
+        }
+
+        return currentEnvironment;
     };
 
     /*
@@ -4624,6 +6695,33 @@ angular.module('encore.ui.utilities')
 
         var environmentMatches = rxEnvironment.envCheck(targetEnvironmentName);
         return isNegated ? !environmentMatches : environmentMatches;
+    };
+}]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @deprecated rxEnvironmentUrl will be removed in a future release of EncoreUI.
+ * @ngdoc filter
+ * @name utilities.filter:rxEnvironmentUrl
+ * @description
+ * Builds a URL based on current environment.
+ * Note: if value passed in isn't an object, it will simply return that value
+ *
+ * @example
+ * <pre>
+ * {{ { tld: 'cloudatlas', path: 'cbs/servers' } | rxEnvironmentUrl }}
+ * Renders as '//staging.cloudatlas.encore.rackspace.com/cbs/servers' in staging
+ *
+ * {{ '/myPath' | rxEnvironmentUrl }}
+ * Renders as '/myPath' regardless of environment, because value passed in was not an object
+ * </pre>
+ */
+.filter('rxEnvironmentUrl', ["rxEnvironment", "$interpolate", function (rxEnvironment, $interpolate) {
+    return function (details) {
+        var environment = rxEnvironment.get();
+
+        // convert url template into full path based on details provided (if details is an object)
+        return _.isObject(details) ? $interpolate(environment.url)(details) : details;
     };
 }]);
 
@@ -5024,6 +7122,641 @@ angular.module('encore.ui.utilities')
 
 angular.module('encore.ui.utilities')
 /**
+ * @ngdoc service
+ * @name utilities.service:rxModal
+ * @requires utilities.service:rxModalStack
+ * @description
+ * Service for providing modals
+ */
+.provider('rxModal', function () {
+    var $modalProvider = {
+
+        options: {
+            animation: true,
+            backdrop: true, //can also be false or 'static'
+            keyboard: true
+        },
+        $get: ["$injector", "$rootScope", "$q", "$templateRequest", "$controller", "rxModalStack", function ($injector, $rootScope, $q, $templateRequest, $controller, rxModalStack) {
+            var $modal = {};
+            function getTemplatePromise (options) {
+                return options.template ? $q.when(options.template) :
+                $templateRequest(angular.isFunction(options.templateUrl) ?
+                    (options.templateUrl)() : options.templateUrl);
+            }
+
+            function getResolvePromises (resolves) {
+                var promisesArr = [];
+                angular.forEach(resolves, function (value) {
+                    if (angular.isFunction(value) || angular.isArray(value)) {
+                        promisesArr.push($q.when($injector.invoke(value)));
+                    } else if (angular.isString(value)) {
+                        promisesArr.push($q.when($injector.get(value)));
+                    } else {
+                        promisesArr.push($q.when(value));
+                    }
+                });
+                return promisesArr;
+            }
+
+            var promiseChain = null;
+            $modal.getPromiseChain = function () {
+                return promiseChain;
+            };
+
+            $modal.open = function (modalOptions) {
+                var modalResultDeferred = $q.defer();
+                var modalOpenedDeferred = $q.defer();
+                var modalRenderDeferred = $q.defer();
+
+                //prepare an instance of a modal to be injected into controllers and returned to a caller
+                var modalInstance = {
+                    result: modalResultDeferred.promise,
+                    opened: modalOpenedDeferred.promise,
+                    rendered: modalRenderDeferred.promise,
+                    close: function (result) {
+                        return rxModalStack.close(modalInstance, result);
+                    },
+                    dismiss: function (reason) {
+                        return rxModalStack.dismiss(modalInstance, reason);
+                    }
+                };
+
+                //merge and clean up options
+                modalOptions = angular.extend({}, $modalProvider.options, modalOptions);
+                modalOptions.resolve = modalOptions.resolve || {};
+
+                //verify options
+                if (!modalOptions.template && !modalOptions.templateUrl) {
+                    throw new Error('One of template or templateUrl options is required.');
+                }
+
+                var templateAndResolvePromise =
+                $q.all([getTemplatePromise(modalOptions)].concat(getResolvePromises(modalOptions.resolve)));
+
+                function resolveWithTemplate () {
+                    return templateAndResolvePromise;
+                }
+
+                // Wait for the resolution of the existing promise chain.
+                // Then switch to our own combined promise dependency (regardless of how the previous modal fared).
+                // Then add to rxModalStack and resolve opened.
+                // Finally clean up the chain variable if no subsequent modal has overwritten it.
+                var samePromise;
+                samePromise = promiseChain = $q.all([promiseChain])
+                .then(resolveWithTemplate, resolveWithTemplate)
+                .then(function resolveSuccess (tplAndVars) {
+
+                    var modalScope = (modalOptions.scope || $rootScope).$new();
+                    modalScope.$close = modalInstance.close;
+                    modalScope.$dismiss = modalInstance.dismiss;
+
+                    modalScope.$on('$destroy', function () {
+                        if (!modalScope.$$uibDestructionScheduled) {
+                            modalScope.$dismiss('$uibUnscheduledDestruction');
+                        }
+                    });
+
+                    var ctrlInstance, ctrlLocals = {};
+                    var resolveIter = 1;
+
+                    //controllers
+                    if (modalOptions.controller) {
+                        ctrlLocals.$scope = modalScope;
+                        ctrlLocals.$modalInstance = modalInstance;
+                        Object.defineProperty(ctrlLocals, '$modalInstance', {
+                            get: function () {
+                                return modalInstance;
+                            }
+                        });
+                        angular.forEach(modalOptions.resolve, function (value, key) {
+                            ctrlLocals[key] = tplAndVars[resolveIter++];
+                        });
+
+                        ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
+                        if (modalOptions.controllerAs) {
+                            if (modalOptions.bindToController) {
+                                angular.extend(ctrlInstance, modalScope);
+                            }
+
+                            modalScope[modalOptions.controllerAs] = ctrlInstance;
+                        }
+                    }
+
+                    rxModalStack.open(modalInstance, {
+                        scope: modalScope,
+                        deferred: modalResultDeferred,
+                        renderDeferred: modalRenderDeferred,
+                        content: tplAndVars[0],
+                        animation: modalOptions.animation,
+                        backdrop: modalOptions.backdrop,
+                        keyboard: modalOptions.keyboard,
+                        backdropClass: modalOptions.backdropClass,
+                        windowTopClass: modalOptions.windowTopClass,
+                        windowClass: modalOptions.windowClass,
+                        windowTemplateUrl: modalOptions.windowTemplateUrl,
+                        size: modalOptions.size,
+                        openedClass: modalOptions.openedClass
+                    });
+                    modalOpenedDeferred.resolve(true);
+
+                }, function resolveError (reason) {
+                    modalOpenedDeferred.reject(reason);
+                    modalResultDeferred.reject(reason);
+                })
+                .finally(function () {
+                    if (promiseChain === samePromise) {
+                        promiseChain = null;
+                    }
+                });
+
+                return modalInstance;
+            };
+
+            return $modal;
+        }]
+    };
+    return $modalProvider;
+});
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc directive
+ * @name utilities.directive:rxModalAnimationClass
+ * @description
+ * Element for modal animation class
+ */
+.directive('rxModalAnimationClass', function () {
+    return {
+        compile: function (tElement, tAttrs) {
+            if (tAttrs.modalAnimation) {
+                tElement.addClass(tAttrs.rxModalAnimationClass);
+            }
+        }
+    };
+});
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxModalStack
+ * @requires utilities.service:rxMultiMap
+ * @requires utilities.service:rxStackedMap
+ * @description
+ * Service for modal stacks
+ */
+.factory('rxModalStack', ["$animate", "$timeout", "$document", "$compile", "$rootScope", "$q", "$injector", "rxMultiMap", "rxStackedMap", function ($animate, $timeout, $document, $compile, $rootScope, $q, $injector, rxMultiMap,
+        rxStackedMap) {
+
+    var $animateCss = null;
+
+    if ($injector.has('$animateCss')) {
+        $animateCss = $injector.get('$animateCss');
+    }
+
+    var OPENED_MODAL_CLASS = 'modal-open';
+
+    var backdropDomEl, backdropScope;
+    var openedWindows = rxStackedMap.createNew();
+    var openedClasses = rxMultiMap.createNew();
+    var $modalStack = {
+        NOW_CLOSING_EVENT: 'modal.stack.now-closing'
+    };
+
+    //Modal focus behavior
+    var focusableElementList;
+    var focusIndex = 0; // eslint-disable-line
+    var tababbleSelector = 'a[href], area[href], input:not([disabled]), ' +
+        'button:not([disabled]),select:not([disabled]), textarea:not([disabled]), ' +
+        'iframe, object, embed, *[tabindex], *[contenteditable=true]';
+
+    function backdropIndex () {
+        var topBackdropIndex = -1;
+        var opened = openedWindows.keys();
+
+        for (var i = 0; i < opened.length; i++) {
+            if (openedWindows.get(opened[i]).value.backdrop) {
+                topBackdropIndex = i;
+            }
+        }
+        return topBackdropIndex;
+    }
+
+    $rootScope.$watch(backdropIndex, function (newBackdropIndex) {
+        if (backdropScope) {
+            backdropScope.index = newBackdropIndex;
+        }
+    });
+
+    function removeModalWindow (modalInstance, elementToReceiveFocus) {
+        var body = $document.find('body').eq(0);
+        var modalWindow = openedWindows.get(modalInstance).value;
+
+        //clean up the stack
+        openedWindows.remove(modalInstance);
+
+        removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function () {
+            var modalBodyClass = modalWindow.openedClass || OPENED_MODAL_CLASS;
+            openedClasses.remove(modalBodyClass, modalInstance);
+            body.toggleClass(modalBodyClass, openedClasses.hasKey(modalBodyClass));
+            toggleTopWindowClass(true);
+        });
+        checkRemoveBackdrop();
+
+        //move focus to specified element if available, or else to body
+        if (elementToReceiveFocus && elementToReceiveFocus.focus) {
+            elementToReceiveFocus.focus();
+        } else {
+            body.focus();
+        }
+    }
+
+    // Add or remove "windowTopClass" from the top window in the stack
+    function toggleTopWindowClass (toggleSwitch) {
+        var modalWindow;
+
+        if (openedWindows.length() > 0) {
+            modalWindow = openedWindows.top().value;
+            modalWindow.modalDomEl.toggleClass(modalWindow.windowTopClass || '', toggleSwitch);
+        }
+    }
+
+    function checkRemoveBackdrop () {
+        //remove backdrop if no longer needed
+        if (backdropDomEl && backdropIndex() == -1) { // eslint-disable-line
+            var backdropScopeRef = backdropScope; // eslint-disable-line
+            removeAfterAnimate(backdropDomEl, backdropScope, function () {
+                backdropScopeRef = null;
+            });
+            backdropDomEl = undefined;
+            backdropScope = undefined;
+        }
+    }
+
+    function removeAfterAnimate (domEl, scope, done) {
+        var asyncDeferred;
+        var asyncPromise = null;
+        var setIsAsync = function () {
+            if (!asyncDeferred) {
+                asyncDeferred = $q.defer();
+                asyncPromise = asyncDeferred.promise;
+            }
+
+            return function asyncDone () {
+                asyncDeferred.resolve();
+            };
+        };
+        scope.$broadcast($modalStack.NOW_CLOSING_EVENT, setIsAsync);
+
+        // Note that it's intentional that asyncPromise might be null.
+        // That's when setIsAsync has not been called during the
+        // NOW_CLOSING_EVENT broadcast.
+        return $q.when(asyncPromise).then(afterAnimating);
+
+        function afterAnimating () {
+            if (afterAnimating.done) {
+                return;
+            }
+            afterAnimating.done = true;
+
+            if ($animateCss) {
+                $animateCss(domEl, {
+                    event: 'leave'
+                }).start().then(function () {
+                    domEl.remove();
+                });
+            } else {
+                $animate.leave(domEl);
+            }
+            scope.$destroy();
+            if (done) {
+                done();
+            }
+        }
+    }
+
+    $document.bind('keydown', function (evt) {
+        if (evt.isDefaultPrevented()) {
+            return evt;
+        }
+
+        var modal = openedWindows.top();
+        if (modal && modal.value.keyboard) {
+            switch (evt.which) {
+                case 27: {
+                    evt.preventDefault();
+                    $rootScope.$apply(function () {
+                        $modalStack.dismiss(modal.key, 'escape key press');
+                    });
+                    break;
+                }
+                case 9: {
+                    /* eslint-disable max-depth */
+                    $modalStack.loadFocusElementList(modal);
+                    var focusChanged = false;
+                    if (evt.shiftKey) {
+                        if ($modalStack.isFocusInFirstItem(evt)) {
+                            focusChanged = $modalStack.focusLastFocusableElement();
+                        }
+                    } else {
+                        if ($modalStack.isFocusInLastItem(evt)) {
+                            focusChanged = $modalStack.focusFirstFocusableElement();
+                        }
+                    }
+                    /* eslint-enable max-depth */
+                    if (focusChanged) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                    }
+                    break;
+                }
+            }
+        }
+    });
+
+    $modalStack.open = function (modalInstance, modal) {
+        var modalOpener = $document[0].activeElement,
+            modalBodyClass = modal.openedClass || OPENED_MODAL_CLASS;
+
+        toggleTopWindowClass(false);
+
+        openedWindows.add(modalInstance, {
+            deferred: modal.deferred,
+            renderDeferred: modal.renderDeferred,
+            modalScope: modal.scope,
+            backdrop: modal.backdrop,
+            keyboard: modal.keyboard,
+            openedClass: modal.openedClass,
+            windowTopClass: modal.windowTopClass
+        });
+
+        openedClasses.put(modalBodyClass, modalInstance);
+
+        var body = $document.find('body').eq(0),
+            currBackdropIndex = backdropIndex();
+
+        if (currBackdropIndex >= 0 && !backdropDomEl) {
+            backdropScope = $rootScope.$new(true);
+            backdropScope.index = currBackdropIndex;
+            var angularBackgroundDomEl = angular.element('<div rx-modal-backdrop="modal-backdrop"></div>');
+            angularBackgroundDomEl.attr('backdrop-class', modal.backdropClass);
+            if (modal.animation) {
+                angularBackgroundDomEl.attr('modal-animation', 'true');
+            }
+            backdropDomEl = $compile(angularBackgroundDomEl)(backdropScope);
+            body.append(backdropDomEl);
+        }
+
+        var angularDomEl = angular.element('<div rx-modal-window="modal-window"></div>');
+        angularDomEl.attr({
+            'template-url': modal.windowTemplateUrl,
+            'window-class': modal.windowClass,
+            'window-top-class': modal.windowTopClass,
+            'size': modal.size,
+            'index': openedWindows.length() - 1,
+            'animate': 'animate'
+        }).html(modal.content);
+        if (modal.animation) {
+            angularDomEl.attr('modal-animation', 'true');
+        }
+
+        var modalDomEl = $compile(angularDomEl)(modal.scope);
+        openedWindows.top().value.modalDomEl = modalDomEl;
+        openedWindows.top().value.modalOpener = modalOpener;
+        body.append(modalDomEl);
+        body.addClass(modalBodyClass);
+
+        $modalStack.clearFocusListCache();
+    };
+
+    function broadcastClosing (modalWindow, resultOrReason, closing) {
+        return !modalWindow.value.modalScope.$broadcast('modal.closing', resultOrReason, closing).defaultPrevented;
+    }
+
+    $modalStack.close = function (modalInstance, result) {
+        var modalWindow = openedWindows.get(modalInstance);
+        if (modalWindow && broadcastClosing(modalWindow, result, true)) {
+            modalWindow.value.modalScope.$$uibDestructionScheduled = true;
+            modalWindow.value.deferred.resolve(result);
+            removeModalWindow(modalInstance, modalWindow.value.modalOpener);
+            return true;
+        }
+        return !modalWindow;
+    };
+
+    $modalStack.dismiss = function (modalInstance, reason) {
+        var modalWindow = openedWindows.get(modalInstance);
+        if (modalWindow && broadcastClosing(modalWindow, reason, false)) {
+            modalWindow.value.modalScope.$$uibDestructionScheduled = true;
+            modalWindow.value.deferred.reject(reason);
+            removeModalWindow(modalInstance, modalWindow.value.modalOpener);
+            return true;
+        }
+        return !modalWindow;
+    };
+
+    $modalStack.dismissAll = function (reason) {
+        var topModal = this.getTop();
+        while (topModal && this.dismiss(topModal.key, reason)) {
+            topModal = this.getTop();
+        }
+    };
+
+    $modalStack.getTop = function () {
+        return openedWindows.top();
+    };
+
+    $modalStack.modalRendered = function (modalInstance) {
+        var modalWindow = openedWindows.get(modalInstance);
+        if (modalWindow) {
+            modalWindow.value.renderDeferred.resolve();
+        }
+    };
+
+    $modalStack.focusFirstFocusableElement = function () {
+        if (focusableElementList.length > 0) {
+            focusableElementList[0].focus();
+            return true;
+        }
+        return false;
+    };
+    $modalStack.focusLastFocusableElement = function () {
+        if (focusableElementList.length > 0) {
+            focusableElementList[focusableElementList.length - 1].focus();
+            return true;
+        }
+        return false;
+    };
+
+    $modalStack.isFocusInFirstItem = function (evt) {
+        if (focusableElementList.length > 0) {
+            return (evt.target || evt.srcElement) == focusableElementList[0]; // eslint-disable-line
+        }
+        return false;
+    };
+
+    $modalStack.isFocusInLastItem = function (evt) {
+        if (focusableElementList.length > 0) {
+            return (evt.target || evt.srcElement) == focusableElementList[focusableElementList.length - 1]; // eslint-disable-line
+        }
+        return false;
+    };
+
+    $modalStack.clearFocusListCache = function () {
+        focusableElementList = [];
+        focusIndex = 0;
+    };
+
+    $modalStack.loadFocusElementList = function (modalWindow) {
+        if (focusableElementList === undefined || !focusableElementList.length) {
+            if (modalWindow) {
+                var modalDomE1 = modalWindow.value.modalDomEl;
+                if (modalDomE1 && modalDomE1.length) {
+                    focusableElementList = modalDomE1[0].querySelectorAll(tababbleSelector);
+                }
+            }
+        }
+    };
+
+    return $modalStack;
+}]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc directive
+ * @name utilities.directive:rxModalTransclude
+ * @description
+ * Element for modal transclude
+ */
+.directive('rxModalTransclude', function () {
+    return {
+        link: function ($scope, $element, $attrs, controller, $transclude) {
+            $transclude($scope.$parent, function (clone) {
+                $element.empty();
+                $element.append(clone);
+            });
+        }
+    };
+});
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxMultiMap
+ * @description
+ * A helper, internal data structure that stores all references attached to key
+ */
+.factory('rxMultiMap', function () {
+    return {
+        createNew: function () {
+            var map = {};
+
+            return {
+                entries: function () {
+                    return Object.keys(map).map(function (key) {
+                        return {
+                            key: key,
+                            value: map[key]
+                        };
+                    });
+                },
+                get: function (key) {
+                    return map[key];
+                },
+                hasKey: function (key) {
+                    return !!map[key];
+                },
+                keys: function () {
+                    return Object.keys(map);
+                },
+                put: function (key, value) {
+                    if (!map[key]) {
+                        map[key] = [];
+                    }
+
+                    map[key].push(value);
+                },
+                remove: function (key, value) {
+                    var values = map[key];
+
+                    if (!values) {
+                        return;
+                    }
+
+                    var idx = values.indexOf(value);
+
+                    if (idx !== -1) {
+                        values.splice(idx, 1);
+                    }
+
+                    if (!values.length) {
+                        delete map[key];
+                    }
+                }
+            };
+        }
+    };
+});
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxStackedMap
+ * @description
+ * A helper, internal data structure that acts as a map but also allows getting / removing
+ * elements in the LIFO order
+ */
+.factory('rxStackedMap', function () {
+    return {
+        createNew: function () {
+            var stack = [];
+
+            return {
+                add: function (key, value) {
+                    stack.push({
+                        key: key,
+                        value: value
+                    });
+                },
+                get: function (key) {
+                    for (var i = 0; i < stack.length; i++) {
+                        if (key == stack[i].key) { // eslint-disable-line
+                            return stack[i];
+                        }
+                    }
+                },
+                keys: function () {
+                    var keys = [];
+                    for (var i = 0; i < stack.length; i++) {
+                        keys.push(stack[i].key);
+                    }
+                    return keys;
+                },
+                top: function () {
+                    return stack[stack.length - 1];
+                },
+                remove: function (key) {
+                    var idx = -1;
+                    for (var i = 0; i < stack.length; i++) {
+                        if (key == stack[i].key) { // eslint-disable-line
+                            idx = i;
+                            break;
+                        }
+                    }
+                    return stack.splice(idx, 1)[0];
+                },
+                removeTop: function () {
+                    return stack.splice(stack.length - 1, 1)[0];
+                },
+                length: function () {
+                    return stack.length;
+                }
+            };
+        }
+    };
+});
+
+angular.module('encore.ui.utilities')
+/**
  * @ngdoc controller
  * @name utilities.controller:rxModalCtrl
  * @scope
@@ -5285,9 +8018,11 @@ angular.module('encore.ui.utilities')
  *
  * ## Using the Page Stack
  *
- * The {@link elements.directive:rxNotifications rxNotifications} directive will gather all notifications for a 
- * particular stack into a single point on the page.  By default, this directive will collect all notifications 
- * in the `page` stack.
+ * The default notification stack is added by default to the `rxPage` template (see {@link rxApp}), so it should be
+ * ready to use without any work (unless your app uses a custom template).  The
+ * {@link elements.directive:rxNotifications rxNotifications} directive will gather all notifications for a particular
+ * stack into a single point on the page.  By default, this directive will collect all notifications in the `page`
+ * stack.
  *
  * <pre>
  * <rx-notifications></rx-notifications>
@@ -6080,6 +8815,35 @@ angular.module('encore.ui.utilities')
     return rxPageTracker;
 }]);
 
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc filter
+ * @name utilities.filter:PaginatedItemsSummary
+ * @requires $interpolate
+ * @description
+ * Given an active pager (i.e. the result of rxPageTracker.createInstance()),
+ * return a string like "26-50 of 500", when on the second page of a list of
+ * 500 items, where we are displaying 25 items per page
+ *
+ * @param {Object} pager The instance of the rxPageTracker service.
+ *
+ * @returns {String} The list of page numbers that will be displayed.
+ */
+.filter('PaginatedItemsSummary', ["rxPaginateUtils", "$interpolate", function (rxPaginateUtils, $interpolate) {
+    return function (pager) {
+        var template = '{{first}}-{{last}} of {{total}}';
+        if (pager.showAll || pager.itemsPerPage > pager.total) {
+            template = '{{total}}';
+        }
+        var firstAndLast = rxPaginateUtils.firstAndLast(pager.currentPage(), pager.itemsPerPage, pager.total);
+        return $interpolate(template)({
+            first: firstAndLast.first + 1,
+            last: firstAndLast.last,
+            total: pager.total
+        });
+    };
+}]);
+
 (function () {
     angular
         .module('encore.ui.utilities')
@@ -6197,6 +8961,654 @@ angular.module('encore.ui.utilities')
         }]
     };
 });
+
+/* eslint-disable */
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:$rxPosition
+ * @description
+ * Element for positioning
+ */
+.factory('$rxPosition', ["$document", "$window", function ($document, $window) {
+    /**
+     * Used by scrollbarWidth() function to cache scrollbar's width.
+     * Do not access this variable directly, use scrollbarWidth() instead.
+     */
+    var SCROLLBAR_WIDTH;
+    /**
+     * scrollbar on body and html element in IE and Edge overlay
+     * content and should be considered 0 width.
+     */
+    var BODY_SCROLLBAR_WIDTH;
+    var OVERFLOW_REGEX = {
+        normal: /(auto|scroll)/,
+        hidden: /(auto|scroll|hidden)/
+    };
+    var PLACEMENT_REGEX = {
+        auto: /\s?auto?\s?/i,
+        primary: /^(top|bottom|left|right)$/,
+        secondary: /^(top|bottom|left|right|center)$/,
+        vertical: /^(top|bottom)$/
+    };
+    var BODY_REGEX = /(HTML|BODY)/;
+
+    return {
+
+        /**
+         * Provides a raw DOM element from a jQuery/jQLite element.
+         *
+         * @param {element} elem - The element to convert.
+         *
+         * @returns {element} A HTML element.
+         */
+        getRawNode: function (elem) {
+            return elem.nodeName ? elem : elem[0] || elem;
+        },
+
+        /**
+         * Provides a parsed number for a style property.  Strips
+         * units and casts invalid numbers to 0.
+         *
+         * @param {string} value - The style value to parse.
+         *
+         * @returns {number} A valid number.
+         */
+        parseStyle: function (value) {
+            value = parseFloat(value);
+            return isFinite(value) ? value : 0;
+        },
+
+        /**
+         * Provides the closest positioned ancestor.
+         *
+         * @param {element} element - The element to get the offest parent for.
+         *
+         * @returns {element} The closest positioned ancestor.
+         */
+        offsetParent: function (elem) {
+            elem = this.getRawNode(elem);
+
+            var offsetParent = elem.offsetParent || $document[0].documentElement;
+
+            function isStaticPositioned (el) {
+                return ($window.getComputedStyle(el).position || 'static') === 'static';
+            }
+
+            while (offsetParent && offsetParent !== $document[0].documentElement && isStaticPositioned(offsetParent)) {
+                offsetParent = offsetParent.offsetParent;
+            }
+
+            return offsetParent || $document[0].documentElement;
+        },
+
+        /**
+         * Provides the scrollbar width, concept from TWBS measureScrollbar()
+         * function in https://github.com/twbs/bootstrap/blob/master/js/modal.js
+         * In IE and Edge, scollbar on body and html element overlay and should
+         * return a width of 0.
+         *
+         * @returns {number} The width of the browser scollbar.
+         */
+        scrollbarWidth: function (isBody) {
+            if (isBody) {
+                if (angular.isUndefined(BODY_SCROLLBAR_WIDTH)) {
+                    var bodyElem = $document.find('body');
+                    bodyElem.addClass('rx-position-body-scrollbar-measure');
+                    BODY_SCROLLBAR_WIDTH = $window.innerWidth - bodyElem[0].clientWidth;
+                    BODY_SCROLLBAR_WIDTH = isFinite(BODY_SCROLLBAR_WIDTH) ? BODY_SCROLLBAR_WIDTH : 0;
+                    bodyElem.removeClass('rx-position-body-scrollbar-measure');
+                }
+                return BODY_SCROLLBAR_WIDTH;
+            }
+
+            if (angular.isUndefined(SCROLLBAR_WIDTH)) {
+                var scrollElem = angular.element('<div class="rx-position-scrollbar-measure"></div>');
+                $document.find('body').append(scrollElem);
+                SCROLLBAR_WIDTH = scrollElem[0].offsetWidth - scrollElem[0].clientWidth;
+                SCROLLBAR_WIDTH = isFinite(SCROLLBAR_WIDTH) ? SCROLLBAR_WIDTH : 0;
+                scrollElem.remove();
+            }
+            return SCROLLBAR_WIDTH;
+        },
+
+        /**
+         * Provides the padding required on an element to replace the scrollbar.
+         *
+         * @returns {object} An object with the following properties:
+         *   <ul>
+         *     <li>**scrollbarWidth**: the width of the scrollbar</li>
+         *     <li>**widthOverflow**: whether the the width is overflowing</li>
+         *     <li>**right**: the amount of right padding on the element needed to replace the scrollbar</li>
+         *     <li>**rightOriginal**: the amount of right padding currently on the element</li>
+         *     <li>**heightOverflow**: whether the the height is overflowing</li>
+         *     <li>**bottom**: the amount of bottom padding on the element needed to replace the scrollbar</li>
+         *     <li>**bottomOriginal**: the amount of bottom padding currently on the element</li>
+         *   </ul>
+         */
+        scrollbarPadding: function (elem) {
+            elem = this.getRawNode(elem);
+
+            var elemStyle = $window.getComputedStyle(elem);
+            var paddingRight = this.parseStyle(elemStyle.paddingRight);
+            var paddingBottom = this.parseStyle(elemStyle.paddingBottom);
+            var scrollParent = this.scrollParent(elem, false, true);
+            var scrollbarWidth = this.scrollbarWidth(BODY_REGEX.test(scrollParent.tagName));
+
+            return {
+                scrollbarWidth: scrollbarWidth,
+                widthOverflow: scrollParent.scrollWidth > scrollParent.clientWidth,
+                right: paddingRight + scrollbarWidth,
+                originalRight: paddingRight,
+                heightOverflow: scrollParent.scrollHeight > scrollParent.clientHeight,
+                bottom: paddingBottom + scrollbarWidth,
+                originalBottom: paddingBottom
+            };
+        },
+
+        /**
+         * Checks to see if the element is scrollable.
+         *
+         * @param {element} elem - The element to check.
+         * @param {boolean=} [includeHidden=false] - Should scroll style of 'hidden' be considered,
+         *   default is false.
+         *
+         * @returns {boolean} Whether the element is scrollable.
+         */
+        isScrollable: function (elem, includeHidden) {
+            elem = this.getRawNode(elem);
+
+            var overflowRegex = includeHidden ? OVERFLOW_REGEX.hidden : OVERFLOW_REGEX.normal;
+            var elemStyle = $window.getComputedStyle(elem);
+            return overflowRegex.test(elemStyle.overflow + elemStyle.overflowY + elemStyle.overflowX);
+        },
+
+        /**
+         * Provides the closest scrollable ancestor.
+         * A port of the jQuery UI scrollParent method:
+         * https://github.com/jquery/jquery-ui/blob/master/ui/scroll-parent.js
+         *
+         * @param {element} elem - The element to find the scroll parent of.
+         * @param {boolean=} [includeHidden=false] - Should scroll style of 'hidden' be considered,
+         *   default is false.
+         * @param {boolean=} [includeSelf=false] - Should the element being passed be
+         * included in the scrollable llokup.
+         *
+         * @returns {element} A HTML element.
+         */
+        scrollParent: function (elem, includeHidden, includeSelf) {
+            elem = this.getRawNode(elem);
+
+            var overflowRegex = includeHidden ? OVERFLOW_REGEX.hidden : OVERFLOW_REGEX.normal;
+            var documentEl = $document[0].documentElement;
+            var elemStyle = $window.getComputedStyle(elem);
+            if (includeSelf && overflowRegex.test(elemStyle.overflow + elemStyle.overflowY + elemStyle.overflowX)) {
+                return elem;
+            }
+            var excludeStatic = elemStyle.position === 'absolute';
+            var scrollParent = elem.parentElement || documentEl;
+
+            if (scrollParent === documentEl || elemStyle.position === 'fixed') {
+                return documentEl;
+            }
+
+            while (scrollParent.parentElement && scrollParent !== documentEl) {
+                var spStyle = $window.getComputedStyle(scrollParent);
+                if (excludeStatic && spStyle.position !== 'static') {
+                    excludeStatic = false;
+                }
+
+                if (!excludeStatic && overflowRegex.test(spStyle.overflow + spStyle.overflowY + spStyle.overflowX)) {
+                    break;
+                }
+                scrollParent = scrollParent.parentElement;
+            }
+
+            return scrollParent;
+        },
+
+        /**
+         * Provides read-only equivalent of jQuery's position function:
+         * http://api.jquery.com/position/ - distance to closest positioned
+         * ancestor.  Does not account for margins by default like jQuery position.
+         *
+         * @param {element} elem - The element to caclulate the position on.
+         * @param {boolean=} [includeMargins=false] - Should margins be accounted
+         * for, default is false.
+         *
+         * @returns {object} An object with the following properties:
+         *   <ul>
+         *     <li>**width**: the width of the element</li>
+         *     <li>**height**: the height of the element</li>
+         *     <li>**top**: distance to top edge of offset parent</li>
+         *     <li>**left**: distance to left edge of offset parent</li>
+         *   </ul>
+         */
+        position: function (elem, includeMagins) {
+            elem = this.getRawNode(elem);
+
+            var elemOffset = this.offset(elem);
+            if (includeMagins) {
+                var elemStyle = $window.getComputedStyle(elem);
+                elemOffset.top -= this.parseStyle(elemStyle.marginTop);
+                elemOffset.left -= this.parseStyle(elemStyle.marginLeft);
+            }
+            var parent = this.offsetParent(elem);
+            var parentOffset = {
+                top: 0, left: 0
+            };
+
+            if (parent !== $document[0].documentElement) {
+                parentOffset = this.offset(parent);
+                parentOffset.top += parent.clientTop - parent.scrollTop;
+                parentOffset.left += parent.clientLeft - parent.scrollLeft;
+            }
+
+            return {
+                width: Math.round(angular.isNumber(elemOffset.width) ? elemOffset.width : elem.offsetWidth),
+                height: Math.round(angular.isNumber(elemOffset.height) ? elemOffset.height : elem.offsetHeight),
+                top: Math.round(elemOffset.top - parentOffset.top),
+                left: Math.round(elemOffset.left - parentOffset.left)
+            };
+        },
+
+        /**
+         * Provides read-only equivalent of jQuery's offset function:
+         * http://api.jquery.com/offset/ - distance to viewport.  Does
+         * not account for borders, margins, or padding on the body
+         * element.
+         *
+         * @param {element} elem - The element to calculate the offset on.
+         *
+         * @returns {object} An object with the following properties:
+         *   <ul>
+         *     <li>**width**: the width of the element</li>
+         *     <li>**height**: the height of the element</li>
+         *     <li>**top**: distance to top edge of viewport</li>
+         *     <li>**right**: distance to bottom edge of viewport</li>
+         *   </ul>
+         */
+        offset: function (elem) {
+            elem = this.getRawNode(elem);
+
+            var elemBCR = elem.getBoundingClientRect();
+            return {
+                width: Math.round(angular.isNumber(elemBCR.width) ? elemBCR.width : elem.offsetWidth),
+                height: Math.round(angular.isNumber(elemBCR.height) ? elemBCR.height : elem.offsetHeight),
+                top: Math.round(elemBCR.top + ($window.pageYOffset || $document[0].documentElement.scrollTop)),
+                left: Math.round(elemBCR.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft))
+            };
+        },
+
+        /**
+         * Provides offset distance to the closest scrollable ancestor
+         * or viewport.  Accounts for border and scrollbar width.
+         *
+         * Right and bottom dimensions represent the distance to the
+         * respective edge of the viewport element.  If the element
+         * edge extends beyond the viewport, a negative value will be
+         * reported.
+         *
+         * @param {element} elem - The element to get the viewport offset for.
+         * @param {boolean=} [useDocument=false] - Should the viewport be the document element instead
+         * of the first scrollable element, default is false.
+         * @param {boolean=} [includePadding=true] - Should the padding on the offset parent element
+         * be accounted for, default is true.
+         *
+         * @returns {object} An object with the following properties:
+         *   <ul>
+         *     <li>**top**: distance to the top content edge of viewport element</li>
+         *     <li>**bottom**: distance to the bottom content edge of viewport element</li>
+         *     <li>**left**: distance to the left content edge of viewport element</li>
+         *     <li>**right**: distance to the right content edge of viewport element</li>
+         *   </ul>
+         */
+        viewportOffset: function (elem, useDocument, includePadding) {
+            elem = this.getRawNode(elem);
+            includePadding = includePadding !== false ? true : false;
+
+            var elemBCR = elem.getBoundingClientRect();
+            var offsetBCR = {
+                top: 0, left: 0, bottom: 0, right: 0
+            };
+
+            var offsetParent = useDocument ? $document[0].documentElement : this.scrollParent(elem);
+            var offsetParentBCR = offsetParent.getBoundingClientRect();
+
+            offsetBCR.top = offsetParentBCR.top + offsetParent.clientTop;
+            offsetBCR.left = offsetParentBCR.left + offsetParent.clientLeft;
+            if (offsetParent === $document[0].documentElement) {
+                offsetBCR.top += $window.pageYOffset;
+                offsetBCR.left += $window.pageXOffset;
+            }
+            offsetBCR.bottom = offsetBCR.top + offsetParent.clientHeight;
+            offsetBCR.right = offsetBCR.left + offsetParent.clientWidth;
+
+            if (includePadding) {
+                var offsetParentStyle = $window.getComputedStyle(offsetParent);
+                offsetBCR.top += this.parseStyle(offsetParentStyle.paddingTop);
+                offsetBCR.bottom -= this.parseStyle(offsetParentStyle.paddingBottom);
+                offsetBCR.left += this.parseStyle(offsetParentStyle.paddingLeft);
+                offsetBCR.right -= this.parseStyle(offsetParentStyle.paddingRight);
+            }
+
+            return {
+                top: Math.round(elemBCR.top - offsetBCR.top),
+                bottom: Math.round(offsetBCR.bottom - elemBCR.bottom),
+                left: Math.round(elemBCR.left - offsetBCR.left),
+                right: Math.round(offsetBCR.right - elemBCR.right)
+            };
+        },
+
+        /**
+         * Provides an array of placement values parsed from a placement string.
+         * Along with the 'auto' indicator, supported placement strings are:
+         *   <ul>
+         *     <li>top: element on top, horizontally centered on host element.</li>
+         *     <li>top-left: element on top, left edge aligned with host element left edge.</li>
+         *     <li>top-right: element on top, lerightft edge aligned with host element right edge.</li>
+         *     <li>bottom: element on bottom, horizontally centered on host element.</li>
+         *     <li>bottom-left: element on bottom, left edge aligned with host element left edge.</li>
+         *     <li>bottom-right: element on bottom, right edge aligned with host element right edge.</li>
+         *     <li>left: element on left, vertically centered on host element.</li>
+         *     <li>left-top: element on left, top edge aligned with host element top edge.</li>
+         *     <li>left-bottom: element on left, bottom edge aligned with host element bottom edge.</li>
+         *     <li>right: element on right, vertically centered on host element.</li>
+         *     <li>right-top: element on right, top edge aligned with host element top edge.</li>
+         *     <li>right-bottom: element on right, bottom edge aligned with host element bottom edge.</li>
+         *   </ul>
+         * A placement string with an 'auto' indicator is expected to be
+         * space separated from the placement, i.e: 'auto bottom-left'  If
+         * the primary and secondary placement values do not match 'top,
+         * bottom, left, right' then 'top' will be the primary placement and
+         * 'center' will be the secondary placement.  If 'auto' is passed, true
+         * will be returned as the 3rd value of the array.
+         *
+         * @param {string} placement - The placement string to parse.
+         *
+         * @returns {array} An array with the following values
+         * <ul>
+         *   <li>**[0]**: The primary placement.</li>
+         *   <li>**[1]**: The secondary placement.</li>
+         *   <li>**[2]**: If auto is passed: true, else undefined.</li>
+         * </ul>
+         */
+        parsePlacement: function (placement) {
+            var autoPlace = PLACEMENT_REGEX.auto.test(placement);
+            if (autoPlace) {
+                placement = placement.replace(PLACEMENT_REGEX.auto, '');
+            }
+
+            placement = placement.split('-');
+
+            placement[0] = placement[0] || 'top';
+            if (!PLACEMENT_REGEX.primary.test(placement[0])) {
+                placement[0] = 'top';
+            }
+
+            placement[1] = placement[1] || 'center';
+            if (!PLACEMENT_REGEX.secondary.test(placement[1])) {
+                placement[1] = 'center';
+            }
+
+            if (autoPlace) {
+                placement[2] = true;
+            } else {
+                placement[2] = false;
+            }
+
+            return placement;
+        },
+
+        /**
+         * Provides coordinates for an element to be positioned relative to
+         * another element.  Passing 'auto' as part of the placement parameter
+         * will enable smart placement - where the element fits. i.e:
+         * 'auto left-top' will check to see if there is enough space to the left
+         * of the hostElem to fit the targetElem, if not place right (same for secondary
+         * top placement).  Available space is calculated using the viewportOffset
+         * function.
+         *
+         * @param {element} hostElem - The element to position against.
+         * @param {element} targetElem - The element to position.
+         * @param {string=} [placement=top] - The placement for the targetElem,
+         *   default is 'top'. 'center' is assumed as secondary placement for
+         *   'top', 'left', 'right', and 'bottom' placements.  Available placements are:
+         *   <ul>
+         *     <li>top</li>
+         *     <li>top-right</li>
+         *     <li>top-left</li>
+         *     <li>bottom</li>
+         *     <li>bottom-left</li>
+         *     <li>bottom-right</li>
+         *     <li>left</li>
+         *     <li>left-top</li>
+         *     <li>left-bottom</li>
+         *     <li>right</li>
+         *     <li>right-top</li>
+         *     <li>right-bottom</li>
+         *   </ul>
+         * @param {boolean=} [appendToBody=false] - Should the top and left values returned
+         *   be calculated from the body element, default is false.
+         *
+         * @returns {object} An object with the following properties:
+         *   <ul>
+         *     <li>**top**: Value for targetElem top.</li>
+         *     <li>**left**: Value for targetElem left.</li>
+         *     <li>**placement**: The resolved placement.</li>
+         *   </ul>
+         */
+        positionElements: function (hostElem, targetElem, placement, appendToBody) {
+            hostElem = this.getRawNode(hostElem);
+            targetElem = this.getRawNode(targetElem);
+
+            // need to read from prop to support tests.
+            var targetWidth = angular.isDefined(targetElem.offsetWidth) ?
+                targetElem.offsetWidth : targetElem.prop('offsetWidth');
+            var targetHeight = angular.isDefined(targetElem.offsetHeight) ?
+                targetElem.offsetHeight : targetElem.prop('offsetHeight');
+
+            placement = this.parsePlacement(placement);
+
+            var hostElemPos = appendToBody ? this.offset(hostElem) : this.position(hostElem);
+            var targetElemPos = {
+                top: 0, left: 0, placement: ''
+            };
+
+            if (placement[2]) {
+                var viewportOffset = this.viewportOffset(hostElem, appendToBody);
+
+                var targetElemStyle = $window.getComputedStyle(targetElem);
+                var adjustedSize = {
+                    width: targetWidth + Math.round(Math.abs(this.parseStyle(targetElemStyle.marginLeft) +
+                        this.parseStyle(targetElemStyle.marginRight))),
+                    height: targetHeight + Math.round(Math.abs(this.parseStyle(targetElemStyle.marginTop) +
+                        this.parseStyle(targetElemStyle.marginBottom)))
+                };
+
+                placement[0] = placement[0] === 'top' && adjustedSize.height > viewportOffset.top &&
+                                  adjustedSize.height <= viewportOffset.bottom ? 'bottom' :
+                               placement[0] === 'bottom' && adjustedSize.height > viewportOffset.bottom &&
+                                  adjustedSize.height <= viewportOffset.top ? 'top' :
+                               placement[0] === 'left' && adjustedSize.width > viewportOffset.left &&
+                                  adjustedSize.width <= viewportOffset.right ? 'right' :
+                               placement[0] === 'right' && adjustedSize.width > viewportOffset.right &&
+                                  adjustedSize.width <= viewportOffset.left ? 'left' :
+                               placement[0];
+
+                placement[1] = placement[1] === 'top' && adjustedSize.height - hostElemPos.height >
+                                  viewportOffset.bottom && adjustedSize.height - hostElemPos.height
+                                  <= viewportOffset.top ? 'bottom' :
+                               placement[1] === 'bottom' && adjustedSize.height - hostElemPos.height >
+                                  viewportOffset.top && adjustedSize.height - hostElemPos.height
+                                  <= viewportOffset.bottom ? 'top' :
+                               placement[1] === 'left' && adjustedSize.width - hostElemPos.width >
+                                  viewportOffset.right && adjustedSize.width - hostElemPos.width
+                                  <= viewportOffset.left ? 'right' :
+                               placement[1] === 'right' && adjustedSize.width - hostElemPos.width >
+                                  viewportOffset.left && adjustedSize.width - hostElemPos.width
+                                  <= viewportOffset.right ? 'left' :
+                               placement[1];
+
+                if (placement[1] === 'center') {
+                    if (PLACEMENT_REGEX.vertical.test(placement[0])) {
+                        var xOverflow = hostElemPos.width / 2 - targetWidth / 2;
+                        if (viewportOffset.left + xOverflow < 0 && adjustedSize.width - hostElemPos.width
+                            <= viewportOffset.right) {
+                            placement[1] = 'left';
+                        } else if (viewportOffset.right + xOverflow < 0 && adjustedSize.width - hostElemPos.width
+                            <= viewportOffset.left) {
+                            placement[1] = 'right';
+                        }
+                    } else {
+                        var yOverflow = hostElemPos.height / 2 - adjustedSize.height / 2;
+                        if ((viewportOffset.top + yOverflow < 0) &&
+                            adjustedSize.height - hostElemPos.height <= viewportOffset.bottom
+                        ) {
+                            placement[1] = 'top';
+                        } else if (viewportOffset.bottom + yOverflow < 0
+                            && adjustedSize.height - hostElemPos.height <= viewportOffset.top) {
+                            placement[1] = 'bottom';
+                        }
+                    }
+                }
+            }
+
+            switch (placement[0]) {
+                case 'top':
+                    targetElemPos.top = hostElemPos.top - targetHeight;
+                    break;
+                case 'bottom':
+                    targetElemPos.top = hostElemPos.top + hostElemPos.height;
+                    break;
+                case 'left':
+                    targetElemPos.left = hostElemPos.left - targetWidth;
+                    break;
+                case 'right':
+                    targetElemPos.left = hostElemPos.left + hostElemPos.width;
+                    break;
+            }
+
+            switch (placement[1]) {
+                case 'top':
+                    targetElemPos.top = hostElemPos.top;
+                    break;
+                case 'bottom':
+                    targetElemPos.top = hostElemPos.top + hostElemPos.height - targetHeight;
+                    break;
+                case 'left':
+                    targetElemPos.left = hostElemPos.left;
+                    break;
+                case 'right':
+                    targetElemPos.left = hostElemPos.left + hostElemPos.width - targetWidth;
+                    break;
+                case 'center':
+                    if (PLACEMENT_REGEX.vertical.test(placement[0])) {
+                        targetElemPos.left = hostElemPos.left + hostElemPos.width / 2 - targetWidth / 2;
+                    } else {
+                        targetElemPos.top = hostElemPos.top + hostElemPos.height / 2 - targetHeight / 2;
+                    }
+                    break;
+            }
+
+            targetElemPos.top = Math.round(targetElemPos.top);
+            targetElemPos.left = Math.round(targetElemPos.left);
+            targetElemPos.placement = placement[1] === 'center' ? placement[0] : placement[0] + '-' + placement[1];
+
+            return targetElemPos;
+        },
+
+        /**
+         * Provides a way to adjust the top positioning after first
+         * render to correctly align element to top after content
+         * rendering causes resized element height
+         *
+         * @param {array} placementClasses - The array of strings of classes
+         * element should have.
+         * @param {object} containerPosition - The object with container
+         * position information
+         * @param {number} initialHeight - The initial height for the elem.
+         * @param {number} currentHeight - The current height for the elem.
+         */
+        adjustTop: function (placementClasses, containerPosition, initialHeight, currentHeight) {
+            if (placementClasses.indexOf('top') !== -1 && initialHeight !== currentHeight) {
+                return {
+                    top: containerPosition.top - currentHeight + 'px'
+                };
+            }
+        },
+
+        /**
+         * Provides a way for positioning tooltip & dropdown
+         * arrows when using placement options beyond the standard
+         * left, right, top, or bottom.
+         *
+         * @param {element} elem - The tooltip/dropdown element.
+         * @param {string} placement - The placement for the elem.
+         */
+        positionArrow: function (elem, placement) {
+            elem = this.getRawNode(elem);
+
+            var innerElem = elem.querySelector('.rx-tooltip-inner, .rx-popover-inner');
+            if (!innerElem) {
+                return;
+            }
+
+            var isTooltip = angular.element(innerElem).hasClass('rx-tooltip-inner');
+
+            var arrowElem = isTooltip ? elem.querySelector('.rx-tooltip-arrow') : elem.querySelector('.arrow');
+            if (!arrowElem) {
+                return;
+            }
+
+            var arrowCss = {
+                top: '',
+                bottom: '',
+                left: '',
+                right: ''
+            };
+
+            placement = this.parsePlacement(placement);
+            if (placement[1] === 'center') {
+                // no adjustment necessary - just reset styles
+                angular.element(arrowElem).css(arrowCss);
+                return;
+            }
+
+            var borderProp = 'border-' + placement[0] + '-width';
+            var borderWidth = $window.getComputedStyle(arrowElem)[borderProp];
+
+            var borderRadiusProp = 'border-';
+            if (PLACEMENT_REGEX.vertical.test(placement[0])) {
+                borderRadiusProp += placement[0] + '-' + placement[1];
+            } else {
+                borderRadiusProp += placement[1] + '-' + placement[0];
+            }
+            borderRadiusProp += '-radius';
+            var borderRadius = $window.getComputedStyle(isTooltip ? innerElem : elem)[borderRadiusProp];
+
+            switch (placement[0]) {
+                case 'top':
+                    arrowCss.bottom = isTooltip ? '0' : '-' + borderWidth;
+                    break;
+                case 'bottom':
+                    arrowCss.top = isTooltip ? '0' : '-' + borderWidth;
+                    break;
+                case 'left':
+                    arrowCss.right = isTooltip ? '0' : '-' + borderWidth;
+                    break;
+                case 'right':
+                    arrowCss.left = isTooltip ? '0' : '-' + borderWidth;
+                    break;
+            }
+
+            arrowCss[placement[1]] = borderRadius;
+
+            angular.element(arrowElem).css(arrowCss);
+        }
+    };
+}]);
+/* eslint-enable */
 
 angular.module('encore.ui.utilities')
     .factory('rxProgressbarUtil', function () {
@@ -6890,7 +10302,7 @@ angular.module('encore.ui.utilities')
  * </pre>
  * Will sort as [{ name: { firstName: 'Adam' } }, {}]
  */
-.filter('rxSortEmptyTop', ['$filter', '$parse', function ($filter, $parse) {
+.filter('rxSortEmptyTop', ["$filter", "$parse", function ($filter, $parse) {
     return function (array, key, reverse) {
 
         var predicateGetter = $parse(key);
@@ -7511,6 +10923,113 @@ angular.module('encore.ui.utilities')
 });
 
 angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxStatusTags
+ * @description
+ * This provider is primarily used for applications to specify custom status
+ * tags, for use with the `status` attributes of `rx-page` and of breadcrumb
+ * objects.
+ *
+ * It also contains `getTag` and `hasTag` run time (vs. config time) methods, but
+ * these should rarely, if ever, be needed outside of the framework.
+ */
+.provider('rxStatusTags', function () {
+    var allTags = {
+        alpha: {
+            class: 'alpha-status',
+            text: 'Alpha'
+        },
+        beta: {
+            class: 'beta-status',
+            text: 'Beta'
+        },
+    };
+    // Takes an object with `key`, `text` and `class` attributes,
+    // and adds it to to the existing set of status values
+    this.addStatus = function (config) {
+        allTags[config.key] = {
+            text: config.text,
+            'class': config['class']
+        };
+    };
+
+    this.$get = function () {
+        return {
+            // Given a status tag key, return the `text` and `class` specified
+            // for the tag
+            getTag: function (key) {
+                if (_.has(allTags, key)) {
+                    return allTags[key];
+                }
+                return { class: '', text: '' };
+            },
+
+            hasTag: function (key) {
+                return _.has(allTags, key);
+            }
+        };
+    };
+});
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc controller
+ * @name utilities.controller:rxTabsetController
+ * @description
+ * Controller for creating tabs.
+ */
+.controller('rxTabsetController', ["$scope", function ($scope) {
+    var ctrl = this,
+        tabs = ctrl.tabs = $scope.tabs = [];
+    var destroyed;
+
+    ctrl.select = function (selectedTab) {
+        angular.forEach(tabs, function (tab) {
+            if (tab.active && tab !== selectedTab) {
+                tab.active = false;
+                tab.onDeselect();
+                selectedTab.selectCalled = false;
+            }
+        });
+        selectedTab.active = true;
+        // only call select if it has not already been called
+        if (!selectedTab.selectCalled) {
+            selectedTab.onSelect();
+            selectedTab.selectCalled = true;
+        }
+    };
+
+    ctrl.addTab = function (tab) {
+        tabs.push(tab);
+        // we can't run the select function on the first tab
+        // since that would select it twice
+        if (tabs.length === 1 && tab.active !== false) {
+            tab.active = true;
+        } else if (tab.active) {
+            ctrl.select(tab);
+        } else {
+            tab.active = false;
+        }
+    };
+
+    ctrl.removeTab = function (tab) {
+        var index = tabs.indexOf(tab);
+        //Select a new tab if the tab to be removed is selected and not destroyed
+        if (tab.active && tabs.length > 1 && !destroyed) {
+            //If this is the last tab, select the previous tab. else, the next tab.
+            var newActiveIndex = index === tabs.length - 1 ? index - 1 : index + 1;
+            ctrl.select(tabs[newActiveIndex]);
+        }
+        tabs.splice(index, 1);
+    };
+
+    $scope.$on('$destroy', function () {
+        destroyed = true;
+    });
+}]);
+
+angular.module('encore.ui.utilities')
 
 /**
  * @ngdoc filter
@@ -7639,7 +11158,7 @@ angular.module('encore.ui.utilities')
      *
      * Credit where it's due: https://github.com/epeli/underscore.string/blob/master/titleize.js
      *
-     * @param {String} inputString The string to convert
+     * @param {String} inputString - The string to convert
      * @returns {String} The titleized version of the string
      *
      * @example
@@ -7744,6 +11263,1350 @@ angular.module('encore.ui.utilities')
 angular.module('encore.ui.utilities')
 /**
  * @ngdoc service
+ * @name utilities.service:$rxTooltip
+ * @description
+ * Utility service that creates tooltip- and popover-like directives as well as
+ * houses global options for them.
+ */
+.provider('$rxTooltip', function () {
+    // The default options tooltip and popover.
+    var defaultOptions = {
+        placement: 'top',
+        placementClassPrefix: '',
+        animation: true,
+        popupDelay: 0,
+        popupCloseDelay: 0,
+        useContentExp: false
+    };
+
+    // Default hide triggers for each show trigger
+    var triggerMap = {
+        'mouseenter': 'mouseleave',
+        'click': 'click',
+        'outsideClick': 'outsideClick',
+        'none': ''
+    };
+
+    // The options specified to the provider globally.
+    var globalOptions = {};
+
+    /**
+     * `options({})` allows global configuration of all tooltips in the
+     * application.
+     *
+     *   var app = angular.module( 'App', ['rxTooltip'], function( $rxTooltipProvider ) {
+     *     // place tooltips left instead of top by default
+     *     $rxTooltipProvider.options( { placement: 'left' } );
+     *   });
+     */
+    this.options = function (value) {
+        angular.extend(globalOptions, value);
+    };
+
+    /**
+     * This allows you to extend the set of trigger mappings available. E.g.:
+     *
+     *   $rxTooltipProvider.setTriggers( { 'openTrigger': 'closeTrigger' } );
+     */
+    this.setTriggers = function setTriggers (triggers) {
+        angular.extend(triggerMap, triggers);
+    };
+
+    /**
+     * This is a helper function for translating camel-case to snakeCase.
+     */
+    function snakeCase (name) {
+        var regexp = /[A-Z]/g;
+        var separator = '-';
+        return name.replace(regexp, function (letter, pos) {
+            return (pos ? separator : '') + letter.toLowerCase();
+        });
+    }
+
+    /**
+     * Returns the actual instance of the $rxTooltip service.
+     * TODO support multiple triggers
+     */
+    this.$get = ["$window", "$compile", "$timeout", "$document", "$rxPosition", "$interpolate", "$rootScope", "$parse", "rxStackedMap", function ($window, $compile, $timeout, $document, $rxPosition,
+    $interpolate, $rootScope, $parse, rxStackedMap) {
+        var openedTooltips = rxStackedMap.createNew();
+        $document.on('keyup', keypressListener);
+
+        $rootScope.$on('$destroy', function () {
+            $document.off('keyup', keypressListener);
+        });
+
+        function keypressListener (e) {
+            if (e.which === 27) {
+                var last = openedTooltips.top();
+                if (last) {
+                    last.value.close();
+                    last = null;
+                }
+            }
+        }
+
+        return function $rxTooltip (ttType, prefix, defaultTriggerShow, options) {
+            options = angular.extend({}, defaultOptions, globalOptions, options);
+
+            /**
+             * Returns an object of show and hide triggers.
+             *
+             * If a trigger is supplied,
+             * it is used to show the tooltip; otherwise, it will use the `trigger`
+             * option passed to the `$rxTooltipProvider.options` method; else it will
+             * default to the trigger supplied to this directive factory.
+             *
+             * The hide trigger is based on the show trigger. If the `trigger` option
+             * was passed to the `$rxTooltipProvider.options` method, it will use the
+             * mapped trigger from `triggerMap` or the passed trigger if the map is
+             * undefined; otherwise, it uses the `triggerMap` value of the show
+             * trigger; else it will just use the show trigger.
+             */
+            function getTriggers (trigger) {
+                var show = (trigger || options.trigger || defaultTriggerShow).split(' ');
+                var hide = show.map(function (trigger) {
+                    return triggerMap[trigger] || trigger;
+                });
+                return {
+                    show: show,
+                    hide: hide
+                };
+            }
+
+            var directiveName = snakeCase(ttType);
+
+            var startSym = $interpolate.startSymbol();
+            var endSym = $interpolate.endSymbol();
+            var template =
+                '<div ' + directiveName + '-popup ' +
+                  'rx-title="' + startSym + 'title' + endSym + '" ' +
+                  (options.useContentExp ?
+                    'content-exp="contentExp()" ' :
+                    'content="' + startSym + 'content' + endSym + '" ') +
+                  'origin-scope="origScope" ' +
+                  'class="rx-position-measure ' + prefix + '" ' +
+                  'tooltip-animation-class="fade"' +
+                  'rx-tooltip-classes ' +
+                  'ng-class="{ in: isOpen }" ' +
+                  '>' +
+                '</div>';
+
+            return {
+                compile: function () {
+                    var tooltipLinker = $compile(template);
+
+                    return function link (scope, element, attrs) {
+                        var tooltip;
+                        var tooltipLinkedScope;
+                        var transitionTimeout;
+                        var showTimeout;
+                        var hideTimeout;
+                        var positionTimeout;
+                        var adjustmentTimeout;
+                        var appendToBody = angular.isDefined(options.appendToBody) ? options.appendToBody : false;
+                        var triggers = getTriggers(undefined);
+                        var hasEnableExp = angular.isDefined(attrs[prefix + 'Enable']);
+                        var ttScope = scope.$new(true);
+                        var repositionScheduled = false;
+                        var isOpenParse = angular.isDefined(attrs[prefix + 'IsOpen']) ?
+                            $parse(attrs[prefix + 'IsOpen']) : false;
+                        var contentParse = options.useContentExp ? $parse(attrs[ttType]) : false;
+                        var observers = [];
+                        var lastPlacement;
+
+                        var positionTooltip = function () {
+                            // check if tooltip exists and is not empty
+                            if (!tooltip || !tooltip.html()) { return; }
+
+                            if (!positionTimeout) {
+                                positionTimeout = $timeout(function () {
+                                    var ttPosition = $rxPosition.positionElements
+                                        (element, tooltip, ttScope.placement, appendToBody);
+                                    var initialHeight = angular.isDefined
+                                        (tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
+                                    var elementPos = appendToBody ? $rxPosition.offset
+                                        (element) : $rxPosition.position(element);
+                                    tooltip.css({ top: ttPosition.top + 'px', left: ttPosition.left + 'px' });
+                                    var placementClasses = ttPosition.placement.split('-');
+
+                                    if (!tooltip.hasClass(placementClasses[0])) {
+                                        tooltip.removeClass(lastPlacement.split('-')[0]);
+                                        tooltip.addClass(placementClasses[0]);
+                                    }
+
+                                    if (!tooltip.hasClass(options.placementClassPrefix + ttPosition.placement)) {
+                                        tooltip.removeClass(options.placementClassPrefix + lastPlacement);
+                                        tooltip.addClass(options.placementClassPrefix + ttPosition.placement);
+                                    }
+
+                                    adjustmentTimeout = $timeout(function () {
+                                        var currentHeight = angular.isDefined(tooltip.offsetHeight)
+                                            ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
+                                        var adjustment = $rxPosition.adjustTop
+                                            (placementClasses, elementPos, initialHeight, currentHeight);
+                                        if (adjustment) {
+                                            tooltip.css(adjustment);
+                                        }
+                                        adjustmentTimeout = null;
+                                    }, 0, false);
+
+                                    // first time through tt element will have the
+                                    // rx-position-measure class or if the placement
+                                    // has changed we need to position the arrow.
+                                    if (tooltip.hasClass('rx-position-measure')) {
+                                        $rxPosition.positionArrow(tooltip, ttPosition.placement);
+                                        tooltip.removeClass('rx-position-measure');
+                                    } else if (lastPlacement !== ttPosition.placement) {
+                                        $rxPosition.positionArrow(tooltip, ttPosition.placement);
+                                    }
+                                    lastPlacement = ttPosition.placement;
+                                    positionTimeout = null;
+                                }, 0, false);
+                            }
+                        };
+
+                        // Set up the correct scope to allow transclusion later
+                        ttScope.origScope = scope;
+
+                        // By default, the tooltip is not open.
+                        // TODO add ability to start tooltip opened
+                        ttScope.isOpen = false;
+
+                        function toggleTooltipBind () {
+                            if (!ttScope.isOpen) {
+                                showTooltipBind();
+                            } else {
+                                hideTooltipBind();
+                            }
+                        }
+
+                        // Show the tooltip with delay if specified, otherwise show it immediately
+                        function showTooltipBind () {
+                            if (hasEnableExp && !scope.$eval(attrs[prefix + 'Enable'])) {
+                                return;
+                            }
+
+                            cancelHide();
+                            prepareTooltip();
+
+                            if (ttScope.popupDelay) {
+                                // Do nothing if the tooltip was already scheduled to pop-up.
+                                // This happens if show is triggered multiple times before any hide is triggered.
+                                if (!showTimeout) {
+                                    showTimeout = $timeout(show, ttScope.popupDelay, false);
+                                }
+                            } else {
+                                show();
+                            }
+                        }
+
+                        function hideTooltipBind () {
+                            cancelShow();
+
+                            if (ttScope.popupCloseDelay) {
+                                if (!hideTimeout) {
+                                    hideTimeout = $timeout(hide, ttScope.popupCloseDelay, false);
+                                }
+                            } else {
+                                hide();
+                            }
+                        }
+
+                        // Show the tooltip popup element.
+                        function show () {
+                            cancelShow();
+                            cancelHide();
+
+                            // Don't show empty tooltips.
+                            if (!ttScope.content) {
+                                return angular.noop;
+                            }
+
+                            createTooltip();
+
+                            // And show the tooltip.
+                            ttScope.$evalAsync(function () {
+                                ttScope.isOpen = true;
+                                assignIsOpen(true);
+                                positionTooltip();
+                            });
+                        }
+
+                        function cancelShow () {
+                            if (showTimeout) {
+                                $timeout.cancel(showTimeout);
+                                showTimeout = null;
+                            }
+
+                            if (positionTimeout) {
+                                $timeout.cancel(positionTimeout);
+                                positionTimeout = null;
+                            }
+                        }
+
+                        // Hide the tooltip popup element.
+                        function hide () {
+                            if (!ttScope) {
+                                return;
+                            }
+
+                            // First things first: we don't show it anymore.
+                            ttScope.$evalAsync(function () {
+                                if (ttScope) {
+                                    ttScope.isOpen = false;
+                                    assignIsOpen(false);
+                                    // And now we remove it from the DOM. However, if we have animation, we
+                                    // need to wait for it to expire beforehand.
+                                    // FIXME: this is a placeholder for a port of the transitions library.
+                                    // The fade transition in TWBS is 150ms.
+                                    if (ttScope.animation) {
+                                        if (!transitionTimeout) {
+                                            transitionTimeout = $timeout(removeTooltip, 150, false);
+                                        }
+                                    } else {
+                                        removeTooltip();
+                                    }
+                                }
+                            });
+                        }
+
+                        function cancelHide () {
+                            if (hideTimeout) {
+                                $timeout.cancel(hideTimeout);
+                                hideTimeout = null;
+                            }
+
+                            if (transitionTimeout) {
+                                $timeout.cancel(transitionTimeout);
+                                transitionTimeout = null;
+                            }
+                        }
+
+                        function createTooltip () {
+                            // There can only be one tooltip element per directive shown at once.
+                            if (tooltip) {
+                                return;
+                            }
+
+                            tooltipLinkedScope = ttScope.$new();
+                            tooltip = tooltipLinker(tooltipLinkedScope, function (tooltip) {
+                                if (appendToBody) {
+                                    $document.find('body').append(tooltip);
+                                } else {
+                                    element.after(tooltip);
+                                }
+                            });
+
+                            openedTooltips.add(ttScope, {
+                                close: hide
+                            });
+
+                            prepObservers();
+                        }
+
+                        function removeTooltip () {
+                            cancelShow();
+                            cancelHide();
+                            unregisterObservers();
+
+                            if (tooltip) {
+                                tooltip.remove();
+
+                                tooltip = null;
+                                if (adjustmentTimeout) {
+                                    $timeout.cancel(adjustmentTimeout);
+                                }
+                            }
+
+                            openedTooltips.remove(ttScope);
+
+                            if (tooltipLinkedScope) {
+                                tooltipLinkedScope.$destroy();
+                                tooltipLinkedScope = null;
+                            }
+                        }
+
+                        /**
+                         * Set the initial scope values. Once
+                         * the tooltip is created, the observers
+                         * will be added to keep things in sync.
+                         */
+                        function prepareTooltip () {
+                            ttScope.title = attrs[prefix + 'Title'];
+                            if (contentParse) {
+                                ttScope.content = contentParse(scope);
+                            } else {
+                                ttScope.content = attrs[ttType];
+                            }
+
+                            ttScope.popupClass = attrs[prefix + 'Class'];
+                            ttScope.placement = angular.isDefined(attrs[prefix + 'Placement']) ?
+                                attrs[prefix + 'Placement'] : options.placement;
+                            var placement = $rxPosition.parsePlacement(ttScope.placement);
+                            lastPlacement = placement[1] ? placement[0] + '-' + placement[1] : placement[0];
+
+                            var delay = parseInt(attrs[prefix + 'PopupDelay'], 10);
+                            var closeDelay = parseInt(attrs[prefix + 'PopupCloseDelay'], 10);
+                            ttScope.popupDelay = !isNaN(delay) ? delay : options.popupDelay;
+                            ttScope.popupCloseDelay = !isNaN(closeDelay) ? closeDelay : options.popupCloseDelay;
+                        }
+
+                        function assignIsOpen (isOpen) {
+                            if (isOpenParse && angular.isFunction(isOpenParse.assign)) {
+                                isOpenParse.assign(scope, isOpen);
+                            }
+                        }
+
+                        ttScope.contentExp = function () {
+                            return ttScope.content;
+                        };
+
+                        /**
+                         * Observe the relevant attributes.
+                         */
+                        attrs.$observe('disabled', function (val) {
+                            if (val) {
+                                cancelShow();
+                            }
+
+                            if (val && ttScope.isOpen) {
+                                hide();
+                            }
+                        });
+
+                        if (isOpenParse) {
+                            scope.$watch(isOpenParse, function (val) {
+                                if (ttScope && !val === ttScope.isOpen) {
+                                    toggleTooltipBind();
+                                }
+                            });
+                        }
+
+                        function prepObservers () {
+                            observers.length = 0;
+
+                            if (contentParse) {
+                                observers.push(
+                                    scope.$watch(contentParse, function (val) {
+                                        ttScope.content = val;
+                                        if (!val && ttScope.isOpen) {
+                                            hide();
+                                        }
+                                    })
+                                );
+
+                                observers.push(
+                                    tooltipLinkedScope.$watch(function () {
+                                        if (!repositionScheduled) {
+                                            repositionScheduled = true;
+                                            tooltipLinkedScope.$$postDigest(function () {
+                                                repositionScheduled = false;
+                                                if (ttScope && ttScope.isOpen) {
+                                                    positionTooltip();
+                                                }
+                                            });
+                                        }
+                                    })
+                                );
+                            } else {
+                                observers.push(
+                                    attrs.$observe(ttType, function (val) {
+                                        ttScope.content = val;
+                                        if (!val && ttScope.isOpen) {
+                                            hide();
+                                        } else {
+                                            positionTooltip();
+                                        }
+                                    })
+                                );
+                            }
+
+                            observers.push(
+                                attrs.$observe(prefix + 'Title', function (val) {
+                                    ttScope.title = val;
+                                    if (ttScope.isOpen) {
+                                        positionTooltip();
+                                    }
+                                })
+                            );
+
+                            observers.push(
+                                attrs.$observe(prefix + 'Placement', function (val) {
+                                    ttScope.placement = val ? val : options.placement;
+                                    if (ttScope.isOpen) {
+                                        positionTooltip();
+                                    }
+                                })
+                            );
+                        }
+
+                        function unregisterObservers () {
+                            if (observers.length) {
+                                angular.forEach(observers, function (observer) {
+                                    observer();
+                                });
+                                observers.length = 0;
+                            }
+                        }
+
+                        // hide tooltips/popovers for outsideClick trigger
+                        function bodyHideTooltipBind (e) {
+                            if (!ttScope || !ttScope.isOpen || !tooltip) {
+                                return;
+                            }
+                            // make sure the tooltip/popover link or tool tooltip/popover itself were not clicked
+                            if (!element[0].contains(e.target) && !tooltip[0].contains(e.target)) {
+                                hideTooltipBind();
+                            }
+                        }
+
+                        // KeyboardEvent handler to hide the tooltip on Escape key press
+                        function hideOnEscapeKey (e) {
+                            if (e.which === 27) {
+                                hideTooltipBind();
+                            }
+                        }
+
+                        var unregisterTriggers = function () {
+                            triggers.show.forEach(function (trigger) {
+                                if (trigger === 'outsideClick') {
+                                    element.off('click', toggleTooltipBind);
+                                } else {
+                                    element.off(trigger, showTooltipBind);
+                                    element.off(trigger, toggleTooltipBind);
+                                }
+                                element.off('keypress', hideOnEscapeKey);
+                            });
+                            triggers.hide.forEach(function (trigger) {
+                                if (trigger === 'outsideClick') {
+                                    $document.off('click', bodyHideTooltipBind);
+                                } else {
+                                    element.off(trigger, hideTooltipBind);
+                                }
+                            });
+                        };
+
+                        function prepTriggers () {
+                            var showTriggers = [], hideTriggers = [];
+                            var val = scope.$eval(attrs[prefix + 'Trigger']);
+                            unregisterTriggers();
+
+                            if (angular.isObject(val)) {
+                                Object.keys(val).forEach(function (key) {
+                                    showTriggers.push(key);
+                                    hideTriggers.push(val[key]);
+                                });
+                                triggers = {
+                                    show: showTriggers,
+                                    hide: hideTriggers
+                                };
+                            } else {
+                                triggers = getTriggers(val);
+                            }
+
+                            if (triggers.show !== 'none') {
+                                triggers.show.forEach(function (trigger, idx) {
+                                    if (trigger === 'outsideClick') {
+                                        element.on('click', toggleTooltipBind);
+                                        $document.on('click', bodyHideTooltipBind);
+                                    } else if (trigger === triggers.hide[idx]) {
+                                        element.on(trigger, toggleTooltipBind);
+                                    } else if (trigger) {
+                                        element.on(trigger, showTooltipBind);
+                                        element.on(triggers.hide[idx], hideTooltipBind);
+                                    }
+                                    element.on('keypress', hideOnEscapeKey);
+                                });
+                            }
+                        }
+
+                        prepTriggers();
+
+                        var animation = scope.$eval(attrs[prefix + 'Animation']);
+                        ttScope.animation = angular.isDefined(animation) ? !!animation : options.animation;
+
+                        var appendToBodyVal;
+                        var appendKey = prefix + 'AppendToBody';
+                        if (appendKey in attrs && attrs[appendKey] === undefined) {
+                            appendToBodyVal = true;
+                        } else {
+                            appendToBodyVal = scope.$eval(attrs[appendKey]);
+                        }
+
+                        appendToBody = angular.isDefined(appendToBodyVal) ? appendToBodyVal : appendToBody;
+
+                        // Make sure tooltip is destroyed and removed.
+                        scope.$on('$destroy', function onDestroyTooltip () {
+                            unregisterTriggers();
+                            removeTooltip();
+                            ttScope = null;
+                        });
+                    };
+                }
+            };
+        };
+    }];
+});
+
+/* eslint-disable */
+angular.module('encore.ui.utilities')
+    .controller('rxTypeaheadController',
+        ["$scope", "$element", "$attrs", "$compile", "$parse", "$q", "$timeout", "$document", "$window", "$rootScope", "$rxDebounce", "$rxPosition", "rxTypeaheadParser", function ($scope, $element, $attrs, $compile, $parse, $q, $timeout,
+            $document, $window, $rootScope, $rxDebounce, $rxPosition, rxTypeaheadParser) {
+
+            var originalScope = $scope;
+            var element = $element;
+            var attrs = $attrs;
+            var HOT_KEYS = [9, 13, 27, 38, 40];
+            var eventDebounceTime = 200;
+            var modelCtrl, ngModelOptions;
+            //SUPPORTED ATTRIBUTES (OPTIONS)
+
+            //minimal no of characters that needs to be entered before typeahead kicks-in
+            var minLength = originalScope.$eval(attrs.rxTypeaheadMinLength);
+            if (!minLength && minLength !== 0) {
+                minLength = 1;
+            }
+
+            originalScope.$watch(attrs.rxTypeaheadMinLength, function (newVal) {
+                minLength = !newVal && newVal !== 0 ? 1 : newVal;
+            });
+
+            //minimal wait time after last character typed before typeahead kicks-in
+            var waitTime = originalScope.$eval(attrs.rxTypeaheadWaitMs) || 0;
+
+            //should it restrict model values to the ones selected from the popup only?
+            var isEditable = originalScope.$eval(attrs.rxTypeaheadEditable) !== false;
+            originalScope.$watch(attrs.rxTypeaheadEditable, function (newVal) {
+                isEditable = newVal !== false;
+            });
+
+            //binding to a variable that indicates if matches are being retrieved asynchronously
+            var isLoadingSetter = $parse(attrs.rxTypeaheadLoading).assign || angular.noop;
+
+            //a function to determine if an event should cause selection
+            var isSelectEvent = attrs.rxTypeaheadShouldSelect ?
+                $parse(attrs.rxTypeaheadShouldSelect) : function (scope, vals) {
+                    var evt = vals.$event;
+                    return evt.which === 13 || evt.which === 9;
+                };
+
+            //a callback executed when a match is selected
+            var onSelectCallback = $parse(attrs.rxTypeaheadOnSelect);
+
+            //should it select highlighted popup value when losing focus?
+            var isSelectOnBlur = angular.isDefined(attrs.rxTypeaheadSelectOnBlur) ?
+                originalScope.$eval(attrs.rxTypeaheadSelectOnBlur) : false;
+
+            //binding to a variable that indicates if there were no results after the query is completed
+            var isNoResultsSetter = $parse(attrs.rxTypeaheadNoResults).assign || angular.noop;
+
+            var inputFormatter = attrs.rxTypeaheadInputFormatter ? $parse(attrs.rxTypeaheadInputFormatter) : undefined;
+
+            var appendToBody = attrs.rxTypeaheadAppendToBody ? originalScope.$eval(attrs.rxTypeaheadAppendToBody) : false;
+
+            var appendTo = attrs.rxTypeaheadAppendTo ?
+                originalScope.$eval(attrs.rxTypeaheadAppendTo) : null;
+
+            var appendToElementId =  attrs.rxTypeaheadAppendToElementId || false;
+
+            var focusFirst = originalScope.$eval(attrs.rxTypeaheadFocusFirst) !== false;
+
+            //If input matches an item of the list exactly, select it automatically
+            var selectOnExact = attrs.rxTypeaheadSelectOnExact ?
+                originalScope.$eval(attrs.rxTypeaheadSelectOnExact) : false;
+
+            //binding to a variable that indicates if dropdown is open
+            var isOpenSetter = $parse(attrs.rxTypeaheadIsOpen).assign || angular.noop;
+
+            var showHint = originalScope.$eval(attrs.rxTypeaheadShowHint) || false;
+
+            //INTERNAL VARIABLES
+
+            //model setter executed upon match selection
+            var parsedModel = $parse(attrs.ngModel);
+            var invokeModelSetter = $parse(attrs.ngModel + '($$$p)');
+            var $setModelValue = function (scope, newValue) {
+                if (angular.isFunction(parsedModel(originalScope)) &&
+                    ngModelOptions.getOption('getterSetter')) {
+                    return invokeModelSetter(scope, {
+                        $$$p: newValue
+                    });
+                }
+
+                return parsedModel.assign(scope, newValue);
+            };
+
+            //expressions used by typeahead
+            var parserResult = rxTypeaheadParser.parse(attrs.rxTypeahead);
+
+            var hasFocus;
+
+            //Used to avoid bug in iOS webview where iOS keyboard does not fire
+            //mousedown & mouseup events
+            //Issue #3699
+            var selected;
+
+            //create a child scope for the typeahead directive so we are not polluting original scope
+            //with typeahead-specific data (matches, query etc.)
+            var scope = originalScope.$new();
+            var offDestroy = originalScope.$on('$destroy', function () {
+                scope.$destroy();
+            });
+            scope.$on('$destroy', offDestroy);
+
+            // WAI-ARIA
+            var popupId = 'typeahead-' + scope.$id + '-' + Math.floor(Math.random() * 10000);
+            element.attr({
+                'aria-autocomplete': 'list',
+                'aria-expanded': false,
+                'aria-owns': popupId
+            });
+
+            var inputsContainer, hintInputElem;
+            //add read-only input to show hint
+            if (showHint) {
+                inputsContainer = angular.element('<div></div>');
+                inputsContainer.css('position', 'relative');
+                element.after(inputsContainer);
+                hintInputElem = element.clone();
+                hintInputElem.attr('placeholder', '');
+                hintInputElem.attr('tabindex', '-1');
+                hintInputElem.val('');
+                hintInputElem.css({
+                    'position': 'absolute',
+                    'top': '0px',
+                    'left': '0px',
+                    'border-color': 'transparent',
+                    'box-shadow': 'none',
+                    'opacity': 1,
+                    'background': 'none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255)',
+                    'color': '#999'
+                });
+                element.css({
+                    'position': 'relative',
+                    'vertical-align': 'top',
+                    'background-color': 'transparent'
+                });
+
+                if (hintInputElem.attr('id')) {
+                    hintInputElem.removeAttr('id'); // remove duplicate id if present.
+                }
+                inputsContainer.append(hintInputElem);
+                hintInputElem.after(element);
+            }
+
+            //pop-up element used to display matches
+            var popUpEl = angular.element('<div rx-typeahead-popup ></div>');
+            popUpEl.attr({
+                id: popupId,
+                matches: 'matches',
+                active: 'activeIdx',
+                select: 'select(activeIdx, evt)',
+                'move-in-progress': 'moveInProgress',
+                query: 'query',
+                position: 'position',
+                'assign-is-open': 'assignIsOpen(isOpen)',
+                'rx-debounce': 'debounceUpdate'
+            });
+            //custom item template
+            if (angular.isDefined(attrs.rxTypeaheadTemplateUrl)) {
+                popUpEl.attr('rx-template-url', attrs.rxTypeaheadTemplateUrl);
+            }
+
+            if (angular.isDefined(attrs.rxTypeaheadPopupTemplateUrl)) {
+                popUpEl.attr('rx-popup-template-url', attrs.rxTypeaheadPopupTemplateUrl);
+            }
+
+            var resetHint = function () {
+                if (showHint) {
+                    hintInputElem.val('');
+                }
+            };
+
+            var resetMatches = function () {
+                scope.matches = [];
+                scope.activeIdx = -1;
+                element.attr('aria-expanded', false);
+                resetHint();
+            };
+
+            var getMatchId = function (index) {
+                return popupId + '-option-' + index;
+            };
+
+            // Indicate that the specified match is the active (pre-selected) item in the list owned by this typeahead.
+            // This attribute is added or removed automatically when the `activeIdx` changes.
+            scope.$watch('activeIdx', function (index) {
+                if (index < 0) {
+                    element.removeAttr('aria-activedescendant');
+                } else {
+                    element.attr('aria-activedescendant', getMatchId(index));
+                }
+            });
+
+            var inputIsExactMatch = function (inputValue, index) {
+                if (scope.matches.length > index && inputValue) {
+                    return inputValue.toUpperCase() === scope.matches[index].label.toUpperCase();
+                }
+
+                return false;
+            };
+
+            var getMatchesAsync = function (inputValue, evt) {
+                var locals = {
+                    $viewValue: inputValue
+                };
+                isLoadingSetter(originalScope, true);
+                isNoResultsSetter(originalScope, false);
+                $q.when(parserResult.source(originalScope, locals)).then(function (matches) {
+                    //it might happen that several async queries were in progress if a user were typing fast
+                    //but we are interested only in responses that correspond to the current view value
+                    var onCurrentRequest = inputValue === modelCtrl.$viewValue;
+                    if (onCurrentRequest && hasFocus) {
+                        if (matches && matches.length > 0) {
+                            scope.activeIdx = focusFirst ? 0 : -1;
+                            isNoResultsSetter(originalScope, false);
+                            scope.matches.length = 0;
+
+                            //transform labels
+                            for (var i = 0; i < matches.length; i++) {
+                                locals[parserResult.itemName] = matches[i];
+                                scope.matches.push({
+                                    id: getMatchId(i),
+                                    label: parserResult.viewMapper(scope, locals),
+                                    model: matches[i]
+                                });
+                            }
+
+                            scope.query = inputValue;
+                            //position pop-up with matches - we need to re-calculate its position each time
+                            //we are opening a window
+                            //with matches as a pop-up might be absolute-positioned and position of an input
+                            // might have changed on a page
+                            //due to other elements being rendered
+                            recalculatePosition();
+
+                            element.attr('aria-expanded', true);
+
+                            //Select the single remaining option if user input matches
+                            if (selectOnExact && scope.matches.length === 1 && inputIsExactMatch(inputValue, 0)) {
+                                if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
+                                    $rxDebounce(function () {
+                                        scope.select(0, evt);
+                                    }, angular.isNumber(scope.debounceUpdate) ?
+                                        scope.debounceUpdate : scope.debounceUpdate['default']);
+                                } else {
+                                    scope.select(0, evt);
+                                }
+                            }
+
+                            if (showHint) {
+                                var firstLabel = scope.matches[0].label;
+                                if (angular.isString(inputValue) &&
+                                    inputValue.length > 0 &&
+                                    firstLabel.slice(0, inputValue.length).toUpperCase() === inputValue.toUpperCase()) {
+                                    hintInputElem.val(inputValue + firstLabel.slice(inputValue.length));
+                                } else {
+                                    hintInputElem.val('');
+                                }
+                            }
+                        } else {
+                            resetMatches();
+                            isNoResultsSetter(originalScope, true);
+                        }
+                    }
+                    if (onCurrentRequest) {
+                        isLoadingSetter(originalScope, false);
+                    }
+                }, function () {
+                    resetMatches();
+                    isLoadingSetter(originalScope, false);
+                    isNoResultsSetter(originalScope, true);
+                });
+            };
+
+            // bind events only if appendToBody params exist - performance feature
+            if (appendToBody) {
+                angular.element($window).on('resize', fireRecalculating);
+                $document.find('body').on('scroll', fireRecalculating);
+            }
+
+            // Declare the debounced function outside recalculating for
+            // proper debouncing
+            var debouncedRecalculate = $rxDebounce(function () {
+                // if popup is visible
+                if (scope.matches.length) {
+                    recalculatePosition();
+                }
+
+                scope.moveInProgress = false;
+            }, eventDebounceTime);
+
+            // Default progress type
+            scope.moveInProgress = false;
+
+            function fireRecalculating () {
+                if (!scope.moveInProgress) {
+                    scope.moveInProgress = true;
+                    scope.$digest();
+                }
+
+                debouncedRecalculate();
+            }
+
+            // recalculate actual position and set new values to scope
+            // after digest loop is popup in right position
+            function recalculatePosition () {
+                scope.position = appendToBody ? $rxPosition.offset(element) : $rxPosition.position(element);
+                scope.position.top += element.prop('offsetHeight');
+            }
+
+            //we need to propagate user's query so we can higlight matches
+            scope.query = undefined;
+
+            //Declare the timeout promise var outside the function scope so that stacked calls can be cancelled later
+            var timeoutPromise;
+
+            var scheduleSearchWithTimeout = function (inputValue) {
+                timeoutPromise = $timeout(function () {
+                    getMatchesAsync(inputValue);
+                }, waitTime);
+            };
+
+            var cancelPreviousTimeout = function () {
+                if (timeoutPromise) {
+                    $timeout.cancel(timeoutPromise);
+                }
+            };
+
+            resetMatches();
+
+            scope.assignIsOpen = function (isOpen) {
+                isOpenSetter(originalScope, isOpen);
+            };
+
+            scope.select = function (activeIdx) {
+                //called from within the $digest() cycle
+                var locals = {};
+                var model, item;
+
+                selected = true;
+                locals[parserResult.itemName] = item = scope.matches[activeIdx].model;
+                model = parserResult.modelMapper(originalScope, locals);
+                $setModelValue(originalScope, model);
+                modelCtrl.$setValidity('editable', true);
+                modelCtrl.$setValidity('parse', true);
+
+                onSelectCallback(originalScope, {
+                    $item: item,
+                    $model: model,
+                    $label: parserResult.viewMapper(originalScope, locals)
+                });
+
+                resetMatches();
+
+                //return focus to the input element if a match was selected via a mouse click event
+                // use timeout to avoid $rootScope:inprog error
+                if (scope.$eval(attrs.rxTypeaheadFocusOnSelect) !== false) {
+                    $timeout(function () {
+                        element[0].focus();
+                    }, 0, false);
+                }
+            };
+
+            //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(27)
+            element.on('keydown', function (evt) {
+                //typeahead is open and an "interesting" key was pressed
+                if (scope.matches.length === 0 || HOT_KEYS.indexOf(evt.which) === -1) {
+                    return;
+                }
+
+                var shouldSelect = isSelectEvent(originalScope, {
+                    $event: evt
+                });
+
+                /**
+                 * if there's nothing selected (i.e. focusFirst) and enter or tab is hit
+                 * or
+                 * shift + tab is pressed to bring focus to the previous element
+                 * then clear the results
+                 */
+                if (scope.activeIdx === -1 && shouldSelect || evt.which === 9 && !!evt.shiftKey) {
+                    resetMatches();
+                    scope.$digest();
+                    return;
+                }
+
+
+                evt.preventDefault();
+                var target;
+                switch (evt.which) {
+                    case 27: // escape
+                        evt.stopPropagation();
+
+                        resetMatches();
+                        originalScope.$digest();
+                        break;
+                    case 38: // up arrow
+                        scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
+                        scope.$digest();
+                        target = popUpEl[0].querySelectorAll('.rx-typeahead-match')[scope.activeIdx];
+                        target.parentNode.scrollTop = target.offsetTop;
+                        break;
+                    case 40: // down arrow
+                        scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
+                        scope.$digest();
+                        target = popUpEl[0].querySelectorAll('.rx-typeahead-match')[scope.activeIdx];
+                        target.parentNode.scrollTop = target.offsetTop;
+                        break;
+                    default:
+                        if (shouldSelect) {
+                            scope.$apply(function () {
+                                if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
+                                    $rxDebounce(function () {
+                                        scope.select(scope.activeIdx, evt);
+                                    }, angular.isNumber(scope.debounceUpdate) ?
+                                        scope.debounceUpdate : scope.debounceUpdate['default']);
+                                } else {
+                                    scope.select(scope.activeIdx, evt);
+                                }
+                            });
+                        }
+                }
+            });
+
+            element.on('focus', function (evt) {
+                hasFocus = true;
+                if (minLength === 0 && !modelCtrl.$viewValue) {
+                    $timeout(function () {
+                        getMatchesAsync(modelCtrl.$viewValue, evt);
+                    }, 0);
+                }
+            });
+
+            element.on('blur', function (evt) {
+                if (isSelectOnBlur && scope.matches.length && scope.activeIdx !== -1 && !selected) {
+                    selected = true;
+                    scope.$apply(function () {
+                        if (angular.isObject(scope.debounceUpdate) && angular.isNumber(scope.debounceUpdate.blur)) {
+                            $rxDebounce(function () {
+                                scope.select(scope.activeIdx, evt);
+                            }, scope.debounceUpdate.blur);
+                        } else {
+                            scope.select(scope.activeIdx, evt);
+                        }
+                    });
+                }
+                if (!isEditable && modelCtrl.$error.editable) {
+                    modelCtrl.$setViewValue();
+                    scope.$apply(function () {
+                        // Reset validity as we are clearing
+                        modelCtrl.$setValidity('editable', true);
+                        modelCtrl.$setValidity('parse', true);
+                    });
+                    element.val('');
+                }
+                hasFocus = false;
+                selected = false;
+            });
+
+            // Keep reference to click handler to unbind it.
+            var dismissClickHandler = function (evt) {
+                // Issue #3973
+                // Firefox treats right click as a click on document
+                if (element[0] !== evt.target && evt.which !== 3 && scope.matches.length !== 0) {
+                    resetMatches();
+                    if (!$rootScope.$$phase) {
+                        originalScope.$digest();
+                    }
+                }
+            };
+
+            $document.on('click', dismissClickHandler);
+
+            originalScope.$on('$destroy', function () {
+                $document.off('click', dismissClickHandler);
+                if (appendToBody || appendTo) {
+                    $popup.remove();
+                }
+
+                if (appendToBody) {
+                    angular.element($window).off('resize', fireRecalculating);
+                    $document.find('body').off('scroll', fireRecalculating);
+                }
+                // Prevent jQuery cache memory leak
+                popUpEl.remove();
+
+                if (showHint) {
+                    inputsContainer.remove();
+                }
+            });
+
+            var $popup = $compile(popUpEl)(scope);
+            if (appendToBody) {
+                $document.find('body').append($popup);
+            } else if (appendTo) {
+                angular.element(appendTo).eq(0).append($popup);
+            } else if (appendToElementId !== false) {
+                angular.element($document[0].getElementById(appendToElementId)).append($popup);
+            } else {
+                element.after($popup);
+            }
+
+            this.init = function (_modelCtrl) {
+                modelCtrl = _modelCtrl;
+                ngModelOptions = extractOptions(modelCtrl);
+
+                scope.debounceUpdate = $parse(ngModelOptions.getOption('rxDebounce'))(originalScope);
+
+                //plug into $parsers pipeline to open a typeahead on view changes initiated from DOM
+                //$parsers kick-in on all the changes coming from the view as well as
+                //$manually triggered by $setViewValue
+                modelCtrl.$parsers.unshift(function (inputValue) {
+                    hasFocus = true;
+
+                    if (minLength === 0 || inputValue && inputValue.length >= minLength) {
+                        if (waitTime > 0) {
+                            cancelPreviousTimeout();
+                            scheduleSearchWithTimeout(inputValue);
+                        } else {
+                            getMatchesAsync(inputValue);
+                        }
+                    } else {
+                        isLoadingSetter(originalScope, false);
+                        cancelPreviousTimeout();
+                        resetMatches();
+                    }
+
+                    if (isEditable) {
+                        return inputValue;
+                    }
+
+                    if (!inputValue) {
+                        // Reset in case user had typed something previously.
+                        modelCtrl.$setValidity('editable', true);
+                        return null;
+                    }
+
+                    modelCtrl.$setValidity('editable', false);
+                    return undefined;
+                });
+
+                modelCtrl.$formatters.push(function (modelValue) {
+                    var candidateViewValue, emptyViewValue;
+                    var locals = {};
+
+                    // The validity may be set to false via $parsers (see above) if
+                    // the model is restricted to selected values. If the model
+                    // is set manually it is considered to be valid.
+                    if (!isEditable) {
+                        modelCtrl.$setValidity('editable', true);
+                    }
+
+                    if (inputFormatter) {
+                        locals.$model = modelValue;
+                        return inputFormatter(originalScope, locals);
+                    }
+
+                    //it might happen that we don't have enough info to properly render input value
+                    //we need to check for this situation and simply return model value if we can't
+                    //apply custom formatting
+                    locals[parserResult.itemName] = modelValue;
+                    candidateViewValue = parserResult.viewMapper(originalScope, locals);
+                    locals[parserResult.itemName] = undefined;
+                    emptyViewValue = parserResult.viewMapper(originalScope, locals);
+
+                    return candidateViewValue !== emptyViewValue ? candidateViewValue : modelValue;
+                });
+            };
+
+            function extractOptions (ngModelCtrl) {
+                var ngModelOptions;
+
+                if (angular.version.minor < 6) { // in angular < 1.6 $options could be missing
+                    // guarantee a value
+                    ngModelOptions = ngModelCtrl.$options || {};
+
+                    // mimic 1.6+ api
+                    ngModelOptions.getOption = function (key) {
+                        return ngModelOptions[key];
+                    };
+                } else { // in angular >=1.6 $options is always present
+                    ngModelOptions = ngModelCtrl.$options;
+                }
+
+                return ngModelOptions;
+            }
+        }]
+    );
+/* eslint-enable */
+
+angular.module('encore.ui.utilities')
+/**
+* @ngdoc filter
+* @name utilities.filter:rxTypeaheadHighlight
+* @description
+* filter to sanitize and display list data
+*/
+.filter('rxTypeaheadHighlight', ["$sce", "$injector", "$log", function ($sce, $injector, $log) {
+    var isSanitizePresent;
+    isSanitizePresent = $injector.has('$sanitize');
+
+    function escapeRegexp (queryToEscape) {
+        // Regex: capture the whole query string and replace it with the string that will be used to match
+        // the results, for example if the capture is "a" the result will be \a
+        return queryToEscape.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+    }
+
+    function containsHtml (matchItem) {
+        return /<.*>/g.test(matchItem);
+    }
+
+    return function (matchItem, query) {
+        if (!isSanitizePresent && containsHtml(matchItem)) {
+            $log.warn('Unsafe use of typeahead please use ngSanitize'); // Warn the user about the danger
+        }
+        // Replaces the capture string with a the same string inside of a "strong" tag
+        var captureString = '<strong>$&</strong>';
+        matchItem = query ? ('' + matchItem).replace(new RegExp(escapeRegexp(query), 'gi'), captureString) : matchItem;
+        if (!isSanitizePresent) {
+            // If $sanitize is not present we pack the string in a $sce object for the ng-bind-html directive
+            matchItem = $sce.trustAsHtml(matchItem);
+        }
+        return matchItem;
+    };
+}]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc directive
+ * @name utilities.directive:rxTypeaheadMatch
+ * @scope
+ * @description
+ * directive used in rxTypeahead to display an element matching the query
+ */
+.directive('rxTypeaheadMatch', ["$templateRequest", "$compile", "$parse", function ($templateRequest, $compile, $parse) {
+    return {
+        scope: {
+            index: '=',
+            match: '=',
+            query: '='
+        },
+        link: function (scope, element, attrs) {
+            var tplUrl = $parse(attrs.templateUrl)(scope.$parent) || 'templates/rxTypeaheadMatch.html';
+            $templateRequest(tplUrl).then(function (tplContent) {
+                $compile(tplContent.trim())(scope, function (clonedElement) {
+                    element.replaceWith(clonedElement);
+                });
+            });
+        }
+    };
+}]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxTypeaheadParser
+ * @description
+ * parser service for use by rxTypeahead
+ */
+.service('rxTypeaheadParser', ["$parse", function ($parse) {
+    var TYPEAHEAD_REGEXP = /^\s*([\s\S]+?)(?:\s+as\s+([\s\S]+?))?\s+for\s+(?:([\$\w][\$\w\d]*))\s+in\s+([\s\S]+?)$/;
+    return {
+        parse: function (input) {
+            var match = input.match(TYPEAHEAD_REGEXP);
+            if (!match) {
+                throw new Error(
+                    'Expected typeahead specification in form of "_modelValue_ (as _label_)? for' +
+                    '_item_ in _collection_" but got "' + input + '".');
+            }
+
+            return {
+                itemName: match[3],
+                source: $parse(match[4]),
+                viewMapper: $parse(match[2] || match[1]),
+                modelMapper: $parse(match[1])
+            };
+        }
+    };
+}]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc directive
+ * @name utilities.directive:rxTypeaheadPopup
+ * @scope
+ * @description
+ * creates a popup used by the rxTypeahead directive
+ * @param {string[]} [matches]  values matching typeahead query
+ * @param {string} [query]  typeahead query made
+ * @param {string} [active]   currently selected choice
+ * @param {string} [position]   placement of typeahead results
+ * @param {boolean} [moveInProgress=false]  is typeahead results popup moving?
+ * @param {string} [select]    method to execute on completion
+ * @param {boolean} [assignIsOpen]  is assignment option open?
+ * @callback rxDebounce
+ */
+.directive('rxTypeaheadPopup', ["$rxDebounce", function ($rxDebounce) {
+    return {
+        scope: {
+            matches: '=',
+            query: '=',
+            active: '=',
+            position: '&',
+            moveInProgress: '=',
+            select: '&',
+            assignIsOpen: '&',
+            rxDebounce: '&'
+        },
+        replace: true,
+        templateUrl: function (element, attrs) {
+            return attrs.rxPopupTemplateUrl || 'templates/rxTypeaheadPopup.html';
+        },
+        link: function (scope, element, attrs) {
+            scope.templateUrl = attrs.rxTemplateUrl;
+
+            scope.isOpen = function () {
+                var isDropdownOpen = scope.matches.length > 0;
+                scope.assignIsOpen({
+                    isOpen: isDropdownOpen
+                });
+                return isDropdownOpen;
+            };
+
+            scope.isActive = function (matchIdx) {
+                return scope.active === matchIdx;
+            };
+
+            scope.selectActive = function (matchIdx) {
+                scope.active = matchIdx;
+            };
+
+            scope.selectMatch = function (activeIdx, evt) {
+                var debounce = scope.rxDebounce();
+                if (angular.isNumber(debounce) || angular.isObject(debounce)) {
+                    $rxDebounce(function () {
+                        scope.select({
+                            activeIdx: activeIdx,
+                            evt: evt
+                        });
+                    }, angular.isNumber(debounce) ? debounce : debounce['default']);
+                } else {
+                    scope.select({
+                        activeIdx: activeIdx,
+                        evt: evt
+                    });
+                }
+            };
+        }
+    };
+}]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
  * @name utilities.service:rxUnauthorizedInterceptor
  * @description
  * Simple injector which will intercept HTTP responses. If a HTTP 401 response error code is returned,
@@ -7823,7 +12686,7 @@ angular.module('encore.ui.utilities')
  *
  * Set of utility functions to break apart/compare URLs.
  */
-.service('rxUrlUtils', ["$location", "$interpolate", "$route", "$document", function ($location, $interpolate, $route, $document) {
+.service('rxUrlUtils', ["$location", "rxEnvironmentUrlFilter", "$interpolate", "$route", "$document", function ($location, rxEnvironmentUrlFilter, $interpolate, $route, $document) {
     var urlParser = $document[0].createElement('a');
     // remove any preceding # and / from the URL for cleaner comparison
     this.stripLeadingChars = function (url) {
@@ -7922,6 +12785,9 @@ angular.module('encore.ui.utilities')
             return url;
         }
 
+        // run the href through rxEnvironmentUrl in case it's defined as such
+        url = rxEnvironmentUrlFilter(url);
+
         if ($route.current) {
             // convert any nested expressions to defined route params
             var finalContext = _.defaults(extraContext || {}, $route.current.pathParams);
@@ -7997,6 +12863,84 @@ angular.module('encore.ui.utilities')
     '+13:00',
     '+14:00',
 ]);
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxVisibility
+ * @description
+ * Provides an interface for adding new `visibility` methods for nav menus.  Methods added via `addMethod` should
+ * have a `function (scope, args)` interface.
+ *
+ * When you do:
+ * <pre>
+ * visibility: [ "someMethodName", { foo: 1, bar: 2} ]
+ * </pre>
+ * in a nav menu definition, the (optional) object will be passed to your method as the
+ * second argument `args`, i.e.:
+ * <pre>
+ * function (scope, args) {}
+ * </pre>
+ */
+.factory('rxVisibility', function () {
+    var methods = {};
+
+    var addMethod = function (methodName, method) {
+        methods[methodName] = method;
+    };
+
+    var getMethod = function (methodName) {
+        return methods[methodName];
+    };
+
+    var hasMethod = function (methodName) {
+        return _.has(methods, methodName);
+    };
+
+    /* This is a convenience wrapper around `addMethod`, for
+     * objects that define both `name` and `method` properties
+     */
+    var addVisibilityObj = function (obj) {
+        addMethod(obj.name, obj.method);
+    };
+
+    return {
+        addMethod: addMethod,
+        getMethod: getMethod,
+        hasMethod: hasMethod,
+        addVisibilityObj: addVisibilityObj
+
+    };
+});
+
+angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxVisibilityPathParams
+ * @description
+ * Returns an object with `name` and `method` params that can
+ * be passed to
+ * [rxVisibility.addMethod()](https://github.com/rackerlabs/encore-ui/blob/master/src/utilities/rxVisibility
+ * /scripts/rxVisibility.js#L22).
+ * We register this by default, as it's used by the nav menu we keep in
+ * {@link utilities.service:routesCdnPath routesCdnPath}.
+ *
+ * The method is used to check if `{param: 'someParamName'}` is present in the current route.
+ * Use it as:
+ * <pre>
+ * visibility: [ 'rxPathParams', { param: 'userName' } ]
+ * </pre>
+ */
+.factory('rxVisibilityPathParams', ["$routeParams", function ($routeParams) {
+    var pathParams = {
+        name: 'rxPathParams',
+        method: function (scope, args) {
+            return !_.isUndefined($routeParams[args.param]);
+        }
+    };
+
+    return pathParams;
+}]);
 
 (function () {
     angular
@@ -9454,7 +14398,7 @@ angular.module('encore.ui.elements')
  * internally you will be receiving a number of different statuses from your
  * APIs, and will need to map them to these six statuses.
  *
- * The example in the Tables [demo](../#/elements/Tables#status-column) shows
+ * The example in the [demo](../#/elements/Tables#status-column) shows
  * a typical use of this directive, such as:
  *
  * <pre>
@@ -9547,10 +14491,12 @@ angular.module('encore.ui.elements')
  * <pre>
  * <th rx-status-header></th>
  * </pre>
- * Note that status columns are sortable with rxSortableColumn, just like any
+ * Note that status columns are sortable with
+ * {@link elements.directive:rxSortableColumn rxSortableColumn}, just like any
  * other column. The demo below shows an example of this.
  *
- * **Note:** The `<th>` is defined as:
+ * One thing to note about the [demo](../#/elements/Tables#status-column):
+ * The `<th>` is defined as:
  *
  * <pre>
  * <th rx-status-header>
@@ -9572,6 +14518,154 @@ angular.module('encore.ui.elements')
         link: function (scope, element) {
             element.addClass('rx-status-header');
         }
+    };
+});
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTab
+ * @requires elements.directive:rxTabset
+ * @restrict EA
+ * @param {Boolean=} active True to show active tab by default
+ * @param {String} heading Heading text to be displayed by default when rx-tab-heading tags are used
+ * @param {Boolean=} onSelect True when tab is selected
+ * @param {Boolean=} onDeselect True when tab is deselected
+ * @description
+ * Element for creating a tab.
+ */
+.directive('rxTab', ["$parse", function ($parse) {
+    return {
+        require: '^rxTabset',
+        restrict: 'EA',
+        replace: true,
+        templateUrl: 'templates/rxTab.html',
+        transclude: true,
+        scope: {
+            active: '=?',
+            heading: '@',
+            onSelect: '&select', //This callback is called in contentHeadingTransclude
+            //once it inserts the tab's content into the dom
+            onDeselect: '&deselect'
+        },
+        controller: function () {
+            //Empty controller so other directives can require being 'under' a tab
+        },
+        link: function (scope, elm, attrs, tabsetCtrl, transclude) {
+            scope.$watch('active', function (active) {
+                if (active) {
+                    tabsetCtrl.select(scope);
+                }
+            });
+
+            scope.disabled = false;
+            if (attrs.disable) {
+                scope.$parent.$watch($parse(attrs.disable), function (value) {
+                    scope.disabled = !!value;
+                });
+            }
+
+            scope.select = function () {
+                if (!scope.disabled) {
+                    scope.active = true;
+                }
+            };
+
+            tabsetCtrl.addTab(scope);
+            scope.$on('$destroy', function () {
+                tabsetCtrl.removeTab(scope);
+            });
+
+            //We need to transclude later, once the content container is ready.
+            //when this link happens, we're inside a tab heading.
+            scope.$transcludeFn = transclude;
+        }
+    };
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTabContentTransclude
+ * @requires elements.directive:rxTabset
+ * @restrict A
+ * @description
+ * Element for transcluding tab content.
+ */
+.directive('rxTabContentTransclude', function () {
+    function isTabHeading (node) {
+        return node.tagName && (
+            node.hasAttribute('rx-tab-heading') ||
+            node.hasAttribute('data-rx-tab-heading') ||
+            node.hasAttribute('x-rx-tab-heading') ||
+            node.tagName.toLowerCase() === 'rx-tab-heading' ||
+            node.tagName.toLowerCase() === 'data-rx-tab-heading' ||
+            node.tagName.toLowerCase() === 'x-rx-tab-heading'
+      );
+    }
+
+    return {
+        restrict: 'A',
+        require: '^rxTabset',
+        link: function (scope, elm, attrs) {
+            var tab = scope.$eval(attrs.rxTabContentTransclude);
+            //Now our tab is ready to be transcluded: both the tab heading area
+            //and the tab content area are loaded.  Transclude 'em both.
+            tab.$transcludeFn(tab.$parent, function (contents) {
+                angular.forEach(contents, function (node) {
+                    if (isTabHeading(node)) {
+                        //Let tabHeadingTransclude know.
+                        tab.headingElement = node;
+                    } else {
+                        elm.append(node);
+                    }
+                });
+            });
+        }
+    };
+});
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTabHeadingTransclude
+ * @requires elements.directive:rxTab
+ * @restrict A
+ * @description
+ * Element for transcluding tab heading.
+ */
+.directive('rxTabHeadingTransclude', function () {
+    return {
+        restrict: 'A',
+        require: '^rxTab',
+        link: function (scope, elm) {
+            scope.$watch('headingElement', function (heading) {
+                if (heading) {
+                    elm.html('');
+                    elm.append(heading);
+                }
+            });
+        }
+    };
+});
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTabset
+ * @restrict EA
+ * @requires utilities.controller:rxTabsetController
+ * @description
+ * Element for creating tabs.
+ */
+.directive('rxTabset', function () {
+    return {
+        restrict: 'EA',
+        transclude: true,
+        replace: true,
+        scope: true,
+        controller: 'rxTabsetController',
+        templateUrl: 'templates/rxTabset.html'
     };
 });
 
@@ -9701,9 +14795,206 @@ angular.module('encore.ui.elements')
     };
 }]);
 
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltip
+ * @requires utilities.service:rxTooltip
+ * @description
+ * Element for Tooltips
+ */
+.directive('rxTooltip', ["$rxTooltip", function ($rxTooltip) {
+    return $rxTooltip('rxTooltip', 'rxTooltip', 'mouseenter');
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipClasses
+ * @description
+ * Element for tooltip classes.
+ */
+.directive('rxTooltipClasses', ["$rxPosition", function ($rxPosition) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            // need to set the primary position so the
+            // arrow has space during position measure.
+            // rxTooltip.positionTooltip()
+            if (scope.placement) {
+                // There are no top-left etc... classes
+                // in TWBS, so we need the primary position.
+                var position = $rxPosition.parsePlacement(scope.placement);
+                element.addClass(position[0]);
+            }
+
+            if (scope.popupClass) {
+                element.addClass(scope.popupClass);
+            }
+
+            if (scope.animation) {
+                element.addClass(attrs.tooltipAnimationClass);
+            }
+        }
+    };
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipHtml
+ * @description
+ * Element for tooltips html
+ */
+.directive('rxTooltipHtml', ["$rxTooltip", function ($rxTooltip) {
+    return $rxTooltip('rxTooltipHtml', 'rxTooltip', 'mouseenter', {
+        useContentExp: true
+    });
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipHtmlPopup
+ * @description
+ * Element for tooltips html popup
+ */
+.directive('rxTooltipHtmlPopup', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            contentExp: '&'
+        },
+        templateUrl: 'templates/rxTooltip-html-popup.html'
+    };
+});
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipPopup
+ * @description
+ * Element for tooltips popup
+ */
+.directive('rxTooltipPopup', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            content: '@'
+        },
+        templateUrl: 'templates/rxTooltip-popup.html'
+    };
+});
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipTemplate
+ * @description
+ * Element for tooltips template
+ */
+.directive('rxTooltipTemplate', ["$rxTooltip", function ($rxTooltip) {
+    return $rxTooltip('rxTooltipTemplate', 'rxTooltip', 'mouseenter', {
+        useContentExp: true
+    });
+}]);
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipTemplatePopup
+ * @description
+ * Element for tooltips template popup
+ */
+.directive('rxTooltipTemplatePopup', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            contentExp: '&',
+            originScope: '&'
+        },
+        templateUrl: 'templates/rxTooltip-template-popup.html'
+    };
+});
+
+angular.module('encore.ui.elements')
+/**
+ * @ngdoc directive
+ * @name elements.directive:rxTooltipTemplateTranclude
+ * @description
+ * Element for transcluding tooltips template.
+ */
+.directive('rxTooltipTemplateTransclude',
+    ["$animate", "$sce", "$compile", "$templateRequest", function ($animate, $sce, $compile, $templateRequest) {
+        return {
+            link: function (scope, elem, attrs) {
+                var origScope = scope.$eval(attrs.rxTooltipTemplateTranscludeScope);
+
+                var changeCounter = 0,
+                    currentScope,
+                    previousElement,
+                    currentElement;
+
+                var cleanupLastIncludeContent = function () {
+                    if (previousElement) {
+                        previousElement.remove();
+                        previousElement = null;
+                    }
+
+                    if (currentScope) {
+                        currentScope.$destroy();
+                        currentScope = null;
+                    }
+
+                    if (currentElement) {
+                        $animate.leave(currentElement).then(function () {
+                            previousElement = null;
+                        });
+                        previousElement = currentElement;
+                        currentElement = null;
+                    }
+                };
+
+                scope.$watch($sce.parseAsResourceUrl(attrs.rxTooltipTemplateTransclude), function (src) {
+                    var thisChangeId = ++changeCounter;
+
+                    if (src) {
+                        //set the 2nd param to true to ignore the template request error so that the inner
+                        //contents and scope can be cleaned up.
+                        $templateRequest(src, true).then(function (response) {
+                            if (thisChangeId !== changeCounter) { return; }
+                            var newScope = origScope.$new();
+                            var template = response;
+
+                            var clone = $compile(template)(newScope, function (clone) {
+                                cleanupLastIncludeContent();
+                                $animate.enter(clone, elem);
+                            });
+
+                            currentScope = newScope;
+                            currentElement = clone;
+
+                            currentScope.$emit('$includeContentLoaded', src);
+                        }, function () {
+                            if (thisChangeId === changeCounter) {
+                                cleanupLastIncludeContent();
+                                scope.$emit('$includeContentError', src);
+                            }
+                        });
+                        scope.$emit('$includeContentRequested', src);
+                    } else {
+                        cleanupLastIncludeContent();
+                    }
+                });
+                scope.$on('$destroy', cleanupLastIncludeContent);
+            }
+        };
+    }]);
+
+angular.module('encore.ui.elements')
 /**
  * @ngdoc overview
- * @name elements.directive:typeahead
+ * @name elements.directive:rxTypeahead
  * @description
  * # typeahead Component
  *
@@ -9725,9 +15016,20 @@ angular.module('encore.ui.elements')
  * for an example.
  *
  */
-angular.module('encore.ui.elements')
+.directive('rxTypeahead', function () {
+    return {
+        controller: 'rxTypeaheadController',
+        require: [
+            'ngModel',
+            'rxTypeahead'
+        ],
+        link: function (originalScope, element, attrs, ctrls) {
+            ctrls[1].init(ctrls[0]);
+        }
+    };
+})
 .config(["$provide", function ($provide) {
-    $provide.decorator('typeaheadDirective', ["$delegate", "$filter", function ($delegate, $filter) {
+    $provide.decorator('rxTypeaheadDirective', ["$delegate", "$filter", function ($delegate, $filter) {
         var typeahead = $delegate[0];
         var link = typeahead.link;
         var lowercase = $filter('lowercase');
@@ -9737,7 +15039,7 @@ angular.module('encore.ui.elements')
                 var ngModelCtrl = ctrls[0];
                 link.apply(this, arguments);
 
-                if (/allowEmpty/.test(attrs.typeahead)) {
+                if (/allowEmpty/.test(attrs.rxTypeahead)) {
                     var EMPTY_KEY = '$EMPTY$';
 
                     // Wrap the directive's $parser such that the $viewValue
@@ -9775,9 +15077,24 @@ angular.module('encore.ui.elements')
     }]);
 }]);
 
+angular.module("templates/rxAccountInfo.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAccountInfo.html",
+    "<div class=\"rx-account-info\"><rx-info-panel panel-title=\"Account Info\"><div class=\"account-info-wrapper\"><div class=\"account-info-label\">Account Name</div><div class=\"account-info-data\"><a href=\"{{ accountPageUrl }}\" target=\"_blank\">{{ accountName }}</a></div></div><div class=\"account-info-wrapper\"><div class=\"account-info-label\">Account #</div><div class=\"account-info-data\"><a href=\"{{ accountPageUrl }}\" target=\"_blank\">{{ accountNumber }}</a></div></div><div class=\"account-info-wrapper\"><div class=\"account-info-label\">Badges</div><div class=\"account-info-data\"><img ng-repeat=\"badge in badges\" ng-src=\"{{badge.url}}\" data-name=\"{{badge.name}}\" data-description=\"{{badge.description}}\" uib-tooltip-html=\"tooltipHtml(badge)\" tooltip-placement=\"bottom\"></div></div><div class=\"account-info-wrapper\" ng-transclude></div></rx-info-panel></div>");
+}]);
+
+angular.module("templates/rxAccountInfoBanner.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAccountInfoBanner.html",
+    "<div class=\"account-info-banner\"><ul class=\"account-info-text\"><li><div class=\"label\">Account Name:</div><div class=\"account-data\"><a href=\"{{ accountPageUrl }}\" target=\"_blank\">{{ accountName || 'N/A' }}</a></div></li><li><div class=\"label\">Account #:</div><div class=\"account-data\"><a href=\"{{ accountPageUrl }}\" target=\"_blank\">{{ accountNumber }}</a></div></li><li><div class=\"label\">Account Status:</div><div class=\"account-data {{ statusClass }} account-status\">{{ accountStatus || 'N/A' }}</div></li><li><div class=\"label\">Access Policy:</div><div class=\"account-data\">{{ accountAccessPolicy || 'N/A' }}</div></li><li><div class=\"label\">Collection Status:</div><div class=\"account-data\">{{ accountCollectionsStatus || 'N/A' }}</div></li><li ng-if=\"showCurrentUser\"><div class=\"label\">Current User:</div><div class=\"account-data\"><rx-account-users></rx-account-users></div></li><li class=\"badges\" ng-repeat=\"badge in badges\"><div class=\"account-info-badge\"><img ng-src=\"{{badge.url}}\" data-name=\"{{badge.name}}\" data-description=\"{{badge.description}}\" uib-tooltip-html=\"tooltipHtml(badge)\" tooltip-placement=\"bottom\"></div></li></ul></div>");
+}]);
+
 angular.module("templates/rxActionMenu.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxActionMenu.html",
     "<div class=\"action-menu-container\"><i ng-click=\"toggle()\" class=\"fa fa-cog fa-lg\"></i><div ng-show=\"displayed\" ng-click=\"modalToggle()\" class=\"action-list action-list-hideable\" ng-transclude></div></div>");
+}]);
+
+angular.module("templates/rxBreadcrumbs.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxBreadcrumbs.html",
+    "<ol class=\"rx-breadcrumbs\"><li ng-repeat=\"breadcrumb in breadcrumbs.getAll(status)\" class=\"breadcrumb\"><ng-switch on=\"$last\"><span ng-switch-when=\"true\" class=\"breadcrumb-name last\"><span ng-bind-html=\"breadcrumb.name\"></span><rx-status-tag status=\"{{ breadcrumb.status }}\"></rx-status-tag></span> <span ng-switch-default><a href=\"{{breadcrumb.path}}\" ng-class=\"{first: $first}\" class=\"breadcrumb-name\"><span ng-bind-html=\"breadcrumb.name\"></span><rx-status-tag status=\"{{ breadcrumb.status }}\"></rx-status-tag></a></span></ng-switch></li></ol>");
 }]);
 
 angular.module("templates/rxButton.html", []).run(["$templateCache", function($templateCache) {
@@ -9792,7 +15109,7 @@ angular.module("templates/rxCollapse.html", []).run(["$templateCache", function(
 
 angular.module("templates/rxCopy.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxCopy.html",
-    "<div class=\"rxCopy__wrapper\"><span class=\"rxCopy__text\">{{trimmedContent}}</span><div class=\"rxCopy__action rxCopy__action--{{copyState}}\" ng-click=\"copyText()\" ng-switch=\"copyState\" tooltip-class=\"rxCopy__tooltip\" tooltip-html=\"tooltip\" tooltip-placement=\"left\" tooltip-popup-delay=\"250\"><i class=\"fa fa-fw fa-clipboard\" ng-switch-when=\"waiting\"></i> <i class=\"fa fa-fw fa-check\" ng-switch-when=\"success\"></i> <i class=\"fa fa-fw fa-times\" ng-switch-when=\"fail\"></i></div></div>");
+    "<div class=\"rxCopy__wrapper\"><span class=\"rxCopy__text\">{{trimmedContent}}</span><div class=\"rxCopy__action rxCopy__action--{{copyState}}\" ng-click=\"copyText()\" ng-switch=\"copyState\" rx-tooltip-class=\"rxCopy__tooltip\" rx-tooltip-html=\"tooltip\" rx-tooltip-placement=\"left\" rx-tooltip-popup-delay=\"250\"><i class=\"fa fa-fw fa-clipboard\" ng-switch-when=\"waiting\"></i> <i class=\"fa fa-fw fa-check\" ng-switch-when=\"success\"></i> <i class=\"fa fa-fw fa-times\" ng-switch-when=\"fail\"></i></div></div>");
 }]);
 
 angular.module("templates/feedbackForm.html", []).run(["$templateCache", function($templateCache) {
@@ -9865,24 +15182,74 @@ angular.module("templates/rxModalActionForm.html", []).run(["$templateCache", fu
     "<div class=\"modal-header\"><h3 class=\"modal-title\">{{title}}</h3><h4 class=\"modal-subtitle\" ng-if=\"subtitle\">{{subtitle}}</h4><button class=\"modal-close btn-link\" ng-click=\"$parent.cancel()\"><span class=\"visually-hidden\">Close Window</span></button></div><div class=\"modal-body\"><div ng-show=\"$parent.isLoading\" class=\"loading\" rx-spinner=\"dark\" toggle=\"$parent.isLoading\"></div><form ng-hide=\"$parent.isLoading\" name=\"$parent.modalActionForm\" class=\"modal-form rx-form\" ng-transclude></form></div><div class=\"modal-footer\"></div>");
 }]);
 
+angular.module("templates/rxModalBackdrop.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxModalBackdrop.html",
+    "<div rx-modal-animation-class=\"fade\" modal-in-class=\"in\" ng-style=\"{'z-index': 1040 + (index && 1 || 0) + index*10}\"></div>");
+}]);
+
 angular.module("templates/rxModalFooters.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxModalFooters.html",
     "<rx-modal-footer state=\"editing\" global><button class=\"button submit\" ng-click=\"submit()\" type=\"submit\" ng-disabled=\"$parent.modalActionForm.$invalid\">{{submitText || \"Submit\"}}</button> <button class=\"button cancel\" ng-click=\"cancel()\">{{cancelText || \"Cancel\"}}</button></rx-modal-footer><rx-modal-footer state=\"complete\" global><button class=\"button finish\" ng-click=\"cancel()\">{{returnText || \"Finish &amp; Close\"}}</button></rx-modal-footer>");
 }]);
 
+angular.module("templates/rxModalWindow.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxModalWindow.html",
+    "<div modal-render=\"{{$isRendered}}\" tabindex=\"-1\" role=\"dialog\" class=\"modal\" rx-modal-animation-class=\"fade\" modal-in-class=\"in\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\"><div class=\"modal-dialog\" ng-class=\"size ? 'modal-' + size : ''\"><div class=\"modal-content\" rx-modal-transclude></div></div></div>");
+}]);
+
 angular.module("templates/rxNotification.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxNotification.html",
-    "<div class=\"rx-notifications\"><div class=\"rx-notification notification-{{type}}\"><span class=\"notification-text\" ng-transclude></span></div></div>");
+    "<div class=\"rx-notification notification-{{type}}\"><span class=\"notification-icon\"><span ng-if=\"loading\" rx-spinner toggle=\"true\"></span> <span ng-if=\"!loading\"><span ng-switch=\"type\"><i class=\"fa fa-exclamation-circle\" ng-switch-when=\"error\"></i> <i class=\"fa fa-exclamation-triangle\" ng-switch-when=\"warning\"></i> <i class=\"fa fa-info-circle\" ng-switch-when=\"info\"></i> <i class=\"fa fa-check-circle\" ng-switch-when=\"success\"></i></span></span></span> <button ng-if=\"isDismissable\" ng-click=\"dismissHook()\" class=\"notification-dismiss btn-link\">&times; <span class=\"visually-hidden\">Dismiss Message</span></button> <span class=\"notification-text\"><div ng-transclude></div></span></div>");
 }]);
 
 angular.module("templates/rxNotifications.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxNotifications.html",
-    "<div class=\"rx-notifications\" ng-show=\"messages.length > 0\"><div ng-repeat=\"message in messages\" class=\"rx-notification animate-fade notification-{{message.type}}\" ng-class=\"{'notification-loading': message.loading}\" rx-spinner toggle=\"message.loading\" ng-init=\"loading = message.loading\"><span class=\"notification-text\" ng-bind-html=\"message.text\"></span> <button ng-click=\"dismiss(message)\" class=\"notification-dismiss btn-link\" ng-if=\"!message.loading\">&times; <span class=\"visually-hidden\">Dismiss Message</span></button></div></div>");
+    "<div class=\"rx-notifications\" ng-show=\"messages.length > 0\"><rx-notification ng-init=\"loading = message.loading\" ng-repeat=\"message in messages\" type=\"{{message.type}}\" loading=\"message.loading\" class=\"animate-fade\" dismiss-hook=\"dismiss(message)\"><span ng-bind-html=\"message.text\"></span></rx-notification></div>");
 }]);
 
 angular.module("templates/rxProgressbar.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxProgressbar.html",
     "<div class=\"rxProgressbar\" ng-class=\"{'rxProgressbar--striped': percent < 100}\"><div class=\"rxProgressbar__value\" ng-style=\"{width: percent + '%'}\" ng-transclude></div></div>");
+}]);
+
+angular.module("templates/rxAccountSearch.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAccountSearch.html",
+    "<div class=\"rx-app-search\"><form name=\"search\" role=\"search\" ng-submit=\"fetchAccount(model)\"><input type=\"text\" placeholder=\"Search by Account Number or Username...\" ng-model=\"model\" class=\"form-item search-input\" ng-required ng-pattern=\"/^([0-9a-zA-Z._ -]{2,})$/\"> <button type=\"submit\" class=\"search-action\" ng-disabled=\"!search.$valid\"><span class=\"visually-hidden\">Search</span></button></form></div>");
+}]);
+
+angular.module("templates/rxAccountUsers.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAccountUsers.html",
+    "<span ng-if=\"isCloudProduct\" class=\"account-users\"><select rx-select ng-model=\"currentUser\" ng-options=\"user.username as user.username for user in users\" ng-change=\"switchUser(currentUser)\"></select></span>");
+}]);
+
+angular.module("templates/rxApp.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxApp.html",
+    "<div class=\"warning-bar rx-notifications\" ng-class=\"{preprod: isPreProd}\" ng-if=\"isWarning\"><div class=\"rx-notification notification-warning\"><span class=\"notification-text\">{{ warningMessage }}</span></div></div><div class=\"rx-app\" ng-class=\"{collapsible: collapsibleNav === 'true', collapsed: collapsedNav, 'warning-bar': isWarning, preprod: isPreProd, 'embedded': isEmbedded}\" ng-cloak><nav class=\"rx-app-menu\" ng-show=\"!isEmbedded\"><header class=\"site-branding\"><h1 class=\"site-title\">{{ siteTitle || 'Encore' }}</h1><button class=\"collapsible-toggle btn-link\" ng-if=\"collapsibleNav === 'true'\" rx-toggle=\"$parent.collapsedNav\" title=\"{{ (collapsedNav) ? 'Show' : 'Hide' }} Main Menu\"><span class=\"visually-hidden\">{{ (collapsedNav) ? 'Show' : 'Hide' }} Main Menu</span><div class=\"double-chevron\" ng-class=\"{'double-chevron-left': !collapsedNav}\"></div></button></header><nav class=\"rx-app-nav\"><div ng-repeat=\"section in routes\" class=\"nav-section nav-section-{{ section.type || 'all' }}\"><h2 class=\"nav-section-title\">{{ section.title }}</h2><rx-app-nav items=\"section.children\" level=\"1\"></rx-app-nav></div></nav><div class=\"rx-app-help clearfix\"><rx-feedback ng-if=\"!hideFeedback\"></rx-feedback></div></nav><div class=\"rx-app-content\" ng-transclude></div></div>");
+}]);
+
+angular.module("templates/rxAppNav.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAppNav.html",
+    "<div class=\"rx-app-nav rx-app-nav-level-{{level}}\"><ul class=\"rx-app-nav-group\"><rx-app-nav-item ng-repeat=\"item in items\" item=\"item\"></rx-app-nav-item></ul></div>");
+}]);
+
+angular.module("templates/rxAppNavItem.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAppNavItem.html",
+    "<li class=\"rx-app-nav-item\" ng-show=\"isVisible(item.visibility, item.roles)\" ng-class=\"{'has-children': item.children.length > 0, active: item.active, 'rx-app-key-{{ item.key }}': item.key }\"><a ng-href=\"{{ getUrl(item.url) }}\" ng-attr-target=\"{{ getTarget() }}\" class=\"item-link\" ng-click=\"navClickHandler($event, item)\">{{item.linkText}}</a><div class=\"item-content\" ng-show=\"item.active && (item.directive || item.children)\"><div class=\"item-directive\" ng-show=\"item.directive\"></div><div class=\"item-children\" ng-show=\"item.children && isVisible(item.childVisibility)\"><div class=\"child-header\" ng-if=\"item.childHeader\" rx-compile=\"item.childHeader\"></div></div></div></li>");
+}]);
+
+angular.module("templates/rxAppSearch.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxAppSearch.html",
+    "<div class=\"rx-app-search\"><form role=\"search\" ng-submit=\"submit(model)\"><input type=\"text\" placeholder=\"{{ placeholder }}\" ng-model=\"model\" class=\"form-item search-input\" ng-required rx-attributes=\"{'ng-pattern': pattern}\"> <button type=\"submit\" class=\"search-action\"><span class=\"visually-hidden\">Search</span></button></form></div>");
+}]);
+
+angular.module("templates/rxBillingSearch.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxBillingSearch.html",
+    "<div class=\"rx-app-search\"><form name=\"search\" role=\"search\" ng-submit=\"fetchAccounts(model)\"><fieldset><input type=\"text\" ng-attr-placeholder=\"Search by {{ placeholder }}\" ng-model=\"model\" class=\"form-item search-input\" ng-required> <button type=\"submit\" class=\"search-action\" ng-disabled=\"!search.$valid\"><span class=\"visually-hidden\">Search</span></button></fieldset><fieldset><ul><li class=\"search-option\"><label for=\"transaction\"><input id=\"transaction\" type=\"radio\" value=\"bsl\" ng-model=\"searchType\"> Transaction/Auth ID</label></li><li class=\"search-option\"><label for=\"account\"><input id=\"account\" type=\"radio\" value=\"cloud\" ng-model=\"searchType\"> Account/Contact Info</label></li></ul></fieldset></form></div>");
+}]);
+
+angular.module("templates/rxPage.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxPage.html",
+    "<div class=\"rx-page\"><header class=\"page-header clearfix\"><rx-breadcrumbs status=\"{{ status }}\"></rx-breadcrumbs><rx-account-info ng-if=\"accountNumber\" account-info-banner=\"true\" account-number=\"{{ accountNumber }}\" team-id=\"{{ teamId }}\"></rx-account-info></header><div class=\"page-body\"><rx-notifications></rx-notifications><div class=\"page-titles\" ng-if=\"title.length > 0 || unsafeHtmlTitle.length > 0 || subtitle.length > 0\"><h2 class=\"page-title\" ng-if=\"title.length > 0\"><span ng-bind=\"title\"></span><rx-status-tag status=\"{{ status }}\"></rx-status-tag></h2><h2 class=\"page-title\" ng-if=\"unsafeHtmlTitle.length > 0\"><span ng-bind-html=\"unsafeHtmlTitle\"></span><rx-status-tag status=\"{{ status }}\"></rx-status-tag></h2><h3 class=\"page-subtitle subdued\" ng-bind-html=\"subtitle\" ng-if=\"subtitle.length > 0\"></h3></div><div class=\"page-content\" ng-transclude></div></div></div>");
 }]);
 
 angular.module("templates/rxPermission.html", []).run(["$templateCache", function($templateCache) {
@@ -9917,10 +15284,45 @@ angular.module("templates/rxSortableColumn.html", []).run(["$templateCache", fun
 
 angular.module("templates/rxStatusColumn.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxStatusColumn.html",
-    "<span tooltip=\"{{ tooltipText }}\" tooltip-placement=\"top\"><i class=\"fa fa-lg {{ statusIcon }}\" title=\"{{ tooltipText }}\"></i></span>");
+    "<span rx-tooltip=\"{{ tooltipText }}\" rx-tooltip-placement=\"top\"><i class=\"fa fa-lg {{ statusIcon }}\" title=\"{{ tooltipText }}\"></i></span>");
+}]);
+
+angular.module("templates/rxTab.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTab.html",
+    "<div class=\"rx-tab\"><li ng-class=\"{active: active, disabled: disabled}\"><a href ng-click=\"select()\" rx-tab-heading-transclude>{{heading}}</a></li></div>");
+}]);
+
+angular.module("templates/rxTabset.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTabset.html",
+    "<div class=\"rx-tabset\"><ul class=\"nav nav-tabs\" ng-transclude></ul><div class=\"tab-content\"><div class=\"tab-pane\" ng-repeat=\"tab in tabs\" ng-class=\"{active: tab.active}\" rx-tab-content-transclude=\"tab\"></div></div></div>");
 }]);
 
 angular.module("templates/rxTags.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/rxTags.html",
-    "<div class=\"rx-tags\" ng-click=\"focusInput($event)\"><div class=\"tag\" ng-repeat=\"tag in tags track by tag.text\" ng-keydown=\"removeIfBackspace($event, tag)\" tabindex=\"{{ disabled ? '' : 0 }}\"><i class=\"fa fa-tag\"></i> <span class=\"text\">{{tag.text}}</span> <span class=\"category\">({{tag.category}})</span> <i class=\"fa fa-times\" ng-click=\"remove(tag)\"></i></div><input type=\"text\" placeholder=\"{{ disabled ? '' : 'Enter a tag' }}\" ng-model=\"newTag\" ng-keydown=\"focusTag($event, newTag)\" ng-disabled=\"disabled\" typeahead=\"tag as tag.text for tag in options | rxXor:tags | filter:{text: $viewValue}\" typeahead-on-select=\"add(newTag)\"></div>");
+    "<div class=\"rx-tags\" ng-click=\"focusInput($event)\"><div class=\"tag\" ng-repeat=\"tag in tags track by tag.text\" ng-keydown=\"removeIfBackspace($event, tag)\" tabindex=\"{{ disabled ? '' : 0 }}\"><i class=\"fa fa-tag\"></i> <span class=\"text\">{{tag.text}}</span> <span class=\"category\">({{tag.category}})</span> <i class=\"fa fa-times\" ng-click=\"remove(tag)\"></i></div><input type=\"text\" placeholder=\"{{ disabled ? '' : 'Enter a tag' }}\" ng-model=\"newTag\" ng-keydown=\"focusTag($event, newTag)\" ng-disabled=\"disabled\" rx-typeahead=\"tag as tag.text for tag in options | rxXor:tags | filter:{text: $viewValue}\" rx-typeahead-on-select=\"add(newTag)\"></div>");
+}]);
+
+angular.module("templates/rxTooltip-html-popup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTooltip-html-popup.html",
+    "<div class=\"rxTooltip__arrow\"></div><div class=\"rxTooltip__inner\" ng-bind-html=\"contentExp()\"></div>");
+}]);
+
+angular.module("templates/rxTooltip-popup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTooltip-popup.html",
+    "<div class=\"rxTooltip__arrow\"></div><div class=\"rxTooltip__inner\" ng-bind=\"content\"></div>");
+}]);
+
+angular.module("templates/rxTooltip-template-popup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTooltip-template-popup.html",
+    "<div class=\"rxTooltip__arrow\"></div><div class=\"rxTooltip__inner\" rx-tooltip-template-transclude=\"contentExp()\" rx-tooltip-template-transclude-scope=\"originScope()\"></div>");
+}]);
+
+angular.module("templates/rxTypeaheadMatch.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTypeaheadMatch.html",
+    "<a href class=\"rx-typeahead-match\" tabindex=\"-1\" ng-bind-html=\"match.label | rxTypeaheadHighlight:query\" ng-attr-title=\"{{match.label}}\"></a>");
+}]);
+
+angular.module("templates/rxTypeaheadPopup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/rxTypeaheadPopup.html",
+    "<ul class=\"dropdown-menu\" ng-show=\"isOpen() && !moveInProgress\" ng-style=\"{top: position().top+'px', left: position().left+'px'}\" style=\"display: block\" role=\"listbox\" aria-hidden=\"{{!isOpen()}}\"><li ng-repeat=\"match in matches track by $index\" ng-class=\"{active: isActive($index) }\" ng-mouseenter=\"selectActive($index)\" ng-click=\"selectMatch($index)\" role=\"option\" id=\"{{::match.id}}\"><div rx-typeahead-match index=\"$index\" match=\"match\" query=\"query\" template-url=\"templateUrl\"></div></li></ul>");
 }]);

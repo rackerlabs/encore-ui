@@ -1,0 +1,81 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/components/rxApp/rxApp.module.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/6195e10/src/components/rxApp/rxApp.module.js#L107" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="rxapp-page"><h2 id="rxapp-component">rxApp Component</h2>
+<p>This component is responsible for creating the HTML necessary for a common
+Encore layout. It builds out the main navigation, plus breadcrumbs and page
+titles.</p>
+<h2 id="usage">Usage</h2>
+<p>For apps that want to use the default Encore navigation, usage is pretty simple.
+In your index.html file, add the <code>rx-app</code> directive inside your app:</p>
+<pre class="prettyprint linenums">
+&lt;body ng-app="myApp"&gt;
+    &lt;rx-app&gt;
+        &lt;ng-view&gt;&lt;/ng-view&gt;
+    &lt;/rx-app&gt;
+&lt;/body&gt;
+</pre>
+<p>By including <code>ng-view</code>, your view content will be added inside the directive.
+This makes setting up views for each page much simpler, since you don&#39;t have
+to include <code>rx-app</code> in each view.</p>
+<p>Inside your view, you&#39;ll likely want to use <code>rx-page</code> to wrap your content.
+See the <code>rx-page</code> docs for more information on this.</p>
+<h2 id="rxapp-navigation">rxApp Navigation</h2>
+<p>By default, the EncoreUI left-hand navigation is loaded at runtime from a
+separate resource. This source can be changed, and there are many options to
+control the navigation from an app level.</p>
+<h3 id="rxapp-navigation_accessing-route-information">Accessing route information</h3>
+<p>Sometimes it&#39;s helpful to have the current route information available for
+menu items. For example, re-using the current params for path building.</p>
+<p>To help with this, $route is exposed on the scope of all menu items.
+<a href="http://goo.gl/IsIscD"><code>$route</code> provides many details on the current view</a>,
+including the ability to access the current controller and scope for the view.</p>
+<p>To see this in action, check out the &#39;childVisibility&#39; property for
+Account-level Tool in <code>encoreNav</code>.</p>
+<h3 id="rxapp-navigation_accessing-properties-on-$rootscope">Accessing properties on $rootScope</h3>
+<p>If you have a property available on the <code>$rootScope</code> of your app that the
+menu data needs to access,
+<a href="http://goo.gl/8vHlsN">you can reference <code>$rootScope</code> via <code>$root</code></a>.
+See the demo for an example of this.</p>
+<h3 id="rxapp-navigation_dynamically-updating-the-menu">Dynamically updating the menu</h3>
+<p>By default, rxApp will create the navigation menu based on the routes defined
+in the &#39;encoreNav&#39; value. This menu is built using the <a href="#/api/utilities.service:rxAppRoutes">rxAppRoutes</a> service.</p>
+<p>To update a route, use the <code>setRouteByKey</code> function on the <code>rxAppRoutes</code> service:</p>
+<pre class="prettyprint linenums">
+rxAppRoutes.setRouteByKey('myKey', {
+    linkText: 'myUpdatedRoute'
+});
+</pre>
+<p>You would normally either set this in your app&#39;s <code>.run</code> function, or in a
+specific controller.</p>
+<h3 id="rxapp-navigation_custom-menus">Custom Menus</h3>
+<p>If you&#39;d like to create an entirely custom menu, you can pass that data in to
+the <code>rx-app</code> directive via the <code>menu</code> attribute. View the demo for an example
+of this.</p>
+<h2 id="common-styling">Common Styling</h2>
+<p>The rxApp common.less file defines many base CSS rules and classes for app use.
+Included in this is <a href="http://necolas.github.io/normalize.css/">normalize.css</a>.
+This helps create a consistent starting point for styles across all browsers.</p>
+<h3 id="common-styling_fonts">Fonts</h3>
+<p>The EncoreUI default font is Roboto. This is used for all text on the page
+and is loaded via Google Fonts. Be sure your app includes the following line:</p>
+<pre class="prettyprint linenums">
+&lt;link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,700,700italic"
+      rel="stylesheet" type="text/css" /&gt;
+</pre>
+<h3 id="common-styling_directives">Directives</h3>
+<ul>
+<li><a href="#/api/rxApp.directive:rxAccountSearch">rxAccountSearch</a></li>
+<li><a href="#/api/rxApp.directive:rxAccountUsers">rxAccountUsers</a></li>
+<li><a href="#/api/rxApp.directive:rxApp">rxApp</a></li>
+<li><a href="#/api/rxApp.directive:rxAppNav">rxAppNav</a></li>
+<li><a href="#/api/rxApp.directive:rxAppNavItem">rxAppNavItem</a></li>
+<li><a href="#/api/rxApp.directive:rxAppSearch">rxAppSearch</a></li>
+<li><a href="#/api/rxApp.directive:rxAtlasSearch">rxAtlasSearch</a></li>
+<li><a href="#/api/rxApp.directive:rxBillingSearch">rxBillingSearch</a></li>
+<li><a href="#/api/rxApp.directive:rxPage">rxPage</a></li>
+<li><a href="#/api/rxApp.directive:rxStatusTag">rxStatusTag</a></li>
+<li><a href="#/api/rxApp.directive:rxTicketSearch">rxTicketSearch</a></li>
+</ul>
+</div></div>

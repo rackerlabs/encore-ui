@@ -27,127 +27,198 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var protractor_1 = require("protractor");
-var rxModalAction_page_1 = require("./rxModalAction.page");
-var rxSelect_page_1 = require("./rxSelect.page");
+            <pre class="prettyprint source linenums"><code>var rxSelect = require('./rxSelect.page').rxSelect;
+var rxNotify = require('./rxNotify.page').rxNotify;
+var rxModalAction = require('./rxModalAction.page').rxModalAction;
+
 /**
  * @namespace
  * @description Utilities for interacting with an rxFeedback component.
  */
-var rxFeedback = (function (_super) {
-    __extends(rxFeedback, _super);
-    // Since we're technically an rxModal, we need to change the root element.
-    function rxFeedback(rootElement) {
-        var _this = _super.call(this, protractor_1.$('.modal')) || this;
-        _this.rootElement = rootElement;
-        _this.lnkFeedback = rootElement;
-        return _this;
-    }
-    Object.defineProperty(rxFeedback.prototype, "selReportType", {
+var rxFeedback = {
+    selReportType: {
         get: function () {
-            return new rxSelect_page_1.rxSelect(protractor_1.$('#selFeedbackType'));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxFeedback.prototype, "txtFeedback", {
+            return rxSelect.initialize($('#selFeedbackType'));
+        }
+    },
+
+    txtFeedback: {
         get: function () {
-            return this.element(protractor_1.by.model('fields.description'));
-        },
-        enumerable: true,
-        configurable: true
-    });
+            return this.rootElement.element(by.model('fields.description'));
+        }
+    },
+
     /**
+     * @instance
+     * @function
      * @description Opens the feedback modal.
      */
-    rxFeedback.prototype.open = function () {
-        var _this = this;
-        return this.isDisplayed().then(function (isDisplayed) {
-            if (!isDisplayed) {
-                _this.lnkFeedback.$('a').click();
-            }
-        });
-    };
-    Object.defineProperty(rxFeedback.prototype, "type", {
-        /**
-         * @description A getter and setter for changing the type of feedback to be submitted.
-         * @example
-         * feedback = new rxFeedback();
-         * feedback.open();
-         * feedback.type = 'Kudos';
-         * expect(feedback.type).to.eventually.equal('Kudos');
-         */
+    open: {
+        value: function () {
+            var page = this;
+            return this.isDisplayed().then(function (isDisplayed) {
+                if (!isDisplayed) {
+                    page.eleFeedback.$('a').click();
+                }
+            });
+        }
+    },
+
+    /**
+     * @instance
+     * @type {String}
+     * @description A getter and setter for changing the type of feedback to be submitted.
+     * @example
+     * feedback = encore.rxFeedback.initialize();
+     * feedback.open();
+     * feedback.type = 'Kudos';
+     * expect(feedback.type).to.eventually.equal('Kudos');
+     */
+    type: {
         get: function () {
             return this.selReportType.selectedOption.getText();
         },
         set: function (optionText) {
-            this.selReportType.select(optionText);
-        },
-        enumerable: true,
-        configurable: true
-    });
+            var option = this.selReportType.rootElement.element(by.cssContainingText('option', optionText));
+            /*
+             * For some reason, it seems that the slow click method in combination
+             * with an rx-select in the modal will dismiss the modal instead of
+             * selecting the dropdown option.
+             *
+             * Reverted to basic .click() functionality, for the time being.
+             */
+            option.click();
+        }
+    },
+
     /**
+     * @instance
+     * @type {String[]}
      * @description All feedback types available for submission.
      */
-    rxFeedback.prototype.getTypes = function () {
-        return this.selReportType.options.getText();
-    };
-    Object.defineProperty(rxFeedback.prototype, "description", {
-        /**
-         * @description A getter and setter to get or change the feedback's description text.
-         */
+    types: {
+        get: function () {
+            return this.selReportType.options;
+        }
+    },
+
+    /**
+     * @instance
+     * @type {String}
+     * @description A getter and setter to get or change the feedback's description text.
+     */
+    description: {
         get: function () {
             return this.txtFeedback.getAttribute('value');
         },
         set: function (feedback) {
             this.txtFeedback.clear();
             this.txtFeedback.sendKeys(feedback);
-        },
-        enumerable: true,
-        configurable: true
-    });
+        }
+    },
+
     /**
+     * @private
+     * @instance
+     * @type {String}
      * @description The placeholder string that populates the feedback description by default.
      */
-    rxFeedback.prototype.getDescriptionPlaceholder = function () {
-        return this.txtFeedback.getAttribute('placeholder');
-    };
+    descriptionPlaceholder: {
+        get: function () {
+            return this.txtFeedback.getAttribute('placeholder');
+        }
+    },
+
     /**
+     * @private
+     * @instance
+     * @type {String}
      * @description The label above the description text box.
      */
-    rxFeedback.prototype.getDescriptionLabel = function () {
-        return this.$('.feedback-description').getText();
-    };
+    descriptionLabel: {
+        get: function () {
+            return this.rootElement.$('.feedback-description').getText();
+        }
+    },
+
     /**
+     * @instance
+     * @function
      * @description A high-level utility function for quickly submitting feedback.
      * Prepares, writes, and submits feedback.
      * If `confirmSuccessWithin` is defined, a confirmation of submission success must appear
      * within `confirmSuccessWithin` milliseconds.
      * If `confirmSuccessFn` is undefined, the default behavior will look for an rxNotify success
      * message. Otherwise, `confirmSuccessFn` will be attempted until it yields a truthy value,
-     * using Protractor's `wait` function.  You must also specify a value for `confirmSuccessWithin`.
+     * using Protractor's `wait` function.
+     * @param {String} feedbackType - The type of feedback to submit.
+     * @param {String} feedbackText - The text to include as a feedback description.
+     * @param {Number} [confirmSuccessWithin=3000] - Milliseconds to confirm success within.
+     * @param {Function} [confirmSuccessFn={@link rxNotify#isPresent}] -
+     * Function used to detect whether the feedback submission was successful.
      */
-    rxFeedback.prototype.send = function (feedbackType, feedbackText) {
-        this.open();
-        this.type = feedbackType;
-        this.description = feedbackText;
-        return this.submit();
-    };
-    return rxFeedback;
-}(rxModalAction_page_1.rxModalAction)); // rxFeedback
-exports.rxFeedback = rxFeedback;
+    send: {
+        value: function (feedbackType, feedbackText, confirmSuccessWithin, confirmSuccessFn) {
+            var page = this;
+            return this.isDisplayed().then(function (isDisplayed) {
+                if (!isDisplayed) {
+                    page.open();
+                }
+                page.reportType = feedbackType;
+                page.description = feedbackText;
+                page.submit();
+                if (confirmSuccessWithin !== undefined) {
+                    page.confirmSuccess(confirmSuccessWithin, confirmSuccessFn);
+                }
+            });
+        }
+    },
+
+    /**
+     * @private
+     * @instance
+     * @function
+     * @description Helper function used to confirm that {@link rxFeedback#send} was confirmed as successful.
+     * @see rxFeedback#send
+     */
+    confirmSuccess: {
+        value: function (within, fn) {
+            if (fn === undefined) {
+                fn = function () {
+                    return rxNotify.all.isPresent('feedback', 'success');
+                };
+            }
+
+            browser.wait(function () {
+                return fn();
+            }, within, 'feedback submission did not confirm success within ' + within + ' msecs');
+        }
+    }
+};//rxFeedback
+
+exports.rxFeedback = {
+    /**
+     * @function
+     * @memberof rxFeedback
+     * @description Creates a page object from a link that launches a feedback modal. Uses {@link rxModalAction} under
+     * the hood to provide typical interactions with the feedback modal.
+     * @param {ElementFinder} [rxFeedbackElement=$([rx-feedback])] -
+     * ElementFinder to be transformed into an {@link rxModalAction} object that is supplemented
+     * with additional functionality provided by {@link rxFeedback}
+     * @returns {rxFeedback}
+     * @see rxModalAction
+     */
+    initialize: function (rxFeedbackElement) {
+        if (rxFeedbackElement === undefined) {
+            rxFeedbackElement = $('[rx-feedback]');
+        }
+
+        rxFeedback.eleFeedback = {
+            get: function () { return rxFeedbackElement; }
+        };
+        return rxModalAction.initialize(rxFeedback);
+    }
+};
 </code></pre>
         </article>
     </section>
@@ -158,13 +229,13 @@ exports.rxFeedback = rxFeedback;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

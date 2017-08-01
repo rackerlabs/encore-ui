@@ -12,7 +12,7 @@
 }
 .FlexboxGrid-demo .rx-example .flex-row,
 .FlexboxGrid-demo .rx-example .grid-row {
-  border-top: 1px dashed #0d74d1;
+  border-top: 1px dashed var(--rx-blue-700);
 }
 .FlexboxGrid-demo .rx-example .grid-col {
   position: relative;
@@ -27,7 +27,7 @@
 }
 .FlexboxGrid-demo .rx-example .flex-col {
   background-color: rgba(0, 0, 0, 0.12);
-  border-left: 1px dotted #616161;
+  border-left: 1px dotted var(--rx-gray-800);
 }
 @media (min-width: 0em) {
   .FlexboxGrid-demo .rx-example #querySize::before {
@@ -255,20 +255,20 @@
   width: auto;
 }
 .layout-demo .dark-blue {
-  background-color: #0d47a1;
+  background-color: var(--rx-blue-900);
 }
 .layout-demo .light-blue {
-  background-color: #0d74d1;
+  background-color: var(--rx-blue-700);
 }
 .layout-demo .dark-green {
-  background-color: #2e7d32;
+  background-color: var(--rx-green-700);
 }
 .layout-demo .light-green {
-  background-color: #4caf51;
+  background-color: var(--rx-green-500);
 }
 .layout-demo .orange {
-  background-color: #ffc107;
-  color: #333333;
+  background-color: var(--rx-orange-500);
+  color: var(--rx-gray-950);
 }
 .layout-demo .small-box-container {
   width: 95%;

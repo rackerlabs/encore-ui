@@ -27,208 +27,281 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+var Page = require('astrolabe').Page;
+
+var rxActionMenu = require('./rxActionMenu.page').rxActionMenu;
+var rxCheckbox = require('./rxCheckbox.page').rxCheckbox;
+
+var rxBulkSelectDefaultRowFn = function (rowElement) {
+    return rxCheckbox.initialize(rowElement.$('input[type="checkbox"]'));
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require("lodash");
-var protractor_1 = require("protractor");
-var rxComponent_1 = require("./rxComponent");
-var rxActionMenu_page_1 = require("./rxActionMenu.page");
-var rxCheckbox_page_1 = require("./rxCheckbox.page");
-var rxBulkSelectRow = (function (_super) {
-    __extends(rxBulkSelectRow, _super);
-    function rxBulkSelectRow() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(rxBulkSelectRow.prototype, "checkbox", {
-        /**
-         * @description The rxCheckbox used to select/deselect the row.
-         */
-        get: function () {
-            return new rxCheckbox_page_1.rxCheckbox(this.$('input[type="checkbox"]'));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @description Selects the row using `this.checkbox`.
-     */
-    rxBulkSelectRow.prototype.select = function () {
-        return this.checkbox.select();
-    };
-    /**
-     * @description Selects the row using `this.checkbox`.
-     */
-    rxBulkSelectRow.prototype.deselect = function () {
-        return this.checkbox.deselect();
-    };
-    return rxBulkSelectRow;
-}(rxComponent_1.rxComponentElement));
-exports.rxBulkSelectRow = rxBulkSelectRow;
-;
-var rxBatchActionMenu = (function (_super) {
-    __extends(rxBatchActionMenu, _super);
-    function rxBatchActionMenu() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(rxBatchActionMenu.prototype, "icoCog", {
-        get: function () {
-            return this.$('.fa-cogs');
-        },
-        enumerable: true,
-        configurable: true
-    });
+
+var rxBatchActionMenu = function (rootElement) {
+    var actionMenu = rxActionMenu.initialize(rootElement);
+
     // Need to override several properties styles and the ng-hide attribute
     // compared to what is seen in rxActionMenu.
-    rxBatchActionMenu.prototype.isExpanded = function () {
-        return this.$('.batch-action-menu-container')
-            .getAttribute('class').then(function (className) {
-            return className.indexOf('ng-hide') === -1;
-        });
-    };
-    rxBatchActionMenu.prototype.isEnabled = function () {
-        return this.$('.btn-link.header-button').isEnabled();
-    };
-    return rxBatchActionMenu;
-}(rxActionMenu_page_1.rxActionMenu));
-__decorate([
-    rxComponent_1.OverrideWebdriver
-], rxBatchActionMenu.prototype, "isEnabled", null);
-;
+    Object.defineProperties(actionMenu, {
+        isExpanded: {
+            value: function () {
+                return rootElement.$('.batch-action-menu-container')
+                    .getAttribute('class').then(function (className) {
+                        return className.indexOf('ng-hide') === -1;
+                    });
+            }
+        },
+
+        icoCog: {
+            get: function () {
+                return rootElement.$('.fa-cogs');
+            }
+        },
+
+        isEnabled: {
+            value: function () {
+                return rootElement.$('.btn-link.header-button').isEnabled();
+            }
+        },
+
+        isPresent: {
+            value: function () {
+                return rootElement.isPresent();
+            }
+        }
+    });
+
+    return actionMenu;
+};
+
 /**
  * @description Properties for interacting with an rxBulkSelect component.
- */
-var rxBulkSelect = (function (_super) {
-    __extends(rxBulkSelect, _super);
-    function rxBulkSelect() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
+ * @namespace
+*/
+var rxBulkSelect = {
     /**
-     * @description Whether the bulk select component is currently enabled.
+     * @function
+     * @instance
+     * @description Whether the bulk select component is currently displayed.
+     * @returns {Boolean}
      */
-    rxBulkSelect.prototype.isEnabled = function () {
-        return this.element(protractor_1.by.cssContainingText('.btn-link', 'Batch Actions')).isEnabled();
-    };
-    Object.defineProperty(rxBulkSelect.prototype, "batchActions", {
-        /**
-         * @description The action menu present in the bulk actions action menu area.
-         */
+    isDisplayed: {
+        value: function () {
+            return this.rootElement.isDisplayed();
+        }
+    },
+
+    /**
+     * @function
+     * @instance
+     * @description Whether the bulk select component is currently enabled.
+     * @returns {Boolean}
+     */
+    isEnabled: {
+        value: function () {
+            return this.rootElement.element(
+                by.cssContainingText('.btn-link', 'Batch Actions')
+            ).isEnabled();
+        }
+    },
+
+    /**
+     * @instance
+     * @type {rxActionMenu}
+     * @description The action menu present in the bulk actions action menu area.
+     */
+    batchActions: {
         get: function () {
-            return new rxBatchActionMenu(this.$('rx-batch-actions'));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxBulkSelect.prototype, "selectAllCheckbox", {
-        /**
-         * @description The checkbox object used to select all rows in the bulk select component.
-         */
+            return rxBatchActionMenu(this.rootElement.$('rx-batch-actions'));
+        }
+    },
+
+    /**
+     * @instance
+     * @type {rxCheckbox}
+     * @description The checkbox object used to select all rows in the bulk select component.
+     */
+    selectAllCheckbox: {
         get: function () {
-            var eleCheckbox = this.$('[rx-bulk-select-header-check]').$('input[type="checkbox"]');
-            return new rxCheckbox_page_1.rxCheckbox(eleCheckbox);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxBulkSelect.prototype, "eleBulkMessage", {
+            var eleCheckbox = this.rootElement.$('[rx-bulk-select-header-check]').$('input[type="checkbox"]');
+            return rxCheckbox.initialize(eleCheckbox);
+        }
+    },
+
+    eleBulkMessage: {
         get: function () {
-            return this.$('.bulk-select-header');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxBulkSelect.prototype, "bulkMessage", {
-        /**
-         * @description The message appearing above the bulk select table, if present.
-         * Only appears when some rows are selected. Otherwise, `null`.
-         */
+            return this.rootElement.$('.bulk-select-header');
+        }
+    },
+
+    /**
+     * @instance
+     * @type {String|null}
+     * @description The message appearing above the bulk select table, if present.
+     * Only appears when some rows are selected. Otherwise, `null`.
+     */
+    bulkMessage: {
         get: function () {
-            return this.eleBulkMessage.element(protractor_1.by.binding('numSelected')).getText().then(function (text) {
+            return this.eleBulkMessage.element(by.binding('numSelected')).getText().then(function (text) {
                 return _.isEmpty(text) ? null : text;
             });
-        },
-        enumerable: true,
-        configurable: true
-    });
+        }
+    },
+
     /**
+     * @instance
+     * @function
+     * @private
      * @description Clicks the "select all" link that is only present when selected rows exist.
      */
-    rxBulkSelect.prototype.selectAll = function () {
-        return this.eleBulkMessage.element(protractor_1.by.partialButtonText('Select all')).click();
-    };
+    selectAll: {
+        value: function () {
+            this.eleBulkMessage.element(by.partialButtonText('Select all')).click();
+        }
+    },
+
     /**
+     * @instance
+     * @function
+     * @private
      * @description Clicks the "Clear all" link that is only present when selected rows exist.
      */
-    rxBulkSelect.prototype.clearSelections = function () {
-        return this.eleBulkMessage.element(protractor_1.by.partialButtonText('Clear')).click();
-    };
-    Object.defineProperty(rxBulkSelect.prototype, "tblRows", {
+    clearSelections: {
+        value: function () {
+            this.eleBulkMessage.element(by.partialButtonText('Clear')).click();
+        }
+    },
+
+    tblRows: {
         get: function () {
-            return this.$$('tbody tr');
-        },
-        enumerable: true,
-        configurable: true
-    });
+            return this.rootElement.$$('tbody tr');
+        }
+    },
+
     /**
-     * @description returns the row element by index.
+     * @function
+     * @instance
+     * @description Grab a row by index `i`, then pass that row element to the
+     * function `rowFromElement`, which is created at initialization time via an
+     * argument passed to {@link rxBulkSelect.initialize}.
+     * @returns {*}
+     * @example
+     * var tableRowFn = function (rootElement) {
+     *     return {
+     *         get rootElement() { return rootElement; },
+     *         get type() {
+     *             return rootElement.element(by.binding('status.type')).getText();
+     *         },
+     *
+     *         get checkbox() {
+     *             return encore.rxCheckbox.initialize(rootElement.$('input[type="checkbox"]'));
+     *         }
+     *     };
+     * };
+     * var table = encore.rxBulkSelect.initialize(undefined, tableRowFn);
+     * expect(table.row(1).type).to.eventually.equal('normal');
      */
-    rxBulkSelect.prototype.row = function (index) {
-        return new rxBulkSelectRow(this.tblRows.get(index));
-    };
-    Object.defineProperty(rxBulkSelect.prototype, "tblSelectedRows", {
+    row: {
+        value: function (i) {
+            return this.rowFromElement(this.tblRows.get(i));
+        }
+    },
+
+    tblSelectedRows: {
         get: function () {
-            return this.$$('tbody tr.selected');
-        },
-        enumerable: true,
-        configurable: true
-    });
+            return this.rootElement.$$('tbody tr.selected');
+        }
+    },
+
     /**
+     * @function
+     * @private
+     * @instance
      * @description Whether or not every available row is selected.
+     * @returns {Boolean}
      */
-    rxBulkSelect.prototype.anySelected = function () {
-        return this.tblSelectedRows.first().isPresent();
-    };
+    anySelected: {
+        value: function () {
+            return this.tblSelectedRows.count().then(function (numSelectedRows) {
+                return numSelectedRows > 0;
+            });
+        }
+    },
+
     /**
      * @function
+     * @private
+     * @instance
+     * @description Whether or not every available row is selected.
+     * @returns {Boolean}
      */
-    rxBulkSelect.prototype.selectByIndex = function (indices) {
-        var _this = this;
-        if (!_.isArray(indices)) {
-            indices = [indices];
+    allSelected: {
+        value: function () {
+            var page = this;
+            return this.tblRows.count().then(function (numRows) {
+                return page.tblSelectedRows.count().then(function (numSelectedRows) {
+                    return numRows === numSelectedRows;
+                });
+            });
         }
-        _.each(indices, function (index) { return _this.row(index).select(); });
-    };
+    },
+
     /**
      * @function
+     * @param {Number|Number[]} i - The index or indices of the row(s) to select
      */
-    rxBulkSelect.prototype.deselectByIndex = function (indices) {
-        var _this = this;
-        if (!_.isArray(indices)) {
-            indices = [indices];
+    selectByIndex: {
+        value: function selectRowByIndex (i) {
+            if (_.isArray(i)) {
+                _.each(i, rowIndex => this.selectByIndex(rowIndex));
+            } else {
+                rxBulkSelectDefaultRowFn(this.tblRows.get(i)).select();
+            }
         }
-        _.each(indices, function (index) { return _this.row(index).deselect(); });
-    };
-    return rxBulkSelect;
-}(rxComponent_1.rxComponentElement));
-__decorate([
-    rxComponent_1.OverrideWebdriver
-], rxBulkSelect.prototype, "isEnabled", null);
-exports.rxBulkSelect = rxBulkSelect;
+    },
+
+    /**
+     * @function
+     * @param {Number|Number[]} i - The index or indices of the row(s) to deselect
+     */
+    deselectByIndex: {
+        value: function deselectRowByIndex (i) {
+            if (Array.isArray(i)) {
+                _.each(i, rowIndex => this.deselectByIndex(rowIndex));
+            } else {
+                rxBulkSelectDefaultRowFn(this.tblRows.get(i)).deselect();
+            }
+        }
+    }
+};
+
+exports.rxBulkSelect = {
+    /**
+     * @function
+     * @memberof rxBulkSelect
+     * @description Creates a page object from an `[rx-bulk-select]` DOM element.
+     * @param {ElementFinder} [rxBulkSelectElement=$('[rx-bulk-select]')] -
+     * ElementFinder to be transformed into an {@link rxBulkSelect} object.
+     * @param {Function} [rxBulkSelectRowFn={@link rxCheckbox}] -
+     * Function used to initialize a row object in the table. See {@link rxBulkSelect#row}
+     * for more information about this parameter.
+     * @returns {rxBulkSelect}
+     */
+    initialize: function (rxBulkSelectElement, rxBulkSelectRowFn) {
+        if (rxBulkSelectElement === undefined) {
+            rxBulkSelectElement = $('[rx-bulk-select]');
+        }
+
+        rxBulkSelect.rowFromElement = {
+            value: rxBulkSelectRowFn || rxBulkSelectDefaultRowFn
+        };
+
+        rxBulkSelect.rootElement = {
+            get: function () { return rxBulkSelectElement; }
+        };
+        return Page.create(rxBulkSelect);
+    }
+};
 </code></pre>
         </article>
     </section>
@@ -239,13 +312,13 @@ exports.rxBulkSelect = rxBulkSelect;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

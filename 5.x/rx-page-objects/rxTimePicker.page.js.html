@@ -27,30 +27,31 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var rxComponent_1 = require("./rxComponent");
-var rxSelect_page_1 = require("./rxSelect.page");
-var _ = require("lodash");
-var moment = require("moment");
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+var moment = require('moment');
+
+var rxSelect = require('./rxSelect.page').rxSelect;
+
 /**
  * @class
+ * @param {ElementFinder} rxTimePickerElement
+ * ElementFinder to be transformed into an rxTimePicker page object
+ *
+ * @returns {rxTimePicker}
+ *
+ * @property {String[]} errors - (get) Array of error messages
+ * @property {String} hour - (get/set) Hour value of picker
+ * @property {String} minutes - (get/set) Minutes value of picker
+ * @property {String} period - (get/set) Period value of picker (AM/PM)
+ * @property {String} time (get/set)
+ * Time value in `HH:mmZ` format, where `Z` must match `[-+]\d{2}:\d{2}`.
+ * This returns the data value of the picker, not the display value.
+ *
+ * When set, it will automatically commit changes to the model.
+ *
+ * @property {String} utcOffset (get/set)
+ * UTC Offset value of picker (-05:00, +00:00, +10:00)
+ *
  * @example
  * var picker = new encore.rxTimePicker($('#myTimePicker'));
  *
@@ -82,213 +83,159 @@ var moment = require("moment");
  * picker.period; // 'PM'
  * picker.offset; // '-05:00'
  */
-var rxTimePicker = (function (_super) {
-    __extends(rxTimePicker, _super);
-    function rxTimePicker() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(rxTimePicker.prototype, "eleControl", {
-        // Private selectors
-        get: function () {
-            return this.$('.control');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "txtHour", {
-        get: function () {
-            return this.$('.hour');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "txtMinutes", {
-        get: function () {
-            return this.$('.minutes');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "btnSubmit", {
-        get: function () {
-            return this.$('button.done');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "btnCancel", {
-        get: function () {
-            return this.$('button.cancel');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "selPeriod", {
-        get: function () {
-            return this.$('.period');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "selUtcOffset", {
-        get: function () {
-            return this.$('.utcOffset');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "txtDisplayValue", {
-        get: function () {
-            return this.$('.displayValue');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "pagePeriod", {
-        // Private Page Objects
-        get: function () {
-            return new rxSelect_page_1.rxSelect(this.selPeriod);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "pageUtcOffset", {
-        get: function () {
-            return new rxSelect_page_1.rxSelect(this.selUtcOffset);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    rxTimePicker.prototype.getErrors = function () {
-        return this.$$('rx-inline-error').getText();
-    };
-    Object.defineProperty(rxTimePicker.prototype, "hours", {
-        get: function () {
-            return this.txtHour.getAttribute('value');
-        },
-        set: function (hour) {
-            this.txtHour.clear();
-            this.txtHour.sendKeys(hour);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "minutes", {
-        get: function () {
-            return this.txtMinutes.getAttribute('value');
-        },
-        set: function (minutes) {
-            this.txtMinutes.clear();
-            this.txtMinutes.sendKeys(minutes);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "period", {
-        get: function () {
-            return this.pagePeriod.selectedOption.getText();
-        },
-        set: function (period) {
-            this.pagePeriod.select(period);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "utcOffset", {
-        get: function () {
-            return this.pageUtcOffset.selectedOption.getText();
-        },
-        set: function (utcOffset) {
-            this.pageUtcOffset.select(utcOffset);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(rxTimePicker.prototype, "time", {
-        get: function () {
-            return this.txtDisplayValue.getAttribute('data-time');
-        },
-        set: function (timeString) {
-            // Accept ISO 8601 Standard Time Format OR custom display format
-            var date = moment(timeString, 'HH:mmZ');
-            // `date` is currently in local TZ (not expected TZ)
-            // extract the expected TZ to update `date`
-            var offset = parseUtcOffset(timeString);
-            // force to time zone from input
-            date.utcOffset(offset);
-            // set via picker
-            this.open();
-            this.hours = date.format('hh'); // 12-hour format (no padding)
-            this.minutes = date.format('mm'); // padded minutes
-            this.pagePeriod.select(date.format('A'));
-            this.pageUtcOffset.select(date.format('Z'));
-            this.submit();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @description Whether the picker can be submitted
-     */
-    rxTimePicker.prototype.canSubmit = function () {
-        return this.btnSubmit.isEnabled();
-    };
-    /**
-     * @description Whether the picker can be submitted
-     */
-    rxTimePicker.prototype.canCancel = function () {
-        return this.btnCancel.isEnabled();
-    };
-    /**
-     * @description Whether the picker is open
-     */
-    rxTimePicker.prototype.isOpen = function () {
-        return this.$('.popup').getAttribute('class').then(function (classes) { return !_.includes(classes, 'ng-hide'); });
-    };
-    /**
-     * @description Open picker
-     */
-    rxTimePicker.prototype.open = function () {
-        var _this = this;
-        return this.isOpen().then(function (opened) { return (!opened) &amp;&amp; _this.eleControl.click(); });
-    };
-    /**
-     * @description Close picker
-     */
-    rxTimePicker.prototype.close = function () {
-        var _this = this;
-        return this.isOpen().then(function (opened) { return opened &amp;&amp; _this.eleControl.click(); });
-    };
-    /**
-     * @description Submit and close picker
-     */
-    rxTimePicker.prototype.submit = function () {
-        return this.btnSubmit.click();
-    };
-    /**
-     * @description Cancel picker, without updating value
-     */
-    rxTimePicker.prototype.cancel = function () {
-        return this.btnCancel.click();
-    };
-    return rxTimePicker;
-}(rxComponent_1.rxComponentElement));
-__decorate([
-    rxComponent_1.OverrideWebdriver
-], rxTimePicker.prototype, "submit", null);
-exports.rxTimePicker = rxTimePicker;
+function rxTimePicker (rxTimePickerElement) {
+    this.rootElement = rxTimePickerElement || $$('rx-time-picker').first();
+
+    // Private selectors
+    this.eleControl = this.rootElement.$('.control');
+    this.txtHour = this.rootElement.$('.hour');
+    this.txtMinutes = this.rootElement.$('.minutes');
+    this.btnSubmit = this.rootElement.$('button.done');
+    this.btnCancel = this.rootElement.$('button.cancel');
+    this.selPeriod = this.rootElement.$('.period');
+    this.selUtcOffset = this.rootElement.$('.utcOffset');
+    this.txtDisplayValue = this.rootElement.$('.displayValue');
+
+    // Private Page Objects
+    this.pagePeriod = rxSelect.initialize(this.selPeriod);
+    this.pageUtcOffset = rxSelect.initialize(this.selUtcOffset);
+
+    // Properties
+    Object.defineProperties(this, {
+        errors: {
+            get: function () {
+                return this.rootElement.$$('rx-inline-error').getText();
+            }
+        },//errors
+
+        hour: {
+            get: function () {
+                return this.txtHour.getAttribute('value');
+            },
+            set: function (val) {
+                this.txtHour.clear();
+                this.txtHour.sendKeys(val);
+            }
+        },//hour
+
+        minutes: {
+            get: function () {
+                return this.txtMinutes.getAttribute('value');
+            },
+            set: function (val) {
+                this.txtMinutes.clear();
+                this.txtMinutes.sendKeys(val);
+            }
+        },//minutes
+
+        period: rxSelect.generateAccessor(this.selPeriod),
+
+        utcOffset: rxSelect.generateAccessor(this.selUtcOffset),
+
+        time: {
+            get: function () {
+                return this.txtDisplayValue.getAttribute('data-time');
+            },
+            set: function (val) {
+                // Accept ISO 8601 Standard Time Format OR custom display format
+                var date = moment(val, 'HH:mmZ');
+
+                // `date` is currently in local TZ (not expected TZ)
+                // extract the expected TZ to update `date`
+                var offset = encore.rxTimePickerUtil.parseUtcOffset(val);
+                // force to time zone from input
+                date.utcOffset(offset);
+
+                // set via picker
+                this.open();
+
+                this.hour = date.format('hh'); // 12-hour format (no padding)
+                this.minutes = date.format('mm'); // padded minutes
+                this.selPeriod.element(by.cssContainingText('option', date.format('A'))).click();
+                this.selUtcOffset.element(by.cssContainingText('option', date.format('Z'))).click();
+                this.submit();
+            }
+        }//time
+    });//properties
+}//rxTimePicker
+
 /**
- * @description return offset value, if present in string
- *
- * **NOTE:** Logic in this function must match the logic in
- * the rxTimePickerUtil service.
+ * @description Whether the picker can be submitted
+ * @returns {Boolean}
  */
-function parseUtcOffset(stringValue) {
-    var regex = /([-+]\d{2}:?\d{2})/;
-    var matched = stringValue.match(regex);
-    return (matched ? matched[0] : '');
-}
-exports.parseUtcOffset = parseUtcOffset;
+rxTimePicker.prototype.canSubmit = function () {
+    return this.btnSubmit.isEnabled();
+};
+
+/**
+ * @description Whether the picker can be cancelled
+ * @returns {Boolean}
+ */
+rxTimePicker.prototype.canCancel = function () {
+    return this.btnCancel.isEnabled();
+};
+
+/**
+ * @description Whether the picker is open
+ * @returns {Promise&lt;Boolean>}
+ */
+rxTimePicker.prototype.isOpen = function () {
+    return this.rootElement.$('.popup').getAttribute('class').then(function (classes) {
+        return !_.includes(classes, 'ng-hide');
+    });
+};
+
+/**
+ * @description Open picker
+ */
+rxTimePicker.prototype.open = function () {
+    var self = this;
+    return this.isOpen().then(function (opened) {
+        if (!opened) {
+            self.eleControl.click();
+        }
+    });
+};
+
+/**
+ * @description Close picker
+ */
+rxTimePicker.prototype.close = function () {
+    var self = this;
+    return this.isOpen().then(function (open) {
+        if (open) {
+            self.eleControl.click();
+        }
+    });
+};
+
+/**
+ * @description Submit and close picker
+ */
+rxTimePicker.prototype.submit = function () {
+    this.btnSubmit.click();
+};
+
+/**
+ * @description Cancel picker, without updating value
+ */
+rxTimePicker.prototype.cancel = function () {
+    this.btnCancel.click();
+};
+
+/**
+ * @description Static initializer method for backward compatibility
+ * @param {ElementFinder} rxTimePickerElement
+ * ElementFinder to be transformed into an rxTimePicker page object
+ * @returns {rxTimePicker}
+ * @example
+ * var picker = encore.rxTimePicker.initialize($('#myTimePicker'));
+ */
+rxTimePicker.initialize = function (rxTimePickerElement) {
+    return new rxTimePicker(rxTimePickerElement);
+};
+
+exports.rxTimePicker = rxTimePicker;
 </code></pre>
         </article>
     </section>
@@ -299,13 +246,13 @@ exports.parseUtcOffset = parseUtcOffset;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

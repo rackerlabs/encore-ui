@@ -27,126 +27,164 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var chai_1 = require("chai");
-var _ = require("lodash");
-var protractor_1 = require("protractor");
-var selenium_webdriver_1 = require("selenium-webdriver");
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+
 /**
  * @description rxCopy exercises.
  * @see rxCopy
+ * @exports exercise/rxCopy
+ * @param {Object} options - Test options. Used to build valid tests.
+ * @param {rxSelect} options.instance - Component to exercise.
+ * @param {Boolean} [options.isPresent=true] - Determines if the component is present.
+ * @param {Boolean} [options.isDisabled=false] - Determines if the component is disabled.
+ * @param {Boolean} [options.isDisplayed=true] - Determines if the component is displayed.
+ * @param {ElementFinder} [testCopyArea=] - An input element somewhere that rxCopy contents can be pasted to.
+ * @param {String|Regex} [expectedText=] - The expected text content inside the input element to be copied.
+ * Can be a regular expression if the text content is very large.
  */
-function rxCopy(options) {
+exports.rxCopy = function (options) {
+    if (options === undefined) {
+        options = {};
+    }
+
     options = _.defaults(options, {
-        displayed: true,
-        enabled: true,
-        present: true,
+        isPresent: true,
+        isEnabled: true,
+        isDisplayed: true
     });
+
     return function () {
         var component;
+
         /**
-         * pastes a value to `testCopyArea` then returns what was pasted.
+         * @returns {Promise&lt;String>}
          */
-        var getPastedValue = function () {
-            options.testCopyArea.clear();
-            options.testCopyArea.sendKeys(selenium_webdriver_1.Key.chord((process.platform === 'darwin' ? selenium_webdriver_1.Key.META : selenium_webdriver_1.Key.CONTROL), 'v'));
-            return options.testCopyArea.getAttribute('value');
-        };
+        function getPastedValue () {
+            return options.testCopyArea
+                .clear()
+                .sendKeys(protractor.Key.chord(
+                    (process.platform === 'darwin' ? protractor.Key.META : protractor.Key.CONTROL),
+                    'v'
+                ))
+                .getAttribute('value');
+        }
+
         before(function () {
             component = options.instance;
         });
+
         it('should be present', function () {
-            chai_1.expect(component.isPresent()).to.eventually.eq(options.present);
+            expect(component.isPresent()).to.eventually.eq(options.isPresent);
         });
-        if (!options.present) {
+
+        if (!options.isPresent) {
             return;
         }
-        it("should " + (options.displayed ? 'be' : 'not be') + " displayed", function () {
-            chai_1.expect(component.isDisplayed()).to.eventually.eq(options.displayed);
+
+        it(`should ${options.isDisplayed ? 'be' : 'not be'} displayed`, function () {
+            expect(component.isDisplayed()).to.eventually.eq(options.isDisplayed);
         });
-        if (!options.displayed) {
+
+        if (!options.isDisplayed) {
             return;
         }
-        it("should " + (options.enabled ? 'be' : 'not be') + " enabled", function () {
-            chai_1.expect(component.isEnabled()).to.eventually.eq(options.enabled);
+
+        it(`should ${options.isEnabled ? 'be' : 'not be'} enabled`, function () {
+            expect(component.isEnabled()).to.eventually.eq(options.isEnabled);
         });
-        if (!options.enabled) {
+
+        if (!options.isEnabled) {
             return;
         }
+
         describe('before copying', function () {
+
             it('should be waiting', function () {
-                chai_1.expect(component.isWaiting()).to.eventually.be.true;
+                expect(component.isWaiting()).to.eventually.be.true;
             });
+
             it('should not be successful', function () {
-                chai_1.expect(component.isSuccessful()).to.eventually.be.false;
+                expect(component.isSuccessful()).to.eventually.be.false;
             });
+
             it('should not have failed', function () {
-                chai_1.expect(component.isFailure()).to.eventually.be.false;
+                expect(component.isFailure()).to.eventually.be.false;
             });
+
             if (options.expectedText) {
                 if (_.isString(options.expectedText)) {
                     it('should have the expected text', function () {
-                        chai_1.expect(component.getText()).to.eventually.eq(options.expectedText);
+                        expect(component.getText()).to.eventually.eq(options.expectedText);
                     });
                 }
+
                 if (_.isRegExp(options.expectedText)) {
                     it('should match the expected text', function () {
-                        chai_1.expect(component.getText()).to.eventually.match(options.expectedText);
+                        expect(component.getText()).to.eventually.match(options.expectedText);
                     });
                 }
             }
+
             it('should have a tooltip informing users to click to copy', function () {
-                chai_1.expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
+                expect(component.rxTooltip.getText()).to.eventually.eq('Click to Copy');
             });
+
             // Skip on Chrome for Mac: CMD-V is not working to paste clipboard contents
-            if (options.testCopyArea &amp;&amp; !(protractor_1.browser.params.isMac &amp;&amp; protractor_1.browser.params.isChrome)) {
+            if (options.testCopyArea &amp;&amp; !(isMac &amp;&amp; isChrome)) {
                 it('should copy text to clipboard', function () {
                     component.copy();
                     getPastedValue().then(function (pastedValue) {
-                        chai_1.expect(component.getText()).to.eventually.eq(pastedValue);
+                        expect(component.getText()).to.eventually.eq(pastedValue);
                     });
                 });
             }
+
             describe('after copy', function () {
                 before(function () {
                     component.copy();
                 });
+
                 it('should not be waiting', function () {
-                    chai_1.expect(component.isWaiting()).to.eventually.be.false;
+                    expect(component.isWaiting()).to.eventually.be.false;
                 });
+
                 it('should be successful', function () {
-                    chai_1.expect(component.isSuccessful()).to.eventually.be.true;
+                    expect(component.isSuccessful()).to.eventually.be.true;
                 });
+
                 it('should not have failed', function () {
-                    chai_1.expect(component.isFailure()).to.eventually.be.false;
+                    expect(component.isFailure()).to.eventually.be.false;
                 });
-                it('should have success tooltip', function () {
-                    chai_1.expect(component.tooltip.getText()).to.eventually.eq('Copied!');
+
+                it ('should have success tooltip', function () {
+                    expect(component.rxTooltip.getText()).to.eventually.eq('Copied!');
                 });
+
                 describe('and after a short wait', function () {
                     before(function () {
-                        protractor_1.browser.sleep(3000);
+                        browser.sleep(3000);
                     });
+
                     it('should be waiting', function () {
-                        chai_1.expect(component.isWaiting()).to.eventually.be.true;
+                        expect(component.isWaiting()).to.eventually.be.true;
                     });
+
                     it('should not be successful', function () {
-                        chai_1.expect(component.isSuccessful()).to.eventually.be.false;
+                        expect(component.isSuccessful()).to.eventually.be.false;
                     });
+
                     it('should not have failed', function () {
-                        chai_1.expect(component.isFailure()).to.eventually.be.false;
+                        expect(component.isFailure()).to.eventually.be.false;
                     });
+
                     it('should have default tooltip', function () {
-                        chai_1.expect(component.tooltip.getText()).to.eventually.eq('Click to Copy');
+                        expect(component.rxTooltip.getText()).to.eventually.eq('Click to Copy');
                     });
                 });
             });
         });
     };
-}
-exports.rxCopy = rxCopy;
-;
+};
 </code></pre>
         </article>
     </section>
@@ -157,13 +195,13 @@ exports.rxCopy = rxCopy;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

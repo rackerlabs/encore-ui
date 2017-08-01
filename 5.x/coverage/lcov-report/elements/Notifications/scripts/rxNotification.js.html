@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">elements/Notifications/scripts/rxNotification.js</span></h1>
     <h2>
-        Statements: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(7 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(7 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">elements/Notifications/scripts/</a> &#187; rxNotification.js</div>
@@ -74,20 +74,28 @@
 47
 48
 49
-50
-51
-52
-53
-54
-55
-56
-57
-58</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+50</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,41 +108,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,6 +133,10 @@
  * Display a static message with styling taken from `rx-notifications`.
  *
  * @param {String=} [type='info'] The type of notification (e.g. 'warning', 'error')
+ * @param {Expression=} dismissHook An expression to execute on dismiss of the
+ * notification.  If defined, a dismiss button will be rendered for the
+ * notification. Otherwise, no dismiss button will be rendered.  (Best if used
+ * in conjunction with the rxNotifications directive and the rxNotify service.)
  *
  * @example
  * &lt;pre&gt;
@@ -158,7 +146,9 @@
 .directive('rxNotification', function (rxNotify) {
     return {
         scope: {
-            type: '@'
+            type: '@',
+            loading: '=',
+            dismissHook: '&amp;'
         },
         transclude: true,
         restrict: 'E',
@@ -167,31 +157,17 @@
             // Transclude returns a jqLite object of the content in the directive pre transclusion into the template.
             pre: function (scope, el, attrs, ctrl, transclude) {
                 if (!_.isEmpty(attrs.stack)) {
-                    /**
-                     * transclude().parent() - returns a jqLite instance of the parent (this directive as defined
-                     *                           in the template pre-rendering).
-                     * transclude().parent().html() - returns the inner HTML of the parent, as a string, as it was
-                     *                                  defined in the template pre-rendering (Text Only)
-                     * ----------------------------
-                     * el                           -&gt; [&lt;rx-notification stack="demo-stack" type="info"&gt;
-                     *                                  &lt;div class="rx-notifications"&gt;...template...&lt;/div&gt;
-                     *                                  &lt;/rx-notification&gt;]
-                     *
-                     * transclude()                 -&gt; [&lt;span class="ng-scope"&gt;Hello, world in demo-stack stack!&lt;/span&gt;]
-                     *
-                     * transclude().parent()        -&gt; [&lt;rx-notification stack="demo-stack" type="info"&gt;
-                     *                                  &lt;span class="ng-scope"&gt;Hello, world in demo-stack stack!&lt;/span&gt;
-                     *                                  &lt;/rx-notification&gt;]
-                     *
-                     * transclude().parent().html() -&gt; "&lt;span class="ng-scope"&gt;Hello, world in demo-stack stack!&lt;/span&gt;"
-                     **/
-                    var content = transclude().parent().html();
-                    rxNotify.add(content, {
-                        type: attrs.type,
-                        stack: attrs.stack
+                    transclude(function (clone) {
+                        rxNotify.add(clone.text(), {
+                            type: attrs.type,
+                            stack: attrs.stack
+                        });
                     });
                     el.remove();
                 }
+            },
+            post: function (scope, el, attrs) {
+                scope.isDismissable = !scope.loading &amp;&amp; !angular.isUndefined(attrs.dismissHook);
             }
         }
     };
@@ -201,7 +177,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 29 2017 16:31:39 GMT-0500 (CDT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

@@ -27,172 +27,152 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c &lt; 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 &amp;&amp; r &amp;&amp; Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var protractor_1 = require("protractor");
-var rxComponent_1 = require("./rxComponent");
-/**
- * @description A lookup for translating types of notifications and their string representations
- * @type {Object}
- * @property {String} error - 'error': A red notification. Used typically for errors or exceptions.
- * @property {String} info - 'info': A blue notification. Used typically for loading actions.
- * @property {String} success - 'success': A green notification. Used typically after successful actions.
- * @property {String} warning - 'warning': An orange warning. Used typically to "sticky" an ever-present message.
- */
-exports.NOTIFY_TYPES = {
-    error: 'error',
-    info: 'info',
-    success: 'success',
-    warning: 'warning',
-};
-/**
- * @description Functions for interacting with a single notification.
- * @see rxNotify
- */
-var rxNotification = (function (_super) {
-    __extends(rxNotification, _super);
-    function rxNotification() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(rxNotification.prototype, "btnDismiss", {
-        get: function () {
-            return this.$('.notification-dismiss');
-        },
-        enumerable: true,
-        configurable: true
-    });
+            <pre class="prettyprint source linenums"><code>var Page = require('astrolabe').Page;
+
+var notificationTypes = /error|info|success|warning/;
+var notification = function (rootElement) {
     /**
-     * @description The type of notification. See {@link rxNotify.types}.
-     * @see rxNotify.types
-     * @example
-     * it('should have the right notification type', function () {
-     *     var notificationType = encore.rxNotify.all.byText('Something bad happened').getType();
-     *     expect(notificationType).to.eventually.equal('error');
-     *     // or, you could write it this way
-     *     expect(notificationType).to.eventually.equal(encore.rxNotify.types.error);
-     * });
+     * @description Functions for interacting with a single notification.
+     * @namespace rxNotify.notification
+     * @see rxNotify
      */
-    rxNotification.prototype.getType = function () {
-        var notificationTypes = /error|info|success|warning/;
-        return this.getAttribute('class').then(function (className) {
-            return className.match(notificationTypes)[0];
-        });
-    };
-    /**
-     * @description The message text of the notification.
-     * @example
-     * it('should have the right notification text', function () {
-     *     var notificationText = encore.rxNotify.all.byText('Something bad happened').getText();
-     *     expect(notificationText).to.eventually.equal('Something bad happened: Contact joe@rackspace.com');
-     * });
-     */
-    rxNotification.prototype.getText = function () {
-        return this._originalElement.getText().then(function (text) {
-            // Remove any lingering '× ' characters.
-            return text.split('\n')[0].trim();
-        });
-    };
-    /**
-     * @description Dismisses the notification.
-     * @example
-     * it('should dismiss the notification', function () {
-     *     var notification = encore.rxNotify.all.byText('Something bad happened');
-     *     expect(encore.rxNotify.all.count()).to.eventually.equal(1);
-     *     notification.dismiss();
-     *     expect(encore.rxNotify.all.count()).to.eventually.equal(0);
-     * });
-     */
-    rxNotification.prototype.dismiss = function () {
-        var _this = this;
-        return this.isDismissable().then(function (dismissable) {
-            if (dismissable) {
-                _this.btnDismiss.click();
-            }
-        });
-    };
-    rxNotification.prototype.hasSpinner = function () {
-        return this.$('.rx-spinner').isPresent();
-    };
-    /**
-     * @description Whether or not the notification includes an "x" on the far right side.
-     * @example
-     * it('should not let me close the warning on the page', function () {
-     *     var notification = encore.rxNotify.byText('Warning: Outage in progress');
-     *     expect(notification.type).to.eventually.equal(encore.rxNotify.types.warning);
-     *     expect(notification.isDismissable()).to.eventually.be.false;
-     * });
-     */
-    rxNotification.prototype.isDismissable = function () {
-        return this.btnDismiss.isPresent();
-    };
-    return rxNotification;
-}(rxComponent_1.rxComponentElement));
-__decorate([
-    rxComponent_1.OverrideWebdriver
-], rxNotification.prototype, "getText", null);
-exports.rxNotification = rxNotification;
-/**
- * @description Functions for interacting with groups of notifications, or getting a single notification.
- */
-var rxNotify = (function (_super) {
-    __extends(rxNotify, _super);
-    function rxNotify() {
-        return _super !== null &amp;&amp; _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(rxNotify.prototype, "tblNotifications", {
-        get: function () {
-            return this.all(protractor_1.by.repeater('message in messages'));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @description Returns a collection of functions used to interact with a group of notifications in a stack.
-     * @see rxNotify.all
-     * @example
-     * it('should have some notifications in the top area', function () {
-     *     expect(encore.rxNotify.byStack('banner').count()).to.eventually.be.above(0);
-     *     expect(encore.rxNotify.all.count()).to.eventually.be.above(0);
-     * });
-     */
-    rxNotify.byStack = function (stackName) {
-        var rootElement = protractor_1.$(".rx-notifications[stack=\"" + stackName + "\"]");
-        return new rxNotify(rootElement);
-    };
-    Object.defineProperty(rxNotify, "all", {
+    return Page.create({
+
         /**
-         * @description Returns a collection of functions used to interact with all notifications on the page.
-         * @see rxNotify.byStack
+         * @type {ElementFinder}
+         * @memberof rxNotify.notification
+         * @instance
+         * @description The root element of the notification.
+         */
+        rootElement: {
+            get: function () {
+                return rootElement;
+            }
+        },
+
+        btnDismiss: {
+            get: function () {
+                return rootElement.$('.notification-dismiss');
+            }
+        },
+
+        /**
+         * @instance
+         * @memberof rxNotify.notification
+         * @type {String}
+         * @description The type of notification. See {@link rxNotify.types}.
+         * @see rxNotify.types
          * @example
-         * it('should have some notifications in the top area', function () {
-         *     expect(encore.rxNotify.all.count()).to.eventually.be.above(0);
-         *     expect(encore.rxNotify.byStack('banner').count()).to.eventually.be.above(0);
+         * it('should have the right notification type', function () {
+         *     var notificationType = encore.rxNotify.all.byText('Something bad happened').type;
+         *     expect(notificationType).to.eventually.equal('error');
+         *     // or, you could write it this way
+         *     expect(notificationType).to.eventually.equal(encore.rxNotify.types.error);
          * });
          */
-        get: function () {
-            var rootElement = protractor_1.$('html');
-            return new rxNotify(rootElement);
+        type: {
+            get: function () {
+                return rootElement.getAttribute('class').then(function (className) {
+                    return className.match(notificationTypes)[0];
+                });
+            }
         },
-        enumerable: true,
-        configurable: true
+
+        /**
+         * @instance
+         * @function
+         * @memberof rxNotify.notification
+         * @description The text of the notification.
+         * @example
+         * it('should have the right notification text', function () {
+         *     var notificationText = encore.rxNotify.all.byText('Something bad happened').getText();
+         *     expect(notificationText).to.eventually.equal('Something bad happened: Contact joe@rackspace.com');
+         * });
+         * @returns {Promise&lt;String>}
+         */
+        getText: {
+            value: function () {
+                return this.rootElement.$('.notification-text').getText();
+            }
+        },
+
+        /**
+         * @instance
+         * @function
+         * @memberof rxNotify.notification
+         * @description Dismisses the notification.
+         * @example
+         * it('should dismiss the notification', function () {
+         *     var notification = encore.rxNotify.all.byText('Something bad happened');
+         *     expect(encore.rxNotify.all.count()).to.eventually.equal(1);
+         *     notification.dismiss();
+         *     expect(encore.rxNotify.all.count()).to.eventually.equal(0);
+         * });
+         */
+        dismiss: {
+            value: function () {
+                var page = this;
+                return this.isDismissable().then(function (dismissable) {
+                    if (dismissable) {
+                        page.btnDismiss.click();
+                        // hack for chrome support -- this is for any possible
+                        // alerts that are opened by closing this notification.
+                        // also, before you check, EC.isAlertPresent does not work here.
+                        return browser.getCapabilities().then(function (capabilities) {
+                            if (capabilities.get('browserName') === 'chrome') {
+                                browser.sleep(500);
+                            }
+                        });
+                    }
+                });
+            }
+        },
+
+        /**
+         * @private
+         */
+        hasSpinner: {
+            value: function () {
+                return rootElement.$('.rx-spinner').isPresent();
+            }
+        },
+
+        /**
+         * @function
+         * @instance
+         * @memberof rxNotify.notification
+         * @returns {Boolean}
+         * @description Whether or not the notification includes an "x" on the far right side.
+         * @example
+         * it('should not let me close the warning on the page', function () {
+         *     var notification = encore.rxNotify.byText('Warning: Outage in progress');
+         *     expect(notification.type).to.eventually.equal(encore.rxNotify.types.warning);
+         *     expect(notification.isDismissable()).to.eventually.be.false;
+         * });
+         */
+        isDismissable: {
+            value: function () {
+                return this.btnDismiss.isPresent();
+            }
+        }
+
     });
+};
+
+/**
+ * @namespace
+ * @description Functions for interacting with groups of notifications, or getting a single notification.
+ */
+var rxNotify = {
+    tblNotifications: {
+        get: function () {
+            return this.rootElement.all(by.repeater('message in messages'));
+        }
+    },
+
     /**
+     * @instance
+     * @function
      * @description The number of notifications present in the scope of the namespace. For instance,
      * calling this function on the object returned from {@link rxNotify.all} will inform you of the
      * number of notifications present *anywhere* on the page. Calling it on {@link rxNotify.byStack}
@@ -203,10 +183,17 @@ var rxNotify = (function (_super) {
      *     expect(encore.rxNotify.all.count()).to.eventually.equal(2);
      * });
      */
-    rxNotify.prototype.count = function () {
-        return this.tblNotifications.count();
-    };
+    count: {
+        value: function () {
+            return this.tblNotifications.count();
+        }
+    },
+
     /**
+     * @function
+     * @instance
+     * @param {String} notificationText - The text to search for in the current scope of notifications.
+     * @returns {rxNotify.notification}
      * @description The resulting notification object that matches the `notificationText`. This notification
      * is searched for using a partial text matching strategy. If more than one notification contains
      * `notificationText`, only the first will be returned.
@@ -216,11 +203,15 @@ var rxNotify = (function (_super) {
      *     expect(notification.getText()).to.eventually.equal('Good job, ' + browser.params.username + '!');
      * });
      */
-    rxNotify.prototype.byText = function (notificationText) {
-        var rootElement = this.element(protractor_1.by.cssContainingText('.rx-notification', notificationText));
-        return new rxNotification(rootElement);
-    };
+    byText: {
+        value: function (notificationText) {
+            return notification(this.rootElement.element(by.cssContainingText('.rx-notification', notificationText)));
+        }
+    },
+
     /**
+     * @function
+     * @instance
      * @description Close all notifications in the current scope of notifications.
      * @example
      * it('should close some notifications', function () {
@@ -231,38 +222,137 @@ var rxNotify = (function (_super) {
      *     expect(encore.rxNotify.all.count()).to.eventually.equal(0);
      * });
      */
-    rxNotify.prototype.dismiss = function () {
-        return this.tblNotifications.filter(function (notificationElement) {
-            return new rxNotification(notificationElement).isDismissable();
-        }).then(function (notificationElements) {
-            notificationElements.reverse().forEach(function (notificationElement) {
-                return new rxNotification(notificationElement).dismiss();
+    dismiss: {
+        value: function () {
+            var page = this;
+            return this.tblNotifications.map(function (notificationElement, index) {
+                return notification(notificationElement).isDismissable().then(function (dismissable) {
+                    if (dismissable) {
+                        return index;
+                    }
+                });
+            }).then(function (dismissableIndexes) {
+                dismissableIndexes.reverse().forEach(function (index) {
+                    // The above `.map` call will populate the list with `undefined` if undismissable. Ignore those.
+                    if (index !== undefined) {
+                        notification(page.tblNotifications.get(index)).dismiss();
+                    }
+                });
             });
-        });
-    };
+        }
+    },
+
     /**
-     * @description Whether or not the notification matching text `message` exists in the current
+     * @instance
+     * @function
+     * @param {String} string - The text to look for inside the notification.
+     * @param {String} [type=] - The notification type ('success', 'info', 'warning', 'error').
+     * @description Whether or not the notification matching text `string` exists in the current
      * scope of notifications. If no `type` is specified, all notifications are searched. If a
      * `type` is specified, only those types of notifications will be searched. See {@link rxNotify.types}
      * to see the list of notification types supported.
      * @example
      * it('should have the notification present', function () {
-     *     expect(encore.rxNotify.all.hasNotification('My message', 'error')).to.eventually.be.false;
+     *     expect(encore.rxNotify.all.isPresent('My message', 'error')).to.eventually.be.false;
      *     expect(encore.rxNotify.all.byText('My message').type).to.eventually.equal('info');
-     *     expect(encore.rxNotify.all.hasNotification('My message')).to.eventually.be.true;
-     *     expect(encore.rxNotify.all.hasNotification('My message', encore.rxNotify.types.info)).to.eventually.be.true;
+     *     expect(encore.rxNotify.all.isPresent('My message')).to.eventually.be.true;
+     *     expect(encore.rxNotify.all.isPresent('My message', encore.rxNotify.types.info)).to.eventually.be.true;
+     * });
+     * @returns {Promise&lt;Boolean>}
+     */
+    isPresent: {
+        value: function (string, type) {
+            var elementsOfType;
+
+            type = type ? '.notification-'.concat(type) : '[class^="notification-"]';
+            elementsOfType = this.rootElement.all(by.cssContainingText(type, string));
+
+            return elementsOfType.count().then(function (count) {
+                return count > 0;
+            });
+        }
+    }
+};
+
+exports.rxNotify = {
+    /**
+     * @memberof rxNotify
+     * @function
+     * @type {rxNotify.notification}
+     * @param {ElementFinder} [rxNotificationElement=$('.rx-notifications .rx-notification')] -
+     * The *singular* rxNotify notification element to be transformed into an {@link rxNotify.notification} page object.
+     * @description Create a single {@link rxNotify.notification} page object from a DOM element.
+     * @example
+     * it('should have a notification', function () {
+     *     expect(encore.rxNotify.initialize().type).to.eventually.equal(encore.rxNotify.types.warning);
      * });
      */
-    rxNotify.prototype.hasNotification = function (message, type) {
-        type = type ? '.notification-'.concat(type) : '[class^="notification-"]';
-        return this.all(protractor_1.by.cssContainingText(type, message)).first().isPresent();
-    };
-    return rxNotify;
-}(rxComponent_1.rxComponentElement));
-__decorate([
-    rxComponent_1.OverrideWebdriver
-], rxNotify.prototype, "hasNotification", null);
-exports.rxNotify = rxNotify;
+    initialize: function (rxNotificationElement) {
+        if (rxNotificationElement === undefined) {
+            rxNotificationElement = $('.rx-notifications .rx-notification');
+        }
+        return notification(rxNotificationElement);
+    },
+
+    /**
+     * @memberof rxNotify
+     * @function
+     * @description Returns a collection of functions used to interact with a group of notifications in a stack.
+     * @returns {rxNotify}
+     * @see rxNotify.all
+     * @example
+     * it('should have some notifications in the top area', function () {
+     *     expect(encore.rxNotify.byStack('banner').count()).to.eventually.be.above(0);
+     *     expect(encore.rxNotify.all.count()).to.eventually.be.above(0);
+     * });
+     */
+    byStack: function (stackName) {
+        rxNotify.rootElement = {
+            get: function () {
+                return $('.rx-notifications[stack="' + stackName + '"]');
+            }
+        };
+
+        return Page.create(rxNotify);
+    },
+
+    /**
+     * @memberof rxNotify
+     * @type {rxNotify}
+     * @description Returns a collection of functions used to interact with all notifications on the page.
+     * @see rxNotify.byStack
+     * @example
+     * it('should have some notifications in the top area', function () {
+     *     expect(encore.rxNotify.all.count()).to.eventually.be.above(0);
+     *     expect(encore.rxNotify.byStack('banner').count()).to.eventually.be.above(0);
+     * });
+     */
+    all: (function () {
+        rxNotify.rootElement = {
+            get: function () {
+                return $('html');
+            }
+        };
+
+        return Page.create(rxNotify);
+    })(),
+
+    /**
+     * @description A lookup for translating types of notifications and their string representations
+     * in {@link rxNotify.notification#type}.
+     * @type {Object}
+     * @property {String} error - 'error': A red notification. Used typically for errors or exceptions.
+     * @property {String} info - 'info': A blue notification. Used typically for loading actions.
+     * @property {String} success - 'success': A green notification. Used typically after successful actions.
+     * @property {String} warning - 'warning': An orange warning. Used typically to "sticky" an ever-present message.
+     */
+    types: {
+        error: 'error',
+        info: 'info',
+        success: 'success',
+        warning: 'warning'
+    }
+};
 </code></pre>
         </article>
     </section>
@@ -273,13 +363,13 @@ exports.rxNotify = rxNotify;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

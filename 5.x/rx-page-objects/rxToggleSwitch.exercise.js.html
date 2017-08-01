@@ -27,80 +27,98 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var chai_1 = require("chai");
-var _ = require("lodash");
-var rxMisc_page_1 = require("./rxMisc.page");
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+
 /**
  * @description rxToggleSwitch exercises.
+ * @see rxToggleSwitch
+ * @exports exercise/rxToggleSwitch
+ * @param {Object} options - Test options. Used to build valid tests.
+ * @param {rxToggleSwitch} options.instance - Component to exercise.
+ * @param {Boolean} [options.disabled=false] - Determines if the switch can be toggled.
+ * @param {Boolean} [options.toggledAtStart=null] -
+ * Beginning state of toggle switch. The value will be detected automatically if not given.
+ * @param {Boolean} [options.toggledAtEnd=null]
+ * End state of toggle switch. The value will be detected automatically if not given.
  * @example
  * describe('default exercises', encore.exercise.rxToggleSwitch({
  *     instance: myPage.emailPreference // select one of many widgets from your page objects
  * }));
  */
-function rxToggleSwitch(options) {
+exports.rxToggleSwitch = function (options) {
+    if (options === undefined) {
+        options = {};
+    }
+
     options = _.defaults(options, {
         enabled: true,
-        toggledAtStart: false,
-        toggledAtEnd: true,
+        toggledAtStart: null, // begins 'OFF'
+        toggledAtEnd: null // ends 'ON'
     });
+
     return function () {
-        var toggledAtEnd = options.toggledAtEnd;
-        var toggledAtStart = options.toggledAtStart;
         var component;
+        var toggledAtStart;
+        var toggledAtEnd;
+
         var positionAsText = function (isEnabled) {
             return isEnabled ? 'ON' : 'OFF';
         };
+
         var toggle = function () {
-            rxMisc_page_1.rxMisc.scrollToElement(component, {
-                positionOnScreen: 'middle',
+            encore.rxMisc.scrollToElement(component.rootElement, {
+                positionOnScreen: 'middle'
             });
             return component.isToggled().then(function (toggled) {
                 toggled ? component.toggleOff() : component.toggleOn();
             });
         };
+
         before(function () {
             component = options.instance;
             component.isToggled().then(function (isToggled) {
                 // use option if available, otherwise use detected state
                 toggledAtStart = _.isNull(options.toggledAtStart) ? isToggled : options.toggledAtStart;
+
                 // use option if available, otherwise use inverse of toggledAtStart
                 toggledAtEnd = _.isNull(options.toggledAtEnd) ? !toggledAtStart : options.toggledAtEnd;
             });
         });
+
         it('should show the element', function () {
-            chai_1.expect(component.isDisplayed()).to.eventually.be.true;
+            expect(component.isDisplayed()).to.eventually.be.true;
         });
+
         it('should' + (options.enabled ? '' : ' not') + ' be enabled', function () {
-            chai_1.expect(component.isEnabled()).to.eventually.equal(options.enabled);
+            expect(component.isEnabled()).to.eventually.equal(options.enabled);
         });
+
         if (!options.enabled) {
             it('should not change state when clicked', function () {
                 toggle();
-                chai_1.expect(component.isToggled()).to.eventually.equal(toggledAtStart);
-                chai_1.expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
+                expect(component.isToggled()).to.eventually.equal(toggledAtStart);
+                expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
             });
-        }
-        else {
+        } else {
             it('should begin in the ' + positionAsText(toggledAtStart) + ' state', function () {
-                chai_1.expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
+                expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
             });
+
             it('should change to ' + positionAsText(toggledAtEnd) + ' when clicked', function () {
                 toggle();
-                chai_1.expect(component.isToggled()).to.eventually.equal(toggledAtEnd);
-                chai_1.expect(component.getText()).to.eventually.equal(positionAsText(toggledAtEnd));
+                expect(component.isToggled()).to.eventually.equal(toggledAtEnd);
+                expect(component.getText()).to.eventually.equal(positionAsText(toggledAtEnd));
             });
+
             it('should return to the ' + positionAsText(toggledAtStart) + ' when clicked again', function () {
                 toggle();
-                chai_1.expect(component.isToggled()).to.eventually.equal(toggledAtStart);
-                chai_1.expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
+                expect(component.isToggled()).to.eventually.equal(toggledAtStart);
+                expect(component.getText()).to.eventually.equal(positionAsText(toggledAtStart));
             });
         }
+
     };
-}
-exports.rxToggleSwitch = rxToggleSwitch;
-;
+};
 </code></pre>
         </article>
     </section>
@@ -111,13 +129,13 @@ exports.rxToggleSwitch = rxToggleSwitch;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

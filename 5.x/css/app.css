@@ -43,118 +43,127 @@ pre code {
   flex-flow: column;
 }
 .palette.red .color.primary {
-  background-color: #f44336;
+  background-color: var(--rx-red-500);
 }
 .palette.red .color.secondary-100 {
-  background-color: #ffcdd2;
+  background-color: var(--rx-red-100);
 }
 .palette.red .color.secondary-700 {
-  background-color: #d32f2f;
+  background-color: var(--rx-red-700);
 }
 .palette.red .color.accent {
-  background-color: #ec515f;
+  background-color: var(--rx-red-accent);
 }
 .palette.blue .color.primary {
-  background-color: #0d74d1;
+  background-color: var(--rx-blue-700);
 }
 .palette.blue .color.secondary-100 {
-  background-color: #bbdefb;
+  background-color: var(--rx-blue-100);
 }
 .palette.blue .color.secondary-500 {
-  background-color: #3391ff;
+  background-color: var(--rx-blue-500);
 }
 .palette.blue .color.secondary-900 {
-  background-color: #0d47a1;
+  background-color: var(--rx-blue-900);
 }
 .palette.blue .color.accent {
-  background-color: #00bdff;
+  background-color: var(--rx-blue-accent);
 }
 .palette.green .color.primary {
-  background-color: #4caf51;
+  background-color: var(--rx-green-500);
+}
+.palette.green .color.secondary-50 {
+  background-color: var(--rx-green-50);
 }
 .palette.green .color.secondary-100 {
-  background-color: #c8e6c9;
+  background-color: var(--rx-green-100);
 }
 .palette.green .color.secondary-700 {
-  background-color: #2e7d32;
+  background-color: var(--rx-green-700);
 }
 .palette.green .color.accent {
-  background-color: #43b947;
+  background-color: var(--rx-green-accent);
 }
 .palette.orange .color.primary {
-  background-color: #ffc107;
+  background-color: var(--rx-orange-500);
 }
 .palette.orange .color.secondary-100 {
-  background-color: #ffecb3;
+  background-color: var(--rx-orange-100);
 }
 .palette.orange .color.secondary-700 {
-  background-color: #d14904;
+  background-color: var(--rx-orange-700);
 }
 .palette.orange .color.accent {
-  background-color: #ffd740;
+  background-color: var(--rx-orange-accent);
 }
 .palette.purple .color.primary {
-  background-color: #3b44a9;
+  background-color: var(--rx-purple-500);
 }
 .palette.purple .color.secondary-100 {
-  background-color: #4a5acc;
+  background-color: var(--rx-purple-100);
 }
 .palette.purple .color.secondary-700 {
-  background-color: #2e3187;
+  background-color: var(--rx-purple-700);
 }
 .palette.purple .color.accent {
-  background-color: #5a74f2;
+  background-color: var(--rx-purple-accent);
 }
 .palette.gray .color.shade-0 {
-  background-color: #ffffff;
+  background-color: var(--rx-white);
 }
 .palette.gray .color.shade-25 {
-  background-color: #fafafa;
+  background-color: var(--rx-gray-25);
 }
 .palette.gray .color.shade-50 {
-  background-color: #f5f5f5;
+  background-color: var(--rx-gray-50);
 }
 .palette.gray .color.shade-100 {
-  background-color: #eeeeee;
+  background-color: var(--rx-gray-100);
 }
 .palette.gray .color.shade-200 {
-  background-color: #e7e7e7;
+  background-color: var(--rx-gray-200);
 }
 .palette.gray .color.shade-300 {
-  background-color: #e0e0e0;
+  background-color: var(--rx-gray-300);
 }
 .palette.gray .color.shade-400 {
-  background-color: #d8d8d8;
+  background-color: var(--rx-gray-400);
 }
 .palette.gray .color.shade-500 {
-  background-color: #bdbdbd;
+  background-color: var(--rx-gray-500);
 }
 .palette.gray .color.shade-600 {
-  background-color: #9e9e9e;
+  background-color: var(--rx-gray-600);
 }
 .palette.gray .color.shade-700 {
-  background-color: #757575;
+  background-color: var(--rx-gray-700);
 }
 .palette.gray .color.shade-800 {
-  background-color: #616161;
+  background-color: var(--rx-gray-800);
 }
 .palette.gray .color.shade-900 {
-  background-color: #424242;
+  background-color: var(--rx-gray-900);
 }
 .palette.gray .color.shade-950 {
-  background-color: #333333;
+  background-color: var(--rx-gray-950);
 }
 .palette.gray .color.shade-975 {
-  background-color: #212121;
+  background-color: var(--rx-gray-975);
 }
 .palette.gray .color.shade-1000 {
-  background-color: #000000;
+  background-color: var(--rx-gray-1000);
+}
+.palette.gray .color.black-a85 {
+  background-color: var(--rx-black-a35);
+}
+.palette.gray .color.white-a80 {
+  background-color: var(--rx-white-a80);
 }
 .palette .light-text {
-  color: #ffffff;
+  color: var(--rx-gray-0);
 }
 .palette .dark-text {
-  color: #333333;
+  color: var(--rx-gray-950);
 }
 .palette .color {
   box-sizing: border-box;
@@ -177,7 +186,6 @@ pre code {
 }
 .palette .color > div small {
   display: block;
-  font-family: "Roboto Mono", monospace;
 }
 .palette .color.heading {
   height: 100px;
@@ -187,16 +195,19 @@ pre code {
   margin-top: 25px;
 }
 .palette .detail {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background-color: var(--rx-gray-0);
+  border: 1px solid var(--rx-gray-300);
   padding: 10px;
+}
+.monospace {
+  font-family: "Roboto Mono", monospace;
 }
 rx-example {
   display: block;
   margin-top: 2em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--rx-gray-300);
   padding: 15px;
-  background-color: #ffffff;
+  background-color: var(--rx-gray-0);
 }
 rx-example h1:first-of-type,
 rx-example h2:first-of-type,
@@ -230,18 +241,18 @@ rx-example .source-tabset .nav-tabs li {
 }
 rx-example .source-tabset .nav-tabs a {
   background: transparent;
-  color: #757575;
+  color: var(--rx-gray-700);
   padding: 4px 10px;
   border-bottom: 3px solid transparent;
 }
 rx-example .source-tabset .nav-tabs a:hover:not(.active),
 rx-example .source-tabset .nav-tabs a:focus:not(.active) {
-  color: #0d74d1;
+  color: var(--rx-blue-700);
 }
 rx-example .source-tabset .nav-tabs .active a {
   background: transparent;
-  color: #0d74d1;
-  border-bottom-color: #0d74d1;
+  color: var(--rx-blue-700);
+  border-bottom-color: var(--rx-blue-700);
 }
 rx-example .source-tabset .tab-content {
   border: 0;
@@ -251,7 +262,7 @@ rx-example .source-tabset .tab-content .tab-pane {
   padding: 0;
 }
 rx-example .source-tabset .tab-content .tab-pane .source-code-wrapper {
-  border: 1px solid #0d74d1;
+  border: 1px solid var(--rx-blue-700);
 }
 rx-example .source-tabset .tab-content .tab-pane .toggle-expand {
   display: block;
@@ -281,7 +292,7 @@ rx-permalink .permalink .icon {
   right: 100%;
   position: absolute;
   visibility: hidden;
-  color: #757575;
+  color: var(--rx-gray-700);
 }
 rx-permalink .permalink .icon:hover {
   visibility: visible;
@@ -302,20 +313,20 @@ rx-permalink .permalink:hover .icon:hover {
   padding: 2px 10px;
   border-radius: 12px;
   vertical-align: top;
-  background-color: #bdbdbd;
+  background-color: var(--rx-gray-500);
   color: #000000;
 }
 .rxStability__pill--prototype {
-  background-color: #ffc107;
-  color: #333333;
+  background-color: var(--rx-orange-500);
+  color: var(--rx-gray-950);
 }
 .rxStability__pill--deprecated {
-  background-color: #d32f2f;
-  color: #ffffff;
+  background-color: var(--rx-red-700);
+  color: var(--rx-gray-0);
 }
 .rxStability__pill--stable {
-  background-color: #2e7d32;
-  color: #ffffff;
+  background-color: var(--rx-green-700);
+  color: var(--rx-gray-0);
 }
 .rxStability .tooltip-inner {
   font-size: 13px;
@@ -555,7 +566,7 @@ body {
 /* TODO: (deprecated) remove with last of components */
 .module-description {
   border: 1px solid #aaaaaa;
-  background: #ffffff;
+  background: var(--rx-gray-0);
   padding: 10px;
   margin-bottom: 2em;
 }
@@ -569,7 +580,7 @@ body {
 }
 .module-description h1 {
   font-size: 1.6em;
-  border-bottom: 1px solid #333333;
+  border-bottom: 1px solid var(--rx-gray-950);
   margin-top: 1.2em;
 }
 .module-description h2 {
@@ -654,7 +665,7 @@ p {
   border-style: solid;
   border-width: 9px 2px 2px 2px;
   padding: 0 10px 10px;
-  background: #ffffff;
+  background: var(--rx-gray-0);
   width: 600px;
   margin: 25px 0;
 }
@@ -667,22 +678,22 @@ p {
   font-weight: 600;
 }
 .example-case.do {
-  border-color: #4caf51;
+  border-color: var(--rx-green-500);
 }
 .example-case.do h4 {
-  color: #2e7d32;
+  color: var(--rx-green-700);
 }
 .example-case.exception {
-  border-color: #ffc107;
+  border-color: var(--rx-orange-500);
 }
 .example-case.exception h4 {
-  color: #d14904;
+  color: var(--rx-orange-700);
 }
 .example-case.avoid {
-  border-color: #f44336;
+  border-color: var(--rx-red-500);
 }
 .example-case.avoid h4 {
-  color: #d32f2f;
+  color: var(--rx-red-700);
 }
 .table--option {
   table-layout: fixed;

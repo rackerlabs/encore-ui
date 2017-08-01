@@ -1,10 +1,9 @@
 angular.module('demoApp')
-.controller('listModulesController', function ($filter, Modules, rxPageTitle) {
+.controller('listModulesController', function ($filter, Modules, rxBreadcrumbsSvc) {
     var vm = this;
 
     vm.category = 'modules';
     vm.capitalizedCategory = $filter('rxCapitalize')(vm.category);
-    rxPageTitle.setTitle('All ' + vm.capitalizedCategory);
     vm.sortKey = 'displayName';
     vm.sortReverse = false;
     vm.modules = _.filter(Modules, { 'isCategory': false });
@@ -13,6 +12,13 @@ angular.module('demoApp')
     vm.getCaretType = getCaretType;
     vm.showCaret = showCaret;
     vm.sortColumn = sortColumn;
+
+    rxBreadcrumbsSvc.set([
+        {
+            path: '#/' + vm.category,
+            name: vm.capitalizedCategory
+        }
+    ]);
 
     function getCaretType () {
         return vm.sortReverse ? 'fa fa-caret-down' : 'fa fa-caret-up';

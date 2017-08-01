@@ -27,149 +27,203 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var chai_1 = require("chai");
-var _ = require("lodash");
-var rxMisc_page_1 = require("./rxMisc.page");
+            <pre class="prettyprint source linenums"><code>var _ = require('lodash');
+
 /**
  * rxPaginate exercises.
+ * @exports exercise/rxPaginate
+ * @param {Object} options - Test options. Used to build valid tests.
+ * @param {rxPaginate} options.instance - Component to exercise.
+ * @param {Boolean} [options.isPresent=true] - Whether or not the pagination element is present.
+ * @param {Boolean} [options.isDisplayed=true] - Whether or not the pagination element is displayed.
+ * @param {String} [options.pages=6] - Estimated page size in the pagination widget.
+ * @param {Number[]} [options.pageSizes=[50, 200, 350, 500]] - Page sizes to validate.
+ * @param {Number} [options.defaultPageSize=50] - Default page size on page load.
+ * @param {Number} [options.invalidPageSize=45] - For testing resizing pagination to invalid items per page.
  * @example
  * describe('default exercises', encore.exercise.rxPaginate({
  *     instance: myPage.pagination, // select one of many pagination instances from your page objects
  *     pages: 20 // will exercise full functionality at 6, limited functionality at 2
- *     totalItems: 300 // some tests require the total number of items to be specified in advance.
  * }));
  */
-function rxPaginate(options) {
+exports.rxPaginate = function (options) {
+    if (options === undefined) {
+        options = {};
+    }
+
     options = _.defaults(options, {
-        present: true,
-        displayed: true,
+        isPresent: true,
+        isDisplayed: true,
         pages: 6,
         pageSizes: [50, 200, 350, 500],
         defaultPageSize: 50,
-        totalItems: 251,
+        invalidPageSize: 45
     });
+
     return function () {
         var pagination;
-        if (!options.present) {
+
+        if (!options.isPresent) {
             return;
         }
+
         before(function () {
             pagination = options.instance;
         });
-        it("should " + (options.displayed ? 'be' : 'not be') + " displayed", function () {
-            chai_1.expect(pagination.isDisplayed()).to.eventually.equal(options.displayed);
+
+        beforeEach(function () {
+            encore.rxMisc.scrollToElement(pagination.rootElement, {
+                positionOnScreen: 'middle'
+            });
         });
-        if (!options.displayed) {
+
+        it(`should ${options.isDisplayed ? 'be' : 'not be'} displayed`, function () {
+            expect(pagination.isDisplayed()).to.eventually.equal(options.isDisplayed);
+        });
+
+        if (!options.isDisplayed) {
             return;
         }
-        it('should not have `next` link on the last page', function () {
-            pagination.last();
-            chai_1.expect(pagination.lnkNext.isDisplayed()).to.eventually.be.false;
-        });
-        it('should allow attempting to navigate to the next page when already on the last page', function () {
-            pagination.last();
-            pagination.getPage().then(function (page) {
-                pagination.next();
-                chai_1.expect(pagination.getPage()).to.eventually.equal(page);
-            });
-        });
-        it('should allow attempting to navigate to the last page when already on the last page', function () {
-            pagination.last();
-            pagination.getPage().then(function (page) {
-                pagination.last();
-                chai_1.expect(pagination.getPage()).to.eventually.equal(page);
-            });
-        });
-        it('should navigate to the first page', function () {
-            pagination.first();
-            chai_1.expect(pagination.getPage()).to.eventually.equal(1);
-        });
-        it('should not have `prev` link on the first page', function () {
-            pagination.first();
-            chai_1.expect(pagination.lnkPrev.isDisplayed()).to.eventually.be.false;
-        });
-        it('should allow attempting to navigate to the previous page when already on the first page', function () {
-            pagination.first();
-            pagination.previous();
-            chai_1.expect(pagination.getPage()).to.eventually.equal(1);
-        });
-        it('should allow attempting to navigate to the first page when already on the first page', function () {
-            pagination.first();
-            chai_1.expect(pagination.getPage()).to.eventually.equal(1);
-        });
-        it('should have all available page sizes', function () {
-            chai_1.expect(pagination.getPageSizes()).to.eventually.eql(options.pageSizes);
-        });
-        it('should highlight the current items per page selection', function () {
-            chai_1.expect(pagination.getPageSize()).to.eventually.equal(options.defaultPageSize);
-        });
+
         if (options.pages > 1) {
             it('should navigate forward one page at a time', function () {
                 pagination.next();
-                chai_1.expect(pagination.getPage()).to.eventually.equal(2);
+                expect(pagination.page).to.eventually.equal(2);
             });
+
             it('should navigate backwards one page at a time', function () {
                 pagination.previous();
-                chai_1.expect(pagination.getPage()).to.eventually.equal(1);
+                expect(pagination.page).to.eventually.equal(1);
             });
+
             it('should navigate to the last page', function () {
-                pagination.getPage().then(function (page) {
+                pagination.page.then(function (page) {
                     var firstPage = page;
                     pagination.last();
-                    rxMisc_page_1.rxMisc.scrollToElement(pagination, {
-                        positionOnScreen: 'middle',
+                    encore.rxMisc.scrollToElement(pagination.rootElement, {
+                        positionOnScreen: 'middle'
                     });
-                    chai_1.expect(pagination.getPage()).to.eventually.be.above(firstPage);
+                    expect(pagination.page).to.eventually.be.above(firstPage);
                     pagination.first();
                 });
             });
         }
+
         if (options.pages > 5) {
             it('should jump forward to page 6 using pagination', function () {
-                pagination.jumpToPage(6);
-                chai_1.expect(pagination.getPage()).to.eventually.equal(6);
+                pagination.page = 6;
+                expect(pagination.page).to.eventually.equal(6);
             });
+
             it('should jump backward to page 2 using pagination', function () {
-                pagination.jumpToPage(2);
-                chai_1.expect(pagination.getPage()).to.eventually.equal(2);
-                pagination.jumpToPage(1);
+                pagination.page = 2;
+                expect(pagination.page).to.eventually.equal(2);
+                pagination.page = 1;
             });
         }
-        if (options.pageSizes.length > 1) {
-            it('should switch to a different items per page', function () {
-                pagination.changePageSize(options.pageSizes[1]);
-                chai_1.expect(pagination.getPageSize()).to.eventually.equal(options.pageSizes[1]);
-                pagination.changePageSize(options.pageSizes[0]);
+
+        it('should not allow navigating `next` the last page', function () {
+            expect(pagination.next).to.throw(pagination.NoSuchPageException);
+        });
+
+        it('should allow attempting to navigate to the last page when already on the last page', function () {
+            pagination.last();
+            pagination.page.then(function (page) {
+                pagination.last();
+                expect(pagination.page).to.eventually.equal(page);
             });
+        });
+
+        it('should navigate to the first page', function () {
+            pagination.first();
+            expect(pagination.page).to.eventually.equal(1);
+        });
+
+        it('should not allow navigating `prev` the first page', function () {
+            expect(pagination.previous).to.throw(pagination.NoSuchPageException);
+        });
+
+        it('should allow attempting to navigate to the first page when already on the first page', function () {
+            pagination.first();
+            expect(pagination.page).to.eventually.equal(1);
+        });
+
+        it('should have all available page sizes', function () {
+            expect(pagination.pageSizes).to.eventually.eql(options.pageSizes);
+        });
+
+        it('should highlight the current items per page selection', function () {
+            expect(pagination.pageSize).to.eventually.equal(options.defaultPageSize);
+        });
+
+        it('should list the lower bounds of the shown items currently in the table', function () {
+            expect(pagination.shownItems.first).to.eventually.equal(1);
+        });
+
+        it('should list the upper bounds of the shown items currently in the table', function () {
+            expect(pagination.shownItems.last).to.eventually.not.be.above(options.defaultPageSize);
+        });
+
+        it('should know the total number of pages without visiting it', function () {
+            pagination.totalPages.then(function (totalPages) {
+                pagination.last();
+                encore.rxMisc.scrollToElement(pagination.rootElement, {
+                    positionOnScreen: 'middle'
+                });
+                expect(pagination.page).to.eventually.equal(totalPages);
+                pagination.first();
+            });
+        });
+
+        if (options.pageSizes.length > 1) {
+
+            it('should switch to a different items per page', function () {
+                pagination.pageSize = options.pageSizes[1];
+                expect(pagination.pageSize).to.eventually.equal(options.pageSizes[1]);
+                pagination.pageSize = options.pageSizes[0];
+            });
+
             if (options.pages > 1) {
                 it('should put the user back on the first page after resizing the items per page', function () {
-                    pagination.jumpToPage(2);
-                    pagination.changePageSize(options.pageSizes[1]);
-                    chai_1.expect(pagination.getPage()).to.eventually.equal(1);
-                    pagination.changePageSize(options.pageSizes[0]);
+                    pagination.page = 2;
+                    pagination.pageSize = options.pageSizes[1];
+                    expect(pagination.page).to.eventually.equal(1);
+                    pagination.pageSize = options.pageSizes[0];
                 });
             }
+
         }
-        if (options.totalItems) {
-            it('should list have the correct string for the shown items', function () {
-                var shownItems = "Showing 1-" + options.defaultPageSize + " of " + options.totalItems + " items";
-                chai_1.expect(pagination.shownItems.getText()).to.eventually.equal(shownItems);
+
+        it('should not fail to match the lower bounds of the shown items even if not displayed', function () {
+            expect(pagination.shownItems.first).to.eventually.equal(1);
+        });
+
+        // execute only if the greatest items per page setting can contain all items
+        if (_.head(options.pageSizes) * options.pages &lt; _.last(options.pageSizes)) {
+
+            it('should not fail to match the upper bounds of the shown items even if not displayed', function () {
+                pagination.pageSize = _.last(options.pageSizes);
+                pagination.shownItems.total.then(function (totalItems) {
+                    expect(pagination.shownItems.last).to.eventually.equal(totalItems);
+                    pagination.pageSize = options.defaultPageSize;
+                });
             });
-            // execute only if the greatest items per page setting can contain all items
-            if (options.totalItems &lt; _.last(options.pageSizes)) {
-                it('should not fail to match the upper bounds of the shown items even if not displayed', function () {
-                    var shownItems = "Showing " + options.totalItems + " items";
-                    pagination.changePageSize(_.last(options.pageSizes));
-                    chai_1.expect(pagination.shownItems.getText()).to.eventually.equal(shownItems);
-                });
-            }
         }
+
+        if (options.invalidPageSize) {
+
+            it('should not allow selecting an unavailable items per page', function () {
+                var fn = function () {
+                    var pageSizeFn = pagination.__lookupSetter__('pageSize');
+                    return protractor.promise.fulfilled(pageSizeFn.call(pagination, options.invalidPageSize));
+                };
+                expect(fn()).to.be.rejectedWith(pagination.NoSuchItemsPerPage);
+            });
+
+        }
+
     };
-}
-exports.rxPaginate = rxPaginate;
-;
+};
 </code></pre>
         </article>
     </section>
@@ -180,13 +234,13 @@ exports.rxPaginate = rxPaginate;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="global.html#rxCharacterCount">rxCharacterCount</a></li><li><a href="global.html#rxCheckbox">rxCheckbox</a></li><li><a href="global.html#rxCollapse">rxCollapse</a></li><li><a href="global.html#rxCopy">rxCopy</a></li><li><a href="global.html#rxDatePicker">rxDatePicker</a></li><li><a href="global.html#rxFieldName">rxFieldName</a></li><li><a href="global.html#rxMetadata">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="global.html#rxMultiSelect">rxMultiSelect</a></li><li><a href="global.html#rxPaginate">rxPaginate</a></li><li><a href="global.html#rxRadio">rxRadio</a></li><li><a href="global.html#rxSearchBox">rxSearchBox</a></li><li><a href="global.html#rxSelect">rxSelect</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxStatusCell.html">rxStatusCell</a></li><li><a href="global.html#rxTags">rxTags</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="global.html#rxToggleSwitch">rxToggleSwitch</a></li><li><a href="Tab.html">Tab</a></li><li><a href="Tabs.html">Tabs</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tooltip.html">Tooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get">get</a></li><li><a href="global.html#ICON_CLASS_STATUS">ICON_CLASS_STATUS</a></li><li><a href="global.html#NOTIFY_TYPES">NOTIFY_TYPES</a></li><li><a href="global.html#OverrideWebdriver">OverrideWebdriver</a></li><li><a href="global.html#parseUtcOffset">parseUtcOffset</a></li><li><a href="global.html#rxAction">rxAction</a></li><li><a href="global.html#rxBulkSelect">rxBulkSelect</a></li><li><a href="global.html#rxModalAction">rxModalAction</a></li><li><a href="global.html#rxNotification">rxNotification</a></li><li><a href="global.html#rxNotify">rxNotify</a></li><li><a href="global.html#rxSelectAccessor">rxSelectAccessor</a></li><li><a href="global.html#STATUS_COLORS">STATUS_COLORS</a></li><li><a href="global.html#STATUS_ICONS">STATUS_ICONS</a></li><li><a href="global.html#textFieldAccessor">textFieldAccessor</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exercise_rxBulkSelect.html">exercise/rxBulkSelect</a></li><li><a href="module-exercise_rxCharacterCount.html">exercise/rxCharacterCount</a></li><li><a href="module-exercise_rxCheckbox.html">exercise/rxCheckbox</a></li><li><a href="module-exercise_rxCollapse.html">exercise/rxCollapse</a></li><li><a href="module-exercise_rxCopy.html">exercise/rxCopy</a></li><li><a href="module-exercise_rxDatePicker.html">exercise/rxDatePicker</a></li><li><a href="module-exercise_rxFieldName.html">exercise/rxFieldName</a></li><li><a href="module-exercise_rxMetadata.html">exercise/rxMetadata</a></li><li><a href="module-exercise_rxMultiSelect.html">exercise/rxMultiSelect</a></li><li><a href="module-exercise_rxPaginate.html">exercise/rxPaginate</a></li><li><a href="module-exercise_rxRadio.html">exercise/rxRadio</a></li><li><a href="module-exercise_rxSearchBox.html">exercise/rxSearchBox</a></li><li><a href="module-exercise_rxSelect.html">exercise/rxSelect</a></li><li><a href="module-exercise_rxTags.html">exercise/rxTags</a></li><li><a href="module-exercise_rxToggleSwitch.html">exercise/rxToggleSwitch</a></li></ul><h3>Classes</h3><ul><li><a href="rxCopy.html">rxCopy</a></li><li><a href="rxDatePicker.html">rxDatePicker</a></li><li><a href="rxFieldName.html">rxFieldName</a></li><li><a href="rxTimePicker.html">rxTimePicker</a></li><li><a href="rxTooltip.html">rxTooltip</a></li></ul><h3>Namespaces</h3><ul><li><a href="rxAccountInfo.html">rxAccountInfo</a></li><li><a href="rxAccountInfo.badge.html">rxAccountInfo.badge</a></li><li><a href="rxActionMenu.html">rxActionMenu</a></li><li><a href="rxActionMenu.action.html">rxActionMenu.action</a></li><li><a href="rxAge.html">rxAge</a></li><li><a href="rxApp.html">rxApp</a></li><li><a href="rxBreadcrumbs.html">rxBreadcrumbs</a></li><li><a href="rxBreadcrumbs.breadcrumb.html">rxBreadcrumbs.breadcrumb</a></li><li><a href="rxBulkSelect.html">rxBulkSelect</a></li><li><a href="rxButton.html">rxButton</a></li><li><a href="rxCharacterCount.html">rxCharacterCount</a></li><li><a href="rxCheckbox.html">rxCheckbox</a></li><li><a href="rxCollapse.html">rxCollapse</a></li><li><a href="rxDiskSize.html">rxDiskSize</a></li><li><a href="rxEnvironment.html">rxEnvironment</a></li><li><a href="rxFeedback.html">rxFeedback</a></li><li><a href="rxForm.html">rxForm</a></li><li><a href="rxForm.textField.html">rxForm.textField</a></li><li><a href="rxInfoPanel.html">rxInfoPanel</a></li><li><a href="rxLocalStorage.html">rxLocalStorage</a></li><li><a href="rxMetadata.html">rxMetadata</a></li><li><a href="rxMisc.html">rxMisc</a></li><li><a href="rxModalAction.html">rxModalAction</a></li><li><a href="rxMultiSelect.html">rxMultiSelect</a></li><li><a href="rxNotify.html">rxNotify</a></li><li><a href="rxNotify.notification.html">rxNotify.notification</a></li><li><a href="rxPage.html">rxPage</a></li><li><a href="rxPaginate.html">rxPaginate</a></li><li><a href="rxPaginate.shownItems.html">rxPaginate.shownItems</a></li><li><a href="rxRadio.html">rxRadio</a></li><li><a href="rxSearchBox.html">rxSearchBox</a></li><li><a href="rxSelect.html">rxSelect</a></li><li><a href="rxSelect.option.html">rxSelect.option</a></li><li><a href="rxSelectFilter.html">rxSelectFilter</a></li><li><a href="rxSortableColumn.html">rxSortableColumn</a></li><li><a href="rxSortableColumns.html">rxSortableColumns</a></li><li><a href="rxStatusColumn.html">rxStatusColumn</a></li><li><a href="rxTabset.html">rxTabset</a></li><li><a href="rxTabset.rxTab.html">rxTabset.rxTab</a></li><li><a href="rxTags.html">rxTags</a></li><li><a href="rxTags.tag.html">rxTags.tag</a></li><li><a href="rxToggleSwitch.html">rxToggleSwitch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rxSpinner">rxSpinner</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 29 2017 16:31:28 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 01 2017 17:46:00 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

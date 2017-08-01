@@ -5,6 +5,258 @@
 
 
 angular.module('demoApp')
+.controller('rxAppCtrl', function ($scope, $location, $rootScope, $window, encoreRoutes, rxVisibility, rxSession) {
+    rxSession.getUserId = function () {
+        return 'bert3000';
+    };
+
+    $scope.subtitle = 'With a subtitle';
+
+    $scope.changeSubtitle = function () {
+        $scope.subtitle = 'With a new subtitle at ' + Date.now();
+    };
+
+    rxVisibility.addMethod(
+        'isUserDefined',
+        function () {
+            return !_.isEmpty($rootScope.user);
+        }
+    );
+
+    $scope.changeRoutes = function () {
+        var newRoute = {
+            linkText: 'Updated Route',
+            childVisibility: 'true',
+            children: [
+                {
+                    linkText: 'New child route'
+                }
+            ]
+        };
+
+        encoreRoutes.setRouteByKey('accountLvlTools', newRoute);
+    };
+
+    // Fake navigation
+    var customApp = document.getElementById('custom-rxApp');
+    customApp.addEventListener('click', function (ev) {
+        var target = ev.target;
+
+        if (target.className.indexOf('item-link') > -1) {
+            // prevent the default jump to top
+            ev.preventDefault();
+
+            var href = target.getAttribute('href');
+
+            // update angular location (if href has a value)
+            if (!_.isEmpty(href)) {
+                // we need to prevent the window from scrolling (the demo does this)
+                // so we get the current scrollTop position
+                // and set it after the demo page has run '$routeChangeSuccess'
+                var currentScollTop = document.body.scrollTop;
+
+                $location.hash(href);
+
+                $rootScope.$apply();
+
+                $window.scrollTo(0, currentScollTop);
+            }
+        }
+    });
+
+    var searchDirective = [
+        'rx-app-search placeholder="Enter User"',
+        'model="$root.user"',
+        'pattern="/^([0-9a-zA-Z._ -]{2,})$/"'
+    ].join(' ');
+
+    $scope.customMenu = [{
+        title: 'Example Menu',
+        children: [
+            {
+                href: 'Lvl1-1',
+                linkText: '1st Order Item'
+            },
+            {
+                linkText: '1st Order Item (w/o href) w/ Children',
+                childVisibility: [ 'isUserDefined' ],
+                childHeader: '<strong class="current-search">Current User:</strong>' +
+                             '<span class="current-result">{{$root.user}}</span>',
+                directive: searchDirective,
+                children: [
+                    {
+                        href: 'Lvl1-2-Lvl2-1',
+                        linkText: '2nd Order Item w/ Children',
+                        children: [{
+                            href: 'Lvl1-2-Lvl2-1-Lvl3-1',
+                            linkText: '3rd Order Item'
+                        }]
+                    },
+                    {
+                        href: 'Lvl1-2-Lvl2-2',
+                        linkText: '2nd Order Item w/ Children',
+                        children: [
+                            {
+                                href: 'Lvl1-2-Lvl2-2-Lvl3-1',
+                                linkText: '3rd Order Item'
+                            },
+                            {
+                                href: 'Lvl1-2-Lvl2-2-Lvl3-2',
+                                linkText: '3rd Order Item'
+                            },
+                            {
+                                href: 'Lvl1-2-Lvl2-2-Lvl3-3',
+                                linkText: '3rd Order Item'
+                            },
+                            {
+                                href: 'Lvl1-2-Lvl2-2-Lvl3-4',
+                                linkText: '3rd Order Item'
+                            }
+                        ]
+                    },
+                    {
+                        href: 'Lvl1-2-Lvl2-3',
+                        linkText: '2nd Order Item'
+                    }
+                ]
+            },
+            {
+                href: 'Lvl1-3',
+                linkText: '1st Order Item w/ Children',
+                children: [
+                    {
+                        href: 'Lvl1-3-Lvl2-1',
+                        linkText: '2nd Order Item'
+                    }
+                ]
+            }
+        ]
+    }];
+
+    // Load docs homepage ('Overview')
+    // NOTE: Trailing forward slash is not an accident.
+    // This is required to get Firefox to load the iframe.
+    //
+    // The resulting url should have double forward slashes `//`.
+    $scope.embedUrl = $location.absUrl().split('#')[0] + '/';
+});
+
+
+// Note that these factories are only present for the purposes of this demo. In a real application,
+// SupportAccount, Teams, AccountStatusGroup, and Encore will have to be provided from elsewhere,
+// outside of encore-ui. Specifically, we implement them in encore-ui-svcs.
+
+angular.module('demoApp')
+.value('Badges',
+       [{
+           url: 'http://mirrors.creativecommons.org/presskit/icons/cc.large.png',
+           description: 'Enables the free distribution of an otherwise copyrighted work.',
+           name: 'Creative Commons'
+       }, {
+           url: 'http://mirrors.creativecommons.org/presskit/icons/by.large.png',
+           description: ['You must give appropriate credit, provide a link to the',
+                         'license, and indicate if changes were made.'].join(' '),
+           name: 'Attribution'
+       }, {
+           url: 'http://mirrors.creativecommons.org/presskit/icons/nc.large.png',
+           description: 'You may not use the material for commercial purposes.',
+           name: 'Non-Commercial'
+       }, {
+           url: 'http://mirrors.creativecommons.org/presskit/icons/zero.large.png',
+           description: 'Waives as many rights as legally possible, worldwide.',
+           name: 'Public Domain'
+       }]
+)
+.value('TeamBadges',
+       [{
+           url: 'http://mirrors.creativecommons.org/presskit/icons/share.large.png',
+           description: ['Licensees may distribute derivative works only under a license',
+                         'identical to the license that governs the original work.'].join(' '),
+           name: 'ShareAlike'
+       }, {
+           url: 'http://mirrors.creativecommons.org/presskit/icons/nd.large.png',
+           description: ['Licensees may copy, distribute, display and perform only verbatim',
+                         'copies of the work, not derivative works based on it.'].join(' '),
+           name: 'No-Derivs'
+       }]
+)
+.factory('SupportAccount', function ($q, Badges) {
+    return {
+        getBadges: function (config, success, failure) {
+            var deferred = $q.defer();
+
+            if (config.accountNumber === '6789') {
+                deferred.reject();
+            } else {
+                deferred.resolve(Badges);
+            }
+
+            deferred.promise.then(success, failure);
+
+            return deferred.promise;
+        }
+    };
+})
+.factory('Teams', function ($q, TeamBadges) {
+    return {
+        badges: function (config) {
+            var deferred = $q.defer();
+
+            if (config.id === '9876') {
+                deferred.reject();
+            } else {
+                deferred.resolve(TeamBadges);
+            }
+
+            deferred.$promise = deferred.promise;
+
+            return deferred;
+        }
+    };
+})
+.factory('Encore', function ($q) {
+    return {
+        getAccount: function (config, success, failure) {
+            var deferred = $q.defer();
+
+            if (config.id === '9876') {
+                deferred.reject();
+            } else if (config.id === '5623') {
+                deferred.resolve({ name: 'DelinquentAccount', status: 'Delinquent', accessPolicy: 'Full' });
+            } else if (config.id === '3265') {
+                deferred.resolve({ name: 'UnverifiedAccount', status: 'Unverified', accessPolicy: 'Full' });
+            } else {
+                deferred.resolve({
+                    name: 'Mosso',
+                    status: 'Active',
+                    accessPolicy: 'Full',
+                    collectionsStatus: 'CURRENT'
+                });
+            }
+
+            deferred.promise.then(success, failure);
+
+            return deferred.promise;
+        }
+    };
+})
+.factory('AccountStatusGroup', function () {
+    var warning = ['suspended', 'delinquent'];
+    var info = ['unverified', 'pending approval', 'approval denied', 'teststatus', 'terminated'];
+
+    return function (statusText) {
+        var lower = statusText.toLowerCase();
+        if (_.includes(warning, lower)) {
+            return 'warning';
+        } else if (_.includes(info, lower)) {
+            return 'info';
+        }
+        return '';
+    };
+});
+
+
+angular.module('demoApp')
 .controller('actionMenuSimpleCtrl', function ($scope, rxNotify) {
     $scope.add = function () {
         rxNotify.add('Added!', {
@@ -21,6 +273,18 @@ angular.module('demoApp')
             timeout: 3
         });
     };
+});
+
+
+angular.module('demoApp')
+.controller('breadcrumbsSimpleCtrl', function ($scope, rxBreadcrumbsSvc) {
+    rxBreadcrumbsSvc.set([{
+        path: '#/elements',
+        name: 'Elements',
+    }, {
+        name: '<strong>All Elements</strong>',
+        status: 'demo'
+    }]);
 });
 
 
@@ -1106,7 +1370,7 @@ angular.module('demoApp')
 angular.module('demoApp')
 .controller('tooltipsSimpleExampleCtrl', function ($scope) {
     $scope.dynamicTooltip = 'I was defined in the controller!';
-    $scope.htmlTooltip = '<span class="tooltip-header">A Tooltip Title</span><p>You can use HTML</p>';
+    $scope.htmlTooltip = '<span class="rx-tooltip-header">A Tooltip Title</span><p>You can use HTML</p>';
 });
 
 
@@ -1139,6 +1403,8 @@ angular.module('demoApp')
 
 
 
+
+
 angular.module('demoApp')
 .controller('rxAgeCtrl', function ($scope) {
     var day = 1000 * 60 * 60 * 24;
@@ -1147,6 +1413,8 @@ angular.module('demoApp')
     $scope.ageMonths = new Date((Date.now() - (day * 40.2))).toString();
     $scope.ageYears = new Date((Date.now() - (day * 380.1))).toString();
 });
+
+
 
 
 angular.module('demoApp')
@@ -1231,6 +1499,8 @@ angular.module('demoApp')
 
 
 
+
+
 angular.module('demoApp')
 .controller('rxBytesConvertCtrl', function ($scope) {
     $scope.sizeGB = 42e10; // 420 GB
@@ -1270,12 +1540,16 @@ angular.module('demoApp')
 
 
 
+
+
 angular.module('demoApp')
 .controller('rxDiskSizeCtrl', function ($scope) {
     $scope.sizeGB = 420;
     $scope.sizeTB = 125000;
     $scope.sizePB = 171337000;
 });
+
+
 
 
 
@@ -1316,6 +1590,8 @@ angular.module('demoApp')
         $window.alert(sidekick.name);
     };
 });
+
+
 
 
 
@@ -1379,6 +1655,8 @@ angular.module('demoApp')
         rxSession.logout();
     };
 });
+
+
 
 
 
@@ -1568,6 +1846,10 @@ angular.module('demoApp')
 });
 
 
+
+
+
+
 angular.module('demoApp')
 .controller('rxTimeDemoCtrl', function ($scope) {
     $scope.dateString = '2015-09-17T19:37:17Z';
@@ -1588,10 +1870,18 @@ angular.module('demoApp')
 
 
 
+
+
+
+
 angular.module('demoApp')
 .controller('rxUnsafeRemoveHTMLSimpleCtrl', function ($scope) {
     $scope.sample = 'Sample string <strong>without</strong> <span>HTML tags</span>.';
 });
+
+
+
+
 
 
 

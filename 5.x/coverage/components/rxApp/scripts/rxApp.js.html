@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/rxApp/scripts/rxApp.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">components/rxApp/scripts/rxApp.js</span></h1>
+    <h2>
+        Statements: <span class="metric">96% <small>(24 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(16 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">96% <small>(24 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">components/rxApp/scripts/</a> &#187; rxApp.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">54</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.rxApp')
+/**
+ * @ngdoc directive
+ * @name rxApp.directive:rxApp
+ * @restrict E
+ * @scope
+ * @description
+ * Responsible for creating the HTML necessary for a common Encore layout.
+ *
+ * @param {String=} siteTitle Title of site to use in upper right hand corner
+ * @param {Array=} menu Menu items used for left-hand navigation
+ * @param {String=} collapsibleNav Set to 'true' if the navigation menu should be collapsible
+ * @param {String=} collapsedNav Binding for the collapsed state of the menu.
+ * @param {Boolean=} newInstance Whether the menu items should be a new instance of `rxAppRoutes`
+ * @param {Boolean=} [hideFeeback=false] Whether to hide the 'feedback' link
+ * @param {String=} logoutUrl URL to pass to rx-logout
+ *
+ * @example
+ * &lt;pre&gt;
+ * &lt;rx-app site-title="Custom Title"&gt;&lt;/rx-app&gt;
+ * &lt;/pre&gt;
+ */
+.directive('rxApp', function (encoreRoutes, rxAppRoutes, rxEnvironment,
+                              routesCdnPath, rxSession, $window) {
+    return {
+        restrict: 'E',
+        transclude: true,
+        templateUrl: 'templates/rxApp.html',
+        scope: {
+            siteTitle: '@?',
+            menu: '=?',
+            collapsibleNav: '@',
+            collapsedNav: '=?',
+            newInstance: '@?',
+            hideFeedback: '@?',
+            logoutUrl: '@?'
+        },
+        link: function (scope) {
+            scope.userId = rxSession.getUserId();
+&nbsp;
+            scope.isPreProd = rxEnvironment.isPreProd();
+&nbsp;
+            scope.isLocalNav = routesCdnPath.hasCustomURL &amp;&amp; (rxEnvironment.isLocal());
+&nbsp;
+            scope.isWarning = scope.isPreProd || scope.isLocalNav;
+&nbsp;
+            scope.isEmbedded = false;
+            try {
+                // Checks to see if we have access to the global scope of a DOM Window
+                // Element by attempting to set a property on it.  If we have no errors
+                // then this means that `document.domain` matches and we have no Cross
+                // Origin security constraints
+                $window.top['hasSameDomain'] = true;
+                scope.isEmbedded = $window.self !== $window.top;
+            } catch (e) {
+<span class="cstat-no" title="statement not covered" >                scope.isEmbedded = false;</span>
+            }
+&nbsp;
+            if (scope.isPreProd) {
+                scope.warningMessage =
+                    'You are using a pre-production environment that has real, live production data!';
+            } else if (scope.isLocalNav) {
+                scope.warningMessage =
+                    'You are using a local nav file. Remove it from your config before committing!';
+            }
+&nbsp;
+            // default hideFeedback to false
+            var appRoutes = scope.newInstance ? new rxAppRoutes() : encoreRoutes;
+&nbsp;
+            // we only want to set new menu data if a new instance of rxAppRoutes was created
+            // or if scope.menu was defined
+            if (scope.newInstance || scope.menu) {
+                appRoutes.setAll(scope.menu);
+            } else {
+                // if the default menu is needed, load it from the CDN
+                // a cached copy is assigned if available
+                scope.routes = appRoutes.fetchRoutes();
+            }
+&nbsp;
+            var setRoutes = function () {
+                appRoutes.getAll().then(function (routes) {
+                    scope.routes = routes;
+                });
+            };
+&nbsp;
+            scope.$evalAsync(setRoutes);
+            scope.$on('rxUpdateNavRoutes', setRoutes);
+&nbsp;
+            // default hideFeedback to false
+            scope.hideFeedback = scope.hideFeedback ? true : false;
+        }
+    };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

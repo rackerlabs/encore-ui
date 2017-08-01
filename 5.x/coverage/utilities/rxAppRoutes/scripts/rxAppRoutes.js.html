@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxAppRoutes/scripts/rxAppRoutes.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">utilities/rxAppRoutes/scripts/rxAppRoutes.js</span></h1>
+    <h2>
+        Statements: <span class="metric">94.44% <small>(68 / 72)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">95% <small>(19 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">87.5% <small>(21 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">94.44% <small>(68 / 72)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxAppRoutes/scripts/</a> &#187; rxAppRoutes.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-yes">226</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">332</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">332</span>
+<span class="cline-any cline-yes">133</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">332</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">226</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-yes">29</span>
+<span class="cline-any cline-yes">29</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-yes">25</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">81</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxAppRoutes
+ * @description
+ * Manages page routes, building urls and marking them as active on route change.
+ */
+.factory('rxAppRoutes', function ($rootScope, $log, rxUrlUtils, $q) {
+    var AppRoutes = function (routes) {
+        routes = routes || [];
+        // we need to get the current path on page load
+        var currentPathChunks = rxUrlUtils.getCurrentPathChunks();
+        var loadingDeferred = $q.defer();
+&nbsp;
+        // if the routes were already passed in, then we can immediately
+        // resolve the promise
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (routes.length &gt; 0) {
+<span class="cstat-no" title="statement not covered" >            loadingDeferred.resolve(routes);</span>
+        }
+&nbsp;
+        var setDynamicProperties = function (routes, extraUrlContext) {
+            _.each(routes, function (route) {
+                // build out url for current route
+                route.url = rxUrlUtils.buildUrl(route.href, extraUrlContext);
+&nbsp;
+                // check if any children exist, if so, build their URLs as well
+                if (route.children) {
+                    route.children = setDynamicProperties(route.children, extraUrlContext);
+                }
+&nbsp;
+                // set active state (this needs to go after the recursion,
+                // so that the URL is built for all the children)
+                route.active = rxUrlUtils.isActive(route, currentPathChunks);
+            });
+&nbsp;
+            return routes;
+        };
+&nbsp;
+        var getRouteIndex = function (key, routes) {
+            var routeIndex;
+            var routeAlreadyFound = false;
+&nbsp;
+            _.forEach(routes, function (route, index) {
+                var foundThisTime = false;
+                if (route.key === key) {
+                    routeIndex = [index];
+                    foundThisTime = true;
+                } else if ('children' in route) {
+                    // if there are children in the route, we need to search through them as well
+                    var childIndex = getRouteIndex(key, route.children);
+                    if (childIndex) {
+                        routeIndex = [index].concat(childIndex);
+                        foundThisTime = true;
+                    }
+                }
+                if (foundThisTime) {
+                    if (routeAlreadyFound) {
+                        $log.warn('Duplicate routes found for key: ' + key);
+                    } else {
+                        routeAlreadyFound = true;
+                    }
+                }
+            });
+&nbsp;
+            return routeIndex;
+        };
+&nbsp;
+        var updateRouteByIndex = function (indexes, routeInfo, routes, level) {
+            var route = routes[indexes[0]];
+&nbsp;
+            if (level &lt; indexes.length - 1) {
+                // if there's more than one index, we need to recurse down a level
+                route.children = updateRouteByIndex(indexes.slice(1), routeInfo, route.children, level + 1);
+            } else {
+                _.assign(route, routeInfo);
+            }
+&nbsp;
+            return routes;
+        };
+&nbsp;
+        // Get the route for a given index
+        var getRouteByIndex = function (indexes, subRoutes) {
+            var i, route,
+                depth = indexes.length;
+            for (i = 0; i &lt; depth; i++) {
+                route = subRoutes[indexes[i]];
+                subRoutes = route.children;
+            }
+            return route;
+        };
+&nbsp;
+        $rootScope.$on('$locationChangeSuccess', function () {
+            // NOTE: currentPath MUST be updated before routes
+            currentPathChunks = rxUrlUtils.getCurrentPathChunks();
+&nbsp;
+            routes = setDynamicProperties(routes);
+        });
+&nbsp;
+        return {
+            /**
+             * Finds the indexes/path to a route. Will return last match if duplicate keys exist
+             * @see setRouteByKey for actual use
+             * @param  {String} key Route Key
+             * @example
+             *     var myRouteIndex = rxAppRoutes.getIndexByKey('myKey'); // [0, 2, 0]
+             * @return {Array|undefined} Array of indexes describing path to route (or undefined if not found)
+             */
+            getIndexByKey: function (key) {
+                return loadingDeferred.promise.then(function () {
+                    var routeIndex = getRouteIndex(key, routes);
+                    if (_.isUndefined(routeIndex)) {
+                        $log.debug('Could not find route by key: ', key);
+                        return $q.reject();
+                    }
+&nbsp;
+                    return routeIndex;
+                });
+            },
+&nbsp;
+            getRouteByKey: function (key) {
+                return this.getIndexByKey(key).then(function (index) {
+                    return getRouteByIndex(index, routes);
+                }, function () {
+                    return $q.reject();
+                });
+            },
+&nbsp;
+            isActiveByKey: function (key) {
+                return this.getRouteByKey(key).then(function (route) {
+                    return rxUrlUtils.isActive(route, rxUrlUtils.getCurrentPathChunks());
+                }, <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    return $q.reject();</span>
+                });
+&nbsp;
+            },
+            /**
+             * functionality to update routes based on their key
+             * @param {String} key Route key used to identify it in navigation
+             * @param {Object} routeInfo Information used to overwrite original properties
+             * @return {Boolean} true if successfully updated, false if key not found
+             */
+            setRouteByKey: function (key, routeInfo) {
+                return this.getIndexByKey(key).then(function (routeIndex) {
+                    routes = updateRouteByIndex(routeIndex, routeInfo, routes, 0);
+&nbsp;
+                    // now that we've updated the route info, we need to reset the dynamic properties
+                    routes = setDynamicProperties(routes);
+&nbsp;
+                    return routeIndex;
+                }, <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    return $q.reject();</span>
+                });
+            },
+            getAll: function () {
+                return loadingDeferred.promise.then(function () {
+                    return routes;
+                });
+            },
+            setAll: function (newRoutes) {
+                // let's not mess with the original object
+                var routesToBe = _.cloneDeep(newRoutes);
+&nbsp;
+                routes = setDynamicProperties(routesToBe);
+                loadingDeferred.resolve();
+            },
+            rebuildUrls: <span class="fstat-no" title="function not covered" >function (extraUrlContext) {</span>
+<span class="cstat-no" title="statement not covered" >                setDynamicProperties(routes, extraUrlContext);</span>
+            }
+        };
+    };
+&nbsp;
+    return AppRoutes;
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

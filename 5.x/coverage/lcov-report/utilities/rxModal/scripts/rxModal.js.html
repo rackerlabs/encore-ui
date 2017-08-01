@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for utilities/rxModal/scripts/rxModal.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">utilities/rxModal/scripts/rxModal.js</span></h1>
+    <h2>
+        Statements: <span class="metric">17.74% <small>(11 / 62)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">12.5% <small>(2 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">17.74% <small>(11 / 62)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">utilities/rxModal/scripts/</a> &#187; rxModal.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1106</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1106</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('encore.ui.utilities')
+/**
+ * @ngdoc service
+ * @name utilities.service:rxModal
+ * @requires utilities.service:rxModalStack
+ * @description
+ * Service for providing modals
+ */
+.provider('rxModal', function () {
+    var $modalProvider = {
+&nbsp;
+        options: {
+            animation: true,
+            backdrop: true, //can also be false or 'static'
+            keyboard: true
+        },
+        $get: function ($injector, $rootScope, $q, $templateRequest, $controller, rxModalStack) {
+            var $modal = {};
+<span class="fstat-no" title="function not covered" >            function getTemplatePromise (options) {</span>
+<span class="cstat-no" title="statement not covered" >                return options.template ? $q.when(options.template) :</span>
+                $templateRequest(angular.isFunction(options.templateUrl) ?
+                    (options.templateUrl)() : options.templateUrl);
+            }
+&nbsp;
+<span class="fstat-no" title="function not covered" >            function getResolvePromises (resolves) {</span>
+<span class="cstat-no" title="statement not covered" >                var promisesArr = [];</span>
+<span class="cstat-no" title="statement not covered" >                angular.forEach(resolves, <span class="fstat-no" title="function not covered" >function (value) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (angular.isFunction(value) || angular.isArray(value)) {</span>
+<span class="cstat-no" title="statement not covered" >                        promisesArr.push($q.when($injector.invoke(value)));</span>
+                    } else <span class="cstat-no" title="statement not covered" >if (angular.isString(value)) {</span>
+<span class="cstat-no" title="statement not covered" >                        promisesArr.push($q.when($injector.get(value)));</span>
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        promisesArr.push($q.when(value));</span>
+                    }
+                });
+<span class="cstat-no" title="statement not covered" >                return promisesArr;</span>
+            }
+&nbsp;
+            var promiseChain = null;
+            $modal.getPromiseChain = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                return promiseChain;</span>
+            };
+&nbsp;
+            $modal.open = <span class="fstat-no" title="function not covered" >function (modalOptions) {</span>
+<span class="cstat-no" title="statement not covered" >                var modalResultDeferred = $q.defer();</span>
+<span class="cstat-no" title="statement not covered" >                var modalOpenedDeferred = $q.defer();</span>
+<span class="cstat-no" title="statement not covered" >                var modalRenderDeferred = $q.defer();</span>
+&nbsp;
+                //prepare an instance of a modal to be injected into controllers and returned to a caller
+<span class="cstat-no" title="statement not covered" >                var modalInstance = {</span>
+                    result: modalResultDeferred.promise,
+                    opened: modalOpenedDeferred.promise,
+                    rendered: modalRenderDeferred.promise,
+                    close: <span class="fstat-no" title="function not covered" >function (result) {</span>
+<span class="cstat-no" title="statement not covered" >                        return rxModalStack.close(modalInstance, result);</span>
+                    },
+                    dismiss: <span class="fstat-no" title="function not covered" >function (reason) {</span>
+<span class="cstat-no" title="statement not covered" >                        return rxModalStack.dismiss(modalInstance, reason);</span>
+                    }
+                };
+&nbsp;
+                //merge and clean up options
+<span class="cstat-no" title="statement not covered" >                modalOptions = angular.extend({}, $modalProvider.options, modalOptions);</span>
+<span class="cstat-no" title="statement not covered" >                modalOptions.resolve = modalOptions.resolve || {};</span>
+&nbsp;
+                //verify options
+<span class="cstat-no" title="statement not covered" >                if (!modalOptions.template &amp;&amp; !modalOptions.templateUrl) {</span>
+<span class="cstat-no" title="statement not covered" >                    throw new Error('One of template or templateUrl options is required.');</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var templateAndResolvePromise =</span>
+                $q.all([getTemplatePromise(modalOptions)].concat(getResolvePromises(modalOptions.resolve)));
+&nbsp;
+<span class="fstat-no" title="function not covered" >                function resolveWithTemplate () {</span>
+<span class="cstat-no" title="statement not covered" >                    return templateAndResolvePromise;</span>
+                }
+&nbsp;
+                // Wait for the resolution of the existing promise chain.
+                // Then switch to our own combined promise dependency (regardless of how the previous modal fared).
+                // Then add to rxModalStack and resolve opened.
+                // Finally clean up the chain variable if no subsequent modal has overwritten it.
+<span class="cstat-no" title="statement not covered" >                var samePromise;</span>
+<span class="cstat-no" title="statement not covered" >                samePromise = promiseChain = $q.all([promiseChain])</span>
+                .then(resolveWithTemplate, resolveWithTemplate)
+                .then(<span class="fstat-no" title="function not covered" >function resolveSuccess (tplAndVars) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var modalScope = (modalOptions.scope || $rootScope).$new();</span>
+<span class="cstat-no" title="statement not covered" >                    modalScope.$close = modalInstance.close;</span>
+<span class="cstat-no" title="statement not covered" >                    modalScope.$dismiss = modalInstance.dismiss;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    modalScope.$on('$destroy', <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                        if (!modalScope.$$uibDestructionScheduled) {</span>
+<span class="cstat-no" title="statement not covered" >                            modalScope.$dismiss('$uibUnscheduledDestruction');</span>
+                        }
+                    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var ctrlInstance, ctrlLocals = {};</span>
+<span class="cstat-no" title="statement not covered" >                    var resolveIter = 1;</span>
+&nbsp;
+                    //controllers
+<span class="cstat-no" title="statement not covered" >                    if (modalOptions.controller) {</span>
+<span class="cstat-no" title="statement not covered" >                        ctrlLocals.$scope = modalScope;</span>
+<span class="cstat-no" title="statement not covered" >                        ctrlLocals.$modalInstance = modalInstance;</span>
+<span class="cstat-no" title="statement not covered" >                        Object.defineProperty(ctrlLocals, '$modalInstance', {</span>
+                            get: <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                                return modalInstance;</span>
+                            }
+                        });
+<span class="cstat-no" title="statement not covered" >                        angular.forEach(modalOptions.resolve, <span class="fstat-no" title="function not covered" >function (value, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                            ctrlLocals[key] = tplAndVars[resolveIter++];</span>
+                        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        ctrlInstance = $controller(modalOptions.controller, ctrlLocals);</span>
+<span class="cstat-no" title="statement not covered" >                        if (modalOptions.controllerAs) {</span>
+<span class="cstat-no" title="statement not covered" >                            if (modalOptions.bindToController) {</span>
+<span class="cstat-no" title="statement not covered" >                                angular.extend(ctrlInstance, modalScope);</span>
+                            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            modalScope[modalOptions.controllerAs] = ctrlInstance;</span>
+                        }
+                    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    rxModalStack.open(modalInstance, {</span>
+                        scope: modalScope,
+                        deferred: modalResultDeferred,
+                        renderDeferred: modalRenderDeferred,
+                        content: tplAndVars[0],
+                        animation: modalOptions.animation,
+                        backdrop: modalOptions.backdrop,
+                        keyboard: modalOptions.keyboard,
+                        backdropClass: modalOptions.backdropClass,
+                        windowTopClass: modalOptions.windowTopClass,
+                        windowClass: modalOptions.windowClass,
+                        windowTemplateUrl: modalOptions.windowTemplateUrl,
+                        size: modalOptions.size,
+                        openedClass: modalOptions.openedClass
+                    });
+<span class="cstat-no" title="statement not covered" >                    modalOpenedDeferred.resolve(true);</span>
+&nbsp;
+                }, <span class="fstat-no" title="function not covered" >function resolveError (reason) {</span>
+<span class="cstat-no" title="statement not covered" >                    modalOpenedDeferred.reject(reason);</span>
+<span class="cstat-no" title="statement not covered" >                    modalResultDeferred.reject(reason);</span>
+                })
+                .finally(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    if (promiseChain === samePromise) {</span>
+<span class="cstat-no" title="statement not covered" >                        promiseChain = null;</span>
+                    }
+                });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return modalInstance;</span>
+            };
+&nbsp;
+            return $modal;
+        }
+    };
+    return $modalProvider;
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 01 2017 17:46:16 GMT-0500 (CDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

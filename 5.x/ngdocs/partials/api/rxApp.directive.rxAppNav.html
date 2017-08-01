@@ -1,0 +1,419 @@
+<a href="https://github.com/rackerlabs/encore-ui/edit/master/src/components/rxApp/scripts/rxAppNav.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/rackerlabs/encore-ui/blob/6195e10/src/components/rxApp/scripts/rxAppNav.js#L480" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rxAppNav</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">rxApp</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="rxapp-directive-page rxapp-directive-rxappnav-page"><p>Creates a menu based on items passed in.</p>
+<h3 id="description_navigation-menu-json-structure">Navigation Menu JSON Structure</h3>
+<p>EncoreUI applications, by default, load the navigation menu from JSON defined
+in the <a href="https://github.com/rackerlabs/encore-ui-nav">encore-ui-nav project</a>.
+You can specify that a different JSON file be used (see the demo below), but
+a certain structure is expected for the JSON.</p>
+<h4 id="description_navigation-menu-json-structure_outer-structure/sections">Outer structure/Sections</h4>
+<p>The JSON consists of an array of objects, with each object representing a
+&quot;section&quot; in the nav. The two demos at the bottom of this page each only have
+one section, <code>&quot;All Tools&quot;</code> and <code>&quot;Example Menu&quot;</code>, respectively. As such, the
+JSON for each of them is an array with one object in it. The default EncoreUI
+nav menu only has one section <code>&quot;All Tools&quot;</code>, and individual products should
+not be expecting to add their own sections.</p>
+<p>The application that this documentation lives in has three sections, which you
+can see if you look at the current left nav menu.
+They are <code>EncoreUI</code>, <code>Design Styleguide</code> and <code>All Components</code>.</p>
+<h5 id="description_navigation-menu-json-structure_outer-structure/sections"><code>title</code> (required)</h5>
+<p>Each section specified in this array is required to have a <code>title</code>
+attribute, i.e.</p>
+<pre class="prettyprint linenums">
+navJSON = [
+    {
+        "title": "Section 1"
+    }, {
+        "title": "Section 2"
+    }
+]
+</pre>
+<h5 id="description_navigation-menu-json-structure_outer-structure/sections"><code>type</code> (optional)</h5>
+<p>Each section can optionally have a <code>type</code> attribute. If present, a class with
+the value <code>nav-section-TYPE</code> will be applied in the nav, otherwise
+<code>nav-section-all</code> will be applied.</p>
+<pre class="prettyprint linenums">
+navJSON = [
+    {
+        "title": "Section 1",
+        "type": "highlight"
+    }, {
+        "title": "Section 2"
+    }
+]
+</pre>
+<p>In this example, <code>Section 1</code> will have a <code>nav-section-highlight</code> class applied
+to it, while <code>Section 2</code> will receive the default <code>nav-section-all</code> class.</p>
+<p>The default Encore nav menu does not currently use the <code>type</code> property, and
+products being added to Encore should avoid it. This attribute is reserved
+for future use by the EncoreUI designers.</p>
+<h5 id="description_navigation-menu-json-structure_outer-structure/sections"><code>children</code> (optional)</h5>
+<p>A section&#39;s <code>children</code> attribute details the first level of navigation items
+that live within the section. This is defined as an array of objects, where
+each object represents an &quot;item&quot; to be displayed in the nav (and the structure
+of the objects/items themselves will be defined in the Navigation Items
+section below). As an example, this could look like:</p>
+<pre class="prettyprint linenums">
+navJSON = [
+    {
+        "title": "Section 1",
+        "type": "highlight",
+        "children": [
+            {
+                "href": "/overview",
+                "key": "overview",
+                "linkText": "Overview"
+            }, {
+                "href": "/about",
+                "key": "about",
+                "linkText": "About"
+            },
+        ]
+    }, {
+        "title": "Section 2",
+        "children": [
+            {
+                "href": "/overview2",
+                "linkText": "Section 2 Overview"
+            }
+        ]
+    }
+]
+</pre>
+<p>These <code>children</code> will be able to have further <code>children</code> nested inside them,
+accessible via an expand/collapse chevron, but it is important to note that
+the top level <code>children</code> in each section will <em>always</em> be displayed.</p>
+<h4 id="description_navigation-menu-json-structure_navigation-items">Navigation Items</h4>
+<p>A Navigation Item is an object that exists in a <code>children</code> array, and
+represents a clickable item. These items have many optional attributes,
+and can themselves contain <code>children</code> attributes.</p>
+<p>Their only required attribute is <code>linkText</code>. The object will also need <em>one</em>
+of the <code>href</code> or <code>children</code> attributes, but these two should be mutually exclusive.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>linkText</code> (required)</h5>
+<p>The <code>linkText</code> attribute defines what text will be shown for the item in the
+nav menu. This was shown in the example above,</p>
+<pre class="prettyprint linenums">
+{
+       "title": "Section 1",
+       "type": "highlight",
+       "children": [
+           {
+                "href": "/overview",
+                "key": "overview",
+                "linkText": "Overview"
+          }, {
+                "href": "/about",
+                "key": "about",
+                "linkText": "About"
+          },
+      ]
+}
+</pre>
+<p>These items will be displayed in the nav with <code>Overview</code> and <code>About</code> text.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>key</code> (required for top-level items)</h5>
+<p>The <code>key</code> attribute is used to provide an unique identifier for individual
+navigation items. If you are introducing a new top-level item into the nav
+menu, then the <code>key</code> is required. It is optional for any nested items. There
+are two possible reasons you would want to provide this for nested items:</p>
+<ol>
+<li>A nav item with a <code>key</code> will have the class <code>rx-app-key-{{ item.key }}</code>
+applied to it</li>
+<li><code>rxAppRoutes</code> exposes a few methods for working with the key, including
+<code>isActiveByKey()</code> and <code>setRouteByKey()</code></li>
+</ol>
+<p>In general, you should not need to provide a <code>key</code> attribute for any nested
+children. We try to avoid custom styling inside the nav, so the automatic
+class application shouldn&#39;t be necessary. And the <code>rxAppRoutes</code> methods are
+<em>generally</em> only used internally by EncoreUI.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>href</code> (optional)</h5>
+<p>The <code>href</code> attribute is used to assign a URL to the item, which will be
+navigated to when clicked. If the item has a <code>children</code> attribute, you
+normally would not include <code>href</code>, because you want the children to
+expand/collapse when this item is clicked, rather than navigating away to
+somewhere else.</p>
+<p>For Encore products within Rackspace, we keep the products on the same domain
+(encore.rackspace.com), but give each product its own top-level path, i.e.
+<code>encore.rackspace.com/foo</code>, <code>encore.rackspace.com/bar</code>. By doing this, the
+<code>href</code> values can simply be entered as <code>/foo</code> and <code>/bar</code>. And more importantly,
+<code>/foo</code> and <code>/bar</code> can be <em>completely separate Angular applications</em>. Both
+applications are available in the nav, but clicking on <code>/foo</code> will load a new
+Angular application, while clicking on <code>/bar</code> loads a brand new Angular
+application.</p>
+<p>This allows applications to be developed and deployed independently from each
+other. The nav is aware of all the applications, but they do not have to be
+aware of each other.</p>
+<p>An extra feature of <code>href</code> is that you can put variables into it, that will be
+interpolated with the current <code>$route.current.pathParams</code>. Thus, you can do
+something like:</p>
+<pre class="prettyprint linenums">
+{
+     "title": "Section 1",
+    "type": "highlight",
+    "children": [
+        {
+            "href": "/overview",
+            "key": "overview",
+            "linkText": "Overview"
+        }, {
+            "href": "/about/{{foobar}}",
+            "key": "about",
+            "linkText": "About"
+        },
+        ]
+}
+</pre>
+<p>If <code>foobar</code> is currently in <code>$route.current.pathParams</code>, then its value will
+automatically be inserted into the final URL.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>children</code> (optional)</h5>
+<p>If an item doesn&#39;t have an <code>href</code> attribute, it&#39;s probably because it has
+child items via the <code>children</code> attribute.</p>
+<pre class="prettyprint linenums">
+{
+     "title": "Section 1",
+    "type": "highlight",
+    "children": [
+        {
+            "href": "/overview",
+            "key": "overview",
+            "linkText": "Overview"
+        }, {
+            "href": "/about",
+            "key": "about",
+            "linkText": "About"
+        }, {
+            "linkText": "People",
+            "children": [
+                {
+                    "href": "/people/bob",
+                    "linkText": "Bob",
+                }, {
+                    "href": "/people/sue",
+                    "linkText": "Sue"
+                }
+
+            ]
+        }
+    ]
+}
+</pre>
+<p>This example shows a new item <code>People</code>, which has no <code>href</code> of its own, but
+does have <code>children</code>, which contains two new items, each with their own unique <code>href</code>.</p>
+<p>By default, the <code>Bob</code> and <code>Sue</code> items will not be visible, and in the nav,
+<code>People</code> will automatically have a chevron attached. When clicked, it will
+expand to show the <code>children</code> items.</p>
+<p>As an aside, in this example, there will likely be one Angular application at
+<code>/people</code>, which is resonsible for routing <code>/people/bob</code> and <code>/people/sue</code>,
+while <code>/overview</code> and <code>/about</code> would probably be two different Angular
+applications.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>visibility</code> and <code>childVisibility</code> (optional)</h5>
+<p>The <code>visibility</code> attribute is used to control whether or not an individual nav
+item is visible to the user. If <code>visibility</code> is not specified, then by default
+the item is always visible. The <code>childVisibility</code> attribute takes all the same
+possible values as <code>visibility</code>, but is used to determine whether the items in
+<code>children</code> should be visible.</p>
+<p><code>visibility</code> can take a few types of values. The original form used in EncoreUI
+was to pass an expression, filtering values with <code>rxEnvironmentMatch</code>, i.e.</p>
+<pre class="prettyprint linenums">
+"visibility": "('unified-preprod' | rxEnvironmentMatch) || ('local' | rxEnvironmentMatch)",
+</pre>
+<p>This expression would be evaluated, checking if the user is currently viewing
+the app in the <code>unified-preprod</code> environment or the <code>local</code> environment, and
+only display the item if one of those was true. (See <a href="#/api/utilities.service:rxEnvironment">rxEnvironment</a>
+for more details on environemnts). This was used to prevent items from being
+displayed in a production environment if they were only currently available in
+staging.</p>
+<p><em>Note</em>: Using an expression for environment checking use has somewhat tailed off.
+We now have different JSON files for each environment, so checking the current
+environment is not necessary.</p>
+<p>Another technique for visibility is to use a predefined set of visibility
+functions that exist in the framework—<code>rxPathParams</code>, for example.</p>
+<p>To use these, you pass an array to <code>visibility</code>, with the first argument being
+the name of the function to use (as a string), and the second argument as an
+optional object describing the parameters to pass to the function.</p>
+<p>For instance, <code>rxPathParams</code> is used to check if a particular parameter is
+present in the current route. The syntax is as follows:</p>
+<pre class="prettyprint linenums">
+"visibility": ["rxPathParams", { "param": "accountNumber" }],
+</pre>
+<p>This means &quot;only show this item if <code>accountNumber</code> is present in the current route.</p>
+<p><code>rxPathParams</code> is typically used with <code>childVisibility</code>, not <code>visibility</code>. For
+instance, the <code>Account</code> section in Encore will by default show a search directive
+(discussed later), and none of its children are visible. After entering a search
+term, an account number is found, and inserted into the route. At that point,
+all of the children under <code>Account</code> will be visible, as they all require an
+<code>accountNumber</code> to correctly operate.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>childHeader</code> (optional)</h5>
+<p>The <code>childHeader</code> attribute is used to specify an HTML header to be placed
+above the <code>children</code> in an expanded area (and thus having a <code>childHeader</code>
+attribute requires having a <code>children</code> attribute).</p>
+<p><code>childHeader</code> receives HTML content as a string, and uses
+<a href="#/api/utilities.directive:rxCompile">utilities.directive:rxCompile</a> to compile and insert the content above
+the <code>children</code> items. The compiled content will be linked against the current
+scope, allowing you to do things like:</p>
+<pre class="prettyprint linenums">
+{
+    "title": "Section 1",
+    "type": "highlight",
+    "childHeader": "&lt;strong&gt;Current Account:&lt;/strong&gt;#{{route.current.pathParams.accountNumber}}",
+    "children": [
+        {
+            "href": "/overview",
+            "key": "overview",
+            "linkText": "Overview"
+        }, {
+            "href": "/about",
+            "key": "about",
+            "linkText": "About"
+        }, {
+           "linkText": "People",
+           "children": [
+                {
+                    "href": "/people/bob",
+                    "linkText": "Bob"
+                }, {
+                    "href": "/people/sue",
+                    "linkText": "Sue"
+                }
+            ]
+        }
+    ]
+}
+</pre>
+<p>This example will pull the <code>accountNumber</code> from the <code>pathParams</code>, and insert
+<code>Current Account: 1234</code> above the children.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>roles</code> (optional)</h5>
+<p><em>Note</em>: Support for <code>roles</code> requires at least version 1.19.0 of EncoreUI.</p>
+<p>In addition to the <code>visibility</code> criteria described above, you can also restrict
+which items are shown to a user based on the LDAP roles of that user. This is
+done via the <code>roles</code> attribute, which takes a single object as its value. This
+object can be used to specify that a user requires <em>all</em> roles from a certain
+set, or <em>any</em> role from a certain set, to see an item. For example:</p>
+<pre class="prettyprint linenums">
+{
+    "title": "Section 1",
+    "type": "highlight",
+    "childHeader": "&lt;strong&gt;Current Account:&lt;/strong&gt;#{{route.current.pathParams.accountNumber}}",
+    "children": [
+        {
+            "href": "/overview",
+            "key": "overview",
+            "linkText": "Overview"
+        }, {
+            "href": "/about",
+            "key": "about",
+            "linkText": "About"
+        }, {
+            "linkText": "People",
+            "children": [
+                {
+                    "href": "/people/bob",
+                    "linkText": "Bob",
+                    "roles": { "all": ["role1", "role2"] }
+                }, {
+                    "href": "/people/sue",
+                    "linkText": "Sue",
+                    "roles": { "any": ["role1", "role2", "role3"] }
+                }
+
+            ]
+        }
+    ]
+}
+</pre>
+<p>In this example, the <code>Bob</code> item can only be seen by users who have <em>both</em> <code>role1</code>
+and <code>role2</code> in their LDAP roles, while the <code>Sue</code> item can only be seen by users
+who have <em>at least one</em> of <code>role1</code>, <code>role2</code>, or <code>role3</code>. Please keep in mind that you
+<a href="https://goo.gl/wzuhxO">can&#39;t do real security in front-end JavaScript</a>.
+Do not rely on <code>roles</code> as a security feature. <code>roles</code> is purely to enhance user
+experience, to prevent them from seeing items that they won&#39;t have permissions
+to access anyway. All the data is still sent to the browser. A user who knows
+how to use the dev tools will be able to see the full list. LDAP role-based
+security must still happen on the server-side.</p>
+<h5 id="description_navigation-menu-json-structure_navigation-items"><code>directive</code> (optional)</h5>
+<p>The optional <code>directive</code> attribute receives the name of a directive in its
+dash-delimited format (i.e. uses <code>&quot;rx-account-search&quot;</code> instead of <code>&quot;rxAccountSearch&quot;</code>).
+If this directive is available, then the navigation menu will have that directive
+inserted and rendered directly under the <code>linkText</code> for the nav item.</p>
+<p>The most important line in the previous paragraph is <code>If this directive is
+available...</code>. Let&#39;s say we add a new <code>Support</code> item to the nav, where each
+of its children are supposed to render its own custom search directive:</p>
+<pre class="prettyprint linenums">
+{
+    "linkText": "Support",
+    "children": [
+        {
+            "linkText": "People Support",
+            "directive": "people-search"
+        }, {
+            "linkText": "Machine Support",
+            "directive": "machine-search"
+        }
+    ]
+}
+</pre>
+<p>The <em>intent</em> is that when the user clicks on &quot;Support&quot;, the menu will expand
+to show &quot;People Support&quot; and &quot;Machine Support&quot; child items, and each will
+contain a search box, defined by the <code>people-search</code> and <code>machine-search</code>
+directives, respectively.</p>
+<p>But where do those directives come from? <code>rxApp</code> provides some legacy
+directives that are available to the nav, including <code>rxAppSearch</code>,
+<code>rxAccountUsers</code>, etc. But <code>people-search</code> does not come from <code>rxApp</code>. And
+recall from the <code>href</code> section that the nav might be defining multiple
+different Angular applications. What if &quot;Support&quot; is defined in your
+application, ad that&#39;s where <code>people-search</code> comes from, but the user is
+currently in a different application? That different application won&#39;t have
+<code>people-search</code> defined anywhere, so when the user clicks on &quot;Support&quot;, the
+directives won&#39;t be available.</p>
+<p>The solution to this is to ensure that these elements with directives <em>also</em>
+have an <code>href</code>, and those URLs belong to Angular applications that define those
+directives. i.e.</p>
+<pre class="prettyprint linenums">
+{
+    "linkText": "Support",
+    "key": "support",
+    "children": [
+        {
+            "linkText": "People Support",
+            "directive": "people-search",
+            "href": "/support/people-support",
+        }, {
+            "linkText": "Machine Support",
+            "directive": "machine-search",
+            "href": "/support/machine-support",
+        }
+    ]
+}
+</pre>
+<p>In fact, recall that we said all items <em>must</em> have one of <code>href</code> or <code>children</code>,
+so the <code>href</code> is necessary anyway. But they key here is that by having an <code>href</code>,
+the browser will navigate to <code>/support/people-support</code> / <code>/support/machine-support</code>,
+which should be defined in Angular apps that have <code>people-search</code> and <code>machine-search</code>
+available as directives.</p>
+<p>With this configuration, clicking on <code>Support</code> will expand the <code>children</code>,
+and the user will see <code>People Support</code> and <code>Machine Support</code>, but they will
+not see the directives. But if they then click on one of <code>People Support</code> or
+<code>Machine Support</code>, then the <code>/support</code> Angular application will be loaded,
+the and the directives will become available.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;rx-app-nav
+       items="{Object}"
+       level="{String}"&gt;
+&lt;/rx-app-nav&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>items</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="rxapp-directive-page rxapp-directive-rxappnav-page"><p>Menu items to display. See encoreNav for object definition</p>
+</div></td></tr><tr><td>level</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="rxapp-directive-page rxapp-directive-rxappnav-page"><p>Level in heirarchy in page. Higher number is deeper nested</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="rxapp-directive-page rxapp-directive-rxappnav-page"><pre class="prettyprint linenums">
+&lt;rx-app-nav level="1" items="menuItems"&gt;&lt;/rx-app-nav&gt;
+</pre>
+</div></div>
+</div>
