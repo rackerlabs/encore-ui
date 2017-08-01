@@ -29,11 +29,11 @@
         .module('demoApp')
         .constant('DOC_VERSIONS', [
             {
-                "label": "5.0.0-x (Unreleased)",
+                "label": "5.x (Current)",
                 "path": "5.x",
             },
             {
-                "label": "4.x (Current)",
+                "label": "4.x (Abandoned)",
                 "path": "4.x",
             },
             {
