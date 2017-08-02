@@ -2,7 +2,7 @@
   "name": "rx-page-objects",
   "author": "Rackspace Hosting, Inc. <encoreui@lists.rackspace.com> (http://rackerlabs.github.io/encore-ui/)",
   "description": "Midway test page objects for all of the Encore UI components",
-  "version": "5.0.0-0",
+  "version": "5.0.0-1",
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
