@@ -1,6 +1,6 @@
 {
   "name": "encore-ui",
-  "version": "5.0.0-1",
+  "version": "5.0.0",
   "main": [
     "./encore-ui.js",
     "./encore-ui.css"
